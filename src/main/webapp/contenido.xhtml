@@ -1,0 +1,39 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <div class="nav-tabs-custom ">
+            <ul id="tab-list"  class="nav nav-tabs" >
+                <li role="presentation"  class="#{controlplantillas.getActive(0)}"><a href="#inicio" data-toggle="tab">INICIO</a></li>
+                <ui:repeat value="#{controlplantillas.modulos}"  class="box box-danger" var="mo" >
+                    <li role="presentation" class="#{controlplantillas.getActive(mo.idmodulo)} ">
+                        <p:commandLink  actionListener="#{controlplantillas.cargarmodulo(mo)}" update="@form" >
+                            #{mo.nombre}
+                            <p:commandButton  icon="fa fa-fw fa-remove" actionListener="#{controlplantillas.cerrarmodulo(mo)}" update="@form" title="Remove this page"/>
+                        </p:commandLink>
+                    </li>
+                </ui:repeat>
+
+            </ul>
+            <div class="tab-content ">
+                <div class="tab-pane #{controlplantillas.getActive(0)} " id="inicio">
+                    <ui:include  src="paginas/principal.xhtml" />
+                </div>
+                <ui:repeat id="repeat" value="#{controlplantillas.modulos}" var="mo" >
+                    <div class="tab-pane #{controlplantillas.getActive(mo.idmodulo)}" id="#{mo.idmodulo}">
+                        <h:form>
+                        <ui:include  src="paginas/#{controlplantillas.modulo}" />
+                        </h:form>
+                 
+                    </div>
+                </ui:repeat>
+            </div> 
+        </div>
+    </ui:composition>
+
+</html>
+
+

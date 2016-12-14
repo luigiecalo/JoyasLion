@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head >
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <title>AdminLTE 2 | Dashboard</title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
+        <!-- Bootstrap 3.3.6 -->
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="font-awesome2/css/font-awesome.min.css"/>
+        <link rel="stylesheet/less" type="text/css" href="styles.less" />
+        <!-- Theme style -->
+        <link rel="stylesheet" href="AdminLTE-master/dist/css/AdminLTE.min.css"/>
+        <!-- AdminLTE Skins. Choose a skin from the css/skins
+             folder instead of downloading all of them to reduce the load. -->
+        <link rel="stylesheet" href="AdminLTE/css/skins/skin-#{controlSeccion.skins}.css"/>
+
+    </h:head>
+    <h:body  onload="#{controlSeccion.validaSeccion()}" class="hold-transition skin-#{controlSeccion.skins} sidebar-mini">
+        <div class="wrapper">
+
+            <header class="main-header">
+                <!-- Logo -->
+                <a href="index2.html" class="logo">
+                    <!-- mini logo for sidebar mini 50x50 pixels -->
+                    <span class="logo-mini"><b>A</b>LT</span>
+                    <!-- logo for regular state and mobile devices -->
+                    <span class="logo-lg"><b>Admin</b>LTE</span>
+                </a>
+                <!-- Header Navbar: style can be found in header.less -->
+                <nav class="navbar navbar-static-top">
+                    <!-- Sidebar toggle button-->
+                    <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                        <span class="sr-only">Toggle navigation</span>
+                    </a>
+
+                    <div class="navbar-custom-menu">
+                        <ul class="nav navbar-nav">
+                            <!-- Messages: style can be found in dropdown.less-->
+                            <li class="dropdown messages-menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-envelope-o"></i>
+                                    <span class="label label-success">4</span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="header">You have 4 messages</li>
+                                    <li>
+                                        <!-- inner menu: contains the actual data -->
+                                        <ul class="menu">
+                                            <li><!-- start message -->
+                                                <a href="#">
+                                                    <div class="pull-left">
+                                                        <img src="AdminLTE-master/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
+                                                    </div>
+                                                    <h4>
+                                                        Support Team
+                                                        <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                                                    </h4>
+                                                    <p>Why not buy a new awesome theme?</p>
+                                                </a>
+                                            </li>
+                                            <!-- end message -->
+                                            <li>
+                                                <a href="#">
+                                                    <div class="pull-left">
+                                                        <img src="AdminLTE-master/dist/img/user3-128x128.jpg" class="img-circle" alt="User Image"/>
+                                                    </div>
+                                                    <h4>
+                                                        AdminLTE Design Team
+                                                        <small><i class="fa fa-clock-o"></i> 2 hours</small>
+                                                    </h4>
+                                                    <p>Why not buy a new awesome theme?</p>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <div class="pull-left">
+                                                        <img src="AdminLTE-master/dist/img/user4-128x128.jpg" class="img-circle" alt="User Image"/>
+                                                    </div>
+                                                    <h4>
+                                                        Developers
+                                                        <small><i class="fa fa-clock-o"></i> Today</small>
+                                                    </h4>
+                                                    <p>Why not buy a new awesome theme?</p>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <div class="pull-left">
+                                                        <img src="AdminLTE-master/dist/img/user3-128x128.jpg" class="img-circle" alt="User Image"/>
+                                                    </div>
+                                                    <h4>
+                                                        Sales Department
+                                                        <small><i class="fa fa-clock-o"></i> Yesterday</small>
+                                                    </h4>
+                                                    <p>Why not buy a new awesome theme?</p>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <div class="pull-left">
+                                                        <img src="AdminLTE-master/dist/img/user4-128x128.jpg" class="img-circle" alt="User Image"/>
+                                                    </div>
+                                                    <h4>
+                                                        Reviewers
+                                                        <small><i class="fa fa-clock-o"></i> 2 days</small>
+                                                    </h4>
+                                                    <p>Why not buy a new awesome theme?</p>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="footer"><a href="#">See All Messages</a></li>
+                                </ul>
+                            </li>
+                            <!-- Notifications: style can be found in dropdown.less -->
+                            <li class="dropdown notifications-menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-bell-o"></i>
+                                    <span class="label label-warning">10</span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="header">You have 10 notifications</li>
+                                    <li>
+                                        <!-- inner menu: contains the actual data -->
+                                        <ul class="menu">
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
+                                                    page and may cause design problems
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fa fa-users text-red"></i> 5 new members joined
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fa fa-shopping-cart text-green"></i> 25 sales made
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fa fa-user text-red"></i> You changed your username
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="footer"><a href="#">View all</a></li>
+                                </ul>
+                            </li>
+                            <!-- Tasks: style can be found in dropdown.less -->
+                            <li class="dropdown tasks-menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-flag-o"></i>
+                                    <span class="label label-danger">9</span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="header">You have 9 tasks</li>
+                                    <li>
+                                        <!-- inner menu: contains the actual data -->
+                                        <ul class="menu">
+                                            <li><!-- Task item -->
+                                                <a href="#">
+                                                    <h3>
+                                                        Design some buttons
+                                                        <small class="pull-right">20%</small>
+                                                    </h3>
+                                                    <div class="progress xs">
+                                                        <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                                            <span class="sr-only">20% Complete</span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <!-- end task item -->
+                                            <li><!-- Task item -->
+                                                <a href="#">
+                                                    <h3>
+                                                        Create a nice theme
+                                                        <small class="pull-right">40%</small>
+                                                    </h3>
+                                                    <div class="progress xs">
+                                                        <div class="progress-bar progress-bar-green" style="width: 40%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                                            <span class="sr-only">40% Complete</span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <!-- end task item -->
+                                            <li><!-- Task item -->
+                                                <a href="#">
+                                                    <h3>
+                                                        Some task I need to do
+                                                        <small class="pull-right">60%</small>
+                                                    </h3>
+                                                    <div class="progress xs">
+                                                        <div class="progress-bar progress-bar-red" style="width: 60%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                                            <span class="sr-only">60% Complete</span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <!-- end task item -->
+                                            <li><!-- Task item -->
+                                                <a href="#">
+                                                    <h3>
+                                                        Make beautiful transitions
+                                                        <small class="pull-right">80%</small>
+                                                    </h3>
+                                                    <div class="progress xs">
+                                                        <div class="progress-bar progress-bar-yellow" style="width: 80%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                                            <span class="sr-only">80% Complete</span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <!-- end task item -->
+                                        </ul>
+                                    </li>
+                                    <li class="footer">
+                                        <a href="#">View all tasks</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!-- User Account: style can be found in dropdown.less -->
+                            <li class="dropdown user user-menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <img src="AdminLTE-master/dist/img/user2-160x160.jpg" class="user-image" alt="User Image"/>
+                                    <span class="hidden-xs">#{controlSeccion.miembro.usuario.login}</span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <!-- User image -->
+                                    <li class="user-header">
+                                        <img src="AdminLTE-master/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
+
+                                        <p>
+                                            #{controlSeccion.miembro.nombre1}-#{controlSeccion.miembro.apellido1}
+                                            <small style="position: relative"><h:form>
+                                                    <h:selectOneMenu class="form-control select2" id="country" value="#{controlSeccion.rolselect}" title="ROL SELECIONADO" style="width:150px">
+                                                        <p:ajax  listener="#{controlSeccion.selecionRol}" update="@form" />
+                                                        <f:selectItems value="#{controlSeccion.rolesSeccion}" />
+                                                    </h:selectOneMenu> 
+                                                </h:form>
+                                            </small>
+                                        </p>
+                                    </li>
+                                    <!-- Menu Body -->
+                                    <li class="user-body">
+                                        <div class="row">
+                                            <div class="col-xs-4 text-center">
+                                                <a href="#">Followers</a>
+                                            </div>
+                                            <div class="col-xs-4 text-center">
+                                                <a href="#">Sales</a>
+
+                                            </div>
+                                            <div class="col-xs-4 text-center">
+                                                <a href="#">Friends</a>
+                                            </div>
+                                        </div>
+                                        <!-- /.row -->
+                                    </li>
+                                    <!-- Menu Footer-->
+
+                                    <li class="user-footer">
+                                        <div class="pull-left">
+                                            <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                        </div>
+                                        <div class="pull-right ">
+                                            <h:form>
+                                                <b:commandButton  class="btn btn-default btn-flat" value="Cerrar Seccion" actionListener="#{controlSeccion.salir()}" update="@form"/>
+                                            </h:form>
+                                        </div>
+                                    </li>
+
+
+                                </ul>
+                            </li>
+                            <!-- Control Sidebar Toggle Button -->
+                            <li>
+                                <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </header>
+            <!-- Left side column. contains the logo and sidebar -->
+            <aside class="main-sidebar">
+                <!-- sidebar: style can be found in sidebar.less -->
+                <section class="sidebar">
+                    <!-- Sidebar user panel -->
+                    <div class="user-panel">
+                        <div class="pull-left image">
+                            <img src="AdminLTE-master/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
+                        </div>
+                        <div class="pull-left info">
+                            <p>#{controlSeccion.miembro.nombre1}</p>
+                            <h:form>
+                                <h:selectOneMenu class="form-control select2" id="country" value="#{controlSeccion.rolselect}" title="ROL SELECIONADO" style="width:150px">
+                                    <p:ajax    listener="#{controlSeccion.selecionRol}" />
+                                    <f:selectItems value="#{controlSeccion.rolesSeccion}" />
+                                </h:selectOneMenu> 
+                            </h:form>
+                        </div>
+                        <div>
+
+                        </div>
+                    </div>
+                    <!-- search form -->
+
+                    <!-- /.search form -->
+                    <!-- sidebar menu: : style can be found in sidebar.less -->
+                    <h:form >
+                        <ul class="sidebar-menu">
+                            <li class="header">
+                                MENÚ PRINCIPAL
+
+                            </li>
+                            <ui:repeat value="#{controlSeccion.modulosSeccion}" var="Mod">
+                                <li>
+                                    <h:commandLink  action="#{controlplantillas.estadiscas()}" >
+                                        <i class="fa #{Mod.icono}"></i> <span>#{Mod.nombre}</span>
+                                        <small class="label pull-right bg-red">3</small>
+                                    </h:commandLink>
+                                </li>
+                            </ui:repeat>
+
+                        </ul>
+                    </h:form>
+                </section>
+                <!-- /.sidebar -->
+            </aside>
+
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <h:form>
+              
+
+                    <!-- Main content -->
+                    <section class="content">
+                        <!-- Small boxes (Stat box) -->
+                        <div class="row">
+                            <div class="col-lg-3 col-xs-6">
+                                <!-- small box -->
+                                <div class="small-box bg-aqua">
+                                    <div class="inner">
+                                        <h3>150</h3>
+
+                                        <p>New Orders</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="ion ion-bag"></i>
+                                    </div>
+                                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                                </div>
+                            </div>
+                            <!-- ./col -->
+                            <div class="col-lg-3 col-xs-6">
+                                <!-- small box -->
+                                <div class="small-box bg-green">
+                                    <div class="inner">
+                                        <h3>53<sup style="font-size: 20px">%</sup></h3>
+
+                                        <p>Bounce Rate</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="ion ion-stats-bars"></i>
+                                    </div>
+                                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                                </div>
+                            </div>
+                            <!-- ./col -->
+                            <div class="col-lg-3 col-xs-6">
+                                <!-- small box -->
+                                <div class="small-box bg-yellow">
+                                    <div class="inner">
+                                        <h3>44</h3>
+
+                                        <p>User Registrations</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="ion ion-person-add"></i>
+                                    </div>
+                                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                                </div>
+                            </div>
+                            <!-- ./col -->
+                            <div class="col-lg-3 col-xs-6">
+                                <!-- small box -->
+                                <div class="small-box bg-red">
+                                    <div class="inner">
+                                        <h3>65</h3>
+
+                                        <p>Unique Visitors</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="ion ion-pie-graph"></i>
+                                    </div>
+                                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                                </div>
+                            </div>
+                            <!-- ./col -->
+                        </div>
+                        <!-- /.row -->
+                        <!-- Main row -->
+                        <div class="row">
+                            <div class="col-lg-3 col-xs-6">
+                                <div class="small-box bg-aqua">
+
+
+                                    #{controlSeccion.skins}
+                                    <button type="button"  class="btn btn-danger">Action</button>
+
+                                    <p:commandButton  class="btn btn-danger" value="cambiar A Color rojo el skin" actionListener="#{controlSeccion.cambiarsikin('red')}"/>
+                                    <p:commandButton  class="btn btn-dropbox" value="cambiar A Color purpura el skin" actionListener="#{controlSeccion.cambiarsikin('purple')}"/>
+                                    <p:commandButton  class="btn btn-primary" value="cambiar A Color azul el skin" actionListener="#{controlSeccion.cambiarsikin('blue')}"/>
+                                    <p:commandButton  class="btn btn-warning" value="cambiar A Color amarillo el skin" actionListener="#{controlSeccion.cambiarsikin('yellow')}"/>
+                                    <p:commandButton  class="btn btn-success" value="cambiar A Color verde el skin" actionListener="#{controlSeccion.cambiarsikin('green')}"/>
+
+
+                                    <p:commandButton value="Basic" type="button" onclick="PF('dlg1').show();" />
+                                    <p:dialog header="Modal Dialog" class="main-header" styleClass="skin-#{controlSeccion.skins}" widgetVar="dlg1" modal="true">
+                                        <header class="main-header">
+                                            <nav class="navbar navbar-static-top">
+
+
+                                                <div class="navbar-custom-menu">
+                                                    <ul class="nav navbar-nav">
+
+                                                    </ul>
+                                                </div>
+                                            </nav>
+                                        </header>
+                                        <h:outputText value="This is a Modal Dialog." />
+                                    </p:dialog> 
+
+                                </div>
+
+                            </div>
+                            <div >
+                                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                                    Launch demo modal
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">cerrar</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                ...
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <b:modal id="amodal" title="Modal Example" backdrop="false" style="main-headernavbarnavbar-static-top" styleClass="modalPseudoClass">
+                                    <p>Modal body</p>
+                                    <f:facet name="footer">
+                                        <b:button value="close" dismiss="modal" onclick="return false;"/>
+                                        <b:button value="Ok" look="primary" dismiss="modal" onclick="return false;"/>
+                                    </f:facet>
+                                </b:modal>
+                                <b:row>
+                                    <b:column span="3">
+                                        <a id="atrigger" class="btn btn-primary btn-lg" href="#amodal" data-toggle="modal">Trigger (HTML A tag)</a>
+                                    </b:column>
+                                    <b:column span="3">
+                                        <button id="btrigger" class="btn btn-info btn-lg" data-target="#amodal" data-toggle="modal">Trigger (HTML Button)</button>
+                                    </b:column>
+                                    <b:column span="3">
+                                        <b:button value="Trigger (JSF passthrough)" look="warning" p:data-target="#amodal" p:data-toggle="modal" onclick="return false;" size="lg"/>
+                                    </b:column>
+                                    <b:column span="3">
+                                        <b:button value="Trigger (JavaScript)" look="success" onclick="$('.modalPseudoClass').modal();
+                                                return false;" size="lg"/>
+                                    </b:column>
+                                </b:row>
+                            </div>
+
+                            <!-- right col -->
+                        </div>
+                        <!-- /.row (main row) -->
+                        <div class="row">
+
+
+                        </div>
+
+                    </section>
+                    <h3>DataModel</h3>
+                </h:form>
+
+
+
+                <!-- /.content -->
+
+            </div>
+            <!-- /.content-wrapper -->
+            <footer class="main-footer">
+                <div class="pull-right hidden-xs">
+                    <b>Version</b> 2.3.3
+                    <button class="btn btn-default" data-toggle="control-sidebar">Toggle Right Sidebar</button>
+
+                </div>
+                <strong>Copyright ; 2014-2015 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
+                reserved.
+            </footer>
+
+            <!-- Control Sidebar -->
+            <aside class="control-sidebar control-sidebar-dark">
+                <!-- Create the tabs -->
+                <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+                    <li class="active"><a href="#control-sidebar-home-tab"  data-toggle="tab" ><i class="fa fa-home"></i></a></li>
+                    <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <!-- Home tab content -->
+                    <div class="tab-pane active" id="control-sidebar-home-tab">
+                        <h3 class="control-sidebar-heading">Aplicar Tema</h3>
+                        <ui:include id="temas" src="temas.xhtml" />
+                    </div>
+                    <div class="tab-pane" id="control-sidebar-settings-tab">
+                        <h3 class="control-sidebar-heading">Más Configuraciones</h3>
+                        En construcion
+                    </div>
+                </div>
+            </aside>
+            <!-- /.control-sidebar -->
+            <!-- Add the sidebar's background. This div must be placed
+                 immediately after the control sidebar -->
+            <div class="control-sidebar-bg"></div>
+
+        </div>
+        <!-- jQuery 2.2.0 -->
+        <!--<script src="AdminLTE/plugins/jQuery/jQuery-2.2.0.min.js"></script>-->
+        <!-- AdminLTE App -->
+        <script src="AdminLTE/js/app.min.js"></script>
+        <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+        <script src="AdminLTE/js/pages/dashboard.js"></script>
+        <!-- AdminLTE for demo purposes -->
+        <!--<script src="AdminLTE/js/demo.js"></script>-->
+        <script src="bootstrap/js/bootstrap.min.js"></script>
+        <script src="js/scripts.js"></script>
+    </h:body>
+</html>

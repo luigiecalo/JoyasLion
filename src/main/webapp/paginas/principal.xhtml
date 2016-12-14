@@ -1,0 +1,38 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <!--Holas Mundo Luigie-->
+        <b:tabView activeIndex="2">
+            <b:tab title="First Tab">
+                <p>This is the first tab.</p>
+            </b:tab>
+            <b:tab title="Another Tab">
+                <p>This is the second tab.</p>
+            </b:tab>
+            <!-- The next tab shows tabs aren't limited to text. You can put anything in a tab. -->
+            <b:tab title="Image Tab">
+                <h3>Nested</h3>
+                <div class="ui-g">
+                    <div class="ui-g-8 ui-g-nopad">
+                        <div class="ui-g-6" style="background: #005384;color: white">6</div>
+                        <div class="ui-g-6" style="background: #398439;color: white">6</div>
+                        <div class="ui-g-12" style="background: wheat;color: blueviolet">12</div>
+                    </div>
+                    <div class="ui-g-4" style="background: tomato;color: windowtext">4</div>
+                </div>
+            </b:tab>
+            <b:tab title="Fancy tab">
+                <f:facet name="anchor"><b:iconAwesome name="cog" spin="true" /></f:facet>
+                <p>This is fancy tab with a spinning image.</p>
+            </b:tab>
+
+        </b:tabView>
+
+    </ui:composition>
+
+</html>

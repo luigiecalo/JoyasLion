@@ -1,0 +1,329 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <span class=""></span>
+        <b:panel id="consulta" collapsible="false" rendered="#{!controlUsuarios.registrar}">
+
+
+            <div class="row">
+                <h:panelGroup    >
+                    <div id="barraup" class="col-xs-12 col-md-12 " style="z-index:2" >
+                        <div  class="box">
+
+                            <div  class="box-body">
+
+                                <b:commandButton value="Registro" 
+                                                 rendered="#{controlUsuarios.bootonregistro(controlSeccion.rol.idrol,controlplantillas.moduloSelecionado)}" 
+                                                 title="REGISTRAR NUEVO USUARIO"   
+                                                 styleClass="btn-app bg-#{controlSeccion.skins}-gradient" 
+                                                 actionListener="#{controlUsuarios.registroModulo()}"
+                                                 size="sm" >
+                                    <i class="fa fa-user-plus"></i>
+                                    <f:param name="username" value="JSF 2.0 User" />
+                                </b:commandButton>
+
+                                <b:commandButton value="Consultar" 
+                                                 style="padding-left:20px"
+                                                 styleClass="btn-app"
+                                                 look="success"
+                                                 size="sm"
+                                                 ajax="true"
+                                                 actionListener="#{controlUsuarios.listarMiembros()}" >
+                                    <i class="fa fa-search"></i>
+                                </b:commandButton>
+
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                    </div>
+                </h:panelGroup>
+
+                <div  class="col-md-12 col-xs-12 row">
+                    <div  class="col-md-12">
+
+                        <p:dataTable id="tbmiembros" var="Mien" value="#{controlUsuarios.miembros}">
+                            <f:facet name="header">
+                                Lista de miembros registrados
+                            </f:facet>
+                            <p:column headerText="Identificacion">
+                                <h:outputText value="#{Mien.documento}" />
+                            </p:column>
+                            <p:column headerText="Nombre completo">
+                                <h:outputText value="#{Mien.apellido1} #{Mien.apellido2} #{Mien.nombre1} #{Mien.nombre2}" />
+                            </p:column>
+                            <p:column headerText="Estado">
+                                <h:outputText value="#{Mien.estado}" />
+                            </p:column>
+                            <p:column style="text-align: center">
+
+                                <p:commandButton   icon="ui-icon-search" title="View" actionListener="#{controlUsuarios.enviarselecionado(Mien)}" update=":form:tab">
+
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </div>
+
+
+            </div> 
+
+
+
+        </b:panel>
+
+        <b:panel id="registro" collapsible="false" rendered="#{controlUsuarios.registrar}">
+            MODULO DE #{controlUsuarios.data} REGISTRO 
+            <div class="row">
+
+                <h:panelGroup >
+                    <div id="barraup" class="col-xs-12 col-md-12 " style="z-index:2" >
+                        <div  class="box">
+
+                            <div  class="box-body">
+                                <b:buttonGroup>
+                                    <b:commandButton value="CONSULTAR"  process="@this" styleClass=" btn btn-app bg-#{controlSeccion.skins}-gradient" actionListener="#{controlUsuarios.consultaModulo()}" update="tab" size="xs" >
+                                        <i class="fa fa-search"></i>
+                                    </b:commandButton>
+                                    <b:commandButton value="Editar" rendered="#{!controlUsuarios.verBtnRegistro()}"  actionListener="#{controlUsuarios.save()}" class="" styleClass="btn btn-app bg-yellow-gradient"  update="tab" size="xs" >
+                                        <i class="fa fa-edit"></i>
+                                    </b:commandButton>
+                                    <b:commandButton value="Guardar" rendered="#{controlUsuarios.verBtnRegistro()}" actionListener="#{controlUsuarios.save()}"   styleClass=" btn btn-app bg-green"  update="tab" size="xs" >
+                                        <i class="fa fa-save"></i>
+                                    </b:commandButton>
+
+                                    <b:commandButton value="Nuevo"  actionListener="#{controlUsuarios.limpiar()}" process="@this"  styleClass=" btn btn-app bg-red"  update="tab" size="xs" >
+                                        <i class="fa fa-clone"></i>
+                                    </b:commandButton>
+
+
+                                    <a class="btn btn-app ir-arriba icon-arrow-up2">
+                                        <i class="fa fa-angle-up"></i> up
+                                    </a>
+                                </b:buttonGroup>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                    </div>
+                </h:panelGroup>
+            </div>
+            <div  class="col-md-12 col-xs-12">
+                <!--<h3></h3>-->
+                <p:panel id="panel" header="Datos del usuario">
+                    <b:growl id="growlMsg" globalOnly="true" placementFrom="top"
+                             show-detail="true" show-summary="false" allowDismiss="true"
+                             delay="10000" escape="true" /> 
+                    <div class="ui-g">
+                        <div class="ui-g-12 ui-md-12 ui-lg-3" >
+
+                            <div class="box-body box-profile">
+
+                                <img class="profile-user-img img-responsive img-circle" src="imagenes/usuario/hombre.png" alt="User profile picture"/>
+
+
+                                <p:fileUpload fileUploadListener="#{controlUsuarios.handleFileUpload}" style="width:100px" class="center-block" mode="advanced"
+                                              auto="true" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+                                <b:messages id="standardMsg3" globalOnly="true" />
+
+                                <h3 class="profile-username text-center">#{controlUsuarios.miembroSelecionado.apellido1} #{controlUsuarios.miembroSelecionado.apellido2} #{controlUsuarios.miembroSelecionado.nombre1} #{controlUsuarios.miembroSelecionado.nombre2}</h3>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="ui-g-12 ui-md-6 ui-lg-6 ui-g-nopad" >
+                            <div class="ui-g-12 ui-md-12 ui-lg-12"  >
+                                <!--<h:outputText value="Identificacion"/>-->
+                                <b:inputText id="documento"
+                                             value="#{controlUsuarios.miembroSelecionado.documento}"
+                                             required="true" 
+                                             renderLabel="true"
+                                             label="Identificacion"
+                                             >
+                                    <f:facet name="prepend">
+                                        <b:icon name="glyphicon glyphicon-list-alt"/>
+                                    </f:facet>
+                                </b:inputText>
+                            </div>
+
+
+                            <div class="ui-g-12 ui-md-12 ui-lg-6" >
+
+                                <!--<h:outputText value="Apellido 1:"/>-->
+                                <b:inputText id="apellido1"
+                                             value="#{controlUsuarios.miembroSelecionado.apellido1}"
+                                             required="true" 
+                                             renderLabel="true"
+                                             label="Primer Apellido"
+                                             >
+                                    <f:facet name="prepend">
+                                        <b:iconAwesome name="fa fa-certificate"/>
+                                    </f:facet>
+                                </b:inputText>
+                            </div>
+                            <div class="ui-g-12 ui-md-12 ui-lg-6" >
+
+                                <!--<h:outputText value="Apellido 1:"/>-->
+                                <b:inputText id="apellido2"
+                                             value="#{controlUsuarios.miembroSelecionado.apellido2}"
+                                             renderLabel="true"
+
+                                             label="Segundo Apellido"
+                                             >
+                                    <f:facet name="prepend">
+                                        <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                    </f:facet>
+                                </b:inputText>
+                            </div>
+                            <div class="ui-g-12 ui-md-12 ui-lg-6" >
+
+                                <!--<h:outputText value="Apellido 1:"/>-->
+                                <b:inputText id="nombre1"
+                                             value="#{controlUsuarios.miembroSelecionado.nombre1}"
+                                             required="true" 
+                                             renderLabel="true"
+                                             label="Primer Nombre"
+                                             >
+                                    <f:facet name="prepend">
+                                        <b:iconAwesome name="fa fa-certificate"/>
+                                    </f:facet>
+                                </b:inputText>
+                            </div>
+                            <div class="ui-g-12 ui-md-12 ui-lg-6" >
+
+                                <!--<h:outputText value="Apellido 1:"/>-->
+                                <b:inputText id="nombre2"
+                                             value="#{controlUsuarios.miembroSelecionado.nombre2}"
+                                             label="Segundo Nombre +#{controlUsuarios.miembroSelecionado.nombre2}"
+
+
+                                             >
+                                    <f:facet name="prepend">
+                                        <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                    </f:facet>
+                                </b:inputText>
+                            </div>
+
+
+
+
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3" >
+                            <div class="box-body box-profile">
+                                <div class="ui-g-12 ui-md-12 ui-lg-11" >
+                                    <b:selectOneMenu id="roleslista"  class="form-control select2"  value="#{controlUsuarios.rolselect}" title="Asigne almenos un ROL" style="margin:0 auto">
+                                        <f:selectItem  itemLabel="Selecione un Rol" itemValue="" />
+                                        <f:selectItems value="#{controlUsuarios.rolesLista}" />
+                                    </b:selectOneMenu>
+                                </div>
+                                <div class="ui-g-12 ui-md-12 ui-lg-1" style="margin: 0 auto" >
+                                    <b:commandButton value=""  style="margin:0 auto" update="listaRolselct" process="@this,roleslista"  actionListener="#{controlUsuarios.agregaRol()}" styleClass=" btn  bg-#{controlSeccion.skins}-gradient"  size="lg" >
+                                        <i class="fa fa-plus"></i>
+                                    </b:commandButton>
+                                </div>
+
+
+                                <div class="ui-g-12 ui-md-12 ui-lg-12" >
+                                    <p:dataList id="listaRolselct" value="#{controlUsuarios.rolesSelect}" var="rol" type="ordered">
+                                        <f:facet name="header">
+                                            Roles Selecionados
+                                        </f:facet>
+                                        <b:commandButton value=""  actionListener="#{controlUsuarios.eliminaRol(rol)}" process="@this"  styleClass=" btn btn-xs btn-danger"  update="listaRolselct" size="xs" >
+                                            <i class="fa fa-trash"></i>
+                                        </b:commandButton>
+                                        #{rol.nombre}
+                                        
+                                    </p:dataList> 
+                                </div>
+
+                                <div class="ui-g-12 ui-md-12 ui-lg-12" >
+                                    <p:outputLabel for="@next" value="Estado del usuario" styleClass="hidden"/>
+                                    <b:selectBooleanCheckbox  value="#{controlUsuarios.estadoMiembro}"
+                                                              update="@after" caption="Activo" />
+
+                                    <b:inputText value="0"  update="@previous @next"
+                                                 id="oneToTenId" styleClass="hidden"/>
+                                    <b:message for="@previous" styleClass="hidden"/>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </p:panel>
+            </div>
+
+        </b:panel>
+        <p:messages autoUpdate="false"/>
+
+
+
+
+
+
+
+        <script type="text/javascript">
+            var nav = $('#barraup');
+
+            if (nav.length != 0) {
+                var height = $("#navpricipal").height();
+                var navHomeY = nav.offset().top - height;
+                var isFixed = false;
+
+                $(document).scroll(function () {
+
+
+
+                    var $w = $(window);
+                    var scrollTop = $w.scrollTop();
+                    var shouldBeFixed = scrollTop > navHomeY;
+                    if (shouldBeFixed) {
+                        if (!isFixed) {
+                            nav.css({
+                                position: 'fixed',
+                                top: height,
+                            });
+                            $('#barraup').load();
+                            isFixed = true;
+                        }
+                    } else if (isFixed)
+                    {
+                        nav.css({
+                            position: 'static'
+                        });
+                        isFixed = false;
+                    }
+
+                });
+            }
+            $('.ir-arriba').click(function () {
+                $('body, html').animate({
+                    scrollTop: '0px'
+                }, 300);
+            });
+
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 0) {
+                    $('.ir-arriba').slideDown(300);
+                } else {
+                    $('.ir-arriba').slideUp(300);
+                }
+            });
+
+
+        </script>
+
+
+
+
+
+    </ui:composition>
+
+</html>
