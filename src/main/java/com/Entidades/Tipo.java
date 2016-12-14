@@ -28,10 +28,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Tipo.findAll", query = "SELECT t FROM Tipo t"),
     @NamedQuery(name = "Tipo.findById", query = "SELECT t FROM Tipo t WHERE t.id = :id"),
     @NamedQuery(name = "Tipo.findByCodigo", query = "SELECT t FROM Tipo t WHERE t.codigo = :codigo"),
-    @NamedQuery(name = "Tipo.findByDescripcion", query = "SELECT t FROM Tipo t WHERE t.descripcion = :descripcion"),
+    @NamedQuery(name = Tipo.LISTAR_DESCRIPCION, query = "SELECT t FROM Tipo t WHERE t.descripcion = :descripcion"),
     @NamedQuery(name = "Tipo.findByNombre", query = "SELECT t FROM Tipo t WHERE t.nombre = :nombre")})
 public class Tipo implements Serializable {
 
+    public static final String LISTAR_DESCRIPCION = "Tipo.findByDescripcion"; 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -17,6 +17,7 @@ import com.Entidades.PiedraCentral;
 import com.Entidades.Tipo;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.faces.bean.ManagedBean;
@@ -40,6 +41,9 @@ public final class ControlModelos implements Serializable {
     private Map<String, Long> piedrasCentralesLista;
     private Map<String, Long> circonesLista;
     private Map<String, Long> tiposModeloLista;
+    private Long piedrasCentralSelect = 0l;
+    private Long circoneSelect = 0l;
+    private Long tiposModelolSelect = 0l;
 
     //OBJECTOS
     private Modelo modeloSelecionado = new Modelo();
@@ -65,10 +69,11 @@ public final class ControlModelos implements Serializable {
      * Creates a new instance of controlplantillas
      */
     public ControlModelos() {
-
+        cargarListas();
     }
 ////METODOS
     //validar los permisos De Los botones
+
     public boolean butompermisos(Long idrol, Modulo mod, String permiso) {
         return util.permisos(idrol, mod, permiso);
     }
@@ -81,23 +86,32 @@ public final class ControlModelos implements Serializable {
 
     //Limpia la vista
     private void limpiar() {
-        
+
     }
+
     //Lista todos Los Modelos de La vista De Consulta
-     public void listarModelos() {
+    public void listarModelos() {
         modelos = ModeloDao.consultarTodo(Modelo.class);
     }
-     
-     //Envia Los datos De la consulta Al registro
-      public void enviarselecionado(Modelo m) {
+
+    private void cargarListas() {
+        tiposModeloLista = new HashMap<String, Long>();
+        for (Tipo tipo : getTiposModelo()) {
+            tiposModeloLista.put(tipo.getNombre(), tipo.getId());
+        }
+    }
+
+    //Envia Los datos De la consulta Al registro
+    public void enviarselecionado(Modelo m) {
         estado = "A";
         Registrar = true;
         RequestContext.getCurrentInstance().reset("form:panel");
         modeloSelecionado = m;
-        piedracentralesSelect=m.getPiedra_centrales();
+        piedracentralesSelect = m.getPiedra_centrales();
     }
-      //pasa Del modulo De registro la modulo De consulta
-      public void consultaModulo() {
+    //pasa Del modulo De registro la modulo De consulta
+
+    public void consultaModulo() {
         Registrar = false;
     }
 
@@ -199,6 +213,7 @@ public final class ControlModelos implements Serializable {
     }
 
     public List<Tipo> getTiposModelo() {
+        tiposModelo = TipoDao.ListarDescripcion("Tipo_piezas");
         return tiposModelo;
     }
 
@@ -212,6 +227,38 @@ public final class ControlModelos implements Serializable {
 
     public void setPiedracentralesSelect(List<PiedraCentral> piedracentralesSelect) {
         this.piedracentralesSelect = piedracentralesSelect;
+    }
+
+    public Modelo getModeloSelecionado() {
+        return modeloSelecionado;
+    }
+
+    public void setModeloSelecionado(Modelo modeloSelecionado) {
+        this.modeloSelecionado = modeloSelecionado;
+    }
+
+    public Long getPiedrasCentralSelect() {
+        return piedrasCentralSelect;
+    }
+
+    public void setPiedrasCentralSelect(Long piedrasCentralSelect) {
+        this.piedrasCentralSelect = piedrasCentralSelect;
+    }
+
+    public Long getCirconeSelect() {
+        return circoneSelect;
+    }
+
+    public void setCirconeSelect(Long circoneSelect) {
+        this.circoneSelect = circoneSelect;
+    }
+
+    public Long getTiposModelolSelect() {
+        return tiposModelolSelect;
+    }
+
+    public void setTiposModelolSelect(Long tiposModelolSelect) {
+        this.tiposModelolSelect = tiposModelolSelect;
     }
 
 }
