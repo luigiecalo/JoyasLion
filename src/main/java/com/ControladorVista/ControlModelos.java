@@ -52,8 +52,8 @@ public final class ControlModelos implements Serializable {
     private PiedraCentral piedracentral = new PiedraCentral();
     //LISTAS
     private List<Modelo> modelos = new ArrayList<Modelo>();
-    private List<Modelo> circones = new ArrayList<Modelo>();
-    private List<Modelo> circonesSelect = new ArrayList<Modelo>();
+    private List<Circon> circones = new ArrayList<Circon>();
+    private List<Circon> circonesSelect = new ArrayList<Circon>();
     private List<Tipo> tiposModelo = new ArrayList<Tipo>();
     private List<PiedraCentral> piedracentrales = new ArrayList<PiedraCentral>();
     private List<PiedraCentral> piedracentralesSelect = new ArrayList<PiedraCentral>();
@@ -95,9 +95,21 @@ public final class ControlModelos implements Serializable {
     }
 
     private void cargarListas() {
+        cargalistaModelos();
+        cargaListaCircones();
+    }
+
+    private void cargalistaModelos() {
         tiposModeloLista = new HashMap<String, Long>();
         for (Tipo tipo : getTiposModelo()) {
             tiposModeloLista.put(tipo.getNombre(), tipo.getId());
+        }
+    }
+
+    private void cargaListaCircones() {
+        circonesLista = new HashMap<String, Long>();
+        for (Circon circon : getCircones()) {
+            circonesLista.put(circon.getReferencia(), circon.getId());
         }
     }
 
@@ -113,6 +125,27 @@ public final class ControlModelos implements Serializable {
 
     public void consultaModulo() {
         Registrar = false;
+    }
+
+    public void agregarCircon() {
+        circon = CirconDao.consultarC(Circon.class, circoneSelect);
+        if (circon != null) {
+            if (circonesSelect.size() <= 0) {
+                circonesSelect.add(circon);
+            } else {
+                boolean encontro = false;
+                for (Circon circ : circonesSelect) {
+                    if (circ.equals(circon)) {
+                        encontro = true;
+                    }
+                }
+                if (encontro) {
+                    util.crearmensajes("INFO", "ADVERTENCIA", "ROL YA SELECIONADO");
+                } else {
+                    circonesSelect.add(circon);
+                }
+            }
+        }
     }
 
 ////GET AND SET
@@ -196,19 +229,20 @@ public final class ControlModelos implements Serializable {
         this.modelos = modelos;
     }
 
-    public List<Modelo> getCircones() {
+    public List<Circon> getCircones() {
+        circones = CirconDao.consultarTodo(Circon.class);
         return circones;
     }
 
-    public void setCircones(List<Modelo> circones) {
+    public void setCircones(List<Circon> circones) {
         this.circones = circones;
     }
 
-    public List<Modelo> getCirconesSelect() {
+    public List<Circon> getCirconesSelect() {
         return circonesSelect;
     }
 
-    public void setCirconesSelect(List<Modelo> circonesSelect) {
+    public void setCirconesSelect(List<Circon> circonesSelect) {
         this.circonesSelect = circonesSelect;
     }
 

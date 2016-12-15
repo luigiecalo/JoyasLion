@@ -116,40 +116,54 @@
                         </div>
                         <div class="ui-g-12 ui-md-6 ui-lg-2 ui-g-nopad" >
                             <div class="ui-g-12 ui-md-6 ui-lg-12"  >
-                                <b:selectOneMenu id="roleslista"  class="form-control select2"  value="#{controlModelos.tiposModelolSelect}" title="Asigne almenos un ROL" style="margin:0 auto">
-                                    <f:selectItem  itemLabel="Selecione un Rol" itemValue="" />
+                                <b:selectOneMenu   class="form-control select2"  value="#{controlModelos.tiposModelolSelect}" title="Asigne almenos un ROL" style="margin:0 auto">
+                                    <f:selectItem  itemLabel="Selecione un Tipo" itemValue="" />
                                     <f:selectItems value="#{controlModelos.tiposModeloLista}" />
                                 </b:selectOneMenu>
                             </div>
-                           
+
                             <div class="ui-g-12 ui-lg-12" >
-
-                                <!--<h:outputText value="Apellido 1:"/>-->
                                 <b:inputText 
-                                             value="#{controlModelos.modeloSelecionado.peso_modelo}"
-                                             renderLabel="true"
-
-                                             label="Peso De Modelos"
-                                             >
+                                    value="#{controlModelos.modeloSelecionado.peso_modelo}"
+                                    renderLabel="true"
+                                    label="Peso De Modelos"
+                                    >
                                     <f:facet name="prepend">
-                                       KG
+                                        KG
                                     </f:facet>
                                 </b:inputText>
                             </div>
-                             <div class="ui-g-12 ui-lg-6" >
-
-                                <!--<h:outputText value="Apellido 1:"/>-->
+                            <div class="ui-g-12 ui-lg-12" >
                                 <b:inputText 
-                                             value="#{controlModelos.modeloSelecionado.peso_modelo}"
-                                             renderLabel="true"
+                                    value="#{controlModelos.modeloSelecionado.peso_modelo}"
+                                    renderLabel="true"
 
-                                             label="Peso De Modelos"
-                                             >
+                                    label="Peso De Modelos"
+                                    >
                                     <f:facet name="prepend">
                                         <i class="fa fa-user-circle-o" aria-hidden="true"></i>
                                     </f:facet>
                                 </b:inputText>
                             </div>
+
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-2 ui-g-nopad" >
+                            <div class="ui-g-12 ui-md-6 ui-lg-11"  >
+                                <b:selectOneMenu  class="form-control select2"  value="#{controlModelos.circoneSelect}" title="Asigne almenos un ROL" style="margin:0 auto">
+                                    <f:selectItem  itemLabel="Selecione un Circon" itemValue="" />
+                                    <f:selectItems value="#{controlModelos.circonesLista}" />
+                                </b:selectOneMenu>
+                            </div>
+                            <div class="ui-g-12 ui-md-12 ui-lg-1" style="margin: 0 auto" >
+                                <b:commandButton value=""  style="margin:0 auto"  process="@this" actionListener="#{controlModelos.agregarCircon()}"  styleClass=" btn  bg-#{controlSeccion.skins}-gradient"  size="lg" >
+                                    <i class="fa fa-plus"></i>
+                                </b:commandButton>
+                            </div>
+
+                            <div class="ui-g-12 ui-lg-12 ui-g-nopad"  >
+                                <p:orderList value="#{controlModelos.circonesSelect}" var="circones" controlsLocation="none" itemLabel="#{circones.codigo}" itemValue="#{circones.id}" />
+                            </div>
+                      
 
                         </div>
 
