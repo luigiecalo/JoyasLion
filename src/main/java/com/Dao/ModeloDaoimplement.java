@@ -8,7 +8,6 @@ package com.Dao;
 import static com.Dao.ImplDao.getEmf;
 import com.DaonInterface.ModeloDao;
 import com.Entidades.Modelo;
-import com.Entidades.Usuario;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -36,6 +35,17 @@ public class ModeloDaoimplement extends ImplDao<Modelo, Long> implements ModeloD
             return null;
         }
         return list.get(0);
+    }
+     
+      public int Ultima() {
+        int result = 0;
+        Query query = em.createNamedQuery(Modelo.ULTIMO);
+        try {
+            result = Integer.parseInt(query.getSingleResult().toString());
+        } catch (NullPointerException ex) {
+            result = 1;
+        }
+        return result;
     }
 
 }

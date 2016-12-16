@@ -20,12 +20,13 @@ import javax.xml.bind.annotation.XmlTransient;
 @SequenceGenerator(name = "USER_SEQUENCE", sequenceName = "USER_SEQUENCE", allocationSize = 1, initialValue = 0)
 @NamedQueries({
     @NamedQuery(name = Modelo.LISTAR, query = "SELECT m FROM Modelo m"),
-    @NamedQuery(name = Modelo.BUSCAR_CODIGO_ESTADO, query = "SELECT m FROM Modelo m WHERE m.codigo = :codigo AND m.estado =:estado")})
+    @NamedQuery(name = Modelo.BUSCAR_CODIGO_ESTADO, query = "SELECT m FROM Modelo m WHERE m.codigo = :codigo AND m.estado =:estado"),
+    @NamedQuery(name = Modelo.ULTIMO, query = "SELECT COUNT(m.id)+1 FROM Modelo m")})
 public class Modelo implements Serializable {
 
-    
     public static final String BUSCAR_CODIGO_ESTADO = "Modelo.codigoEstado";
-    public static final String LISTAR = "Modelo.listar";              
+    public static final String LISTAR = "Modelo.listar";
+    public static final String ULTIMO = "Modelo.ultimo";
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USER_SEQUENCE")
@@ -47,13 +48,12 @@ public class Modelo implements Serializable {
     @Column(name = "peso_circones")
     private Double peso_circones;
     @ManyToMany
-    @JoinTable(name="modelo_piedraCentral",
-        joinColumns=@JoinColumn(name="id_modelo", referencedColumnName="id"),
-        inverseJoinColumns=@JoinColumn(name="id_piedra", referencedColumnName="id")
-        )
+    @JoinTable(name = "modelo_piedraCentral",
+            joinColumns = @JoinColumn(name = "id_modelo", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "id_piedra", referencedColumnName = "id")
+    )
     private List<PiedraCentral> piedra_centrales;
-    
- 
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "modelo")
     private List<ModeloCircon> modelo_circon;
 
@@ -148,8 +148,6 @@ public class Modelo implements Serializable {
     public void setPiedra_centrales(List<PiedraCentral> piedra_centrales) {
         this.piedra_centrales = piedra_centrales;
     }
-
-   
 
     @Override
     public int hashCode() {

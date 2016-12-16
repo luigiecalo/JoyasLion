@@ -112,7 +112,7 @@ public class prueba implements Serializable {
         piedras.add(PC);
         circones = CirDao.consultarTodo(Circon.class);
         System.out.println("______CIRCONESSS__________");
-
+        int ultimo= MdDao.Ultima();
         modelo.setCodigo("M006");
         modelo.setEstado("ACTIVO");
 
@@ -139,7 +139,14 @@ public class prueba implements Serializable {
         for (Modelo mod : modelos) {
             System.out.println(mod.getModelo_circon().size());
         }
-        System.out.println("REGISTRO EXITOSO");
+        String number = ultimo + "";
+//        if (number.length() == 1) {
+//            number.format("00{0}", 2);
+//        }
+
+        System.out.println("REGISTRO EXITOSO "+String.format("%02d", ultimo));
+        ultimo=19;
+        System.out.println("REGISTRO EXITOSO "+String.format("%02d", ultimo));
 
     }
 

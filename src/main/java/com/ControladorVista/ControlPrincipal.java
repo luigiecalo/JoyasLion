@@ -31,7 +31,7 @@ import org.primefaces.context.RequestContext;
  */
 @ManagedBean
 @ViewScoped
-public final class ControlModelos implements Serializable {
+public final class ControlPrincipal implements Serializable {
 
     //UTILIDADES
     private Long idmod;
@@ -77,8 +77,8 @@ public final class ControlModelos implements Serializable {
     /**
      * Creates a new instance of controlplantillas
      */
-    public ControlModelos() {
-        cargarListas();
+    public ControlPrincipal() {
+        listarModelos();
     }
 ////METODOS
     //validar los permisos De Los botones
