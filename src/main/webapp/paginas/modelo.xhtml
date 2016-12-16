@@ -131,7 +131,7 @@
                                     label="Peso De Modelos"
                                     >
                                     <f:facet name="prepend">
-                                         <i class="fa fa-balance-scale" aria-hidden="true"></i>
+                                        <i class="fa fa-balance-scale" aria-hidden="true"></i>
                                     </f:facet>
                                 </b:inputText>
                             </div>
@@ -159,24 +159,32 @@
                                         <f:selectItems value="#{controlModelos.piedrasCentralesLista}" />
                                     </b:selectOneMenu>
                                 </div>
-                                 <div class="ui-g-1 ui-md-1 ui-lg-1" style="padding:0px">
-                                     <label  class="bf-no-message" style="color: white">.</label>
+                                <div class="ui-g-1 ui-md-1 ui-lg-1" style="padding:0px">
+                                    <label  class="bf-no-message" style="color: white">.</label>
                                     <b:commandButton id="Piedrabotom"  value=""  class="botom-grupo-bordes"   update="listaPiedrasSelect msg growlMsg" ajax="true" process="@this,listaPiedrasSelect,piedraCselect"  actionListener="#{controlModelos.agregarPiedra()}"   look="primary" size="lg" >
                                         <i class="fa fa-plus"></i>
                                     </b:commandButton>
                                 </div>
                                 <div class="ui-g-3 ui-md-3 ui-lg-3" style="padding:0px">
-                                   
+
                                 </div>
-                               
+
                             </div>
                             <div class="ui-g-12 ui-md-10 ui-lg-12" >
                                 <p:dataTable id="listaPiedrasSelect"   style="width:100%" value="#{controlModelos.piedracentralesSelect}" var="Piedras">
                                     <f:facet name="header">
                                         Piedras Centrales Selecionadas 
                                     </f:facet>
-                                    <p:column headerText="codigo">
-                                        <h:outputText value="#{Piedras.codigo}" />
+                                    <p:column headerText="Acciones">
+                                        <b:buttonGroup>
+                                            <b:commandButton value=""  process="@this" look="success"  size="xs" >
+                                                <i class="fa fa-search"></i>
+                                            </b:commandButton>
+                                            <b:commandButton value=""  process="@this"  look="danger"   size="xs" >
+                                                <i class="fa fa-trash"></i>
+                                            </b:commandButton>
+
+                                        </b:buttonGroup>
                                     </p:column>
 
                                     <p:column headerText="forma">
