@@ -17,6 +17,7 @@ import org.primefaces.context.RequestContext;
  * @author usuario
  */
 public class Utilidades implements Serializable {
+    private String focus;
 
     public boolean permisos(Long idRol, Modulo modulo,String permiso) {
         boolean result = false;
@@ -49,4 +50,13 @@ public class Utilidades implements Serializable {
     public long toLong(Number number) {
         return number.longValue();
     }
+
+    public String getFocus() {
+        return focus;
+    }
+
+    public void setFocus(String focus) {
+        this.focus = focus;
+    }
+    
 }

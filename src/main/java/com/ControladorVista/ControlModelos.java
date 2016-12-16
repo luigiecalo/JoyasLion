@@ -12,6 +12,7 @@ import com.Dao.PiedraCentralDaoimplement;
 import com.Dao.TipoDaoimplement;
 import com.Entidades.Circon;
 import com.Entidades.Modelo;
+import com.Entidades.ModeloCircon;
 import com.Entidades.Modulo;
 import com.Entidades.PiedraCentral;
 import com.Entidades.Tipo;
@@ -38,22 +39,30 @@ public final class ControlModelos implements Serializable {
     private String estado = "R";
     private boolean Registrar = false;
     private boolean estadoModelo = true;
+    private boolean cantidad = true;
+    private String focus = "panel";
+    private Double pesoCirones = 0.0;
+
     private Map<String, Long> piedrasCentralesLista;
     private Map<String, Long> circonesLista;
     private Map<String, Long> tiposModeloLista;
     private Long piedrasCentralSelect = 0l;
     private Long circoneSelect = 0l;
     private Long tiposModelolSelect = 0l;
+    private int valorCantidad = 0;
 
     //OBJECTOS
     private Modelo modeloSelecionado = new Modelo();
     private Circon circon = new Circon();
     private Tipo tipo = new Tipo();
     private PiedraCentral piedracentral = new PiedraCentral();
+    private ModeloCircon modelocircon = new ModeloCircon();
     //LISTAS
     private List<Modelo> modelos = new ArrayList<Modelo>();
     private List<Circon> circones = new ArrayList<Circon>();
     private List<Circon> circonesSelect = new ArrayList<Circon>();
+    private List<ModeloCircon> modelocircones = new ArrayList<ModeloCircon>();
+    private List<ModeloCircon> modelocirconSelect = new ArrayList<ModeloCircon>();
     private List<Tipo> tiposModelo = new ArrayList<Tipo>();
     private List<PiedraCentral> piedracentrales = new ArrayList<PiedraCentral>();
     private List<PiedraCentral> piedracentralesSelect = new ArrayList<PiedraCentral>();
@@ -86,7 +95,8 @@ public final class ControlModelos implements Serializable {
 
     //Limpia la vista
     private void limpiar() {
-
+        RequestContext.getCurrentInstance().reset("form:panel");
+        cargarListas();
     }
 
     //Lista todos Los Modelos de La vista De Consulta
@@ -95,20 +105,29 @@ public final class ControlModelos implements Serializable {
     }
 
     private void cargarListas() {
-        cargalistaModelos();
+        cargalistaTipoModelos();
         cargaListaCircones();
+        cargaListaPiedrasC();
+        selecoionarcircon();
     }
 
-    private void cargalistaModelos() {
+    private void cargalistaTipoModelos() {
         tiposModeloLista = new HashMap<String, Long>();
         for (Tipo tipo : getTiposModelo()) {
             tiposModeloLista.put(tipo.getNombre(), tipo.getId());
         }
     }
 
+    private void cargaListaPiedrasC() {
+        piedrasCentralesLista = new HashMap<String, Long>();
+        for (PiedraCentral piedra : getPiedracentrales()) {
+            piedrasCentralesLista.put(piedra.getNombre(), piedra.getId());
+        }
+    }
+
     private void cargaListaCircones() {
         circonesLista = new HashMap<String, Long>();
-        for (Circon circon : getCircones()) {
+        for (Circon circon : CirconDao.consultarTodo(Circon.class)) {
             circonesLista.put(circon.getReferencia(), circon.getId());
         }
     }
@@ -121,31 +140,67 @@ public final class ControlModelos implements Serializable {
         modeloSelecionado = m;
         piedracentralesSelect = m.getPiedra_centrales();
     }
-    //pasa Del modulo De registro la modulo De consulta
 
+    //pasa Del modulo De registro la modulo De consulta
     public void consultaModulo() {
         Registrar = false;
+    }
+
+    public void selecoionarcircon() {
+        if (circoneSelect <= 0) {
+            cantidad = true;
+            focus = "panel";
+        } else {
+            cantidad = false;
+            focus = "valorCantidad";
+        }
     }
 
     public void agregarCircon() {
         circon = CirconDao.consultarC(Circon.class, circoneSelect);
         if (circon != null) {
-            if (circonesSelect.size() <= 0) {
-                circonesSelect.add(circon);
+            ModeloCircon modeloCircon = new ModeloCircon();
+            modeloCircon.setCircon(circon);
+            modeloCircon.setCantidad(valorCantidad);
+            if (modelocirconSelect.size() <= 0) {
+                modelocirconSelect.add(modeloCircon);
             } else {
+                int i = 0;
+                int index = 0;
+                ModeloCircon Modcirconencontrado = new ModeloCircon();
                 boolean encontro = false;
-                for (Circon circ : circonesSelect) {
-                    if (circ.equals(circon)) {
+                for (ModeloCircon Mc : modelocirconSelect) {
+                    if (Mc.getCircon().equals(circon)) {
                         encontro = true;
+                        Modcirconencontrado = Mc;
+                        index = i;
                     }
+                    i++;
                 }
                 if (encontro) {
-                    util.crearmensajes("INFO", "ADVERTENCIA", "ROL YA SELECIONADO");
+                    modeloCircon.setCantidad(modeloCircon.getCantidad() + Modcirconencontrado.getCantidad());
+                    modelocirconSelect.set(index, modeloCircon);
                 } else {
-                    circonesSelect.add(circon);
+                    modelocirconSelect.add(modeloCircon);
                 }
             }
+            valorCantidad = 0;
+            circoneSelect = 0L;
         }
+    }
+
+    public void agregarPiedra() {
+        piedracentral = PiedraCentralDao.consultarC(PiedraCentral.class, piedrasCentralSelect);
+        if (piedracentral != null) {
+            piedracentralesSelect.add(piedracentral);
+            piedrasCentralSelect = 0L;
+        }else{
+        util.crearmensajes("ALERTA", "CUIDADO!!","Selecione Primero una Piedra central");
+        }
+    }
+
+    public void eliminaCircon(Circon circon) {
+        circonesSelect.remove(circon);
     }
 
 ////GET AND SET
@@ -293,6 +348,77 @@ public final class ControlModelos implements Serializable {
 
     public void setTiposModelolSelect(Long tiposModelolSelect) {
         this.tiposModelolSelect = tiposModelolSelect;
+    }
+
+    public ModeloCircon getModelocircon() {
+        return modelocircon;
+    }
+
+    public void setModelocircon(ModeloCircon modelocircon) {
+        this.modelocircon = modelocircon;
+    }
+
+    public List<ModeloCircon> getModelocircones() {
+        return modelocircones;
+    }
+
+    public void setModelocircones(List<ModeloCircon> modelocircones) {
+        this.modelocircones = modelocircones;
+    }
+
+    public List<ModeloCircon> getModelocirconSelect() {
+        return modelocirconSelect;
+    }
+
+    public void setModelocirconSelect(List<ModeloCircon> modelocirconSelect) {
+        this.modelocirconSelect = modelocirconSelect;
+    }
+
+    public List<PiedraCentral> getPiedracentrales() {
+        piedracentrales = PiedraCentralDao.consultarTodo(PiedraCentral.class);
+        return piedracentrales;
+    }
+
+    public void setPiedracentrales(List<PiedraCentral> piedracentrales) {
+        this.piedracentrales = piedracentrales;
+    }
+
+    public boolean isCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(boolean cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public int getValorCantidad() {
+        return valorCantidad;
+    }
+
+    public void setValorCantidad(int valorCantidad) {
+        this.valorCantidad = valorCantidad;
+    }
+
+    public String getFocus() {
+        return focus;
+    }
+
+    public void setFocus(String focus) {
+        this.focus = focus;
+    }
+
+    public Double getPesoCirones() {
+        double peso=0;
+        for (ModeloCircon Mcircon : modelocirconSelect) {
+            Double sum=Mcircon.getCircon().getMuestra()*Mcircon.getCantidad();
+            peso=sum+peso;
+        }
+        pesoCirones=peso;
+        return pesoCirones;
+    }
+
+    public void setPesoCirones(Double pesoCirones) {
+        this.pesoCirones = pesoCirones;
     }
 
 }

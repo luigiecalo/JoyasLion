@@ -104,24 +104,26 @@
             </div>
             <div  class="col-md-12 col-xs-12">
                 <!--<h3></h3>-->
-                <p:panel id="panel" header="Datos del usuario">
+                <p:panel id="panel"  header="Datos del usuario">
+                    <p:focus id="focus" context="#{controlModelos.focus}"/>
                     <b:growl id="growlMsg" globalOnly="true" placementFrom="top"
                              show-detail="true" show-summary="false" allowDismiss="true"
                              delay="10000" escape="true" /> 
-                    <div class="ui-g">
-                        <div class="ui-g-12 ui-md-12 ui-lg-3" >
-                            <div class="box-body box-profile">
+                    <div class="ui-g" >
+                        <div class="ui-g-12 ui-md-12 ui-lg-3"  >
+                            <div  class="box-body box-profile">
                                 <img class="profile-user-img img-responsive img-circle" style="width:60%" src="imagenes/modelos/default.png" alt="User profile picture"/>
                             </div>
+                            <!--<b:panel styleClass="form-horizontal">-->
+                            <!--</b:panel>-->
                         </div>
-                        <div class="ui-g-12 ui-md-6 ui-lg-2 ui-g-nopad" >
-                            <div class="ui-g-12 ui-md-6 ui-lg-12"  >
-                                <b:selectOneMenu   class="form-control select2"  value="#{controlModelos.tiposModelolSelect}" title="Asigne almenos un ROL" style="margin:0 auto">
+                        <div class="ui-g-12 ui-md-6 ui-lg-3 ui-g-nopad"  >
+                            <div class="ui-g-12 ui-md-12 ui-lg-12">
+                                <b:selectOneMenu label="Tipo del Modelo" class="form-control select2"  value="#{controlModelos.tiposModelolSelect}" title="Asigne almenos un Tipo de Modelo" style="margin:0 auto">
                                     <f:selectItem  itemLabel="Selecione un Tipo" itemValue="" />
                                     <f:selectItems value="#{controlModelos.tiposModeloLista}" />
                                 </b:selectOneMenu>
                             </div>
-
                             <div class="ui-g-12 ui-lg-12" >
                                 <b:inputText 
                                     value="#{controlModelos.modeloSelecionado.peso_modelo}"
@@ -129,42 +131,124 @@
                                     label="Peso De Modelos"
                                     >
                                     <f:facet name="prepend">
-                                        KG
+                                         <i class="fa fa-balance-scale" aria-hidden="true"></i>
                                     </f:facet>
                                 </b:inputText>
                             </div>
                             <div class="ui-g-12 ui-lg-12" >
                                 <b:inputText 
-                                    value="#{controlModelos.modeloSelecionado.peso_modelo}"
+                                    id="pesocircones"
+                                    value="#{controlModelos.pesoCirones}"
                                     renderLabel="true"
-
+                                    readonly="true"
                                     label="Peso De Modelos"
                                     >
                                     <f:facet name="prepend">
-                                        <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                        <i class="fa fa-balance-scale" aria-hidden="true"></i>
                                     </f:facet>
                                 </b:inputText>
                             </div>
 
                         </div>
-                        <div class="ui-g-12 ui-md-6 ui-lg-2 ui-g-nopad" >
-                            <div class="ui-g-12 ui-md-6 ui-lg-11"  >
-                                <b:selectOneMenu  class="form-control select2"  value="#{controlModelos.circoneSelect}" title="Asigne almenos un ROL" style="margin:0 auto">
-                                    <f:selectItem  itemLabel="Selecione un Circon" itemValue="" />
-                                    <f:selectItems value="#{controlModelos.circonesLista}" />
-                                </b:selectOneMenu>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3 ui-g-nopad" >
+                            <div class="ui-g-12 ui-md-12 ui-lg-12"  >
+
+                                <div class="ui-g-10 ui-md-10 ui-lg-10" style="padding:0px">
+                                    <b:selectOneMenu  label="Piedra Central" id="piedraCselect"  class="form-control select2"  value="#{controlModelos.piedrasCentralSelect}"  style="margin:0 auto;height:34px">
+                                        <f:selectItem  itemLabel="Selecione una Piedra" itemValue="" />
+                                        <f:selectItems value="#{controlModelos.piedrasCentralesLista}" />
+                                    </b:selectOneMenu>
+                                </div>
+                                 <div class="ui-g-1 ui-md-1 ui-lg-1" style="padding:0px">
+                                     <label  class="bf-no-message" style="color: white">.</label>
+                                    <b:commandButton id="Piedrabotom"  value=""  class="botom-grupo-bordes"   update="listaPiedrasSelect msg growlMsg" ajax="true" process="@this,listaPiedrasSelect,piedraCselect"  actionListener="#{controlModelos.agregarPiedra()}"   look="primary" size="lg" >
+                                        <i class="fa fa-plus"></i>
+                                    </b:commandButton>
+                                </div>
+                                <div class="ui-g-3 ui-md-3 ui-lg-3" style="padding:0px">
+                                   
+                                </div>
+                               
                             </div>
-                            <div class="ui-g-12 ui-md-12 ui-lg-1" style="margin: 0 auto" >
-                                <b:commandButton value=""  style="margin:0 auto"  process="@this" actionListener="#{controlModelos.agregarCircon()}"  styleClass=" btn  bg-#{controlSeccion.skins}-gradient"  size="lg" >
-                                    <i class="fa fa-plus"></i>
-                                </b:commandButton>
+                            <div class="ui-g-12 ui-md-10 ui-lg-12" >
+                                <p:dataTable id="listaPiedrasSelect"   style="width:100%" value="#{controlModelos.piedracentralesSelect}" var="Piedras">
+                                    <f:facet name="header">
+                                        Piedras Centrales Selecionadas 
+                                    </f:facet>
+                                    <p:column headerText="codigo">
+                                        <h:outputText value="#{Piedras.codigo}" />
+                                    </p:column>
+
+                                    <p:column headerText="forma">
+                                        <h:outputText value="#{Piedras.forma.nombre}" />
+                                    </p:column>
+
+                                    <p:column headerText="peso">
+                                        <h:outputText value="#{Piedras.peso}" />
+                                    </p:column>
+
+                                    <p:column headerText="Tipo">
+                                        <h:outputText value="#{Piedras.tipo.nombre}" />
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3 ui-g-nopad" >
+                            <div class="ui-g-12 ui-md-12 ui-lg-12"  >
+                                <div class="ui-g-8 ui-md-8ui-lg-8" style="padding:0px">
+                                    <label  class="bf-no-message">Circones</label>
+                                    <h:selectOneMenu  id="circonselect"  class="form-control select2"  value="#{controlModelos.circoneSelect}"  style="margin:0 auto;height:34px">
+                                        <p:ajax listener="#{controlModelos.selecoionarcircon()}"  update="valorCantidad cantidadbotom :form:focus" />
+                                        <f:selectItem  itemLabel="Selecione un Circon" itemValue="" />
+                                        <f:selectItems value="#{controlModelos.circonesLista}" />
+                                    </h:selectOneMenu>
+                                </div>
+                                <div class="ui-g-3 ui-md-3 ui-lg-3" style="padding:0px">
+                                    <label  class="bf-no-message" style="color: white">.</label>
+                                    <b:inputText id="valorCantidad" onfocus="if (this.value == '0') {
+                                                this.value = '';
+                                            }" immediate="true" style="width:100%" disabled="#{controlModelos.cantidad}" class="input-grupo-bordes"  value="#{controlModelos.valorCantidad}" placeholder="Cantidad" >
+                                    </b:inputText>
+                                </div>
+                                <div class="ui-g-1 ui-md-1 ui-lg-1" style="padding:0px">
+                                    <label  class="bf-no-message" style="color: white">.</label>
+                                    <b:commandButton id="cantidadbotom" value="" disabled="#{controlModelos.cantidad}" class="botom-grupo-bordes"   update="listaCirconselct msg growlMsg valorCantidad pesocircones" ajax="true" process="@this,circonselect,msg,growlMsg,valorCantidad,pesocircones"  actionListener="#{controlModelos.agregarCircon()}"   look="primary" size="lg" >
+                                        <i class="fa fa-plus"></i>
+                                    </b:commandButton>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-12 ui-lg-12" >
+                                <p:dataTable id="listaCirconselct"   style="width:100%" value="#{controlModelos.modelocirconSelect}" var="MCircon">
+                                    <f:facet name="header">
+                                        Circones selecionados 
+                                    </f:facet>
+                                    <p:column headerText="codigo">
+                                        <h:outputText value="#{MCircon.circon.codigo}" />
+                                    </p:column>
+
+                                    <p:column headerText="Referencia">
+                                        <h:outputText value="#{MCircon.circon.referencia}" />
+                                    </p:column>
+
+                                    <p:column headerText="peso">
+                                        <h:outputText value="#{MCircon.circon.muestra}" />
+                                    </p:column>
+
+                                    <p:column headerText="cantidad">
+                                        <h:outputText value="#{MCircon.cantidad}" />
+                                    </p:column>
+                                </p:dataTable>
                             </div>
 
-                            <div class="ui-g-12 ui-lg-12 ui-g-nopad"  >
-                                <p:orderList value="#{controlModelos.circonesSelect}" var="circones" controlsLocation="none" itemLabel="#{circones.codigo}" itemValue="#{circones.id}" />
-                            </div>
-                      
 
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3 ui-g-nopad" >
+                            <div class="ui-g-12 ui-md-12 ui-lg-12"  >
+
+                            </div>
+                            <div class="ui-g-12 ui-md-12 ui-lg-12"  >
+
+                            </div>
                         </div>
 
 
@@ -174,7 +258,7 @@
 
 
         </b:panel>
-        <p:messages autoUpdate="false"/>
+        <p:messages id="msg" autoUpdate="false"/>
 
 
 

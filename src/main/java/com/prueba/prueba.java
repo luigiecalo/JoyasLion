@@ -108,7 +108,7 @@ public class prueba implements Serializable {
         tipo = TDao.consultarC(Tipo.class, 4L);
         PC.setTipo(tipo);
         PC.setPeso(5000.19);
-        PCDao.crear(PC);
+//        PCDao.crear(PC);
         piedras.add(PC);
         circones = CirDao.consultarTodo(Circon.class);
         System.out.println("______CIRCONESSS__________");
