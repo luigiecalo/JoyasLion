@@ -7,30 +7,72 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
+        <span class=""></span>
+        <div class="row">
 
+            <h:panelGroup >
+                <div id="barraup" class="col-xs-12 col-md-12 " style="z-index:2" >
+                    <div  class="box">
+
+                        <div  class="box-body">
+                            <b:buttonGroup>
+                                <b:commandButton value="Consultar"
+                                                 process="@this"  look="primary"  
+                                                 size="xs" >
+                                    <i class="fa fa-list"></i>
+                                </b:commandButton>
+                                <b:commandButton value="Guardar" 
+                                                 look="success"  
+                                                 size="xs" >
+                                    <i class="fa fa-save"></i>
+                                </b:commandButton>
+                                <b:commandButton value="Editar" 
+                                                 look="warning"   
+                                                 size="xs" >
+                                    <i class="fa fa-pencil-square"></i>
+                                </b:commandButton>
+                                <b:commandButton value="Nuevo" 
+                                                 look="danger"  
+                                                 size="xs" >
+                                    <i class="fa fa-search"></i>
+                                </b:commandButton>
+
+                            </b:buttonGroup>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                </div>
+            </h:panelGroup>
+        </div>
         <b:row>
+
+
+
             <ui:repeat value="#{controlPrincipal.modelos}" var="Modelo">
-                <b:column col-sm="6" col-md="2">
-                    <b:thumbnail>
-                        <img  src="imagenes/fondo.jpg" data-src="imagenes/fondo.png" alt="Generic placeholder thumbnail"/>
-                        <f:facet name="caption">
-                            <h3>#{Modelo.codigo}</h3><h3>#{Modelo.tipo_modelo.nombre}</h3>
-                            <p>Tiene un Peso de #{Modelo.peso_circones}</p>
-                            Piedras: Centrales
-                            #{Modelo.piedra_centrales.size()}
-                            <p>
-                                <b:button look="primary" value="Button"/>
-                                <b:button value="Button"/>
-                            </p>
-                        </f:facet>
-                    </b:thumbnail>
+                <b:column col-sm="6" col-md="3" style="padding-bottom: 20px;"  >
+
+                    <div class="contenedor-img ejemplo-1" >
+                        <b:thumbnail >
+                            <img  src="imagenes/fondo.jpg" data-src="imagenes/fondo.png" style="width:100%" class="modelos" alt="Generic placeholder thumbnail"/>
+
+                            <div class="mascara">
+                                <h2>#{Modelo.codigo}</h2>  
+                                <p>Tiene un Peso de #{Modelo.peso_circones}</p>
+                                <b:buttonGroup>
+                                    <b:button look="default" style="color:black" value="Plata"/>
+                                    <b:button value="Oro" look="warning"/>
+                                </b:buttonGroup>
+
+                            </div>
+                        </b:thumbnail> 
+                    </div>
+
+
                 </b:column>
             </ui:repeat>
-
         </b:row>
-
-      
-
+         <script src="js/prueba.js"></script>
     </ui:composition>
+   
 
 </html>

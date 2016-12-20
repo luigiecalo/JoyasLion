@@ -8,86 +8,96 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Facelet Title</title>
+        <link rel="stylesheet" href="css/primefacesConfig.css"/>
     </h:head>
-    <h:body>
+    <body>
         Hello from Facelets Mundo Como Estas?
-        <p:layout fullPage="true">
-
-            <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
-                <h:form id="formulario">
-                    <!--<b:panel styleClass="form-horizontal">-->
-                    <b:inputText id="nuevo"   value="asdas" span="12">
-
-                        <f:facet name="append">
-
-                            <b:commandButton  value="" icon="print"  look="danger" iconAwesome="print"  >
-
-                            </b:commandButton>
-                        </f:facet>
-                    </b:inputText>
-                    <!--</b:panel>-->
-                </h:form>
-                #{nuevo.nombre}  
-            </p:layoutUnit>
-
-            <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
-                Footer
-            </p:layoutUnit>
-
-            <p:layoutUnit position="west" size="175" header="Left" collapsible="true">
-                <p:menu>
-                    <p:submenu label="Resources">
-                        <p:menuitem value="Demo" url="http://www.primefaces.org/showcase-labs/ui/home.jsf" />
-                        <p:menuitem value="Documentation" url="http://www.primefaces.org/documentation.html" />
-                        <p:menuitem value="Forum" url="http://forum.primefaces.org/" />
-                        <p:menuitem value="Themes" url="http://www.primefaces.org/themes.html" />
-
-                    </p:submenu>
-
-                </p:menu>
-            </p:layoutUnit>
-
-            <p:layoutUnit position="center">
-                <h:form>
-                    <b:row>
-                        <b:column col-sm="6">
-                           
-                            <b:panel look="primary" title="AJAXified Combobox - only mouse move">
-                                <b:label
-                                    text="Which framework do you choose for desktop applications?" />
-                                <b:selectOneMenu value="#{otro.estado}" id="desktopId"
-                                                 onmousemove="console.log('mouse move');ajax:ajaxBean.onMouseMove();"
-                                                 update="messages jsfMessages">
-
-
-                                    <f:selectItem itemLabel="(Please select)" itemValue="0" />
-                                    <f:selectItem itemLabel=".NET" itemValue="1" />
-                                    <f:selectItem itemLabel="JavaFX" itemValue="2" />
-                                    <f:selectItem itemLabel="GroovyFX" itemValue="3" />
-                                    <f:selectItem itemLabel="JSF" itemValue="4" />
-                                </b:selectOneMenu>
+        <div class="contenedor-img">
+            <img src="imagenes/fondo.jpg" alt="" />
+            <div class="mascara">
+                <h2>Ejemplo</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vitae tortor diam in ullamcorper malesuada.</p>
+                <a class="link" href="#">Leer mas</a>
+            </div>
+        </div>
+        <!--<img  src="imagenes/fondo.jpg" data-src="imagenes/fondo.png" class="modelos" alt="Generic placeholder thumbnail"/>-->
+        <!--        <p:layout fullPage="true">
+                 
+                    <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
+                        <h:form id="formulario">
+                            <b:panel styleClass="form-horizontal">
+                            <b:inputText id="nuevo"   value="asdas" span="12">
+        
+                                <f:facet name="append">
+        
+                                    <b:commandButton  value="" icon="print"  look="danger" iconAwesome="print"  >
+        
+                                    </b:commandButton>
+                                </f:facet>
+                            </b:inputText>
                             </b:panel>
-                            <b:panel look="primary" title="JSF messages" id="jsfMessages">
-                                <b:messages showSummary="false" />
-                            </b:panel>
+                        </h:form>
+        #{nuevo.nombre}  
+    </p:layoutUnit>
 
-                        </b:column>
-                        <b:column col-sm="6">
-                            <b:well id="messages">
-                                Last server-side events:
-                                <ul>
-                                    <ui:repeat var="message" value="#{otro.modelos}">
-                                        <li>#{message}</li>
-                                    </ui:repeat>
-                                </ul>
-                            </b:well>
-                        </b:column>
-                    </b:row>
-                </h:form>
-            </p:layoutUnit>
+    <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
+        Footer
+    </p:layoutUnit>
+
+    <p:layoutUnit position="west" size="175" header="Left" collapsible="true">
+        <p:menu>
+            <p:submenu label="Resources">
+                <p:menuitem value="Demo" url="http://www.primefaces.org/showcase-labs/ui/home.jsf" />
+                <p:menuitem value="Documentation" url="http://www.primefaces.org/documentation.html" />
+                <p:menuitem value="Forum" url="http://forum.primefaces.org/" />
+                <p:menuitem value="Themes" url="http://www.primefaces.org/themes.html" />
+
+            </p:submenu>
+
+        </p:menu>
+    </p:layoutUnit>
+
+    <p:layoutUnit position="center">
+        <h:form>
+            <b:row>
+                <b:column col-sm="6">
+
+                    <b:panel look="primary" title="AJAXified Combobox - only mouse move">
+                        <b:label
+                            text="Which framework do you choose for desktop applications?" />
+                        <b:selectOneMenu value="#{otro.estado}" id="desktopId"
+                                         onmousemove="console.log('mouse move');ajax:ajaxBean.onMouseMove();"
+                                         update="messages jsfMessages">
 
 
-        </p:layout>
-    </h:body>
+                            <f:selectItem itemLabel="(Please select)" itemValue="0" />
+                            <f:selectItem itemLabel=".NET" itemValue="1" />
+                            <f:selectItem itemLabel="JavaFX" itemValue="2" />
+                            <f:selectItem itemLabel="GroovyFX" itemValue="3" />
+                            <f:selectItem itemLabel="JSF" itemValue="4" />
+                        </b:selectOneMenu>
+                    </b:panel>
+                    <b:panel look="primary" title="JSF messages" id="jsfMessages">
+                        <b:messages showSummary="false" />
+                    </b:panel>
+
+                </b:column>
+                <b:column col-sm="6">
+                    <b:well id="messages">
+                        Last server-side events:
+                        <ul>
+                            <ui:repeat var="message" value="#{otro.modelos}">
+                                <li>#{message}</li>
+                            </ui:repeat>
+                        </ul>
+                    </b:well>
+                </b:column>
+            </b:row>
+        </h:form>
+    </p:layoutUnit>
+
+
+</p:layout>-->
+    </body>
 </html>
 

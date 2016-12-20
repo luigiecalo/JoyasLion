@@ -21,6 +21,7 @@ import com.Entidades.Grupo;
 import com.Entidades.Miembro;
 import com.Entidades.Modelo;
 import com.Entidades.ModeloCircon;
+import com.Entidades.ModeloPiedracentral;
 import com.Entidades.Modulo;
 import com.Entidades.Permisos;
 import com.Entidades.PiedraCentral;
@@ -108,11 +109,14 @@ public class prueba implements Serializable {
         tipo = TDao.consultarC(Tipo.class, 4L);
         PC.setTipo(tipo);
         PC.setPeso(5000.19);
+        List<ModeloPiedracentral> modelopiedras = new ArrayList<ModeloPiedracentral>();
+        
+        
 //        PCDao.crear(PC);
-        piedras.add(PC);
+        piedras=PCDao.consultarTodo(PiedraCentral.class);
         circones = CirDao.consultarTodo(Circon.class);
         System.out.println("______CIRCONESSS__________");
-        int ultimo= MdDao.Ultima();
+        int ultimo = MdDao.Ultima();
         modelo.setCodigo("M006");
         modelo.setEstado("ACTIVO");
 
@@ -121,8 +125,8 @@ public class prueba implements Serializable {
         modelo.setPeso_modelo(332.8);
         tipo = TDao.consultarC(Tipo.class, 1L);
         modelo.setTipo_modelo(tipo);
-        modelo.setPiedra_centrales(piedras);
-//        MdDao.crear(modelo);
+        
+        MdDao.crear(modelo);
         int cant = 6;
         modelo = MdDao.buscarModeloEstado(modelo.getCodigo(), "ACTIVO");
         List<ModeloCircon> modelocircones = new ArrayList<ModeloCircon>();
@@ -133,8 +137,18 @@ public class prueba implements Serializable {
             modelocircones.add(modeloCircon);
             cant++;
         }
+        for (PiedraCentral piedrasc : piedras) {
+            System.out.println(piedrasc.getCodigo());
+            ModeloPiedracentral mp= new ModeloPiedracentral();
+            mp.setPiedra(piedrasc);
+            mp.setModelo(modelo);
+            modelopiedras.add(mp);
+        }
+        
+        
+        modelo.setPiedra_centrales(modelopiedras);
         modelo.setModelo_circon(modelocircones);
-//        MdDao.modificar(modelo);
+        MdDao.modificar(modelo);
         modelos = MdDao.consultarTodo(Modelo.class);
         for (Modelo mod : modelos) {
             System.out.println(mod.getModelo_circon().size());
@@ -144,9 +158,9 @@ public class prueba implements Serializable {
 //            number.format("00{0}", 2);
 //        }
 
-        System.out.println("REGISTRO EXITOSO "+String.format("%02d", ultimo));
-        ultimo=19;
-        System.out.println("REGISTRO EXITOSO "+String.format("%02d", ultimo));
+        System.out.println("REGISTRO EXITOSO " + String.format("%03d", ultimo));
+        ultimo = 190;
+        System.out.println("REGISTRO EXITOSO " + String.format("%03d", ultimo));
 
     }
 

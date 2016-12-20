@@ -99,6 +99,9 @@ public final class ControlModelos implements Serializable {
         Modelo modelo = new Modelo();
         modeloSelecionado = modelo;
         RequestContext.getCurrentInstance().reset("form:panel");
+        tiposModelolSelect = 0l;
+        piedrasCentralSelect = 0l;
+        circoneSelect = 0l;
         piedracentralesSelect.clear();
         modelocirconSelect.clear();
         listarModelos();
@@ -133,7 +136,7 @@ public final class ControlModelos implements Serializable {
     private void cargaListaCircones() {
         circonesLista = new HashMap<String, Long>();
         for (Circon circon : CirconDao.consultarTodo(Circon.class)) {
-            circonesLista.put(circon.getReferencia(), circon.getId());
+            circonesLista.put(circon.getTamano(), circon.getId());
         }
     }
 
@@ -143,7 +146,9 @@ public final class ControlModelos implements Serializable {
         Registrar = true;
         RequestContext.getCurrentInstance().reset("form:panel");
         modeloSelecionado = m;
-        piedracentralesSelect = m.getPiedra_centrales();
+        tiposModelolSelect = m.getTipo_modelo().getId();
+        modelocirconSelect = m.getModelo_circon();
+//        piedracentralesSelect = m.getPiedra_centrales();
     }
 
     //pasa Del modulo De registro la modulo De consulta
@@ -166,6 +171,7 @@ public final class ControlModelos implements Serializable {
     }
 
     public void agregarCircon() {
+         RequestContext context = RequestContext.getCurrentInstance();
         if (circoneSelect == 0L) {
             util.crearmensajes("ALERTA", "CUIDADO!!", "Selecione Primero una Piedra central");
         } else {
@@ -197,9 +203,11 @@ public final class ControlModelos implements Serializable {
                     }
                 }
                 valorCantidad = 0;
-                circoneSelect = 0L;
+                circoneSelect = 0l;
                 cantidad = true;
+               
                 focus = "panel";
+//                context.update(":form:circonselect :form:listaCirconselct :form:msg :form:growlMsg :form:valorCantidad :form:pesocircones");
             } else {
                 util.crearmensajes("ALERTA", "CUIDADO 2!!", "Selecione Primero una Piedra central");
             }
@@ -209,21 +217,21 @@ public final class ControlModelos implements Serializable {
     public void guardarModelo() {
         modeloSelecionado.setEstado(estadoModelo ? "ACTIVO" : "INACTIVO");
         modeloSelecionado.setImagen("dsd/imag123.png");
-        modeloSelecionado.setTipo_modelo(TipoDao.consultar(Tipo.class,tiposModelolSelect));
+        modeloSelecionado.setTipo_modelo(TipoDao.consultar(Tipo.class, tiposModelolSelect));
         modeloSelecionado.setPeso_circones(pesoCirones);
-        modeloSelecionado.setPiedra_centrales(piedracentralesSelect);
+//        modeloSelecionado.setPiedra_centrales(piedracentralesSelect);
         if (estado.equals("R")) {
             modeloSelecionado.setCodigo("M" + String.format("%03d", ModeloDao.Ultima()));
             ModeloDao.crear(modeloSelecionado);
+
             if (modelocirconSelect.size() > 0) {
                 modeloSelecionado = ModeloDao.buscarModeloEstado(modeloSelecionado.getCodigo(), "ACTIVO");
-                modeloSelecionado.setModelo_circon(modelocirconSelect);
-                ModeloDao.modificar(modeloSelecionado);
+                modificar(modeloSelecionado);
             }
             limpiar();
             util.crearmensajes("INFO", "EXITOSO", "Modelo Guadado Satifactoriamente");
         } else {
-            ModeloDao.modificar(modeloSelecionado);
+            modificar(modeloSelecionado);
             limpiar();
             util.crearmensajes("INFO", "EXITOSO", "Modelo Modificado Satifactoriamente");
 
@@ -472,12 +480,22 @@ public final class ControlModelos implements Serializable {
             Double sum = Mcircon.getCircon().getMuestra() * Mcircon.getCantidad();
             peso = sum + peso;
         }
-        pesoCirones = peso;
+        pesoCirones = peso* 0.2;
         return pesoCirones;
     }
 
     public void setPesoCirones(Double pesoCirones) {
         this.pesoCirones = pesoCirones;
+    }
+
+    private void modificar(Modelo modeloSelecionado) {
+        for (ModeloCircon modeloCircon : modelocirconSelect) {
+            ModeloCircon nuevomodeloCircon = new ModeloCircon(modeloSelecionado, modeloCircon.getCircon(), modeloCircon.getCantidad());
+            modelocircones.add(nuevomodeloCircon);
+        }
+        modeloSelecionado.setModelo_circon(modelocircones);
+        ModeloDao.modificar(modeloSelecionado);
+        modelocircones.clear();
     }
 
 }

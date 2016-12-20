@@ -7,6 +7,7 @@ package com.Entidades;
 
 import com.Dao.ModeloDaoimplement;
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -33,10 +34,10 @@ public class ModeloCircon implements Serializable {
     @EmbeddedId
     protected ModeloCirconPK modeloCirconPk;
     @JoinColumn(name = "idmodelo", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(cascade = CascadeType.ALL,optional = false)
     private Modelo modelo;
     @JoinColumn(name = "idcircon", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(cascade = CascadeType.ALL,optional = false)
     private Circon circon;
     @Column(name = "cantidad")
     private int cantidad;

@@ -20,6 +20,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -60,8 +61,8 @@ public class PiedraCentral implements Serializable {
     @OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "forma")
     private Tipo forma;
-    @ManyToMany(mappedBy="piedra_centrales")
-    private List<Modelo> modelos;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy="piedra")
+    private List<ModeloPiedracentral> modelos;
 
     public PiedraCentral() {
     }
@@ -131,11 +132,11 @@ public class PiedraCentral implements Serializable {
         this.forma = forma;
     }
 
-    public List<Modelo> getModelos() {
+    public List<ModeloPiedracentral> getModelos() {
         return modelos;
     }
 
-    public void setModelos(List<Modelo> modelos) {
+    public void setModelos(List<ModeloPiedracentral> modelos) {
         this.modelos = modelos;
     }
     

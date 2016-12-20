@@ -47,12 +47,8 @@ public class Modelo implements Serializable {
     @Basic(optional = false)
     @Column(name = "peso_circones")
     private Double peso_circones;
-    @ManyToMany
-    @JoinTable(name = "modelo_piedraCentral",
-            joinColumns = @JoinColumn(name = "id_modelo", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "id_piedra", referencedColumnName = "id")
-    )
-    private List<PiedraCentral> piedra_centrales;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy="modelo")
+    private List<ModeloPiedracentral> piedra_centrales;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "modelo")
     private List<ModeloCircon> modelo_circon;
@@ -141,11 +137,11 @@ public class Modelo implements Serializable {
         this.estado = estado;
     }
 
-    public List<PiedraCentral> getPiedra_centrales() {
+    public List<ModeloPiedracentral> getPiedra_centrales() {
         return piedra_centrales;
     }
 
-    public void setPiedra_centrales(List<PiedraCentral> piedra_centrales) {
+    public void setPiedra_centrales(List<ModeloPiedracentral> piedra_centrales) {
         this.piedra_centrales = piedra_centrales;
     }
 

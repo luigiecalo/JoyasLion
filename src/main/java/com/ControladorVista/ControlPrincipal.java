@@ -133,7 +133,7 @@ public final class ControlPrincipal implements Serializable {
     private void cargaListaCircones() {
         circonesLista = new HashMap<String, Long>();
         for (Circon circon : CirconDao.consultarTodo(Circon.class)) {
-            circonesLista.put(circon.getReferencia(), circon.getId());
+            circonesLista.put(circon.getTamano(), circon.getId());
         }
     }
 
@@ -143,7 +143,7 @@ public final class ControlPrincipal implements Serializable {
         Registrar = true;
         RequestContext.getCurrentInstance().reset("form:panel");
         modeloSelecionado = m;
-        piedracentralesSelect = m.getPiedra_centrales();
+//        piedracentralesSelect = m.getPiedra_centrales();
     }
 
     //pasa Del modulo De registro la modulo De consulta
@@ -211,7 +211,7 @@ public final class ControlPrincipal implements Serializable {
         modeloSelecionado.setImagen("dsd/imag123.png");
         modeloSelecionado.setTipo_modelo(TipoDao.consultar(Tipo.class,tiposModelolSelect));
         modeloSelecionado.setPeso_circones(pesoCirones);
-        modeloSelecionado.setPiedra_centrales(piedracentralesSelect);
+//        modeloSelecionado.setPiedra_centrales(piedracentralesSelect);
         if (estado.equals("R")) {
             modeloSelecionado.setCodigo("M" + String.format("%03d", ModeloDao.Ultima()));
             ModeloDao.crear(modeloSelecionado);

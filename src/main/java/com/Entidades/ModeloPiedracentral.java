@@ -11,12 +11,15 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -26,37 +29,35 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author usuario
  */
 @Entity
-@Table(name = "circon")
+@Table(name = "modelo_piedraCentral")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Circon.findAll", query = "SELECT c FROM Circon c")})
-public class Circon implements Serializable {
-
+    @NamedQuery(name = "ModeloPiedracentral.findAll", query = "SELECT mp FROM ModeloPiedracentral mp")})
+public class ModeloPiedracentral implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Basic(optional = false)
-    @Column(name = "codigo")
-    private String codigo;
-    @Column(name = "muestra")
-    @Basic(optional = false)
-    private Double muestra;
-    @Column(name = "tamano")
-    private String tamano;
-    @Basic(optional = false)
-    @Column(name = "precio")
-    private Double precio;
-     @OneToMany(cascade = CascadeType.ALL, mappedBy = "circon")
-    private List<ModeloCircon> modelo_Circon;
+    @OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name = "idmodelo")
+    private Modelo modelo;
+    @OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name = "idpiedra")
+    private PiedraCentral piedra;
 
-    public Circon() {
+    public ModeloPiedracentral() {
     }
 
-    public Circon(Long idpermisos) {
-        this.id = idpermisos;
+    public ModeloPiedracentral(Long idrol) {
+        this.id = idrol;
+    }
+
+    public ModeloPiedracentral(Long idrol, Modelo id_modelo, PiedraCentral id_piedra) {
+        this.id = idrol;
+        this.modelo = id_modelo;
+        this.piedra = id_piedra;
     }
 
     public Long getId() {
@@ -67,65 +68,38 @@ public class Circon implements Serializable {
         this.id = id;
     }
 
-    public String getCodigo() {
-        return codigo;
+    public Modelo getModelo() {
+        return modelo;
     }
 
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
+    public void setModelo(Modelo modelo) {
+        this.modelo = modelo;
     }
 
-   
-
-    public String getTamano() {
-        return tamano;
+    public PiedraCentral getPiedra() {
+        return piedra;
     }
 
-    public void setTamano(String tamano) {
-        this.tamano = tamano;
+    public void setPiedra(PiedraCentral piedra) {
+        this.piedra = piedra;
     }
 
-    public Double getMuestra() {
-        return muestra;
-    }
 
-    public void setMuestra(Double muestra) {
-        this.muestra = muestra;
-    }
 
-    public Double getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(Double precio) {
-        this.precio = precio;
-    }
-
-    @XmlTransient
-    public List<ModeloCircon> getModelo_Circon() {
-        return modelo_Circon;
-    }
-
-    public void setModelo_Circon(List<ModeloCircon> modelo_Circon) {
-        this.modelo_Circon = modelo_Circon;
-    }
-
-   
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
-    
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Circon)) {
+        if (!(object instanceof ModeloPiedracentral)) {
             return false;
         }
-        Circon other = (Circon) object;
+        ModeloPiedracentral other = (ModeloPiedracentral) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -134,7 +108,7 @@ public class Circon implements Serializable {
 
     @Override
     public String toString() {
-        return "com.Entidades.Circon[ idCircon=" + id + " ]";
+        return "com.Entidades.ModuloPiedra[ idrol=" + id + " ]";
     }
-
+    
 }

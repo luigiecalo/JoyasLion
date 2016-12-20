@@ -100,7 +100,7 @@
                                     <b:commandButton value="Editar" rendered="#{!controlModelos.verBtnRegistro()}" actionListener="#{controlModelos.guardarModelo()}"  look="warning"   update="tab" size="xs" >
                                         <i class="fa fa-pencil-square"></i>
                                     </b:commandButton>
-                                    <b:commandButton value="Nuevo" actionListener="#{controlModelos.limpiar()}"   look="danger"  update="tab" size="xs" >
+                                    <b:commandButton value="Nuevo" actionListener="#{controlModelos.limpiar()}"  process="@this" look="danger"  update="tab" size="xs" >
                                         <i class="fa fa-search"></i>
                                     </b:commandButton>
 
@@ -138,7 +138,7 @@
                                     value="#{controlModelos.modeloSelecionado.peso_modelo}"
                                     renderLabel="true"
                                     required="true"
-                                    label="Peso De Modelos"
+                                    label="Peso De Modelo"
                                     >
                                     <f:facet name="prepend">
                                         <i class="fa fa-balance-scale" aria-hidden="true"></i>
@@ -148,7 +148,7 @@
                             <div class="ui-g-12 ui-lg-12" >
                                 <b:inputText 
                                     id="pesocircones"
-                                    value="#{controlModelos.pesoCirones}"
+                                    value="#{controlModelos.pesoCirones} g"
                                     renderLabel="true"
                                     readonly="true"
                                     label="Peso De Circones"
@@ -159,9 +159,9 @@
                                 </b:inputText>
                             </div>
                             <div class="ui-g-12 ui-md-12 ui-lg-12" >
-                              
+
                                 <b:selectBooleanCheckbox disabled="#{controlModelos.verBtnRegistro()}" value="#{controlModelos.estadoModelo}"
-                                                          caption="Activo" />
+                                                         caption="Activo" />
 
                             </div>
 
@@ -231,12 +231,19 @@
                                     <label  class="bf-no-message" style="color: white">.</label>
                                     <b:inputText id="valorCantidad" onfocus="if (this.value == '0') {
                                                 this.value = '';
-                                            }" immediate="true" style="width:100%" disabled="#{controlModelos.cantidad}" class="input-grupo-bordes"  value="#{controlModelos.valorCantidad}" placeholder="Cantidad" >
+                                            }" immediate="true" style="width:100%" disabled="#{controlModelos.cantidad}" class="input-grupo-bordes"  value="#{controlModelos.valorCantidad}" placeholder="Cantidad"
+                                                  >
+                                         <f:ajax event="change" listener="#{controlModelos.agregarCircon()}"  />
                                     </b:inputText>
                                 </div>
                                 <div class="ui-g-1 ui-md-1 ui-lg-1" style="padding:0px">
                                     <label  class="bf-no-message" style="color: white">.</label>
-                                    <b:commandButton id="cantidadbotom" value="" disabled="#{controlModelos.cantidad}" class="botom-grupo-bordes"   update="listaCirconselct msg growlMsg valorCantidad pesocircones" ajax="true" process="@this,circonselect,msg,growlMsg,valorCantidad,pesocircones"  actionListener="#{controlModelos.agregarCircon()}"   look="primary" size="lg" >
+                                    <b:commandButton id="cantidadbotom" value="" disabled="#{controlModelos.cantidad}" class="botom-grupo-bordes" 
+                                                     update="listaCirconselct msg growlMsg valorCantidad pesocircones circonselect" 
+                                                     ajax="true" 
+                                                     process="@this,circonselect,msg,growlMsg,valorCantidad,pesocircones"
+                                                     actionListener="#{controlModelos.agregarCircon()}"   
+                                                     look="primary" size="lg" >
                                         <i class="fa fa-plus"></i>
                                     </b:commandButton>
                                 </div>
@@ -251,11 +258,11 @@
                                     </p:column>
 
                                     <p:column headerText="Referencia">
-                                        <h:outputText value="#{MCircon.circon.referencia}" />
+                                        <h:outputText value="#{MCircon.circon.tamano}" />
                                     </p:column>
 
                                     <p:column headerText="peso">
-                                        <h:outputText value="#{MCircon.circon.muestra}" />
+                                        <h:outputText value="#{MCircon.circon.muestra}qlt" />
                                     </p:column>
 
                                     <p:column headerText="cantidad">
@@ -291,52 +298,6 @@
 
 
         <script type="text/javascript">
-            var nav = $('#barraup');
-
-            if (nav.length != 0) {
-                var height = $("#navpricipal").height();
-                var navHomeY = nav.offset().top - height;
-                var isFixed = false;
-
-                $(document).scroll(function () {
-
-
-
-                    var $w = $(window);
-                    var scrollTop = $w.scrollTop();
-                    var shouldBeFixed = scrollTop > navHomeY;
-                    if (shouldBeFixed) {
-                        if (!isFixed) {
-                            nav.css({
-                                position: 'fixed',
-                                top: height,
-                            });
-                            $('#barraup').load();
-                            isFixed = true;
-                        }
-                    } else if (isFixed)
-                    {
-                        nav.css({
-                            position: 'static'
-                        });
-                        isFixed = false;
-                    }
-
-                });
-            }
-            $('.ir-arriba').click(function () {
-                $('body, html').animate({
-                    scrollTop: '0px'
-                }, 300);
-            });
-
-            $(window).scroll(function () {
-                if ($(this).scrollTop() > 0) {
-                    $('.ir-arriba').slideDown(300);
-                } else {
-                    $('.ir-arriba').slideUp(300);
-                }
-            });
 
 
         </script>
