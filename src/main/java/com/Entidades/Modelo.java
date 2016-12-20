@@ -47,10 +47,10 @@ public class Modelo implements Serializable {
     @Basic(optional = false)
     @Column(name = "peso_circones")
     private Double peso_circones;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy="modelo")
+    @OneToMany(cascade = CascadeType.ALL,orphanRemoval=true,mappedBy="modelo")
     private List<ModeloPiedracentral> piedra_centrales;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "modelo")
+    @OneToMany(cascade = CascadeType.ALL,orphanRemoval=true, mappedBy = "modelo")
     private List<ModeloCircon> modelo_circon;
 
     @Basic(optional = false)
@@ -167,7 +167,9 @@ public class Modelo implements Serializable {
 
     @Override
     public String toString() {
-        return "com.Entidades.Modelo[ Modelo=" + id + " ]";
+        return "Modelo{" + "id=" + id + ", codigo=" + codigo + ", imagen=" + imagen + ", tipo_modelo=" + tipo_modelo + ", peso_modelo=" + peso_modelo + ", peso_circones=" + peso_circones + ", piedra_centrales=" + piedra_centrales + ", modelo_circon=" + modelo_circon + ", estado=" + estado + '}';
     }
+
+   
 
 }

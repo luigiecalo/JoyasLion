@@ -6,9 +6,7 @@
 package com.ControladorVista;
 
 import Utilidades.Utilidades;
-import static com.ControladorVista.ControlSeccion.toLong;
 import com.Dao.MiembroDaoimplement;
-import com.Dao.ModuloDaoimplement;
 import com.Dao.RolDaoimplement;
 import com.Dao.UsuarioDaoimplement;
 import com.Entidades.Miembro;
@@ -21,10 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;

@@ -17,7 +17,7 @@ import org.primefaces.context.RequestContext;
  * @author usuario
  */
 public class Utilidades implements Serializable {
-    private String focus;
+    private String focus="null";
 
     public boolean permisos(Long idRol, Modulo modulo,String permiso) {
         boolean result = false;

@@ -10,12 +10,14 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -34,42 +36,43 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "ModeloPiedracentral.findAll", query = "SELECT mp FROM ModeloPiedracentral mp")})
 public class ModeloPiedracentral implements Serializable {
+    
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
-    private Long id;
-    @OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.EAGER, orphanRemoval = true)
-    @JoinColumn(name = "idmodelo")
+     @EmbeddedId
+    protected ModeloPiedraCentralPK modeloPiedraCentralPk;
+    @JoinColumn(name = "idmodelo", referencedColumnName = "id", insertable = false, updatable = false)
+    @ManyToOne(cascade = CascadeType.ALL,optional = false)
     private Modelo modelo;
-    @OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.EAGER, orphanRemoval = true)
-    @JoinColumn(name = "idpiedra")
+    @JoinColumn(name = "idpiera", referencedColumnName = "id", insertable = false, updatable = false)
+    @ManyToOne(cascade = CascadeType.ALL,optional = false)
     private PiedraCentral piedra;
+    @Column(name = "cantidad")
+    private int cantidad;
 
     public ModeloPiedracentral() {
     }
 
-    public ModeloPiedracentral(Long idrol) {
-        this.id = idrol;
+    
+
+    public ModeloPiedracentral(Modelo modelo, PiedraCentral piedra, int cantidad) {
+        this.modeloPiedraCentralPk = new ModeloPiedraCentralPK();
+        this.modeloPiedraCentralPk.setIdmodelo(modelo.getId());
+        this.modeloPiedraCentralPk.setIdpiedra(piedra.getId());
+        this.modelo = modelo;
+        this.piedra = piedra;
+        this.cantidad = cantidad;
     }
 
-    public ModeloPiedracentral(Long idrol, Modelo id_modelo, PiedraCentral id_piedra) {
-        this.id = idrol;
-        this.modelo = id_modelo;
-        this.piedra = id_piedra;
+      public ModeloPiedracentral(ModeloPiedraCentralPK modeloPiedraCentralPk) {
+        this.modeloPiedraCentralPk = modeloPiedraCentralPk;
     }
 
-    public Long getId() {
-        return id;
+    public ModeloPiedracentral(long modelo, long piedra, int cantidad) {
+        this.modeloPiedraCentralPk = new ModeloPiedraCentralPK(modelo, piedra);
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Modelo getModelo() {
-        return modelo;
+    public ModeloPiedraCentralPK getModeloPiedraCentralPk() {
+        return modeloPiedraCentralPk;
     }
 
     public void setModelo(Modelo modelo) {
@@ -84,12 +87,17 @@ public class ModeloPiedracentral implements Serializable {
         this.piedra = piedra;
     }
 
+    public int getCantidad() {
+        return cantidad;
+    }
 
-
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (modeloPiedraCentralPk != null ? modeloPiedraCentralPk.hashCode() : 0);
         return hash;
     }
 
@@ -100,7 +108,7 @@ public class ModeloPiedracentral implements Serializable {
             return false;
         }
         ModeloPiedracentral other = (ModeloPiedracentral) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.modeloPiedraCentralPk == null && other.modeloPiedraCentralPk != null) || (this.modeloPiedraCentralPk != null && !this.modeloPiedraCentralPk.equals(other.modeloPiedraCentralPk))) {
             return false;
         }
         return true;
@@ -108,7 +116,10 @@ public class ModeloPiedracentral implements Serializable {
 
     @Override
     public String toString() {
-        return "com.Entidades.ModuloPiedra[ idrol=" + id + " ]";
+        return "ModeloPiedracentral{" + "modeloPiedraCentralPk=" + modeloPiedraCentralPk + ", cantidad=" + cantidad + '}';
     }
+
+
+   
     
 }

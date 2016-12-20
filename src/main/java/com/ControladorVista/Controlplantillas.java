@@ -5,26 +5,16 @@
  */
 package com.ControladorVista;
 
-import static com.ControladorVista.ControlSeccion.toLong;
 import com.Dao.ModuloDaoimplement;
 import com.Entidades.Miembro;
 import com.Entidades.Modulo;
-import com.Entidades.Rol;
-import java.awt.Panel;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.el.ELContext;
-import javax.el.ExpressionFactory;
-import javax.faces.application.Application;
-import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
 

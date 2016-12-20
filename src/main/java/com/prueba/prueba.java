@@ -110,12 +110,11 @@ public class prueba implements Serializable {
         PC.setTipo(tipo);
         PC.setPeso(5000.19);
         List<ModeloPiedracentral> modelopiedras = new ArrayList<ModeloPiedracentral>();
-        
-        
+
 //        PCDao.crear(PC);
-        piedras=PCDao.consultarTodo(PiedraCentral.class);
+        piedras = PCDao.consultarTodo(PiedraCentral.class);
         circones = CirDao.consultarTodo(Circon.class);
-        System.out.println("______CIRCONESSS__________");
+
         int ultimo = MdDao.Ultima();
         modelo.setCodigo("M006");
         modelo.setEstado("ACTIVO");
@@ -125,33 +124,47 @@ public class prueba implements Serializable {
         modelo.setPeso_modelo(332.8);
         tipo = TDao.consultarC(Tipo.class, 1L);
         modelo.setTipo_modelo(tipo);
-        
-        MdDao.crear(modelo);
-        int cant = 6;
-        modelo = MdDao.buscarModeloEstado(modelo.getCodigo(), "ACTIVO");
-        List<ModeloCircon> modelocircones = new ArrayList<ModeloCircon>();
-        for (Circon circone : circones) {
-            System.out.println(circone.getCodigo());
-            ModeloCircon modeloCircon = new ModeloCircon(modelo, circone, cant);
-            modeloCircon.setCantidad(cant);
-            modelocircones.add(modeloCircon);
-            cant++;
-        }
-        for (PiedraCentral piedrasc : piedras) {
-            System.out.println(piedrasc.getCodigo());
-            ModeloPiedracentral mp= new ModeloPiedracentral();
-            mp.setPiedra(piedrasc);
-            mp.setModelo(modelo);
-            modelopiedras.add(mp);
-        }
-        
-        
-        modelo.setPiedra_centrales(modelopiedras);
-        modelo.setModelo_circon(modelocircones);
-        MdDao.modificar(modelo);
+
+//        MdDao.crear(modelo);
+//        int cant = 14;
+//        modelo = MdDao.buscarModeloEstado(modelo.getCodigo(), "ACTIVO");
+//        List<ModeloCircon> modelocircones = new ArrayList<ModeloCircon>();
+//        System.out.println("______CIRCONESSS__________");
+//        for (Circon circone : circones) {
+//            System.out.println(circone.getCodigo());
+//            ModeloCircon modeloCircon = new ModeloCircon(modelo, circone, cant);
+//            modeloCircon.setCantidad(cant);
+//            modelocircones.add(modeloCircon);
+//            cant++;
+//        }
+//        System.out.println("______PIEDRAS__________");
+//        for (PiedraCentral piedrasc : piedras) {
+//            System.out.println(piedrasc.getCodigo());
+//            ModeloPiedracentral mp = new ModeloPiedracentral();
+//
+//            mp.setPiedra(piedrasc);
+//            mp.setModelo(modelo);
+//            if (mp.getId() == null) {
+//                modelopiedras.add(mp);
+//            }
+//        }
+//
+//        modelo.setPiedra_centrales(modelopiedras);
+//        modelo.setModelo_circon(modelocircones);
+//        MdDao.modificar(modelo);
         modelos = MdDao.consultarTodo(Modelo.class);
+
+        System.out.println("______MODELOS__________");
         for (Modelo mod : modelos) {
-            System.out.println(mod.getModelo_circon().size());
+            System.out.println(mod.getCodigo() + "-" + mod.getTipo_modelo().getNombre());
+            System.out.println("*CIRCONES(" + mod.getModelo_circon().size() + ")_________");
+            for (ModeloCircon mc1 : mod.getModelo_circon()) {
+                System.out.println(mc1.getCircon().getCodigo() + "--" + mc1.getCircon().getTamano());
+            }
+            System.out.println("*PIEDRAS(" + mod.getPiedra_centrales().size() + ")__________");
+            for (ModeloPiedracentral mp1 : mod.getPiedra_centrales()) {
+                System.out.println(mp1.getPiedra().getCodigo() + "--" + mp1.getPiedra().getNombre());
+            }
         }
         String number = ultimo + "";
 //        if (number.length() == 1) {
