@@ -171,11 +171,12 @@
                             <div class="ui-g-12 ui-md-12 ui-lg-12"  >
 
                                 <div class="ui-g-8 ui-md-8 ui-lg-8" style="padding:0px">
-                                    <b:selectOneMenu  label="Piedra Central" id="piedraCselect"  class="form-control select2"  value="#{controlModelos.piedrasCentralSelect}"  style="margin:0 auto;height:34px">
+                                    <label  class="bf-no-message">Piedra Central:</label>
+                                    <h:selectOneMenu  label="" id="piedraCselect"  class="form-control select2"  value="#{controlModelos.piedrasCentralSelect}"  style="margin:0 auto;height:34px">
                                         <p:ajax listener="#{controlModelos.selecoionarpiedra()}"  update="valorCantidadPiedra Piedrabotom :form:focus" />
                                         <f:selectItem  itemLabel="Selecione una Piedra" itemValue="" />
                                         <f:selectItems value="#{controlModelos.piedrasCentralesLista}" />
-                                    </b:selectOneMenu>
+                                    </h:selectOneMenu>
                                 </div>
                                 <div class="ui-g-3 ui-md-3 ui-lg-3" style="padding:0px">
                                     <label  class="bf-no-message" style="color: white">.</label>
@@ -183,7 +184,6 @@
                                                 this.value = '';
                                             }"  style="width:100%" disabled="#{controlModelos.cantidadPiedra}" class="input-grupo-bordes"  value="#{controlModelos.valorCantidadPiedra}" placeholder="Cantidad"
                                                   >
-                                       #{controlModelos.cantidadPiedra}
                                     </b:inputText>
                                 </div>
                                 <div class="ui-g-1 ui-md-1 ui-lg-1" style="padding:0px">
@@ -227,13 +227,16 @@
                                     <p:column headerText="Tipo">
                                         <h:outputText value="#{Piedras.piedra.tipo.nombre}" />
                                     </p:column>
+                                    <p:column headerText="cant">
+                                        <h:outputText value="#{Piedras.cantidad}" />
+                                    </p:column>
                                 </p:dataTable>
                             </div>
                         </div>
                         <div class="ui-g-12 ui-md-6 ui-lg-3 ui-g-nopad" >
                             <div class="ui-g-12 ui-md-12 ui-lg-12"  >
                                 <div class="ui-g-8 ui-md-8ui-lg-8" style="padding:0px">
-                                    <label  class="bf-no-message">Circones</label>
+                                    <label  class="bf-no-message">Circones:</label>
                                     <h:selectOneMenu  id="circonselect"  class="form-control select2"  value="#{controlModelos.circoneSelect}"  style="margin:0 auto;height:34px">
                                         <p:ajax listener="#{controlModelos.selecoionarcircon()}"  update="valorCantidad cantidadbotom :form:focus" />
                                         <f:selectItem  itemLabel="Selecione un Circon" itemValue="" />

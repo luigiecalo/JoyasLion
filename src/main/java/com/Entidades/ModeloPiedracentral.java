@@ -43,7 +43,7 @@ public class ModeloPiedracentral implements Serializable {
     @JoinColumn(name = "idmodelo", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(cascade = CascadeType.ALL,optional = false)
     private Modelo modelo;
-    @JoinColumn(name = "idpiera", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "idpiedra", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(cascade = CascadeType.ALL,optional = false)
     private PiedraCentral piedra;
     @Column(name = "cantidad")
