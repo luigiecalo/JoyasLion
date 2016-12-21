@@ -8,12 +8,13 @@ package com.ControladorVista;
 import Utilidades.Utilidades;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
+import javax.faces.bean.ManagedBean;
 
 /**
  *
  * @author LuisGuillermo
  */
-@Named(value = "controlUtilidades")
+@ManagedBean
 @Dependent
 public class ControlUtilidades {
     
@@ -24,6 +25,10 @@ public class ControlUtilidades {
      * Creates a new instance of ControlUtilidades
      */
     public ControlUtilidades() {
+    }
+    
+    public String format(Double valor,String formato){
+    return util.formatoDecimal(valor, formato);
     }
 
     public Utilidades getUtil() {

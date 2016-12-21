@@ -16,7 +16,7 @@
 
                         <div  class="box-body">
                             <b:buttonGroup>
-                                <b:commandButton value="Consultar"
+                                <b:commandButton value="Mi Orden"
                                                  process="@this"  look="primary"  
                                                  size="xs" >
                                     <i class="fa fa-list"></i>
@@ -49,30 +49,47 @@
 
 
             <ui:repeat value="#{controlPrincipal.modelos}" var="Modelo">
-                <b:column col-sm="6" col-md="3" style="padding-bottom: 20px;"  >
+                <b:column col-sm="6" col-md="3"   >
 
                     <div class="contenedor-img ejemplo-1" >
                         <b:thumbnail >
                             <img  src="imagenes/fondo.jpg" data-src="imagenes/fondo.png" style="width:100%" class="modelos" alt="Generic placeholder thumbnail"/>
 
-                            <div class="mascara">
-                                <h2>#{Modelo.codigo}</h2>  
-                                <p>Tiene un Peso de #{Modelo.peso_circones}</p>
+
+                            <div class="mascara" style="background-image: url(../imagenes/fondo.jpg)" >
+                                <h2 >#{Modelo.codigo} </h2>  
+                                <p>
+                                    <b:commandButton style="color:black" update=":form:dialog" value="Mas informacion" type="button" onclick="PF('dlg1').show();" />
+                                    <b:commandButton style="color:black"  value="Mas informacion" type="button" onclick="PF('dlg2').show();" />
+                                </p>
                                 <b:buttonGroup>
-                                    <b:button look="default" style="color:black" value="Plata"/>
-                                    <b:button value="Oro" look="warning"/>
+                                    <b:button look="default" style="color:black"  tooltip="peso en Plata" value="#{controlUtilidades.util.formatoDecimal(Modelo.peso_modelo*12,'0.0')}g"/>
+                                    <b:button  look="warning"  tooltip="peso en Oro"
+                                               tooltip-position="bottom" value="#{controlUtilidades.util.formatoDecimal(Modelo.peso_modelo*16,'0.0')}g"/>
                                 </b:buttonGroup>
 
                             </div>
+
+                            <p:dialog id="dialog" header="Basic Dialog" modal="true"  style="background:white" width="400" widgetVar="dlg1" minHeight="40">
+                                #{Modelo.codigo}
+                                <h:outputText value="Resistance to PrimeFaces is futile!" />
+                            </p:dialog>
+
                         </b:thumbnail> 
+
                     </div>
 
 
                 </b:column>
             </ui:repeat>
+            <p:dialog id="dialog2" header="Basic Dialog" modal="true"  style="background:white" width="400" widgetVar="dlg2" minHeight="40">
+                
+                <h:outputText value="Resistance to PrimeFaces is futile!" />
+            </p:dialog>
+
         </b:row>
-         <script src="js/prueba.js"></script>
+        <script src="js/prueba.js"></script>
     </ui:composition>
-   
+
 
 </html>

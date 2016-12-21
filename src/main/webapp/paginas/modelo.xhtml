@@ -17,27 +17,30 @@
                         <div  class="box">
 
                             <div  class="box-body">
+                                <b:buttonGroup>
+                                    #{controlModelos.butompermisos(controlSeccion.rol.idrol,controlplantillas.moduloSelecionado,'E')};
+                                    #{controlModelos.format(3.987465, '0.00')};
+                                   #{controlUtilidades.format(4.987465, '0.0000')}
+                                    <b:commandButton value="Agregar nuevo modelo" 
+                                                     rendered="#{controlModelos.butompermisos(controlSeccion.rol.idrol,controlplantillas.moduloSelecionado,'E')}" 
+                                                     title="Agregar nuevo Modelo"   
+                                                     iconAwesome="fa-plus-circle"
+                                                     look="success"
+                                                     actionListener="#{controlModelos.registroModulo()}"
+                                                     size="sm" >
+                                    </b:commandButton>
+                                    <b:commandButton value="Consultar" 
+                                                     style="padding-left:20px"
+                                                     look="info"
+                                                     size="sm"
+                                                     update="modelos"
+                                                     actionListener="#{controlModelos.listarModelos()}" >
+                                        <i class="fa fa-search"></i>
+                                    </b:commandButton>
+                                </b:buttonGroup>
 
-                                <b:commandButton value="Registro" 
-                                                 rendered="#{controlModelos.butompermisos(controlSeccion.rol.idrol,controlplantillas.moduloSelecionado,'E')}" 
-                                                 title="REGISTRAR NUEVO MODELO"   
-                                                 styleClass=" btn-btn-app btn-danger"  iconAwesome="thumbs-up"
-                                                 look="info"
-                                                 actionListener="#{controlModelos.registroModulo()}"
-                                                 size="sm" >
-                                    <i class="fa fa-plus"></i>
-                                    <f:param name="username" value="JSF 2.0 User" />
-                                </b:commandButton>
 
-                                <b:commandButton value="Consultar" 
-                                                 style="padding-left:20px"
-                                                 styleClass="btn-app"
-                                                 look="success"
-                                                 size="sm"
-                                                 update="modelos"
-                                                 actionListener="#{controlModelos.listarModelos()}" >
-                                    <i class="fa fa-search"></i>
-                                </b:commandButton>
+
 
                             </div>
                             <!-- /.box-body -->
@@ -91,17 +94,17 @@
 
                             <div  class="box-body">
                                 <b:buttonGroup>
-                                    <b:commandButton value="Consultar" actionListener="#{controlModelos.consultaModulo()}" process="@this"  look="primary"  update="tab" size="xs" >
-                                        <i class="fa fa-list"></i>
-                                    </b:commandButton>
-                                    <b:commandButton value="Guardar" rendered="#{controlModelos.verBtnRegistro()}" actionListener="#{controlModelos.guardarModelo()}"  look="success"  update="tab" size="xs" >
+                                    <b:commandButton value="Guardar" rendered="#{controlModelos.verBtnRegistro()}" actionListener="#{controlModelos.guardarModelo()}"  look="success"  update="tab" size="sm" >
                                         <i class="fa fa-save"></i>
                                     </b:commandButton>
-                                    <b:commandButton value="Editar" rendered="#{!controlModelos.verBtnRegistro()}" actionListener="#{controlModelos.guardarModelo()}"  look="warning"   update="tab" size="xs" >
+                                    <b:commandButton value="Editar" rendered="#{!controlModelos.verBtnRegistro()}" actionListener="#{controlModelos.guardarModelo()}"  look="warning"   update="tab" size="sm" >
                                         <i class="fa fa-pencil-square"></i>
                                     </b:commandButton>
-                                    <b:commandButton value="Nuevo" actionListener="#{controlModelos.limpiar()}"  process="@this" look="danger"  update="tab" size="xs" >
-                                        <i class="fa fa-search"></i>
+                                    <b:commandButton value="Nuevo" actionListener="#{controlModelos.limpiar()}"  process="@this" look="danger"  update="tab" size="sm" >
+                                        <i class="fa fa-eraser"></i>
+                                    </b:commandButton>
+                                    <b:commandButton value="Consultar" actionListener="#{controlModelos.consultaModulo()}" process="@this"  look="primary"  update="tab" size="sm">
+                                        <i class="fa fa-list"></i>
                                     </b:commandButton>
 
                                 </b:buttonGroup>
@@ -171,7 +174,9 @@
                             <div class="ui-g-12 ui-md-12 ui-lg-12"  >
 
                                 <div class="ui-g-8 ui-md-8 ui-lg-8" style="padding:0px">
-                                    <label  class="bf-no-message">Piedra Central:</label>
+                                    <label  class="bf-no-message">Piedra Central:
+                                       
+                                    </label>
                                     <h:selectOneMenu  label="" id="piedraCselect"  class="form-control select2"  value="#{controlModelos.piedrasCentralSelect}"  style="margin:0 auto;height:34px">
                                         <p:ajax listener="#{controlModelos.selecoionarpiedra()}"  update="valorCantidadPiedra Piedrabotom :form:focus" />
                                         <f:selectItem  itemLabel="Selecione una Piedra" itemValue="" />
@@ -183,7 +188,7 @@
                                     <b:inputText id="valorCantidadPiedra" onfocus="if (this.value == '0') {
                                                 this.value = '';
                                             }"  style="width:100%" disabled="#{controlModelos.cantidadPiedra}" class="input-grupo-bordes"  value="#{controlModelos.valorCantidadPiedra}" placeholder="Cantidad"
-                                                  >
+                                                 >
                                     </b:inputText>
                                 </div>
                                 <div class="ui-g-1 ui-md-1 ui-lg-1" style="padding:0px">
@@ -196,7 +201,7 @@
                                         <i class="fa fa-plus"></i>
                                     </b:commandButton>
                                 </div>
-                               
+
 
                             </div>
                             <div class="ui-g-12 ui-md-10 ui-lg-12" >
@@ -248,7 +253,7 @@
                                     <b:inputText id="valorCantidad" onfocus="if (this.value == '0') {
                                                 this.value = '';
                                             }"  style="width:100%" disabled="#{controlModelos.cantidad}" class="input-grupo-bordes"  value="#{controlModelos.valorCantidad}" placeholder="Cantidad"
-                                                  >
+                                                 >
                                     </b:inputText>
                                 </div>
                                 <div class="ui-g-1 ui-md-1 ui-lg-1" style="padding:0px">
@@ -278,16 +283,12 @@
                                             </b:commandButton>
                                         </b:buttonGroup>
                                     </p:column>
-                                    <p:column headerText="codigo">
-                                        <h:outputText value="#{MCircon.circon.codigo}" />
-                                    </p:column>
-
-                                    <p:column headerText="Referencia">
+                                    <p:column headerText="Tamaño">
                                         <h:outputText value="#{MCircon.circon.tamano}" />
                                     </p:column>
 
                                     <p:column headerText="peso">
-                                        <h:outputText value="#{MCircon.circon.muestra}qlt" />
+                                        <h:outputText value="#{MCircon.circon.muestra}k" />
                                     </p:column>
 
                                     <p:column headerText="cantidad">

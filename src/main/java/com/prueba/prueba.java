@@ -5,6 +5,7 @@
  */
 package com.prueba;
 
+import Utilidades.Utilidades;
 import com.Dao.CirconDaoimplement;
 import com.Dao.GrupoDaoimplement;
 import com.Dao.MiembroDaoimplement;
@@ -71,6 +72,7 @@ public class prueba implements Serializable {
         Circon circon = new Circon();
         Modelo modelo = new Modelo();
         PiedraCentral PC = new PiedraCentral();
+        Utilidades uti= new Utilidades();
         //Lita de OBJETOS
 //        List<Permisos> permisoLista = new ArrayList<Permisos>();
 //        List<Miembro> miembroLista = new ArrayList<Miembro>();
@@ -152,9 +154,10 @@ public class prueba implements Serializable {
 //        modelo.setPiedra_centrales(modelopiedras);
 //        modelo.setModelo_circon(modelocircones);
 //        MdDao.modificar(modelo);
+
         modelos = MdDao.consultarTodo(Modelo.class);
 
-        System.out.println("______MODELOS__________");
+        System.out.println("______MODELOS__("+uti.formatoDecimal(3.99865424, "0.000")+"________");
         for (Modelo mod : modelos) {
             System.out.println(mod.getCodigo() + "-" + mod.getTipo_modelo().getNombre());
             System.out.println("*CIRCONES(" + mod.getModelo_circon().size() + ")_________");

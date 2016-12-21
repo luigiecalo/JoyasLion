@@ -11,6 +11,12 @@
         <link rel="stylesheet" href="css/primefacesConfig.css"/>
     </h:head>
     <body>
+        <p:lightBox iframe="true" id="lighbox3">
+                <h:outputLink value="/paginas/usuarios.xhtml" title="PrimeFaces HomePage">
+                    <h:outputText value="PrimeFaces HomePage" />
+                </h:outputLink>
+            </p:lightBox>
+        
         Hello from Facelets Mundo Como Estas?
         <div class="contenedor-img">
             <img src="imagenes/fondo.jpg" alt="" />
@@ -19,6 +25,7 @@
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vitae tortor diam in ullamcorper malesuada.</p>
                 <a class="link" href="#">Leer mas</a>
             </div>
+            
         </div>
         <!--<img  src="imagenes/fondo.jpg" data-src="imagenes/fondo.png" class="modelos" alt="Generic placeholder thumbnail"/>-->
         <!--        <p:layout fullPage="true">

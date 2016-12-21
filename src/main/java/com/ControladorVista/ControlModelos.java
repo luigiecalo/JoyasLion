@@ -94,6 +94,10 @@ public final class ControlModelos implements Serializable {
         return util.permisos(idrol, mod, permiso);
     }
 
+    public String format(Double valor, String formato) {
+        return util.formatoDecimal(valor, formato);
+    }
+
     //cambia de vista a la vista De consulta
     public void registroModulo() {
         Registrar = true;
@@ -122,11 +126,11 @@ public final class ControlModelos implements Serializable {
     }
 
     public void selecionar() {
-       estado = "A";
+        estado = "A";
         Registrar = true;
         RequestContext.getCurrentInstance().reset("form:panel");
     }
-    
+
     private void cargarListas() {
         cargalistaTipoModelos();
         cargaListaCircones();
@@ -181,6 +185,7 @@ public final class ControlModelos implements Serializable {
             focus = "valorCantidad";
         }
     }
+
     public void selecoionarpiedra() {
         if (piedrasCentralSelect <= 0) {
             cantidadPiedra = true;
@@ -190,7 +195,6 @@ public final class ControlModelos implements Serializable {
             focus = "valorCantidadPiedra";
         }
     }
-    
 
     public void eliminaCircon(ModeloCircon circon) {
         modelocirconSelect.remove(circon);
@@ -318,7 +322,7 @@ public final class ControlModelos implements Serializable {
             modelocircones.add(nuevomodeloCircon);
         }
         for (ModeloPiedracentral modeloPiedra : modeloPiedracentralesSelect) {
-            ModeloPiedracentral nuevomodeloPiedra = new ModeloPiedracentral(modeloSelecionado.getId(), modeloPiedra.getPiedra().getId(), valorCantidad);
+            ModeloPiedracentral nuevomodeloPiedra = new ModeloPiedracentral(modeloSelecionado, modeloPiedra.getPiedra(), modeloPiedra.getCantidad());
             modelopiedracentrales.add(nuevomodeloPiedra);
         }
         modeloSelecionado.setPiedra_centrales(modelopiedracentrales);

@@ -8,6 +8,7 @@ package Utilidades;
 import com.Entidades.Modulo;
 import com.Entidades.RolModuloPermiso;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
@@ -45,6 +46,11 @@ public class Utilidades implements Serializable {
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL,mensagePrincipal, MensageSegundario));
         }
         requestContext.getCurrentInstance().execute("$('.modalPseudoClass').modal('hide');");
+    }
+    
+    public String formatoDecimal(Double numero,String format){
+        DecimalFormat decimales = new DecimalFormat(format);
+        return decimales.format(numero);
     }
 
     public long toLong(Number number) {
