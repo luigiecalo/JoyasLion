@@ -7,6 +7,10 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
+        <!--<link rel="stylesheet" type="text/css" href="css/default.css" />-->
+
+
+
         <span class=""></span>
         <div class="row">
 
@@ -44,23 +48,36 @@
                 </div>
             </h:panelGroup>
         </div>
-        <b:row>
-
-
+        <b:row style="width:100%">
 
             <ui:repeat value="#{controlPrincipal.modelos}" var="Modelo">
                 <b:column col-sm="6" col-md="3"   >
+                    <div class="ih-item square colored effect6 from_left_and_right"><a href="#">
+                      <div class="img"><img src="images/assets/rect/4.jpg" alt="img"/></div>
+                      <div class="info">
+                          <h3>#{Modelo.codigo} </h3>  
+                        <!--<h3>Heading here</h3>-->
+                        <p>
+                                    <b:commandButton style="color:black"  value="Mas informacion" type="button"  />
+                                </p>
+                      </div></a></div>
+                </b:column>
+            </ui:repeat>
 
-                    <div class="contenedor-img ejemplo-1" >
-                        <b:thumbnail >
-                            <img  src="imagenes/fondo.jpg" data-src="imagenes/fondo.png" style="width:100%" class="modelos" alt="Generic placeholder thumbnail"/>
+        </b:row>
+        <b:row>
+            <ui:repeat value="#{controlPrincipal.modelos}" var="Modelo">
+                <b:column col-sm="6" col-md="3"   >
+
+                    <div class="contenedor-img ejemplo-1 ih-item colored square" >
+                        <!--<b:thumbnail >-->
+                            <img  src="imagenes/fondo.jpg" data-src="imagenes/fondo.png" style="width:100%" class="modelos img" alt="Generic placeholder thumbnail"/>
 
 
                             <div class="mascara" style="background-image: url(../imagenes/fondo.jpg)" >
-                                <h2 >#{Modelo.codigo} </h2>  
+                                <h2>#{Modelo.codigo} </h2>  
                                 <p>
-                                    <b:commandButton style="color:black" update=":form:dialog" value="Mas informacion" type="button" onclick="PF('dlg1').show();" />
-                                    <b:commandButton style="color:black"  value="Mas informacion" type="button" onclick="PF('dlg2').show();" />
+                                    <b:commandButton style="color:black"  value="Mas informacion" type="button"  />
                                 </p>
                                 <b:buttonGroup>
                                     <b:button look="default" style="color:black"  tooltip="peso en Plata" value="#{controlUtilidades.util.formatoDecimal(Modelo.peso_modelo*12,'0.0')}g"/>
@@ -70,25 +87,20 @@
 
                             </div>
 
-                            <p:dialog id="dialog" header="Basic Dialog" modal="true"  style="background:white" width="400" widgetVar="dlg1" minHeight="40">
-                                #{Modelo.codigo}
-                                <h:outputText value="Resistance to PrimeFaces is futile!" />
-                            </p:dialog>
 
-                        </b:thumbnail> 
+
+                        <!--</b:thumbnail>--> 
 
                     </div>
 
 
                 </b:column>
             </ui:repeat>
-            <p:dialog id="dialog2" header="Basic Dialog" modal="true"  style="background:white" width="400" widgetVar="dlg2" minHeight="40">
-                
-                <h:outputText value="Resistance to PrimeFaces is futile!" />
-            </p:dialog>
 
         </b:row>
-        <script src="js/prueba.js"></script>
+        <!--<script src="js/prueba.js"></script>-->
+
+        <!-- For the demo ad only -->   
     </ui:composition>
 
 

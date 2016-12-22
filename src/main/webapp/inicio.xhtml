@@ -22,6 +22,7 @@
         <!-- AdminLTE Skins. Choose a skin from the css/skins
              folder instead of downloading all of them to reduce the load. -->
         <link rel="stylesheet" href="AdminLTE/css/skins/skin-#{controlSeccion.skins}.css"/>
+        <link rel="stylesheet" href="styles/main.css"/>
 
     </h:head>
     <h:body onload="#{controlSeccion.validaSeccion()}" class="hold-transition skin-#{controlSeccion.skins}  fixeds sidebar-mini">
@@ -404,31 +405,31 @@
                     <div class="nav-tabs-custom">
                         <h:form id="form">
                             <b:panel  id="tab" styleClass="idpanel">
-                            <ul id="tab-list"  class="nav nav-tabs " >
-                                <li role="presentation" class="active" ><a href="#inicio" data-toggle="tab" style="text-transform: uppercase"><i class="fa #{controlplantillas.icono}"></i>#{controlplantillas.nombre}</a></li>
-                            </ul>
-                            <div class="tab-content ">
-                                <div class="tab-pane active" id="mo1.idmodulo">
+                                <ul id="tab-list"  class="nav nav-tabs " >
+                                    <li role="presentation" class="active" ><a href="#inicio" data-toggle="tab" style="text-transform: uppercase"><i class="fa #{controlplantillas.icono}"></i>#{controlplantillas.nombre}</a></li>
+                                </ul>
+                                <div class="tab-content ">
+                                    <div class="tab-pane active" id="mo1.idmodulo">
 
-                                    
+
                                         <ui:include  src="paginas/#{controlplantillas.modulo}" />
-<!--                                        <div class="tab-pane " >
-                                            NOMBRE:#{controlplantillas.nombre}
-                                            <p:separator/>
-                                            ID Modulo:#{controlplantillas.moduloid}
-                                            <p:separator/>
-                                            Modulo:#{controlplantillas.modulo}
-                                            <p:separator/>
-                                            GRupo:#{controlplantillas.grupo}
-                                            <p:separator/>
-                                            Sub Grupo:#{controlplantillas.subGrupo}
-                                        </div>-->
-                                    
+                                        <!--                                        <div class="tab-pane " >
+                                                                                    NOMBRE:#{controlplantillas.nombre}
+                                                                                    <p:separator/>
+                                                                                    ID Modulo:#{controlplantillas.moduloid}
+                                                                                    <p:separator/>
+                                                                                    Modulo:#{controlplantillas.modulo}
+                                                                                    <p:separator/>
+                                                                                    GRupo:#{controlplantillas.grupo}
+                                                                                    <p:separator/>
+                                                                                    Sub Grupo:#{controlplantillas.subGrupo}
+                                                                                </div>-->
+
+
+                                    </div>
 
                                 </div>
-
-                            </div>
-                                </b:panel>
+                            </b:panel>
                         </h:form>
                     </div>
 
@@ -506,13 +507,14 @@
         <!--<script src="AdminLTE/plugins/jQuery/jQuery-2.2.0.min.js"></script>-->
         <!-- AdminLTE App -->
         <script src="AdminLTE/js/app.js"></script>
-        
+
         <!--       Slimscroll -->
         <!--<script src="AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js"></script>-->
         <!--<script src="AdminLTE/js/pages/dashboard.js"></script>-->
         <!-- AdminLTE for demo purposes -->
         <!--<script src="AdminLTE/js/demo.js"></script>-->
         <!--<script src="bootstrap/js/bootstrap.min.js"></script>-->
+        <script src="js/prueba.js"></script>
         <script src="bootstrap/js/bootstrap.min.js"></script>
         <script src="js/scripts.js"></script>
 

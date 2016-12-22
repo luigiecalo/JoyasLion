@@ -9,6 +9,8 @@
     <h:head>
         <title>Facelet Title</title>
         <link rel="stylesheet" href="css/primefacesConfig.css"/>
+         <link rel="stylesheet" type="text/css" href="css/component.css" />
+        <script src="js/modernizr.custom.js"></script>
     </h:head>
     <body>
         <p:lightBox iframe="true" id="lighbox3">
@@ -27,84 +29,69 @@
             </div>
             
         </div>
-        <!--<img  src="imagenes/fondo.jpg" data-src="imagenes/fondo.png" class="modelos" alt="Generic placeholder thumbnail"/>-->
-        <!--        <p:layout fullPage="true">
-                 
-                    <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
-                        <h:form id="formulario">
-                            <b:panel styleClass="form-horizontal">
-                            <b:inputText id="nuevo"   value="asdas" span="12">
-        
-                                <f:facet name="append">
-        
-                                    <b:commandButton  value="" icon="print"  look="danger" iconAwesome="print"  >
-        
-                                    </b:commandButton>
-                                </f:facet>
-                            </b:inputText>
-                            </b:panel>
-                        </h:form>
-        #{nuevo.nombre}  
-    </p:layoutUnit>
-
-    <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
-        Footer
-    </p:layoutUnit>
-
-    <p:layoutUnit position="west" size="175" header="Left" collapsible="true">
-        <p:menu>
-            <p:submenu label="Resources">
-                <p:menuitem value="Demo" url="http://www.primefaces.org/showcase-labs/ui/home.jsf" />
-                <p:menuitem value="Documentation" url="http://www.primefaces.org/documentation.html" />
-                <p:menuitem value="Forum" url="http://forum.primefaces.org/" />
-                <p:menuitem value="Themes" url="http://www.primefaces.org/themes.html" />
-
-            </p:submenu>
-
-        </p:menu>
-    </p:layoutUnit>
-
-    <p:layoutUnit position="center">
-        <h:form>
-            <b:row>
-                <b:column col-sm="6">
-
-                    <b:panel look="primary" title="AJAXified Combobox - only mouse move">
-                        <b:label
-                            text="Which framework do you choose for desktop applications?" />
-                        <b:selectOneMenu value="#{otro.estado}" id="desktopId"
-                                         onmousemove="console.log('mouse move');ajax:ajaxBean.onMouseMove();"
-                                         update="messages jsfMessages">
-
-
-                            <f:selectItem itemLabel="(Please select)" itemValue="0" />
-                            <f:selectItem itemLabel=".NET" itemValue="1" />
-                            <f:selectItem itemLabel="JavaFX" itemValue="2" />
-                            <f:selectItem itemLabel="GroovyFX" itemValue="3" />
-                            <f:selectItem itemLabel="JSF" itemValue="4" />
-                        </b:selectOneMenu>
-                    </b:panel>
-                    <b:panel look="primary" title="JSF messages" id="jsfMessages">
-                        <b:messages showSummary="false" />
-                    </b:panel>
-
-                </b:column>
-                <b:column col-sm="6">
-                    <b:well id="messages">
-                        Last server-side events:
-                        <ul>
-                            <ui:repeat var="message" value="#{otro.modelos}">
-                                <li>#{message}</li>
-                            </ui:repeat>
-                        </ul>
-                    </b:well>
-                </b:column>
-            </b:row>
-        </h:form>
-    </p:layoutUnit>
-
-
-</p:layout>-->
+          <ul class="grid cs-style-3">
+                <li>
+                    <figure>
+                        <img src="images/3.png" alt="img03"/>
+                        <figcaption>
+                            <h3>Settings</h3>
+                            <span>Jacob Cummings</span>
+                            <a href="http://dribbble.com/shots/1116685-Settings">Take a look</a>
+                        </figcaption>
+                    </figure>
+                </li>
+                <li>
+                    <figure>
+                        <img src="images/1.png" alt="img01"/>
+                        <figcaption>
+                            <h3>Camera</h3>
+                            <span>Jacob Cummings</span>
+                            <a href="http://dribbble.com/shots/1115632-Camera">Take a look</a>
+                        </figcaption>
+                    </figure>
+                </li>
+                <li>
+                    <figure>
+                        <img src="images/2.png" alt="img02"/>
+                        <figcaption>
+                            <h3>Music</h3>
+                            <span>Jacob Cummings</span>
+                            <a href="http://dribbble.com/shots/1115960-Music">Take a look</a>
+                        </figcaption>
+                    </figure>
+                </li>
+                <li>
+                    <figure>
+                        <img src="images/4.png" alt="img04"/>
+                        <figcaption>
+                            <h3>Safari</h3>
+                            <span>Jacob Cummings</span>
+                            <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>
+                        </figcaption>
+                    </figure>
+                </li>
+                <li>
+                    <figure>
+                        <img src="images/5.png" alt="img05"/>
+                        <figcaption>
+                            <h3>Phone</h3>
+                            <span>Jacob Cummings</span>
+                            <a href="http://dribbble.com/shots/1117308-Phone">Take a look</a>
+                        </figcaption>
+                    </figure>
+                </li>
+                <li>
+                    <figure>
+                        <img src="images/6.png" alt="img06"/>
+                        <figcaption>
+                            <h3>Game Center</h3>
+                            <span>Jacob Cummings</span>
+                            <a href="http://dribbble.com/shots/1118904-Game-Center">Take a look</a>
+                        </figcaption>
+                    </figure>
+                </li>
+            </ul>
+         <script src="js/toucheffects.js"></script>
     </body>
 </html>
 
