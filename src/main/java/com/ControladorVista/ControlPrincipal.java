@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.primefaces.context.RequestContext;
@@ -42,6 +43,8 @@ public final class ControlPrincipal implements Serializable {
     private boolean cantidad = true;
     private String focus = "panel";
     private Double pesoCirones = 0.0;
+    private List<String> images;
+    private List<String> imagesid;
 
     private Map<String, Long> piedrasCentralesLista;
     private Map<String, Long> circonesLista;
@@ -79,6 +82,7 @@ public final class ControlPrincipal implements Serializable {
      */
     public ControlPrincipal() {
         listarModelos();
+        cargarimagenes();
     }
 ////METODOS
     //validar los permisos De Los botones
@@ -209,7 +213,7 @@ public final class ControlPrincipal implements Serializable {
     public void guardarModelo() {
         modeloSelecionado.setEstado(estadoModelo ? "ACTIVO" : "INACTIVO");
         modeloSelecionado.setImagen("dsd/imag123.png");
-        modeloSelecionado.setTipo_modelo(TipoDao.consultar(Tipo.class,tiposModelolSelect));
+        modeloSelecionado.setTipo_modelo(TipoDao.consultar(Tipo.class, tiposModelolSelect));
         modeloSelecionado.setPeso_circones(pesoCirones);
 //        modeloSelecionado.setPiedra_centrales(piedracentralesSelect);
         if (estado.equals("R")) {
@@ -259,6 +263,17 @@ public final class ControlPrincipal implements Serializable {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public void cargarimagenes() {
+        images = new ArrayList<String>();
+        for (int i = 1; i <= 8; i++) {
+            images.add(i + ".jpg");
+        }
+        imagesid = new ArrayList<String>();
+        for (int i = 1; i <= 8; i++) {
+            imagesid.add(i+"");
         }
     }
 
@@ -478,6 +493,15 @@ public final class ControlPrincipal implements Serializable {
 
     public void setPesoCirones(Double pesoCirones) {
         this.pesoCirones = pesoCirones;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public List<String> getImagesid() {
+
+        return imagesid;
     }
 
 }

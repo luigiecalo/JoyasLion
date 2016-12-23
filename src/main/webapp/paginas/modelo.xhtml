@@ -18,9 +18,7 @@
 
                             <div  class="box-body">
                                 <b:buttonGroup>
-                                    #{controlModelos.butompermisos(controlSeccion.rol.idrol,controlplantillas.moduloSelecionado,'E')};
-                                    #{controlModelos.format(3.987465, '0.00')};
-                                   #{controlUtilidades.format(4.987465, '0.0000')}
+                                   
                                     <b:commandButton value="Agregar nuevo modelo" 
                                                      rendered="#{controlModelos.butompermisos(controlSeccion.rol.idrol,controlplantillas.moduloSelecionado,'E')}" 
                                                      title="Agregar nuevo Modelo"   
@@ -116,7 +114,7 @@
             </div>
             <div  class="col-md-12 col-xs-12">
                 <!--<h3></h3>-->
-                <p:panel id="panel"  header="Datos del usuario">
+                <p:panel id="panel"  header="Datos del Modelo">
                     <p:focus id="focus" context="#{controlModelos.focus}"/>
                     <b:growl id="growlMsg" globalOnly="true" placementFrom="top"
                              show-detail="true" show-summary="false" allowDismiss="true"

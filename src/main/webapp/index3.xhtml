@@ -8,90 +8,72 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Facelet Title</title>
-        <link rel="stylesheet" href="css/primefacesConfig.css"/>
-         <link rel="stylesheet" type="text/css" href="css/component.css" />
-        <script src="js/modernizr.custom.js"></script>
+
+        <!--<link rel="stylesheet" href="css/form-elements.css" type="text/css" media="screen" />-->
+        <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="AdminLTE/css/AdminLTE.css"/>
+        <style>
+            body {
+                text-align: center;
+            }
+            #images {
+                width: 400px;
+                height: 250px;
+                overflow: hidden;
+                position: relative;
+
+                margin: 20px auto;
+            }
+            #images img {
+                width: 400px;
+                height: 250px;
+
+                position: absolute;
+                top: 0;
+                left: -400px;
+                z-index: 1;
+                opacity: 0;
+
+                transition: all linear 500ms;
+                -o-transition: all linear 500ms;
+                -moz-transition: all linear 500ms;
+                -webkit-transition: all linear 500ms;
+            }
+            #images img:target {
+                left: 0;
+                z-index: 9;
+                opacity: 1;
+            }
+            #images img:first-child {
+                left: 0;
+                opacity: 1;
+            }
+            #slider a {
+
+            }
+            #slider img:hover {
+                -webkit-transform:scale(1.25);
+                -moz-transform:scale(1.25);
+                -ms-transform:scale(1.25);
+                -o-transform:scale(1.25);
+                transform:scale(1.25);
+            }
+        </style>
     </h:head>
-    <body>
-        <p:lightBox iframe="true" id="lighbox3">
-                <h:outputLink value="/paginas/usuarios.xhtml" title="PrimeFaces HomePage">
-                    <h:outputText value="PrimeFaces HomePage" />
-                </h:outputLink>
-            </p:lightBox>
-        
-        Hello from Facelets Mundo Como Estas?
-        <div class="contenedor-img">
-            <img src="imagenes/fondo.jpg" alt="" />
-            <div class="mascara">
-                <h2>Ejemplo</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vitae tortor diam in ullamcorper malesuada.</p>
-                <a class="link" href="#">Leer mas</a>
-            </div>
-            
+    <h:body>
+        <div id="images">
+            <img  id="image1" class="img-md" src="images/assets/1.jpg" />
+            <img id="image2" src="http://i.imgur.com/qASVX.jpg" />
+            <img id="image3" src="http://i.imgur.com/fLuHO.jpg" />
+            <img id="image4" src="http://i.imgur.com/5Sd3Q.jpg" />
         </div>
-          <ul class="grid cs-style-3">
-                <li>
-                    <figure>
-                        <img src="images/3.png" alt="img03"/>
-                        <figcaption>
-                            <h3>Settings</h3>
-                            <span>Jacob Cummings</span>
-                            <a href="http://dribbble.com/shots/1116685-Settings">Take a look</a>
-                        </figcaption>
-                    </figure>
-                </li>
-                <li>
-                    <figure>
-                        <img src="images/1.png" alt="img01"/>
-                        <figcaption>
-                            <h3>Camera</h3>
-                            <span>Jacob Cummings</span>
-                            <a href="http://dribbble.com/shots/1115632-Camera">Take a look</a>
-                        </figcaption>
-                    </figure>
-                </li>
-                <li>
-                    <figure>
-                        <img src="images/2.png" alt="img02"/>
-                        <figcaption>
-                            <h3>Music</h3>
-                            <span>Jacob Cummings</span>
-                            <a href="http://dribbble.com/shots/1115960-Music">Take a look</a>
-                        </figcaption>
-                    </figure>
-                </li>
-                <li>
-                    <figure>
-                        <img src="images/4.png" alt="img04"/>
-                        <figcaption>
-                            <h3>Safari</h3>
-                            <span>Jacob Cummings</span>
-                            <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>
-                        </figcaption>
-                    </figure>
-                </li>
-                <li>
-                    <figure>
-                        <img src="images/5.png" alt="img05"/>
-                        <figcaption>
-                            <h3>Phone</h3>
-                            <span>Jacob Cummings</span>
-                            <a href="http://dribbble.com/shots/1117308-Phone">Take a look</a>
-                        </figcaption>
-                    </figure>
-                </li>
-                <li>
-                    <figure>
-                        <img src="images/6.png" alt="img06"/>
-                        <figcaption>
-                            <h3>Game Center</h3>
-                            <span>Jacob Cummings</span>
-                            <a href="http://dribbble.com/shots/1118904-Game-Center">Take a look</a>
-                        </figcaption>
-                    </figure>
-                </li>
-            </ul>
-         <script src="js/toucheffects.js"></script>
-    </body>
+        <div id="slider">
+            <a href="#image1"><img  style="width:2%" class="img-circle"  src="images/assets/1.jpg" /></a>
+            <a href="#image2"><img  style="width:2%" class="img-circle"  src="images/assets/2.jpg" /></a>
+            <a href="#image3"><img  style="width:2%" class="img-circle"  src="images/assets/3.jpg" /></a>
+            <a href="#image4"><img  style="width:2%" class="img-circle"  src="images/assets/4.jpg" /></a>
+        </div>
+
+    </h:body>
 </html>
 
