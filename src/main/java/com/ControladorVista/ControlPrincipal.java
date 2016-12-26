@@ -40,9 +40,8 @@ public final class ControlPrincipal implements Serializable {
     private String estado = "R";
     private boolean Registrar = false;
     private boolean estadoModelo = true;
-    private boolean cantidad = true;
     private String focus = "panel";
-    private Double pesoCirones = 0.0;
+    private int cantidad = 0;
     private List<String> images;
     private List<String> imagesid;
 
@@ -117,7 +116,6 @@ public final class ControlPrincipal implements Serializable {
         cargalistaTipoModelos();
         cargaListaCircones();
         cargaListaPiedrasC();
-        selecoionarcircon();
     }
 
     private void cargalistaTipoModelos() {
@@ -155,116 +153,15 @@ public final class ControlPrincipal implements Serializable {
         Registrar = false;
     }
 
-    public void selecoionarcircon() {
-        if (circoneSelect <= 0) {
-            cantidad = true;
-            focus = "panel";
-        } else {
-            cantidad = false;
-            focus = "valorCantidad";
-        }
+    public void selecoionarmodelo(Modelo modelo) {
+        RequestContext context = RequestContext.getCurrentInstance();
+        modeloSelecionado= modelo;
+        context.getCurrentInstance().execute("$(#amodal).modal(');");
     }
 
-    public void eliminarcircon(ModeloCircon mcircon) {
-        modelocirconSelect.remove(mcircon);
-    }
 
-    public void agregarCircon() {
-        if (circoneSelect == 0L) {
-            util.crearmensajes("ALERTA", "CUIDADO!!", "Selecione Primero una Piedra central");
-        } else {
-            circon = CirconDao.consultarC(Circon.class, circoneSelect);
-            if (circon != null) {
-                ModeloCircon modeloCircon = new ModeloCircon();
-                modeloCircon.setCircon(circon);
-                modeloCircon.setCantidad(valorCantidad);
-                if (modelocirconSelect.size() <= 0) {
-                    modelocirconSelect.add(modeloCircon);
-                } else {
-                    int i = 0;
-                    int index = 0;
-                    ModeloCircon Modcirconencontrado = new ModeloCircon();
-                    boolean encontro = false;
-                    for (ModeloCircon Mc : modelocirconSelect) {
-                        if (Mc.getCircon().equals(circon)) {
-                            encontro = true;
-                            Modcirconencontrado = Mc;
-                            index = i;
-                        }
-                        i++;
-                    }
-                    if (encontro) {
-                        modeloCircon.setCantidad(modeloCircon.getCantidad() + Modcirconencontrado.getCantidad());
-                        modelocirconSelect.set(index, modeloCircon);
-                    } else {
-                        modelocirconSelect.add(modeloCircon);
-                    }
-                }
-                valorCantidad = 0;
-                circoneSelect = 0L;
-                cantidad = true;
-                focus = "panel";
-            } else {
-                util.crearmensajes("ALERTA", "CUIDADO 2!!", "Selecione Primero una Piedra central");
-            }
-        }
-    }
 
-    public void guardarModelo() {
-        modeloSelecionado.setEstado(estadoModelo ? "ACTIVO" : "INACTIVO");
-        modeloSelecionado.setImagen("dsd/imag123.png");
-        modeloSelecionado.setTipo_modelo(TipoDao.consultar(Tipo.class, tiposModelolSelect));
-        modeloSelecionado.setPeso_circones(pesoCirones);
-//        modeloSelecionado.setPiedra_centrales(piedracentralesSelect);
-        if (estado.equals("R")) {
-            modeloSelecionado.setCodigo("M" + String.format("%03d", ModeloDao.Ultima()));
-            ModeloDao.crear(modeloSelecionado);
-            if (modelocirconSelect.size() > 0) {
-                modeloSelecionado = ModeloDao.buscarModeloEstado(modeloSelecionado.getCodigo(), "ACTIVO");
-                modeloSelecionado.setModelo_circon(modelocirconSelect);
-                ModeloDao.modificar(modeloSelecionado);
-            }
-            limpiar();
-            util.crearmensajes("INFO", "EXITOSO", "Modelo Guadado Satifactoriamente");
-        } else {
-            ModeloDao.modificar(modeloSelecionado);
-            limpiar();
-            util.crearmensajes("INFO", "EXITOSO", "Modelo Modificado Satifactoriamente");
-
-        }
-
-    }
-
-    public void eliminaPiedra(PiedraCentral piedra) {
-        piedracentralesSelect.remove(piedra);
-    }
-
-    public void agregarPiedra() {
-        if (piedrasCentralSelect == 0L) {
-            util.crearmensajes("ALERTA", "CUIDADO!!", "Selecione Primero una Piedra central");
-        } else {
-
-            piedracentral = PiedraCentralDao.consultarC(PiedraCentral.class, piedrasCentralSelect);
-            if (piedracentral != null) {
-                piedracentralesSelect.add(piedracentral);
-                piedrasCentralSelect = 0L;
-            } else {
-                util.crearmensajes("ALERTA", "CUIDADO 2!!", "Selecione Primero una Piedra central");
-            }
-        }
-    }
-
-    public void eliminaCircon(Circon circon) {
-        circonesSelect.remove(circon);
-    }
-
-    public boolean verBtnRegistro() {
-        if (estado.equals("R")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    
 
     public void cargarimagenes() {
         images = new ArrayList<String>();
@@ -457,11 +354,11 @@ public final class ControlPrincipal implements Serializable {
         this.piedracentrales = piedracentrales;
     }
 
-    public boolean isCantidad() {
+    public int isCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(boolean cantidad) {
+    public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
 
@@ -481,19 +378,7 @@ public final class ControlPrincipal implements Serializable {
         this.focus = focus;
     }
 
-    public Double getPesoCirones() {
-        double peso = 0;
-        for (ModeloCircon Mcircon : modelocirconSelect) {
-            Double sum = Mcircon.getCircon().getMuestra() * Mcircon.getCantidad();
-            peso = sum + peso;
-        }
-        pesoCirones = peso;
-        return pesoCirones;
-    }
-
-    public void setPesoCirones(Double pesoCirones) {
-        this.pesoCirones = pesoCirones;
-    }
+  
 
     public List<String> getImages() {
         return images;

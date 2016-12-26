@@ -18,9 +18,10 @@ import org.primefaces.context.RequestContext;
  * @author usuario
  */
 public class Utilidades implements Serializable {
-    private String focus="null";
 
-    public boolean permisos(Long idRol, Modulo modulo,String permiso) {
+    private String focus = "null";
+
+    public boolean permisos(Long idRol, Modulo modulo, String permiso) {
         boolean result = false;
         for (RolModuloPermiso rolmodulospermiso : modulo.getRolModuloPermisoList()) {
             if (rolmodulospermiso.getRol().getIdrol().equals(idRol)) {
@@ -42,15 +43,20 @@ public class Utilidades implements Serializable {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, mensagePrincipal, MensageSegundario));
         } else if (estado.equals("INFO")) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, mensagePrincipal, MensageSegundario));
-        }else{
-        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL,mensagePrincipal, MensageSegundario));
+        } else {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, mensagePrincipal, MensageSegundario));
         }
         requestContext.getCurrentInstance().execute("$('.modalPseudoClass').modal('hide');");
     }
-    
-    public String formatoDecimal(Double numero,String format){
+
+    public String formatoDecimal(Double numero, String format) {
         DecimalFormat decimales = new DecimalFormat(format);
         return decimales.format(numero);
+    }
+
+    public void modal(String id, String estado) {
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.getCurrentInstance().execute("$('#" + id + "').modal('" + estado + "');");
     }
 
     public long toLong(Number number) {
@@ -64,5 +70,5 @@ public class Utilidades implements Serializable {
     public void setFocus(String focus) {
         this.focus = focus;
     }
-    
+
 }

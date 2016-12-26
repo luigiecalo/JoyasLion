@@ -41,6 +41,8 @@
 
                             </b:buttonGroup>
                         </div>
+
+
                         <!-- /.box-body -->
                     </div>
                 </div>
@@ -49,20 +51,20 @@
 
         <b:row>
 
-            <ui:repeat value="#{controlPrincipal.modelos}" var="Modelo">
+            <p:repeat value="#{controlPrincipal.modelos}" var="Modelo">
                 <b:column col-sm="6" col-md="3"  style="padding-top: 20px" >
+
 
                     <div class="contenedor-img ejemplo-1 ih-item colored square"  >
                         <!--<b:thumbnail >-->
                         <img  src="imagenes/fondo.jpg" data-src="imagenes/fondo.png" style="width:100%" class="modelos img" alt="Generic placeholder thumbnail"/>
-
-
                         <div class="mascara" >
                             <h2>#{Modelo.codigo} </h2>  
                             <p>
-                                <b:commandButton style="color:black"  value="" type="button" tooltip="Ver Mas informacion" onclick="$('.modalPseudoClass').modal();return false;"  >
-                                    <i class="fa fa-search"></i>
-                                </b:commandButton>
+                                <p:commandButton update=":form:mod" icon="fa fa-search-plus" actionListener="#{controlUtilidades.util.modal('mdModelo','show')}" >
+                                    <f:setPropertyActionListener value="#{Modelo}" target="#{controlPrincipal.modeloSelecionado}"  />
+                                </p:commandButton>
+
                             </p>
                             <b:buttonGroup>
                                 <b:button look="default" style="color:black"  tooltip="peso en Plata" tooltip-position="bottom" value="#{controlUtilidades.util.formatoDecimal(Modelo.peso_modelo*12,'0.0')}g"/>
@@ -71,103 +73,126 @@
                             </b:buttonGroup>
 
                         </div>
-
-
-
-                        <!--</b:thumbnail>--> 
-
                     </div>
-
-
                 </b:column>
-            </ui:repeat>
+            </p:repeat>
+
 
         </b:row>
 
 
+        <!--Modal de selecion-->
+        <div class="modal fade " id="mdModelo" style="z-index:2000" data-backdrop="false" styleClass="myModal"  role="dialog" >
+
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header" >
+                        <h4 class="modal-title">Info Modal</h4>
+                    </div>
+                    <div class="modal-body">
+
+
+                        <div class="row">
+                            <b:panel  col-spans="2" id="mod">
+                                <div class="col-lg-12"  >
+                                    <div class="col-xs-12 col-sm-4" >
+                                        <ul class="list-group">
+                                            <li class="list-group-item"><img  src="imagenes/fondo.jpg"  data-src="imagenes/fondo.png" class="img-thumbnail img-responsive circle colored ih-item padre" alt="Generic placeholder thumbnail"/></li>
+                                            <li class="list-group-item">CODIGO:#{controlPrincipal.modeloSelecionado.codigo}</li>
+                                            <li class="list-group-item">Peso en sera: (#{controlPrincipal.modeloSelecionado.peso_modelo})</li>
+                                            <li class="list-group-item">Circones (#{controlPrincipal.modeloSelecionado.modelo_circon.size()})</li>
+                                            <li class="list-group-item">Piedras Centrales (#{controlPrincipal.modeloSelecionado.piedra_centrales.size()})</li>
+                                            <li class="list-group-item">
+                                                Material:
+                                                <b:buttonGroup>
+                                                    <b:button look="default" style="color:black" title="peso en Plata" tooltip="peso en Plata" 
+                                                              tooltip-position="bottom" value="#{controlUtilidades.util.formatoDecimal(controlPrincipal.modeloSelecionado.peso_modelo*12,'0.0')}g"/>
+                                                    <b:button  look="warning"  tooltip="peso en Oro" title="peso en Oro"
+                                                               tooltip-position="bottom" value="#{controlUtilidades.util.formatoDecimal(controlPrincipal.modeloSelecionado.peso_modelo*16,'0.0')}g"/>
+                                                </b:buttonGroup>
+                                            </li>
+                                            <li class="list-group-item"><i class="glyphicon glyphicon-screenshot"></i>#{controlPrincipal.modeloSelecionado.tipo_modelo.nombre}</li>
+                                            <li class="list-group-item"><i class="fa fa-envelope"></i> john@example.com</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-8" >
+
+
+                                        <div id="slider" style="border: #006"  >
+                                            <ui:repeat value="#{controlPrincipal.imagesid}"  var="img">
+                                                <a href="#image#{img}"> <img style="" class="img-sm img-circle"  src="images/assets/#{img}.jpg" /></a>
+                                            </ui:repeat>
+                                        </div>
+
+
+                                        <div id="images" >
+                                            <ui:repeat value="#{controlPrincipal.imagesid}" var="img">
+                                                <img  id="image#{img}" class="img-md contenedor-img img-thumbnail" src="images/assets/#{img}.jpg" />
+                                            </ui:repeat>
+                                        </div>
+                                    </div>
+                                      <div class="col-xs-12 col-sm-8" >
+
+
+
+                                    <div class="ui-g-12 ui-g-nopad">
+                                        <div class="ui-g-6">Material</div>
+                                        <div class="ui-g-6">
+                                            <p:selectOneRadio  value="#{controlPrincipal.circoneSelect}">
+                                                <f:selectItem  itemValue="ORO"   itemLabel="ORO" />
+                                                <f:selectItem itemValue="PLATA" itemLabel="PLATA" />
+                                            </p:selectOneRadio>
+                                        </div>
+                                        <div class="ui-g-6">Cantidad</div>
+                                        <div class="ui-g-6">
+                                            <b:inputText value="#{controlPrincipal.cantidad}" style="font-size: 20px;width:50px">
+                                                <f:facet name="prepend">
+                                                    <b:button value="-" />
+                                                </f:facet>
+                                                <f:facet name="append" >
+                                                    <b:button value="+" />
+                                                </f:facet>
+                                            </b:inputText>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                </div>
+                            </b:panel>
+                           
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer bg-#{controlSeccion.skins}-gradient">
+                        <b:button value="close" dismiss="modal" onclick="return false;"/>
+                        <b:commandButton  value="Agregar a Orden" look="primary">
+                            <i class="fa fa-shopping-cart"></i>
+                        </b:commandButton>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+            <!--                            </div>-->
+        </div>
         <!--<script src="js/prueba.js"></script>-->
         <b:modal id="amodal" title="Modal Example" styleClass="modalPseudoClass"
                  closable="false" close-on-escape="false" backdrop="false" size="modal-lg">
-
-
+            <p:panel id="mod1" >
+                value="#{controlPrincipal.modeloSelecionado}"
+            </p:panel>
             <!--<div class="ui-g-4">-->
-            <div class="row">
-                <div class="col-lg-12" >
-                    <div class="col-xs-12 col-sm-4" >
-                        <ul class="list-group">
-                            <li class="list-group-item"><img  src="imagenes/fondo.jpg"  data-src="imagenes/fondo.png" class="img-thumbnail img-responsive circle colored ih-item padre" alt="Generic placeholder thumbnail"/></li>
-                            <li class="list-group-item">CODIGO</li>
-                            <li class="list-group-item">Peso En Sera:</li>
-                            <li class="list-group-item">Circones:</li>
-                            <li class="list-group-item">Piedras Centrales</li>
-                            <li class="list-group-item"><i class="fa fa-phone"></i> 000-000-0000 </li>
-                            <li class="list-group-item"><i class="fa fa-envelope"></i> john@example.com</li>
-                        </ul>
-                    </div>
-                    <div class="col-xs-12 col-sm-8" >
 
-
-                        <div id="slider" style="border: #006"  >
-                            <ui:repeat value="#{controlPrincipal.imagesid}"  var="img">
-                                <a href="#image#{img}"> <img style="" class="img-sm img-circle"  src="images/assets/#{img}.jpg" /></a>
-                            </ui:repeat>
-                        </div>
-
-
-                        <div id="images" >
-                            <ui:repeat value="#{controlPrincipal.imagesid}" var="img">
-                                <img  id="image#{img}" class="img-md contenedor-img" src="images/assets/#{img}.jpg" />
-                            </ui:repeat>
-                        </div>
-
-
-
-
-                    </div>
-                    <div class="col-xs-12 col-sm-8" >
-                        <p:panelGrid columns="3" layout="grid">            
-                            <h:outputText value="Content" /> 
-                            <h:outputText value="Content" /> 
-                            <h:outputText value="Content" /> 
-
-                            <h:outputText value="Content" /> 
-                            <h:outputText value="Content" /> 
-                            <h:outputText value="Content" /> 
-
-                            <h:outputText value="Content" /> 
-                            <h:outputText value="Content" /> 
-                            <h:outputText value="Content" /> 
-                        </p:panelGrid>
-                        <p:panelGrid >
-                            <div class="ui-g">
-                                <div class="ui-g-12 ui-lg-6 ui-md-8 ui-g-nopad">
-                                    <div class="ui-g-12 ui-lg-6 ui-md-6">Cantidad</div>
-                                    <div class="ui-g-12 ui-lg-6 ui-md-6"><p:spinner value="0"></p:spinner></div>
-                                    <div class="ui-g-12 ui-lg-6 ui-md-6">
-                                        Material
-                                    </div>
-
-                                    <div class="ui-g-12 ui-lg-6 ui-md-6" >
-                                          Aqui Va la Cantidad
-                                    </div>
-                                </div>
-                                <div class="ui-g-12 ui-lg-6 ui-md-4" >
-                                    <b:commandButton  value="Agregar a Orden">
-                                        <i class="fa fa-send"></i>
-                                    </b:commandButton>
-                                </div>
-                            </div>
-                        </p:panelGrid>
-                    </div>
-
-                </div>
-            </div>
             <!--</div>-->
 
 
             <f:facet name="footer">
                 <b:button value="close" dismiss="modal" onclick="return false;"/>
-                <b:button value="Ok" look="primary" dismiss="modal" onclick="return false;"/>
+                <b:commandButton  value="Agregar a Orden" look="primary">
+                    <i class="fa fa-shopping-cart"></i>
+                </b:commandButton>
             </f:facet>
         </b:modal>
 
