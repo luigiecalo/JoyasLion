@@ -14,7 +14,7 @@ import com.Dao.TipoDaoimplement;
 import com.Entidades.Circon;
 import com.Entidades.Modelo;
 import com.Entidades.ModeloCircon;
-import com.Entidades.ModeloPiedracentral;
+import com.Entidades.ModeloPiedraCentral;
 import com.Entidades.Modulo;
 import com.Entidades.PiedraCentral;
 import com.Entidades.Tipo;
@@ -70,8 +70,8 @@ public final class ControlModelos implements Serializable {
     private List<ModeloCircon> modelocirconSelect = new ArrayList<ModeloCircon>();
     private List<Tipo> tiposModelo = new ArrayList<Tipo>();
     private List<PiedraCentral> piedracentrales = new ArrayList<PiedraCentral>();
-    private List<ModeloPiedracentral> modeloPiedracentralesSelect = new ArrayList<ModeloPiedracentral>();
-    private List<ModeloPiedracentral> modelopiedracentrales = new ArrayList<ModeloPiedracentral>();
+    private List<ModeloPiedraCentral> modeloPiedracentralesSelect = new ArrayList<ModeloPiedraCentral>();
+    private List<ModeloPiedraCentral> modelopiedracentrales = new ArrayList<ModeloPiedraCentral>();
     //DAOS
 
     private ModeloDaoimplement ModeloDao = new ModeloDaoimplement();
@@ -244,7 +244,7 @@ public final class ControlModelos implements Serializable {
         }
     }
 
-    public void eliminaPiedra(ModeloPiedracentral piedra) {
+    public void eliminaPiedra(ModeloPiedraCentral piedra) {
         modeloPiedracentralesSelect.remove(piedra);
     }
 
@@ -255,7 +255,7 @@ public final class ControlModelos implements Serializable {
 
             piedracentral = PiedraCentralDao.consultarC(PiedraCentral.class, piedrasCentralSelect);
             if (piedracentral != null) {
-                ModeloPiedracentral pcentreal = new ModeloPiedracentral();
+                ModeloPiedraCentral pcentreal = new ModeloPiedraCentral();
                 pcentreal.setPiedra(piedracentral);
                 pcentreal.setCantidad(valorCantidadPiedra);
                 if (modeloPiedracentralesSelect.size() <= 0) {
@@ -263,9 +263,9 @@ public final class ControlModelos implements Serializable {
                 } else {
                     int i = 0;
                     int index = 0;
-                    ModeloPiedracentral ModPiedraencontrado = new ModeloPiedracentral();
+                    ModeloPiedraCentral ModPiedraencontrado = new ModeloPiedraCentral();
                     boolean encontro = false;
-                    for (ModeloPiedracentral Mp : modeloPiedracentralesSelect) {
+                    for (ModeloPiedraCentral Mp : modeloPiedracentralesSelect) {
                         if (Mp.getPiedra().equals(piedracentral)) {
                             encontro = true;
                             ModPiedraencontrado = Mp;
@@ -321,8 +321,8 @@ public final class ControlModelos implements Serializable {
             ModeloCircon nuevomodeloCircon = new ModeloCircon(modeloSelecionado, modeloCircon.getCircon(), modeloCircon.getCantidad());
             modelocircones.add(nuevomodeloCircon);
         }
-        for (ModeloPiedracentral modeloPiedra : modeloPiedracentralesSelect) {
-            ModeloPiedracentral nuevomodeloPiedra = new ModeloPiedracentral(modeloSelecionado, modeloPiedra.getPiedra(), modeloPiedra.getCantidad());
+        for (ModeloPiedraCentral modeloPiedra : modeloPiedracentralesSelect) {
+            ModeloPiedraCentral nuevomodeloPiedra = new ModeloPiedraCentral(modeloSelecionado, modeloPiedra.getPiedra(), modeloPiedra.getCantidad());
             modelopiedracentrales.add(nuevomodeloPiedra);
         }
         modeloSelecionado.setPiedra_centrales(modelopiedracentrales);
@@ -445,11 +445,11 @@ public final class ControlModelos implements Serializable {
         this.tiposModelo = tiposModelo;
     }
 
-    public List<ModeloPiedracentral> getModeloPiedracentralesSelect() {
+    public List<ModeloPiedraCentral> getModeloPiedracentralesSelect() {
         return modeloPiedracentralesSelect;
     }
 
-    public void setModeloPiedracentralesSelect(List<ModeloPiedracentral> modeloPiedracentralesSelect) {
+    public void setModeloPiedracentralesSelect(List<ModeloPiedraCentral> modeloPiedracentralesSelect) {
         this.modeloPiedracentralesSelect = modeloPiedracentralesSelect;
     }
 

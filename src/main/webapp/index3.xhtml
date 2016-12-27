@@ -10,7 +10,7 @@
         <title>Facelet Title</title>
 
         <!--<link rel="stylesheet" href="css/form-elements.css" type="text/css" media="screen" />-->
-        <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" />
+        <!--<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" />-->
         <link rel="stylesheet" href="AdminLTE/css/AdminLTE.css"/>
         <style>
             body {
@@ -61,7 +61,23 @@
         </style>
     </h:head>
     <h:body>
+        <h:form id="form">
+            <p:panel id="panel">
+                #{controlPrincipal.message}--#{controlOrden.cant}--#{controlSeccion.miembro.nombre1}
+            </p:panel>
+            <p:commandButton value="cambiar" actionListener="#{controlPrincipal.cambiartext()}" update="panel" />
+        </h:form>
+
+        
+        <h:form id="form2">
+            <p:panel id="panel2">
+                <b:inputText value="#{controlOrden.message}"/>
+            </p:panel>
+            <p:commandButton value="cambiar"  update=":form:panel" />
+        </h:form>
+
         <div id="images">
+
             <img  id="image1" class="img-md" src="images/assets/1.jpg" />
             <img id="image2" src="http://i.imgur.com/qASVX.jpg" />
             <img id="image3" src="http://i.imgur.com/fLuHO.jpg" />

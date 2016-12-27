@@ -22,7 +22,7 @@
         <!-- AdminLTE Skins. Choose a skin from the css/skins
              folder instead of downloading all of them to reduce the load. -->
         <link rel="stylesheet" href="AdminLTE/css/skins/skin-#{controlSeccion.skins}.css"/>
-<link rel="stylesheet" href="styles/main.css"/>
+        <link rel="stylesheet" href="styles/main.css"/>
 
     </h:head>
     <h:body onload="#{controlSeccion.validaSeccion()}" class="hold-transition skin-#{controlSeccion.skins}  fixeds sidebar-mini">
@@ -410,7 +410,9 @@
                                 </ul>
                                 <div class="tab-content ">
                                     <div class="tab-pane active" id="mo1.idmodulo">
-
+                                        <b:growl id="growlMsg" globalOnly="true" placementFrom="top"
+                                                 show-detail="true" show-summary="false" allowDismiss="true"
+                                                 delay="10000" escape="true" /> 
 
                                         <ui:include  src="paginas/#{controlplantillas.modulo}" />
                                         <!--                                        <div class="tab-pane " >
@@ -514,7 +516,7 @@
         <!-- AdminLTE for demo purposes -->
         <!--<script src="AdminLTE/js/demo.js"></script>-->
         <!--<script src="bootstrap/js/bootstrap.min.js"></script>-->
-        <script src="js/prueba.js"></script>
+        
         <script src="bootstrap/js/bootstrap.min.js"></script>
         <script src="js/scripts.js"></script>
 

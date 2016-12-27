@@ -47,11 +47,14 @@ public class Modelo implements Serializable {
     @Basic(optional = false)
     @Column(name = "peso_circones")
     private Double peso_circones;
-    @OneToMany(cascade = CascadeType.ALL,orphanRemoval=true,mappedBy="modelo")
-    private List<ModeloPiedracentral> piedra_centrales;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "modelo")
+    private List<ModeloPiedraCentral> piedra_centrales;
 
-    @OneToMany(cascade = CascadeType.ALL,orphanRemoval=true, mappedBy = "modelo")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "modelo")
     private List<ModeloCircon> modelo_circon;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "modelo")
+    private List<OrdenModelo> orden_modelo;
 
     @Basic(optional = false)
     @Column(name = "estado")
@@ -129,6 +132,14 @@ public class Modelo implements Serializable {
         this.modelo_circon = modelo_circon;
     }
 
+    public List<OrdenModelo> getOrden_modelo() {
+        return orden_modelo;
+    }
+
+    public void setOrden_modelo(List<OrdenModelo> orden_modelo) {
+        this.orden_modelo = orden_modelo;
+    }
+
     public String getEstado() {
         return estado;
     }
@@ -137,11 +148,11 @@ public class Modelo implements Serializable {
         this.estado = estado;
     }
 
-    public List<ModeloPiedracentral> getPiedra_centrales() {
+    public List<ModeloPiedraCentral> getPiedra_centrales() {
         return piedra_centrales;
     }
 
-    public void setPiedra_centrales(List<ModeloPiedracentral> piedra_centrales) {
+    public void setPiedra_centrales(List<ModeloPiedraCentral> piedra_centrales) {
         this.piedra_centrales = piedra_centrales;
     }
 
@@ -169,7 +180,5 @@ public class Modelo implements Serializable {
     public String toString() {
         return "Modelo{" + "id=" + id + ", codigo=" + codigo + ", imagen=" + imagen + ", tipo_modelo=" + tipo_modelo + ", peso_modelo=" + peso_modelo + ", peso_circones=" + peso_circones + ", piedra_centrales=" + piedra_centrales + ", modelo_circon=" + modelo_circon + ", estado=" + estado + '}';
     }
-
-   
 
 }

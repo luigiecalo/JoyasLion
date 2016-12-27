@@ -17,27 +17,20 @@
                     <div  class="box">
 
                         <div  class="box-body">
-                            <b:buttonGroup>
-                                <b:commandButton value="Mi Orden"
+                            <b:buttonGroup id="botomgrup">
+                                
+                                <b:commandButton value="VER MI ORDEN" actionListener="#{controlplantillas.setModulo('miorden.xhtml')}"
                                                  process="@this"  look="primary"  
-                                                 size="xs" >
-                                    <i class="fa fa-list"></i>
+                                                 size="xs" tooltip="Tiene (#{controlOrden.ordenesMoldelos.size()}) Articulos para generar " tooltip-position="bottom" >
+
                                 </b:commandButton>
-                                <b:commandButton value="Guardar" 
+                                <b:commandButton value="" actionListener="#{controlplantillas.setModulo('miorden.xhtml')}"
                                                  look="success"  
-                                                 size="xs" >
-                                    <i class="fa fa-save"></i>
+                                                 size="xs"  tooltip="Tiene (#{controlOrden.ordenesMoldelos.size()}) Articulos para generar " tooltip-position="bottom" >
+                                    <i class="fa fa-cart-arrow-down"></i>
+                                    <span class="label">#{controlOrden.ordenesMoldelos.size()}</span>
                                 </b:commandButton>
-                                <b:commandButton value="Editar" 
-                                                 look="warning"   
-                                                 size="xs" >
-                                    <i class="fa fa-pencil-square"></i>
-                                </b:commandButton>
-                                <b:commandButton value="Nuevo" 
-                                                 look="danger"  
-                                                 size="xs" >
-                                    <i class="fa fa-search"></i>
-                                </b:commandButton>
+
 
                             </b:buttonGroup>
                         </div>
@@ -51,9 +44,8 @@
 
         <b:row>
 
-            <p:repeat value="#{controlPrincipal.modelos}" var="Modelo">
+            <ui:repeat value="#{controlPrincipal.modelos}" var="Modelo">
                 <b:column col-sm="6" col-md="3"  style="padding-top: 20px" >
-
 
                     <div class="contenedor-img ejemplo-1 ih-item colored square"  >
                         <!--<b:thumbnail >-->
@@ -75,7 +67,7 @@
                         </div>
                     </div>
                 </b:column>
-            </p:repeat>
+            </ui:repeat>
 
 
         </b:row>
@@ -93,7 +85,7 @@
 
 
                         <div class="row">
-                            <b:panel  col-spans="2" id="mod">
+                            <b:panel   id="mod">
                                 <div class="col-lg-12"  >
                                     <div class="col-xs-12 col-sm-4" >
                                         <ul class="list-group">
@@ -102,15 +94,7 @@
                                             <li class="list-group-item">Peso en sera: (#{controlPrincipal.modeloSelecionado.peso_modelo})</li>
                                             <li class="list-group-item">Circones (#{controlPrincipal.modeloSelecionado.modelo_circon.size()})</li>
                                             <li class="list-group-item">Piedras Centrales (#{controlPrincipal.modeloSelecionado.piedra_centrales.size()})</li>
-                                            <li class="list-group-item">
-                                                Material:
-                                                <b:buttonGroup>
-                                                    <b:button look="default" style="color:black" title="peso en Plata" tooltip="peso en Plata" 
-                                                              tooltip-position="bottom" value="#{controlUtilidades.util.formatoDecimal(controlPrincipal.modeloSelecionado.peso_modelo*12,'0.0')}g"/>
-                                                    <b:button  look="warning"  tooltip="peso en Oro" title="peso en Oro"
-                                                               tooltip-position="bottom" value="#{controlUtilidades.util.formatoDecimal(controlPrincipal.modeloSelecionado.peso_modelo*16,'0.0')}g"/>
-                                                </b:buttonGroup>
-                                            </li>
+
                                             <li class="list-group-item"><i class="glyphicon glyphicon-screenshot"></i>#{controlPrincipal.modeloSelecionado.tipo_modelo.nombre}</li>
                                             <li class="list-group-item"><i class="fa fa-envelope"></i> john@example.com</li>
                                         </ul>
@@ -131,43 +115,50 @@
                                             </ui:repeat>
                                         </div>
                                     </div>
-                                      <div class="col-xs-12 col-sm-8" >
+                                    <div class="col-xs-12 col-sm-8" >
 
 
 
-                                    <div class="ui-g-12 ui-g-nopad">
-                                        <div class="ui-g-6">Material</div>
-                                        <div class="ui-g-6">
-                                            <p:selectOneRadio  value="#{controlPrincipal.circoneSelect}">
-                                                <f:selectItem  itemValue="ORO"   itemLabel="ORO" />
-                                                <f:selectItem itemValue="PLATA" itemLabel="PLATA" />
-                                            </p:selectOneRadio>
+                                        <div class="ui-g-12 ui-g-nopad">
+                                            <div class="ui-g-6">Peso en Oro</div>
+                                            <div class="ui-g-6"><b:button  look="warning"  tooltip="peso en Oro" title="peso en Oro"
+                                                                           tooltip-position="bottom" value="#{controlUtilidades.util.formatoDecimal(controlPrincipal.modeloSelecionado.peso_modelo*16,'0.0')}g"/></div>
+                                            <div class="ui-g-6">Peso En plata</div>
+                                            <div class="ui-g-6"> <b:button look="default" style="color:black" title="peso en Plata" tooltip="peso en Plata" 
+                                                                           tooltip-position="bottom" value="#{controlUtilidades.util.formatoDecimal(controlPrincipal.modeloSelecionado.peso_modelo*12,'0.0')}g"/></div>
+                                            <div class="ui-g-6">Material</div>
+                                            <div class="ui-g-6">
+                                                <p:selectOneRadio  value="#{controlPrincipal.material}">
+                                                    <f:selectItem  itemValue="ORO"   itemLabel="ORO" />
+                                                    <f:selectItem itemValue="PLATA" itemLabel="PLATA" />
+                                                </p:selectOneRadio>
+                                            </div>
+                                            <div class="ui-g-6">Cantidad</div>
+                                            <div class="ui-g-6">
+                                                <b:inputText  id="cant" value="#{controlPrincipal.cantidad}" style="font-size: 20px;text-align: center">
+                                                    <f:facet name="prepend">
+                                                        <b:commandButton value="-" update="cant"  actionListener="#{controlPrincipal.restar}"/>
+                                                    </f:facet>
+                                                    <f:facet name="append" >
+                                                        <b:commandButton value="+"  update="cant" actionListener="#{controlPrincipal.sumar}"/>
+                                                    </f:facet>
+                                                </b:inputText>
+                                            </div>
+                                            <p:messages autoUpdate="false"/>
                                         </div>
-                                        <div class="ui-g-6">Cantidad</div>
-                                        <div class="ui-g-6">
-                                            <b:inputText value="#{controlPrincipal.cantidad}" style="font-size: 20px;width:50px">
-                                                <f:facet name="prepend">
-                                                    <b:button value="-" />
-                                                </f:facet>
-                                                <f:facet name="append" >
-                                                    <b:button value="+" />
-                                                </f:facet>
-                                            </b:inputText>
-                                        </div>
-
                                     </div>
-                                </div>
 
                                 </div>
+
                             </b:panel>
-                           
+
                         </div>
 
 
                     </div>
                     <div class="modal-footer bg-#{controlSeccion.skins}-gradient">
                         <b:button value="close" dismiss="modal" onclick="return false;"/>
-                        <b:commandButton  value="Agregar a Orden" look="primary">
+                        <b:commandButton type="submit"  value="Agregar a Orden" update="mod botomgrup" actionListener="#{controlPrincipal.anadirOrden}" look="primary">
                             <i class="fa fa-shopping-cart"></i>
                         </b:commandButton>
                     </div>
@@ -177,24 +168,6 @@
             <!-- /.modal-dialog -->
             <!--                            </div>-->
         </div>
-        <!--<script src="js/prueba.js"></script>-->
-        <b:modal id="amodal" title="Modal Example" styleClass="modalPseudoClass"
-                 closable="false" close-on-escape="false" backdrop="false" size="modal-lg">
-            <p:panel id="mod1" >
-                value="#{controlPrincipal.modeloSelecionado}"
-            </p:panel>
-            <!--<div class="ui-g-4">-->
-
-            <!--</div>-->
-
-
-            <f:facet name="footer">
-                <b:button value="close" dismiss="modal" onclick="return false;"/>
-                <b:commandButton  value="Agregar a Orden" look="primary">
-                    <i class="fa fa-shopping-cart"></i>
-                </b:commandButton>
-            </f:facet>
-        </b:modal>
 
 
     </ui:composition>

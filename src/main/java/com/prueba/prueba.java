@@ -22,7 +22,7 @@ import com.Entidades.Grupo;
 import com.Entidades.Miembro;
 import com.Entidades.Modelo;
 import com.Entidades.ModeloCircon;
-import com.Entidades.ModeloPiedracentral;
+import com.Entidades.ModeloPiedraCentral;
 import com.Entidades.Modulo;
 import com.Entidades.Permisos;
 import com.Entidades.PiedraCentral;
@@ -103,29 +103,29 @@ public class prueba implements Serializable {
 //        circon.setMuestra(0.030);
 //        circon.setReferencia("Referencia");
 //        CirDao.crear(circon);
-        System.out.println("PIEDRAS CENTRALES*****");
-        PC.setCodigo("PC003");
-        PC.setNombre("ESMERALDA GRANDE");
-        tipo = TDao.consultarC(Tipo.class, 2L);
-        PC.setForma(tipo);
-        tipo = TDao.consultarC(Tipo.class, 4L);
-        PC.setTipo(tipo);
-        PC.setPeso(5000.19);
-        List<ModeloPiedracentral> modelopiedras = new ArrayList<ModeloPiedracentral>();
-
-//        PCDao.crear(PC);
-        piedras = PCDao.consultarTodo(PiedraCentral.class);
-        circones = CirDao.consultarTodo(Circon.class);
-
-        int ultimo = MdDao.Ultima();
-        modelo.setCodigo("M006");
-        modelo.setEstado("ACTIVO");
-
-        modelo.setImagen("dsd/imag123.png");
-        modelo.setPeso_circones(23400.0);
-        modelo.setPeso_modelo(332.8);
-        tipo = TDao.consultarC(Tipo.class, 1L);
-        modelo.setTipo_modelo(tipo);
+//        System.out.println("PIEDRAS CENTRALES*****");
+//        PC.setCodigo("PC003");
+//        PC.setNombre("ESMERALDA GRANDE");
+//        tipo = TDao.consultarC(Tipo.class, 2L);
+//        PC.setForma(tipo);
+//        tipo = TDao.consultarC(Tipo.class, 4L);
+//        PC.setTipo(tipo);
+//        PC.setPeso(5000.19);
+//        List<ModeloPiedraCentral> modelopiedras = new ArrayList<ModeloPiedraCentral>();
+//
+////        PCDao.crear(PC);
+//        piedras = PCDao.consultarTodo(PiedraCentral.class);
+//        circones = CirDao.consultarTodo(Circon.class);
+//
+//        int ultimo = MdDao.Ultima();
+//        modelo.setCodigo("M006");
+//        modelo.setEstado("ACTIVO");
+//
+//        modelo.setImagen("dsd/imag123.png");
+//        modelo.setPeso_circones(23400.0);
+//        modelo.setPeso_modelo(332.8);
+//        tipo = TDao.consultarC(Tipo.class, 1L);
+//        modelo.setTipo_modelo(tipo);
 
 //        MdDao.crear(modelo);
 //        int cant = 14;
@@ -142,7 +142,7 @@ public class prueba implements Serializable {
 //        System.out.println("______PIEDRAS__________");
 //        for (PiedraCentral piedrasc : piedras) {
 //            System.out.println(piedrasc.getCodigo());
-//            ModeloPiedracentral mp = new ModeloPiedracentral();
+//            ModeloPiedraCentral mp = new ModeloPiedraCentral();
 //
 //            mp.setPiedra(piedrasc);
 //            mp.setModelo(modelo);
@@ -165,18 +165,18 @@ public class prueba implements Serializable {
                 System.out.println(mc1.getCircon().getCodigo() + "--" + mc1.getCircon().getTamano());
             }
             System.out.println("*PIEDRAS(" + mod.getPiedra_centrales().size() + ")__________");
-            for (ModeloPiedracentral mp1 : mod.getPiedra_centrales()) {
+            for (ModeloPiedraCentral mp1 : mod.getPiedra_centrales()) {
                 System.out.println(mp1.getPiedra().getCodigo() + "--" + mp1.getPiedra().getNombre());
             }
         }
-        String number = ultimo + "";
+//        String number = ultimo + "";
 //        if (number.length() == 1) {
 //            number.format("00{0}", 2);
 //        }
 
-        System.out.println("REGISTRO EXITOSO " + String.format("%03d", ultimo));
-        ultimo = 190;
-        System.out.println("REGISTRO EXITOSO " + String.format("%03d", ultimo));
+//        System.out.println("REGISTRO EXITOSO " + String.format("%03d", ultimo));
+//        ultimo = 190;
+//        System.out.println("REGISTRO EXITOSO " + String.format("%03d", ultimo));
 
     }
 

@@ -62,7 +62,7 @@ public class PiedraCentral implements Serializable {
     @JoinColumn(name = "forma")
     private Tipo forma;
     @OneToMany(cascade = CascadeType.ALL,mappedBy="piedra")
-    private List<ModeloPiedracentral> modelos;
+    private List<ModeloPiedraCentral> modelos;
 
     public PiedraCentral() {
     }
@@ -132,11 +132,11 @@ public class PiedraCentral implements Serializable {
         this.forma = forma;
     }
 
-    public List<ModeloPiedracentral> getModelos() {
+    public List<ModeloPiedraCentral> getModelos() {
         return modelos;
     }
 
-    public void setModelos(List<ModeloPiedracentral> modelos) {
+    public void setModelos(List<ModeloPiedraCentral> modelos) {
         this.modelos = modelos;
     }
     

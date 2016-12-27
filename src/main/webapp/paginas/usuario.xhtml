@@ -13,30 +13,29 @@
 
             <div class="row">
                 <h:panelGroup    >
-                    <div id="barraup" class="col-xs-12 col-md-12 " style="z-index:2" >
+                    <div id="barraup" class="col-xs-12 col-md-12 " style="z-index:200" >
                         <div  class="box">
 
                             <div  class="box-body">
+                                <b:buttonGroup>
+                                    <b:commandButton value="AGREGAR USAURIO" 
+                                                     rendered="#{controlUsuarios.bootonregistro(controlSeccion.rol.idrol,controlplantillas.moduloSelecionado)}" 
+                                                     title="REGISTRAR MODELO"   
+                                                     look="success"
+                                                     actionListener="#{controlUsuarios.registroModulo()}"
+                                                     size="sm" >
+                                        <i class="fa fa-user-plus"></i>
+                                    </b:commandButton>
 
-                                <b:commandButton value="Registro" 
-                                                 rendered="#{controlUsuarios.bootonregistro(controlSeccion.rol.idrol,controlplantillas.moduloSelecionado)}" 
-                                                 title="REGISTRAR MODELO"   
-                                                 styleClass="btn-app bg-#{controlSeccion.skins}-gradient" 
-                                                 actionListener="#{controlUsuarios.registroModulo()}"
-                                                 size="sm" >
-                                    <i class="fa fa-user-plus"></i>
-                                    <f:param name="username" value="JSF 2.0 User" />
-                                </b:commandButton>
-
-                                <b:commandButton value="Consultar" 
-                                                 style="padding-left:20px"
-                                                 styleClass="btn-app"
-                                                 look="success"
-                                                 size="sm"
-                                                 ajax="true"
-                                                 actionListener="#{controlUsuarios.listarMiembros()}" >
-                                    <i class="fa fa-search"></i>
-                                </b:commandButton>
+                                    <b:commandButton value="Consultar" 
+                                                     style="padding-left:20px"
+                                                     look="info"
+                                                     size="sm"
+                                                     update="tbmiembros"
+                                                     actionListener="#{controlUsuarios.listarMiembros()}" >
+                                        <i class="fa fa-search"></i>
+                                    </b:commandButton>
+                                </b:buttonGroup>
 
                             </div>
                             <!-- /.box-body -->
@@ -82,29 +81,27 @@
             <div class="row">
 
                 <h:panelGroup >
-                    <div id="barraup" class="col-xs-12 col-md-12 " style="z-index:2" >
+                    <div id="barraup" class="col-xs-12 col-md-12 " style="z-index:200" >
                         <div  class="box">
 
                             <div  class="box-body">
                                 <b:buttonGroup>
-                                    <b:commandButton value="CONSULTAR"  process="@this" styleClass=" btn btn-app bg-#{controlSeccion.skins}-gradient" actionListener="#{controlUsuarios.consultaModulo()}" update="tab" size="xs" >
-                                        <i class="fa fa-search"></i>
-                                    </b:commandButton>
-                                    <b:commandButton value="Editar" rendered="#{!controlUsuarios.verBtnRegistro()}"  actionListener="#{controlUsuarios.save()}" class="" styleClass="btn btn-app bg-yellow-gradient"  update="tab" size="xs" >
-                                        <i class="fa fa-edit"></i>
-                                    </b:commandButton>
-                                    <b:commandButton value="Guardar" rendered="#{controlUsuarios.verBtnRegistro()}" actionListener="#{controlUsuarios.save()}"   styleClass=" btn btn-app bg-green"  update="tab" size="xs" >
+                                    <b:commandButton value="Guardar" rendered="#{controlUsuarios.verBtnRegistro()}"  actionListener="#{controlUsuarios.save()}"  look="success"   update="tab" size="xs" >
                                         <i class="fa fa-save"></i>
                                     </b:commandButton>
-
-                                    <b:commandButton value="Nuevo"  actionListener="#{controlUsuarios.limpiar()}" process="@this"  styleClass=" btn btn-app bg-red"  update="tab" size="xs" >
+                                    <b:commandButton value="Editar" rendered="#{!controlUsuarios.verBtnRegistro()}"  actionListener="#{controlUsuarios.save()}" look="warning" class=""  update="tab" size="xs" >
+                                        <i class="fa fa-edit"></i>
+                                    </b:commandButton>
+                                    <b:commandButton value="Nuevo"  actionListener="#{controlUsuarios.limpiar()}" process="@this"  look="danger"   update="tab" size="xs" >
                                         <i class="fa fa-clone"></i>
                                     </b:commandButton>
+                                    <b:commandButton value="Consultar"  process="@this"  actionListener="#{controlUsuarios.consultaModulo()}" update="tab" look="primary"  size="xs" >
+                                        <i class="fa fa-search"></i>
+                                    </b:commandButton>
 
-
-                                    <a class="btn btn-app ir-arriba icon-arrow-up2">
-                                        <i class="fa fa-angle-up"></i> up
-                                    </a>
+                                    <!--                                    <a class="btn btn-app ir-arriba icon-arrow-up2">
+                                                                            <i class="fa fa-angle-up"></i> up
+                                                                        </a>-->
                                 </b:buttonGroup>
                             </div>
                             <!-- /.box-body -->
@@ -115,9 +112,7 @@
             <div  class="col-md-12 col-xs-12">
                 <!--<h3></h3>-->
                 <p:panel id="panel" header="Datos del usuario">
-                    <b:growl id="growlMsg" globalOnly="true" placementFrom="top"
-                             show-detail="true" show-summary="false" allowDismiss="true"
-                             delay="10000" escape="true" /> 
+
                     <div class="ui-g">
                         <div class="ui-g-12 ui-md-12 ui-lg-3" >
                             <div class="box-body box-profile">
@@ -231,7 +226,7 @@
                                             <i class="fa fa-trash"></i>
                                         </b:commandButton>
                                         #{rol.nombre}
-                                        
+
                                     </p:dataList> 
                                 </div>
 
@@ -259,56 +254,7 @@
 
 
 
-        <script type="text/javascript">
-            var nav = $('#barraup');
-
-            if (nav.length != 0) {
-                var height = $("#navpricipal").height();
-                var navHomeY = nav.offset().top - height;
-                var isFixed = false;
-
-                $(document).scroll(function () {
-
-
-
-                    var $w = $(window);
-                    var scrollTop = $w.scrollTop();
-                    var shouldBeFixed = scrollTop > navHomeY;
-                    if (shouldBeFixed) {
-                        if (!isFixed) {
-                            nav.css({
-                                position: 'fixed',
-                                top: height,
-                            });
-                            $('#barraup').load();
-                            isFixed = true;
-                        }
-                    } else if (isFixed)
-                    {
-                        nav.css({
-                            position: 'static'
-                        });
-                        isFixed = false;
-                    }
-
-                });
-            }
-            $('.ir-arriba').click(function () {
-                $('body, html').animate({
-                    scrollTop: '0px'
-                }, 300);
-            });
-
-            $(window).scroll(function () {
-                if ($(this).scrollTop() > 0) {
-                    $('.ir-arriba').slideDown(300);
-                } else {
-                    $('.ir-arriba').slideUp(300);
-                }
-            });
-
-
-        </script>
+        <script src="js/prueba.js"></script>
 
 
 

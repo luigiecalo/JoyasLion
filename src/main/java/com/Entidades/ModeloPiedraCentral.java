@@ -34,8 +34,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "modelo_piedraCentral")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "ModeloPiedracentral.findAll", query = "SELECT mp FROM ModeloPiedracentral mp")})
-public class ModeloPiedracentral implements Serializable {
+    @NamedQuery(name = "ModeloPiedraCentral.findAll", query = "SELECT mp FROM ModeloPiedraCentral mp")})
+public class ModeloPiedraCentral implements Serializable {
     
     private static final long serialVersionUID = 1L;
      @EmbeddedId
@@ -49,12 +49,12 @@ public class ModeloPiedracentral implements Serializable {
     @Column(name = "cantidad")
     private int cantidad;
 
-    public ModeloPiedracentral() {
+    public ModeloPiedraCentral() {
     }
 
     
 
-    public ModeloPiedracentral(Modelo modelo, PiedraCentral piedra, int cantidad) {
+    public ModeloPiedraCentral(Modelo modelo, PiedraCentral piedra, int cantidad) {
         this.modeloPiedraCentralPk = new ModeloPiedraCentralPK();
         this.modeloPiedraCentralPk.setIdmodelo(modelo.getId());
         this.modeloPiedraCentralPk.setIdpiedra(piedra.getId());
@@ -63,11 +63,11 @@ public class ModeloPiedracentral implements Serializable {
         this.cantidad = cantidad;
     }
 
-      public ModeloPiedracentral(ModeloPiedraCentralPK modeloPiedraCentralPk) {
+      public ModeloPiedraCentral(ModeloPiedraCentralPK modeloPiedraCentralPk) {
         this.modeloPiedraCentralPk = modeloPiedraCentralPk;
     }
 
-    public ModeloPiedracentral(long modelo, long piedra, int cantidad) {
+    public ModeloPiedraCentral(long modelo, long piedra, int cantidad) {
         this.modeloPiedraCentralPk = new ModeloPiedraCentralPK(modelo, piedra);
     }
 
@@ -104,10 +104,10 @@ public class ModeloPiedracentral implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ModeloPiedracentral)) {
+        if (!(object instanceof ModeloPiedraCentral)) {
             return false;
         }
-        ModeloPiedracentral other = (ModeloPiedracentral) object;
+        ModeloPiedraCentral other = (ModeloPiedraCentral) object;
         if ((this.modeloPiedraCentralPk == null && other.modeloPiedraCentralPk != null) || (this.modeloPiedraCentralPk != null && !this.modeloPiedraCentralPk.equals(other.modeloPiedraCentralPk))) {
             return false;
         }
