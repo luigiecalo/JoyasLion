@@ -35,37 +35,106 @@
             </h:panelGroup>
         </div>
         <div class="row">
-            <b:column col-sm="6" col-md="3" col-lg="12"  style="padding-top: 20px" >
-                <!--<b:panelGrid colSpans="6,6" id="stateGridId">-->
-                <!--<h:form>-->
-                <b:panel title="Within form - collapse state is restored"
-                         look="primary">
-                    <p:dataTable id="ordenesmodelos" var="om" value="#{controlOrden.ordenesMoldelos}">
-                            
-                            <p:column headerText="Codigo">
-                                <h:outputText value="#{om.modelo.codigo}" />
-                            </p:column>
-                            <p:column headerText="Cantidad">
-                                <h:outputText value="#{om.cantidad}" />
-                            </p:column>
-                            <p:column headerText="Material">
-                                <h:outputText value="#{om.material}" />
-                            </p:column>
-                            <p:column style="text-align: center">
-                                <p:commandButton   icon="ui-icon-search" title="View"  update=":form:tab">
-                                </p:commandButton>
-                            </p:column>
-                        </p:dataTable>
-                </b:panel>
+            <div class="col-xs-9 col-md-9 col-lg-9">
+                DAtos personales
+            </div>
+             <div class="col-xs-3 col-md-3 col-lg-3">
+                <!-- small box -->
+                <div class="small-box bg-aqua">
+                    <div class="inner">
+                        <h3>150</h3>
 
-                <!--</h:form>-->
-                <b:panel title="outside the form - open after each postback"
-                         look="danger">
-                    <h:outputText value="Panel Content" />
-                    <b:messages />
-                </b:panel>
-                <!--</b:panelGrid>-->
-            </b:column>
+                        <p>New Orders</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-cart-plus"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-md-6 col-lg-6">
+                <p:dataTable id="ordenesmodelos" var="om" value="#{controlOrden.ordenesMoldelos}">
+
+                    <p:column headerText="Modelo">
+                        <img  src="imagenes/fondo.jpg" data-src="imagenes/fondo.png" style="width:100%" class="modelos img img-bordered-sm" alt="Generic placeholder thumbnail"/>
+                    </p:column>
+                    <p:column headerText="Codigo">
+                        <h:outputText value="#{om.modelo.codigo}" />
+                    </p:column>
+                    <p:column headerText="Cant" style="width: 50px">
+                        <h:outputText value="#{om.cantidad}" />
+                    </p:column>
+                    
+                    <p:column headerText="Material" >
+                        <b:button look="#{om.peso_material=="ORO"?'warning':'default'}" style="color:black" title="peso en Plata" tooltip="peso en Plata" 
+                                  tooltip-position="bottom" value="#{controlUtilidades.util.formatoDecimal(om.peso_material,'0.0')}g"/></b:button>
+                    </p:column>
+                    <p:column style="text-align: center" >
+                        <p:commandButton class="bg-aqua"  icon="ui-icon-search" title="View"  update=":form:tab">
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </div>
+           
+            <div class="col-lg-3 col-xs-6 col-lg-3">
+                <!-- small box -->
+                <div class="small-box bg-aqua">
+                    <div class="inner">
+                        <h3>150</h3>
+
+                        <p>New Orders</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-cart-plus"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xs-6 col-lg-3">
+                <!-- small box -->
+                <div class="small-box bg-aqua">
+                    <div class="inner">
+                        <h3>150</h3>
+
+                        <p>New Orders</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-cart-plus"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xs-6 col-lg-3">
+                <!-- small box -->
+                <div class="small-box bg-aqua">
+                    <div class="inner">
+                        <h3>150</h3>
+
+                        <p>New Orders</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-cart-plus"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xs-6 col-lg-3">
+                <!-- small box -->
+                <div class="small-box bg-aqua">
+                    <div class="inner">
+                        <h3>150</h3>
+
+                        <p>New Orders</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-cart-plus"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+
+
 
 
 
