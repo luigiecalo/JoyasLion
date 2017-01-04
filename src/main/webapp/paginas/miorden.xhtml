@@ -19,10 +19,9 @@
 
                                 <b:commandButton value="MODELOS" actionListener="#{controlplantillas.setModulo('principal.xhtml')}"
                                                  process="@this"  look="primary"  
-                                                 size="xs" tooltip="Tiene (#{controlOrden.cant}) Articulos para generar " tooltip-position="bottom" >
-
+                                                 size="xs"  tooltip-position="bottom" >
                                 </b:commandButton>
-
+                                <b:button look="warning"  size="xs"   value="REALIZAR ORDEN"/>
 
 
                             </b:buttonGroup>
@@ -35,103 +34,113 @@
             </h:panelGroup>
         </div>
         <div class="row">
-            <div class="col-xs-9 col-md-9 col-lg-9">
-                DAtos personales
+            <div class="col-xs-12 col-md-3 col-lg-12">
+                <div class="ui-g" >
+                    <div class="ui-g-12 ui-md-4 ui-g-nopad">
+
+                        <div class="ui-g-12 ui-g-nopad">
+
+
+                            <div class="ui-g">
+                                <div class="ui-g-6 ui-md-12">
+                                    <div class="small-box bg-#{controlSeccion.skins}">
+                                        <div class="inner">
+                                            <h2>
+                                                #{controlSeccion.miembro.nombre1} #{controlSeccion.miembro.nombre2}
+                                            </h2>
+
+                                            <p style="text-align: right">TOTAL<span class="info-box-number">$#{controlOrden.totalOrden}</span></p>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="fa fa-cart-plus"></i>
+                                        </div>
+                                    </div>
+                                </div>  
+
+
+                            </div>
+
+                            <div class="ui-g">
+                                <div class="ui-g-12 ui-md-6">
+                                    <div class="description-block border-right">
+                                        <span class="description-percentage text-yellow"><i class="fa fa-caret-left"></i> 0%</span>
+                                        <h5 class="description-header">$10,390.90</h5>
+                                        <span class="description-text">TOTAL COST</span>
+                                    </div>
+                                </div>
+                                <div class="ui-g-12 ui-md-6">
+                                    <div class="description-block border-right">
+                                        <span class="description-percentage text-yellow"><i class="fa fa-caret-left"></i> 0%</span>
+                                        <h5 class="description-header">$12,390.90</h5>
+                                        <span class="description-text">TOTAL CON IVA</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-8">
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Detalles de La Orden</h3>  
+
+
+                                <div class="box-tools pull-right">
+                                    <b:commandButton value="" actionListener="#{controlplantillas.setModulo('principal.xhtml')}"
+                                                     process="@this"  look="primary"  
+                                                     size="xs"  class="btn btn-box-tool" >
+                                        <i class="fa fa-cart-plus"></i>
+                                    </b:commandButton>
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                    </button>
+
+                                </div>
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                <ul class="products-list product-list-in-box">
+                                    <ui:repeat value="#{controlOrden.ordenesMoldelos}" var="om">
+                                        <li class="item">
+                                            <div class="product-img">
+                                                <img  src="imagenes/fondo.jpg" data-src="imagenes/fondo.png"  class="modelos img-thumbnail" alt="Generic placeholder thumbnail"/>
+                                            </div>
+                                            <div class="product-info">
+                                                <a href="javascript:void(0)" class="product-title">
+                                                    <h:outputText value="#{om.modelo.codigo}  " style="font-size:17px;"/>
+
+                                                </a>
+                                                <b:buttonGroup >
+                                                    <b:button look="#{om.material=='ORO'?'warning':'default'}" style="#{om.material=='ORO'?'':'color:black'}" title="peso en #{om.material}" tooltip="peso en #{om.material}" 
+                                                              tooltip-position="bottom" value="#{controlUtilidades.util.formatoDecimal(om.peso_material,'0.0')}g"/>
+                                                    <b:commandButton value="Cancelar" actionListener="#{controlOrden.eliminaOrden(om)}" process="@this"  look="danger"  ajax="true"   >
+                                                        <i class="fa fa-trash"></i>
+                                                    </b:commandButton>
+                                                </b:buttonGroup>
+
+                                                <span class="label label-warning pull-right">$#{om.total}</span>
+                                                <span class="product-description">
+
+                                                    Cantidad: <h:outputText value="#{om.cantidad}"/>
+                                                </span>
+                                            </div>
+                                        </li>
+                                    </ui:repeat>
+
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div> 
             </div>
-             <div class="col-xs-3 col-md-3 col-lg-3">
+
+            <div class="col-lg-3 col-xs-6 col-lg-3 col-lg-offset-9">
                 <!-- small box -->
-                <div class="small-box bg-aqua">
-                    <div class="inner">
-                        <h3>150</h3>
-
-                        <p>New Orders</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-cart-plus"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-
-            <div class="col-xs-12 col-md-6 col-lg-6">
-                <p:dataTable id="ordenesmodelos" var="om" value="#{controlOrden.ordenesMoldelos}">
-
-                    <p:column headerText="Modelo">
-                        <img  src="imagenes/fondo.jpg" data-src="imagenes/fondo.png" style="width:100%" class="modelos img img-bordered-sm" alt="Generic placeholder thumbnail"/>
-                    </p:column>
-                    <p:column headerText="Codigo">
-                        <h:outputText value="#{om.modelo.codigo}" />
-                    </p:column>
-                    <p:column headerText="Cant" style="width: 50px">
-                        <h:outputText value="#{om.cantidad}" />
-                    </p:column>
-                    
-                    <p:column headerText="Material" >
-                        <b:button look="#{om.peso_material=="ORO"?'warning':'default'}" style="color:black" title="peso en Plata" tooltip="peso en Plata" 
-                                  tooltip-position="bottom" value="#{controlUtilidades.util.formatoDecimal(om.peso_material,'0.0')}g"/></b:button>
-                    </p:column>
-                    <p:column style="text-align: center" >
-                        <p:commandButton class="bg-aqua"  icon="ui-icon-search" title="View"  update=":form:tab">
-                        </p:commandButton>
-                    </p:column>
-                </p:dataTable>
-            </div>
-           
-            <div class="col-lg-3 col-xs-6 col-lg-3">
-                <!-- small box -->
-                <div class="small-box bg-aqua">
-                    <div class="inner">
-                        <h3>150</h3>
-
-                        <p>New Orders</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-cart-plus"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-xs-6 col-lg-3">
-                <!-- small box -->
-                <div class="small-box bg-aqua">
-                    <div class="inner">
-                        <h3>150</h3>
-
-                        <p>New Orders</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-cart-plus"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-xs-6 col-lg-3">
-                <!-- small box -->
-                <div class="small-box bg-aqua">
-                    <div class="inner">
-                        <h3>150</h3>
-
-                        <p>New Orders</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-cart-plus"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-xs-6 col-lg-3">
-                <!-- small box -->
-                <div class="small-box bg-aqua">
-                    <div class="inner">
-                        <h3>150</h3>
-
-                        <p>New Orders</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-cart-plus"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
+                <b:commandButton value="REALIZAR ORDEN" actionListener="#{controlOrden.guardarOrden}"
+                                                     process="@this"  look="warning" 
+                                                     size="lg"  class="btn btn-box-tool" >
+                                        <i class="fa fa-cart-arrow-down"></i>
+                                    </b:commandButton>
             </div>
 
 

@@ -41,7 +41,7 @@ public final class ControlPrincipal implements Serializable {
     private List<String> images;
     private List<String> imagesid;
     @ManagedProperty(value = "#{controlOrden}")
-    private ControlOrden messageBean;
+    private ControlOrden controlOrden;
     //OBJECTOS
     private Modelo modeloSelecionado = new Modelo();
     private Circon circon = new Circon();
@@ -133,12 +133,12 @@ public final class ControlPrincipal implements Serializable {
             util.crearmensajes("INFO", "MENSAGE", "REgistro Exitoso");
             util.modal("mdModelo", "hide");
             Double peso_modelo=0.0;
-            if (material == "ORO") {
+            if (material.equals("ORO")) {
                peso_modelo=modeloSelecionado.getPeso_modelo()* 16;
             } else {
                 peso_modelo=modeloSelecionado.getPeso_modelo()* 12;
             }
-            messageBean.agregarordenmodelo(modeloSelecionado, cantidad, material, peso_modelo);
+            controlOrden.agregarordenmodelo(modeloSelecionado, cantidad, material, peso_modelo);
 //            controlOrdenes.setCantidad(203);
 //            ControlOrdenes bean1 = context.getApplication().evaluateExpressionGet(context, "#{controlOrdenes}", ControlOrdenes.class);
 //            bean.setCantidad(bean.getCantidad() + 1);
@@ -324,19 +324,19 @@ public final class ControlPrincipal implements Serializable {
     }
 
     public void cambiartext() {
-        messageBean.setMessage("este Es un nuevo texto");
-        messageBean.setCant(messageBean.getCant() + 1);
+        controlOrden.setMessage("este Es un nuevo texto");
+        controlOrden.setCant(controlOrden.getCant() + 1);
     }
 
     public String getMessage() {
-        if (messageBean != null) {
-            message = messageBean.getMessage();
+        if (controlOrden != null) {
+            message = controlOrden.getMessage();
         }
         return message;
     }
 
-    public void setMessageBean(ControlOrden message) {
-        this.messageBean = message;
+    public void setControlOrden(ControlOrden message) {
+        this.controlOrden = message;
     }
 
 }

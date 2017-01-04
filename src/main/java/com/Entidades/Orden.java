@@ -18,12 +18,15 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "orden")
 @SequenceGenerator(name = "USER_SEQUENCE", sequenceName = "USER_SEQUENCE", allocationSize = 1, initialValue = 0)
-@NamedQueries({@NamedQuery(name = Orden.LISTAR, query = "SELECT o FROM Orden o")})
+@NamedQueries({
+    @NamedQuery(name = Orden.LISTAR, query = "SELECT o FROM Orden o"),
+    @NamedQuery(name = Orden.BUSCAR_CODIGO_ESTADO, query = "SELECT o FROM Orden o WHERE o.codigo = :codigo AND o.estado =:estado"),
+    @NamedQuery(name = Orden.ULTIMO, query = "SELECT COUNT(o.id)+1 FROM Orden o WHERE o.codigo LIKE :codigo")})
 public class Orden implements Serializable {
 
-//    public static final String BUSCAR_CODIGO_ESTADO = "Orden.codigoEstado";
+    public static final String BUSCAR_CODIGO_ESTADO = "Orden.codigoEstado";
     public static final String LISTAR = "Orden.listar";
-//    public static final String ULTIMO = "Orden.ultimo";
+    public static final String ULTIMO = "Orden.ultimo";
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USER_SEQUENCE")
@@ -44,9 +47,8 @@ public class Orden implements Serializable {
     @Basic(optional = false)
     @Column(name = "valor_total")
     private Double valor_total;
-    @OneToMany(cascade = CascadeType.ALL,orphanRemoval=true,mappedBy="orden")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "orden")
     private List<OrdenModelo> ordenesModelo;
-
 
     @Basic(optional = false)
     @Column(name = "estado")
@@ -55,8 +57,8 @@ public class Orden implements Serializable {
     public Orden() {
     }
 
-    public Orden(Long id, String codigo,Long fecha, Usuario usuario,
-            Usuario cliente,  Double valor_total,
+    public Orden(Long id, String codigo, Long fecha, Usuario usuario,
+            Usuario cliente, Double valor_total,
             String estado) {
         this.id = id;
         this.codigo = codigo;
@@ -132,8 +134,6 @@ public class Orden implements Serializable {
         this.estado = estado;
     }
 
-  
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -158,9 +158,5 @@ public class Orden implements Serializable {
     public String toString() {
         return "Orden{" + "id=" + id + ", fecha=" + fecha + ", codigo=" + codigo + ", usuario=" + usuario + ", cliente=" + cliente + ", valor_total=" + valor_total + ", ordenesModelo=" + ordenesModelo + ", estado=" + estado + '}';
     }
-
-  
-
-   
 
 }

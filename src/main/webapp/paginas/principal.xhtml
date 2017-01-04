@@ -18,11 +18,11 @@
 
                         <div  class="box-body">
                             <b:buttonGroup id="botomgrup">
-                                
+
                                 <b:commandButton value="VER MI ORDEN" actionListener="#{controlplantillas.setModulo('miorden.xhtml')}"
                                                  process="@this"  look="primary"  
                                                  size="xs" tooltip="Tiene (#{controlOrden.ordenesMoldelos.size()}) Articulos para generar " tooltip-position="bottom" >
-
+                                    <i class="fa fa-eye"></i>
                                 </b:commandButton>
                                 <b:commandButton value="" actionListener="#{controlplantillas.setModulo('miorden.xhtml')}"
                                                  look="success"  
@@ -81,72 +81,72 @@
                     <div class="modal-header" >
                         <h4 class="modal-title">Info Modal</h4>
                     </div>
-                     <b:panel   id="mod">
-                                <div class="col-lg-12"  >
-                                    <div class="col-xs-12 col-sm-4" >
-                                        <ul class="list-group">
-                                            <li class="list-group-item"><img  src="imagenes/fondo.jpg"  data-src="imagenes/fondo.png" class="img-thumbnail img-responsive circle colored ih-item padre" alt="Generic placeholder thumbnail"/></li>
-                                            <li class="list-group-item">CODIGO:#{controlPrincipal.modeloSelecionado.codigo}</li>
-                                            <li class="list-group-item">Peso en sera: (#{controlPrincipal.modeloSelecionado.peso_modelo})</li>
-                                            <li class="list-group-item">Circones (#{controlPrincipal.modeloSelecionado.modelo_circon.size()})</li>
-                                            <li class="list-group-item">Piedras Centrales (#{controlPrincipal.modeloSelecionado.piedra_centrales.size()})</li>
+                    <b:panel   id="mod">
+                        <div class="col-lg-12"  >
+                            <div class="col-xs-12 col-sm-4" >
+                                <ul class="list-group">
+                                    <li class="list-group-item"><img  src="imagenes/fondo.jpg"  data-src="imagenes/fondo.png" class="img-thumbnail img-responsive circle colored ih-item padre" alt="Generic placeholder thumbnail"/></li>
+                                    <li class="list-group-item">CODIGO:#{controlPrincipal.modeloSelecionado.codigo}</li>
+                                    <li class="list-group-item">Peso en sera: (#{controlPrincipal.modeloSelecionado.peso_modelo})</li>
+                                    <li class="list-group-item">Circones (#{controlPrincipal.modeloSelecionado.modelo_circon.size()})</li>
+                                    <li class="list-group-item">Piedras Centrales (#{controlPrincipal.modeloSelecionado.piedra_centrales.size()})</li>
 
-                                            <li class="list-group-item"><i class="glyphicon glyphicon-screenshot"></i>#{controlPrincipal.modeloSelecionado.tipo_modelo.nombre}</li>
-                                            <li class="list-group-item"><i class="fa fa-envelope"></i> john@example.com</li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-8" >
-
-
-                                        <div id="slider" style="border: #006"  >
-                                            <ui:repeat value="#{controlPrincipal.imagesid}"  var="img">
-                                                <a href="#image#{img}"> <img style="" class="img-sm img-circle"  src="images/assets/#{img}.jpg" /></a>
-                                            </ui:repeat>
-                                        </div>
+                                    <li class="list-group-item"><i class="glyphicon glyphicon-screenshot"></i>#{controlPrincipal.modeloSelecionado.tipo_modelo.nombre}</li>
+                                    <li class="list-group-item"><i class="fa fa-envelope"></i> john@example.com</li>
+                                </ul>
+                            </div>
+                            <div class="col-xs-12 col-sm-8" >
 
 
-                                        <div id="images" >
-                                            <ui:repeat value="#{controlPrincipal.imagesid}" var="img">
-                                                <img  id="image#{img}" class="img-md contenedor-img img-thumbnail" src="images/assets/#{img}.jpg" />
-                                            </ui:repeat>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-8" >
-
-
-
-                                        <div class="ui-g-12 ui-g-nopad">
-                                            <div class="ui-g-6">Peso en Oro</div>
-                                            <div class="ui-g-6"><b:button  look="warning"  tooltip="peso en Oro" title="peso en Oro"
-                                                                           tooltip-position="bottom" value="#{controlUtilidades.util.formatoDecimal(controlPrincipal.modeloSelecionado.peso_modelo*16,'0.0')}g"/></div>
-                                            <div class="ui-g-6">Peso En plata</div>
-                                            <div class="ui-g-6"> <b:button look="default" style="color:black" title="peso en Plata" tooltip="peso en Plata" 
-                                                                           tooltip-position="bottom" value="#{controlUtilidades.util.formatoDecimal(controlPrincipal.modeloSelecionado.peso_modelo*12,'0.0')}g"/></div>
-                                            <div class="ui-g-6">Material</div>
-                                            <div class="ui-g-6">
-                                                <p:selectOneRadio  value="#{controlPrincipal.material}">
-                                                    <f:selectItem  itemValue="ORO"   itemLabel="ORO" />
-                                                    <f:selectItem itemValue="PLATA" itemLabel="PLATA" />
-                                                </p:selectOneRadio>
-                                            </div>
-                                            <div class="ui-g-6">Cantidad</div>
-                                            <div class="ui-g-6">
-                                                <b:inputText  id="cant" value="#{controlPrincipal.cantidad}" style="font-size: 20px;text-align: center">
-                                                    <f:facet name="prepend">
-                                                        <b:commandButton value="-" update="cant"  actionListener="#{controlPrincipal.restar}"/>
-                                                    </f:facet>
-                                                    <f:facet name="append" >
-                                                        <b:commandButton value="+"  update="cant" actionListener="#{controlPrincipal.sumar}"/>
-                                                    </f:facet>
-                                                </b:inputText>
-                                            </div>
-                                            <p:messages autoUpdate="false"/>
-                                        </div>
-                                    </div>
-
+                                <div id="slider" style="border: #006"  >
+                                    <ui:repeat value="#{controlPrincipal.imagesid}"  var="img">
+                                        <a href="#image#{img}"> <img style="" class="img-sm img-circle"  src="images/assets/#{img}.jpg" /></a>
+                                    </ui:repeat>
                                 </div>
 
-                            </b:panel>
+
+                                <div id="images" >
+                                    <ui:repeat value="#{controlPrincipal.imagesid}" var="img">
+                                        <img  id="image#{img}" class="img-md contenedor-img img-thumbnail" src="images/assets/#{img}.jpg" />
+                                    </ui:repeat>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-8" >
+
+
+
+                                <div class="ui-g-12 ui-g-nopad">
+                                    <div class="ui-g-6">Peso en Oro</div>
+                                    <div class="ui-g-6"><b:button  look="warning"  tooltip="peso en Oro" title="peso en Oro"
+                                                                   tooltip-position="bottom" value="#{controlUtilidades.util.formatoDecimal(controlPrincipal.modeloSelecionado.peso_modelo*16,'0.0')}g"/></div>
+                                    <div class="ui-g-6">Peso En plata</div>
+                                    <div class="ui-g-6"> <b:button look="default" style="color:black" title="peso en Plata" tooltip="peso en Plata" 
+                                                                   tooltip-position="bottom" value="#{controlUtilidades.util.formatoDecimal(controlPrincipal.modeloSelecionado.peso_modelo*12,'0.0')}g"/></div>
+                                    <div class="ui-g-6">Material</div>
+                                    <div class="ui-g-6">
+                                        <p:selectOneRadio  value="#{controlPrincipal.material}">
+                                            <f:selectItem  itemValue="ORO"   itemLabel="ORO" />
+                                            <f:selectItem itemValue="PLATA" itemLabel="PLATA" />
+                                        </p:selectOneRadio>
+                                    </div>
+                                    <div class="ui-g-6">Cantidad</div>
+                                    <div class="ui-g-6">
+                                        <b:inputText  id="cant" value="#{controlPrincipal.cantidad}" style="font-size: 20px;text-align: center">
+                                            <f:facet name="prepend">
+                                                <b:commandButton value="-" update="cant"  actionListener="#{controlPrincipal.restar}"/>
+                                            </f:facet>
+                                            <f:facet name="append" >
+                                                <b:commandButton value="+"  update="cant" actionListener="#{controlPrincipal.sumar}"/>
+                                            </f:facet>
+                                        </b:inputText>
+                                    </div>
+                                    <p:messages autoUpdate="false"/>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </b:panel>
                     <div class="modal-footer bg-#{controlSeccion.skins}-gradient">
                         <b:button value="close" dismiss="modal" onclick="return false;"/>
                         <b:commandButton type="submit"  value="Agregar a Orden" update="mod botomgrup" actionListener="#{controlPrincipal.anadirOrden}" look="primary">

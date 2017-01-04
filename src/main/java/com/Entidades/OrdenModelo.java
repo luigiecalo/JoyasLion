@@ -26,18 +26,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "orden_modelo")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "OrdenModelo.findAll", query = "SELECT om FROM OrdenModelo om")})
+    @NamedQuery(name = OrdenModelo.LISTAR, query = "SELECT om FROM OrdenModelo om")})
 public class OrdenModelo implements Serializable {
 
-
+    public static final String BUSCAR_CODIGO_ESTADO = "OrdenModelo.codigoEstado";
+    public static final String LISTAR = "OrdenModelo.listar";
+    public static final String ULTIMO = "OrdenModelo.ultimo";
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected OrdenModeloPK ordenModeloPK;
     @JoinColumn(name = "idorden", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(cascade = CascadeType.ALL,optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
     private Orden orden;
     @JoinColumn(name = "idmodelo", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(cascade = CascadeType.ALL,optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
     private Modelo modelo;
     @Column(name = "cantidad")
     private int cantidad;
@@ -55,30 +57,28 @@ public class OrdenModelo implements Serializable {
     public OrdenModelo() {
     }
 
-    public OrdenModelo(Modelo modelo, Orden orden, int cantidad,Double descuento, Double  valor,Double total,String material,Double peso_material) {
+    public OrdenModelo(Modelo modelo, Orden orden, int cantidad, Double descuento, Double valor, Double total, String material, Double peso_material) {
         this.ordenModeloPK = new OrdenModeloPK();
         this.ordenModeloPK.setIdmodelo(modelo.getId());
         this.ordenModeloPK.setIdmodelo(orden.getId());
         this.modelo = modelo;
         this.orden = orden;
         this.cantidad = cantidad;
-        this.descuento=descuento;
-        this.valor=valor;
-        this.material=material;
-        this.peso_material=peso_material;
-        this.total=total;
-        
+        this.descuento = descuento;
+        this.valor = valor;
+        this.material = material;
+        this.peso_material = peso_material;
+        this.total = total;
+
     }
 
     public OrdenModelo(OrdenModeloPK ordenModeloPK) {
         this.ordenModeloPK = ordenModeloPK;
     }
 
-    public OrdenModelo(long modelo, long orden) {
-        this.ordenModeloPK = new OrdenModeloPK(orden,modelo);
+    public void setOrdenModeloPK(long modelo, long orden) {
+        this.ordenModeloPK = new OrdenModeloPK(orden, modelo);
     }
-
-  
 
     public Modelo getModelo() {
         return modelo;
@@ -136,8 +136,6 @@ public class OrdenModelo implements Serializable {
         this.peso_material = peso_material;
     }
 
-    
-
     public int getCantidad() {
         return cantidad;
     }
@@ -145,7 +143,6 @@ public class OrdenModelo implements Serializable {
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
-
 
     @Override
     public int hashCode() {
