@@ -1,0 +1,84 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <span class=""></span>
+        <div class="row">
+
+            <h:panelGroup >
+                <div id="barraup" class="col-xs-12 col-md-12 " style="z-index:2" >
+                    <div  class="box">
+
+                        <div  class="box-body">
+                            <b:buttonGroup id="botomgrup">
+
+                                <b:commandButton value="MODELOS" actionListener="#{controlplantillas.setModulo('principal.xhtml')}"
+                                                 process="@this"  look="primary"   update=":form:tab" 
+                                                 size="xs"  tooltip-position="bottom" >
+                                </b:commandButton>
+                                <b:button look="warning"  size="xs"   value="REALIZAR ORDEN"/>
+
+
+                            </b:buttonGroup>
+                        </div>
+
+
+                        <!-- /.box-body -->
+                    </div>
+                </div>
+            </h:panelGroup>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-3 col-lg-12">
+                <p:dataTable var="ord" value="#{controlOrden.ordenes}" rowStyleClass="#{car.year le 1990 ? 'old' : null}">
+                    <p:column headerText="COD">
+                        <h:outputText value="#{ord.codigo}" />
+                    </p:column>
+
+                    <p:column headerText="FECHA">
+                        <h:outputText value="#{ord.fecha}" />
+                    </p:column>
+                     <p:column headerText="CLIENTE">
+                         <h:outputText value="#{ord.cliente.login}" />
+                    </p:column>
+
+                    <p:column headerText="TOTAL">
+                        <h:outputText value="#{ord.valor_total}" />
+                    </p:column>
+
+                    <p:column headerText="ESTADO">
+                        <h:outputText value="#{ord.estado}" />
+                    </p:column>
+                </p:dataTable>
+            </div>
+
+
+
+
+
+
+        </div>
+
+
+        <p:messages id="msg" autoUpdate="false"/>
+
+
+
+
+
+
+
+        <script src="js/prueba.js"></script>
+
+
+
+
+
+    </ui:composition>
+
+</html>

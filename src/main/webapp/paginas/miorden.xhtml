@@ -18,12 +18,14 @@
                             <b:buttonGroup id="botomgrup">
 
                                 <b:commandButton value="MODELOS" actionListener="#{controlplantillas.setModulo('principal.xhtml')}"
-                                                 process="@this"  look="primary"  
+                                                 process="@this"  look="primary"   update=":form:tab" 
                                                  size="xs"  tooltip-position="bottom" >
                                 </b:commandButton>
                                 <b:button look="warning"  size="xs"   value="REALIZAR ORDEN"/>
-
-
+                                <b:commandButton value="Estado Ordenes" actionListener="#{controlplantillas.setModulo('ordenes.xhtml')}"
+                                                 process="@this"  look="primary"   update=":form:tab" 
+                                                 size="xs"  tooltip-position="bottom" >
+                                </b:commandButton>
                             </b:buttonGroup>
                         </div>
 
@@ -86,7 +88,7 @@
 
                                 <div class="box-tools pull-right">
                                     <b:commandButton value="" actionListener="#{controlplantillas.setModulo('principal.xhtml')}"
-                                                     process="@this"  look="primary"  
+                                                     update=":form:tab"   look="primary"  
                                                      size="xs"  class="btn btn-box-tool" >
                                         <i class="fa fa-cart-plus"></i>
                                     </b:commandButton>
@@ -137,10 +139,10 @@
             <div class="col-lg-3 col-xs-6 col-lg-3 col-lg-offset-9">
                 <!-- small box -->
                 <b:commandButton value="REALIZAR ORDEN" actionListener="#{controlOrden.guardarOrden}"
-                                                     process="@this"  look="warning" 
-                                                     size="lg"  class="btn btn-box-tool" >
-                                        <i class="fa fa-cart-arrow-down"></i>
-                                    </b:commandButton>
+                                 process="@this"  look="warning" 
+                                 size="lg"  class="btn btn-box-tool" >
+                    <i class="fa fa-cart-arrow-down"></i>
+                </b:commandButton>
             </div>
 
 

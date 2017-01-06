@@ -23,8 +23,18 @@ public class OrdenDaoimplement extends ImplDao<Orden, Long> implements OrdenDao,
 
     EntityManager em = getEmf().createEntityManager();
 
-    public List<Orden> Listar() {
+    public List<Orden> ListarPorUsuario() {
         return em.createNamedQuery(Orden.LISTAR).getResultList();
+    }
+
+    public List<Orden> buscarOrdenCodigoEstado(Long cliente) {
+        Query query = em.createNamedQuery(Orden.USUARIO_LISTA);
+        query.setParameter("cliente", cliente);
+        List<Orden> list = query.getResultList();
+        if (list == null || list.isEmpty()) {
+            return null;
+        }
+        return list;
     }
 
     public Orden buscarOrdenCodigoEstado(String codigo, String estado) {
@@ -42,7 +52,7 @@ public class OrdenDaoimplement extends ImplDao<Orden, Long> implements OrdenDao,
     public int Ultima(String cod) {
         int result = 0;
         Query query = em.createNamedQuery(Orden.ULTIMO);
-        query.setParameter("codigo",'%'+cod+'%');
+        query.setParameter("codigo", '%' + cod + '%');
         try {
             result = Integer.parseInt(query.getSingleResult().toString());
         } catch (NullPointerException ex) {

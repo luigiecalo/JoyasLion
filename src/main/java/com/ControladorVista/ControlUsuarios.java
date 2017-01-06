@@ -6,6 +6,7 @@
 package com.ControladorVista;
 
 import Utilidades.Utilidades;
+import Utilidades.crearcarpeta;
 import com.Dao.MiembroDaoimplement;
 import com.Dao.RolDaoimplement;
 import com.Dao.UsuarioDaoimplement;
@@ -13,15 +14,21 @@ import com.Entidades.Miembro;
 import com.Entidades.Modulo;
 import com.Entidades.Rol;
 import com.Entidades.Usuario;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.imageio.ImageIO;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 
@@ -33,11 +40,17 @@ import org.primefaces.event.FileUploadEvent;
 @ViewScoped
 public final class ControlUsuarios implements Serializable {
 
+    //UTILIDADES
     private Long idmod;
     private Long rolselect = 0l;
     private Utilidades util = new Utilidades();
     private Usuario usuario = new Usuario();
     private Miembro miembro = new Miembro();
+    private crearcarpeta ruta = new crearcarpeta();
+    private String imagen = "default2";
+    private String carpeta = "temp/";
+    File directorioTemp = new File(ruta.Ruta() + "/temp");
+
     private Rol rol = new Rol();
 //    private Rol rolselect= new Rol();
     private Miembro miembroSelecionado = new Miembro();
@@ -74,7 +87,7 @@ public final class ControlUsuarios implements Serializable {
     }
 
     public boolean bootonregistro(Long idrol, Modulo mod) {
-        return util.permisos(idrol, mod,"E");
+        return util.permisos(idrol, mod, "E");
     }
 
     public boolean verBtnRegistro() {
@@ -91,8 +104,24 @@ public final class ControlUsuarios implements Serializable {
     }
 
     public void handleFileUpload(FileUploadEvent event) {
-        FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
-        FacesContext.getCurrentInstance().addMessage(null, message);
+        try {
+            FacesMessage message = new FacesMessage("Se Cargo", event.getFile().getFileName() + " Exitosamente");
+            BufferedImage imBuff = ImageIO.read(event.getFile().getInputstream());
+
+            File directorio = null;
+            try {
+                directorio = new File(ruta.Ruta() + "/temp");
+                directorio.mkdir();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            String img=event.getFile().getFileName() + ruta.totalArchivos(directorio);
+            File file = new File(directorio.getPath(), img + ".png");
+            ImageIO.write(imBuff, "png", file);
+            this.imagen = img;
+            util.crearmensajes("INFO", "Primer Mensage", "SE CARGO IMAGEN CORRECTAMENTE");
+        } catch (IOException ex) {
+        }
     }
 
     public void enviarselecionado(Miembro m) {
@@ -100,7 +129,8 @@ public final class ControlUsuarios implements Serializable {
         Registrar = true;
         RequestContext.getCurrentInstance().reset("form:panel");
         miembroSelecionado = m;
-        rolesSelect=m.getUsuario().getRoles();
+        imagen = m.getImagen() != null ? m.getImagen() : "default2";
+        rolesSelect = m.getUsuario().getRoles();
     }
 
     public void limpiar() {
@@ -111,12 +141,13 @@ public final class ControlUsuarios implements Serializable {
         m.setNombre1("");
         m.setNombre2("");
         RequestContext.getCurrentInstance().reset("form:panel");
+        imagen = "default2";
         miembroSelecionado = m;
         rolesSelect.clear();
         listarMiembros();
-        
-//        ControlUsuarios cu= new ControlUsuarios();
+        Eliminartemp();
 
+//        ControlUsuarios cu= new ControlUsuarios();
     }
 
     public void save() {
@@ -129,11 +160,12 @@ public final class ControlUsuarios implements Serializable {
             if (estado.equals("R")) {
                 saveUsuario(miembroSelecionado);
                 MiemDao.crear(miembroSelecionado);
+                guardarImagen(miembroSelecionado);
 
             } else {
                 saveUsuario(miembroSelecionado);
                 MiemDao.modificar(miembroSelecionado);
-
+                guardarImagen(miembroSelecionado);
             }
 
             limpiar();
@@ -152,12 +184,30 @@ public final class ControlUsuarios implements Serializable {
         }
         usuario.setEstado(estadoMiembro ? 1 : 0);
         usuario.setRoles(rolesSelect);
+        miem.setImagen(imagen);
         miem.setUsuario(usuario);
 
     }
 
     public void eliminaRol(Rol rol) {
         rolesSelect.remove(rol);
+    }
+
+    private void guardarImagen(Miembro miembro) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        try {
+            File Origen = new File(ruta.Ruta() + "");
+            if (estado.equals("R")) {
+                Origen = new File(ruta.Ruta() + "/temp", imagen + ".png");
+            } else {
+                Origen = new File(ruta.Ruta() + "/imagenes/usuarios", imagen + ".png");
+            }
+            BufferedImage imBuff = ImageIO.read(Origen);
+            File Destino = new File(ruta.Ruta() + "/imagenes/usuarios", "" + miembro.getDocumento() + ".png");
+            ImageIO.write(imBuff, "png", Destino);
+        } catch (IOException ex) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", ex.toString()));
+        }
     }
 
     public void agregaRol() {
@@ -180,9 +230,9 @@ public final class ControlUsuarios implements Serializable {
             }
 
         } else {
-             util.crearmensajes("INFO", "ADVERTENCIA", "SELECIONE ALMENOS UN ROL");
+            util.crearmensajes("INFO", "ADVERTENCIA", "SELECIONE ALMENOS UN ROL");
         }
-        rolselect=0l;
+        rolselect = 0l;
     }
 
     public void consultaModulo() {
@@ -320,6 +370,31 @@ public final class ControlUsuarios implements Serializable {
 
     public void setRolselect(Long rolselect) {
         this.rolselect = rolselect;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
+    private void Eliminartemp() {
+        ruta.EliminarArchivosTemp(directorioTemp);
+    }
+
+    public String getCarpeta() {
+        if (estado.equals("R")) {
+            carpeta = "temp/";
+        } else {
+            carpeta = "imagenes/usuarios/";
+        }
+        return carpeta;
+    }
+
+    public void setCarpeta(String carpeta) {
+        this.carpeta = carpeta;
     }
 
 }

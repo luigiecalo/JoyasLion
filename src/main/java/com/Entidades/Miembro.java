@@ -45,6 +45,8 @@ public class Miembro implements Serializable {
     @Basic(optional = false)
     @Column(name = "estado")
     private String estado;
+    @Column(name = "imagen")
+    private String imagen;
 
     @OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "idusuarios")
@@ -128,6 +130,15 @@ public class Miembro implements Serializable {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+    
 
     @Override
     public int hashCode() {

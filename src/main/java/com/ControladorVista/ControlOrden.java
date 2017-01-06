@@ -36,6 +36,7 @@ public class ControlOrden {
     private Usuario clienteSelect = new Usuario();
     private OrdenModelo oredeModelo;
     //LISTAS
+    private List<Orden> ordenes = new ArrayList<Orden>();
     private List<OrdenModelo> ordenesMoldelos = new ArrayList<OrdenModelo>();
     //DAO
     private OrdenDaoimplement ODAO = new OrdenDaoimplement();
@@ -45,6 +46,7 @@ public class ControlOrden {
     private ControlSeccion controlSeccion;
 
     public ControlOrden() {
+
     }
 /// METODOS
     //Agrega un Modelo a La lista
@@ -161,6 +163,15 @@ public class ControlOrden {
 
     public void setOrdenesMoldelos(List<OrdenModelo> ordenesMoldelos) {
         this.ordenesMoldelos = ordenesMoldelos;
+    }
+
+    public List<Orden> getOrdenes() {
+        ordenes = ODAO.buscarOrdenCodigoEstado(controlSeccion.getMiembro().getUsuario().getId());
+        return ordenes;
+    }
+
+    public void setOrdenes(List<Orden> ordenes) {
+        this.ordenes = ordenes;
     }
 
     public String getMessage() {
