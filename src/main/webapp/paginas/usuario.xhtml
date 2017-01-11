@@ -86,16 +86,16 @@
 
                             <div  class="box-body">
                                 <b:buttonGroup>
-                                    <b:commandButton value="Guardar" rendered="#{controlUsuarios.verBtnRegistro()}"  actionListener="#{controlUsuarios.save()}"  look="success"   update="tab" size="xs" >
+                                    <b:commandButton value="Guardar" rendered="#{controlUsuarios.verBtnRegistro()}"  actionListener="#{controlUsuarios.save()}"  look="success"   update="tab" size="sm" >
                                         <i class="fa fa-save"></i>
                                     </b:commandButton>
-                                    <b:commandButton value="Editar" rendered="#{!controlUsuarios.verBtnRegistro()}"  actionListener="#{controlUsuarios.save()}" look="warning" class=""  update="tab" size="xs" >
+                                    <b:commandButton value="Editar" rendered="#{!controlUsuarios.verBtnRegistro()}"  actionListener="#{controlUsuarios.save()}" look="warning" class=""  update="tab" size="sm">
                                         <i class="fa fa-edit"></i>
                                     </b:commandButton>
-                                    <b:commandButton value="Nuevo"  actionListener="#{controlUsuarios.limpiar()}" process="@this"  look="danger"   update="tab" size="xs" >
+                                    <b:commandButton value="Nuevo"  actionListener="#{controlUsuarios.limpiar()}" process="@this"  look="danger"   update="tab" size="sm" >
                                         <i class="fa fa-clone"></i>
                                     </b:commandButton>
-                                    <b:commandButton value="Consultar"  process="@this"  actionListener="#{controlUsuarios.consultaModulo()}" update="tab" look="primary"  size="xs" >
+                                    <b:commandButton value="Consultar"  process="@this"  actionListener="#{controlUsuarios.consultaModulo()}" update="tab" look="primary"  size="sm" >
                                         <i class="fa fa-search"></i>
                                     </b:commandButton>
 
@@ -119,6 +119,7 @@
                     <div class="ui-g">
                         <div class="ui-g-12 ui-md-12 ui-lg-3" >
                             <div class="box-body box-profile">
+                                #{controlUsuarios.carpeta}#{controlUsuarios.imagen}.png
                                 <p:graphicImage id="temp" class="profile-user-img img-responsive img-circle"  value="#{controlUsuarios.carpeta}#{controlUsuarios.imagen}.png" cache="false"  style=" position: static;width: 100px; height: 100px;"/>
                                 <p:fileUpload fileUploadListener="#{controlUsuarios.handleFileUpload}" update="tab"   style="width:100px" class="center-block" mode="advanced"
                                               auto="true" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />

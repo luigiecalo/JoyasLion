@@ -10,6 +10,7 @@ import com.DaonInterface.OrdenDao;
 import com.Entidades.Modelo;
 import com.Entidades.Orden;
 import com.Entidades.OrdenModelo;
+import com.Entidades.Usuario;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -27,7 +28,7 @@ public class OrdenDaoimplement extends ImplDao<Orden, Long> implements OrdenDao,
         return em.createNamedQuery(Orden.LISTAR).getResultList();
     }
 
-    public List<Orden> buscarOrdenCodigoEstado(Long cliente) {
+    public List<Orden> buscarOrdenCodigoEstado(Usuario cliente) {
         Query query = em.createNamedQuery(Orden.USUARIO_LISTA);
         query.setParameter("cliente", cliente);
         List<Orden> list = query.getResultList();

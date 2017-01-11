@@ -166,7 +166,7 @@ public class ControlOrden {
     }
 
     public List<Orden> getOrdenes() {
-        ordenes = ODAO.buscarOrdenCodigoEstado(controlSeccion.getMiembro().getUsuario().getId());
+        ordenes = ODAO.buscarOrdenCodigoEstado(controlSeccion.getMiembro().getUsuario());
         return ordenes;
     }
 

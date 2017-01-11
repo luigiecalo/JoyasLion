@@ -9,6 +9,8 @@ import com.Entidades.Modulo;
 import com.Entidades.RolModuloPermiso;
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
@@ -61,6 +63,18 @@ public class Utilidades implements Serializable {
 
     public long toLong(Number number) {
         return number.longValue();
+    }
+
+    public String LongToDateFormat(Long fecha, String formato) {
+        Date d = new Date(fecha);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        if (formato.equals("") || formato.isEmpty() || formato == null) {
+            sdf = new SimpleDateFormat("dd/MM/yyyy");
+        } else {
+            sdf = new SimpleDateFormat(formato);
+        }
+        String date = sdf.format(d);
+        return date;
     }
 
     public String getFocus() {

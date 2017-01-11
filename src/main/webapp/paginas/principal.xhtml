@@ -30,6 +30,10 @@
                                     <i class="fa fa-cart-arrow-down"></i>
                                     <span class="label">#{controlOrden.ordenesMoldelos.size()}</span>
                                 </b:commandButton>
+                                <b:commandButton value="Estado Ordenes" actionListener="#{controlplantillas.setModulo('ordenes.xhtml')}"
+                                                 process="@this"  look="primary"   update=":form:tab" 
+                                                 size="xs"  tooltip-position="bottom" >
+                                </b:commandButton>
 
 
                             </b:buttonGroup>

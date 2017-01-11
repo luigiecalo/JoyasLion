@@ -61,6 +61,7 @@ public final class ControlUsuarios implements Serializable {
     private Map<String, Long> rolesLista;
     private boolean Registrar = false;
     private boolean estadoMiembro = true;
+    private boolean imagenedit = false;
     public String data = "1";
     private String apellido1 = "";
     private String estado = "R";
@@ -110,15 +111,19 @@ public final class ControlUsuarios implements Serializable {
 
             File directorio = null;
             try {
+
                 directorio = new File(ruta.Ruta() + "/temp");
                 directorio.mkdir();
+                carpeta = "select00001";
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-            String img=event.getFile().getFileName() + ruta.totalArchivos(directorio);
+            String img = event.getFile().getFileName() + ruta.totalArchivos(directorio);
             File file = new File(directorio.getPath(), img + ".png");
             ImageIO.write(imBuff, "png", file);
+            this.imagenedit = true;
             this.imagen = img;
+            editarcarpeta();
             util.crearmensajes("INFO", "Primer Mensage", "SE CARGO IMAGEN CORRECTAMENTE");
         } catch (IOException ex) {
         }
@@ -130,6 +135,7 @@ public final class ControlUsuarios implements Serializable {
         RequestContext.getCurrentInstance().reset("form:panel");
         miembroSelecionado = m;
         imagen = m.getImagen() != null ? m.getImagen() : "default2";
+        editarcarpeta();
         rolesSelect = m.getUsuario().getRoles();
     }
 
@@ -143,9 +149,11 @@ public final class ControlUsuarios implements Serializable {
         RequestContext.getCurrentInstance().reset("form:panel");
         imagen = "default2";
         miembroSelecionado = m;
+        editarcarpeta();
         rolesSelect.clear();
         listarMiembros();
         Eliminartemp();
+        imagenedit = false;
 
 //        ControlUsuarios cu= new ControlUsuarios();
     }
@@ -184,7 +192,7 @@ public final class ControlUsuarios implements Serializable {
         }
         usuario.setEstado(estadoMiembro ? 1 : 0);
         usuario.setRoles(rolesSelect);
-        miem.setImagen(imagen);
+        miem.setImagen(miem.getDocumento());
         miem.setUsuario(usuario);
 
     }
@@ -198,6 +206,8 @@ public final class ControlUsuarios implements Serializable {
         try {
             File Origen = new File(ruta.Ruta() + "");
             if (estado.equals("R")) {
+                Origen = new File(ruta.Ruta() + "/temp", imagen + ".png");
+            } else if (imagenedit) {
                 Origen = new File(ruta.Ruta() + "/temp", imagen + ".png");
             } else {
                 Origen = new File(ruta.Ruta() + "/imagenes/usuarios", imagen + ".png");
@@ -384,12 +394,16 @@ public final class ControlUsuarios implements Serializable {
         ruta.EliminarArchivosTemp(directorioTemp);
     }
 
-    public String getCarpeta() {
-        if (estado.equals("R")) {
+    public void editarcarpeta() {
+        if (estado.equals("R") || carpeta.equals("select00001")) {
             carpeta = "temp/";
         } else {
             carpeta = "imagenes/usuarios/";
         }
+    }
+
+    public String getCarpeta() {
+
         return carpeta;
     }
 

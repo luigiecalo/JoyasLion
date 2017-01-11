@@ -21,7 +21,12 @@
                                                  process="@this"  look="primary"   update=":form:tab" 
                                                  size="xs"  tooltip-position="bottom" >
                                 </b:commandButton>
-                                <b:button look="warning"  size="xs"   value="REALIZAR ORDEN"/>
+                                <b:commandButton value="" actionListener="#{controlplantillas.setModulo('miorden.xhtml')}"
+                                                 look="success"    update=":form:tab"
+                                                 size="xs"  tooltip="Tiene (#{controlOrden.ordenesMoldelos.size()}) Articulos para generar " tooltip-position="bottom" >
+                                    <i class="fa fa-cart-arrow-down"></i>
+                                    <span class="label">#{controlOrden.ordenesMoldelos.size()}</span>
+                                </b:commandButton>
 
 
                             </b:buttonGroup>
@@ -35,13 +40,13 @@
         </div>
         <div class="row">
             <div class="col-xs-12 col-md-3 col-lg-12">
-                <p:dataTable var="ord" value="#{controlOrden.ordenes}" rowStyleClass="#{car.year le 1990 ? 'old' : null}">
-                    <p:column headerText="COD">
+                <p:dataTable var="ord" value="#{controlOrden.ordenes}"  >
+                    <p:column headerText="COD" style="background: #{ord.estado=='EN ESPERA' ? 'red' : ''}" >
                         <h:outputText value="#{ord.codigo}" />
                     </p:column>
 
                     <p:column headerText="FECHA">
-                        <h:outputText value="#{ord.fecha}" />
+                        <h:outputText value="#{controlUtilidades.util.LongToDateFormat(ord.fecha, '')}" />
                     </p:column>
                      <p:column headerText="CLIENTE">
                          <h:outputText value="#{ord.cliente.login}" />
