@@ -17,15 +17,16 @@
                         <div  class="box-body">
                             <b:buttonGroup id="botomgrup">
 
-                                <b:commandButton value="LISTAR ROLES" actionListener="#{controlRoles.listarRoles}"
-                                                 process="@this"  look="primary"   update=":form:tab" 
-                                                 size="xs"  tooltip-position="bottom" >
+
+                                <b:commandButton value="Guardar Cambios" rendered="#{controlRoles.modelosboolean}"
+                                                 look="warning"    update=":form:tab"
+                                                 size="sm"   >
+                                    <i class="fa fa-plus-circle"></i>
+
                                 </b:commandButton>
-                                <b:commandButton value="" 
-                                                 look="success"    update=":form:tab"
-                                                 size="xs"  tooltip="Tiene (#{controlOrden.ordenesMoldelos.size()}) Articulos para generar " tooltip-position="bottom" >
-                                    <i class="fa fa-cart-arrow-down"></i>
-                                    <span class="label">#{controlOrden.ordenesMoldelos.size()}</span>
+                                <b:commandButton value="Cancelar Cambios" rendered="#{controlRoles.modelosboolean}"
+                                                 look="primary"   update=":form:tab" 
+                                                 size="sm"  tooltip-position="bottom" >
                                 </b:commandButton>
 
 
@@ -39,7 +40,7 @@
             </h:panelGroup>
         </div>
         <div class="row">
-            <div class="col-xs-3 col-md-3 col-lg-3">
+            <div class="col-xs-12 col-md-12 col-lg-3">
                 <p:dataTable id="roles" var="rol" value="#{controlRoles.roles}" selectionMode="single" selection="#{controlRoles.rolselect}" rowKey="#{rol.idrol}">
                     <f:facet name="header">
                         Selecione un rol
@@ -51,28 +52,40 @@
                     </p:column>
                 </p:dataTable>
             </div>
-            <div class="col-xs-3 col-md-3 col-lg-3">
-                <p:dataTable id="modulos" var="modu" rendered="#{controlRoles.modelosboolean}" value="#{controlRoles.modulos}" selectionMode="single" selection="#{controlRoles.modulosSelect}" rowKey="#{modu.idmodulo}">
+            <div class="col-xs-12 col-md-6 col-lg-4">
+
+                <p:dataTable id="modulos" var="modu" rendered="#{controlRoles.modelosboolean}" selectionMode="single" rowKey="#{modu.idmodulo}" selection="#{controlRoles.mdoSelect}" value="#{controlRoles.modulos}" >
                     <f:facet name="header">
                         Selecione Modulo 
                     </f:facet>
-                    <p:ajax event="rowSelect" listener="#{controlRoles.onModuloSelect}" update=":form:tab" />
-
+                    <p:ajax event="rowSelect" listener="#{controlRoles.onModuloSelect}" update=":form:modselect" />
                     <p:column headerText="Id">
-                        <i class="#{modu.icono}"></i> <h:outputText value="#{modu.nombre}" />
+                        <i class="fa #{modu.icono} "></i> <h:outputText value="#{modu.nombre}" />
                     </p:column>
-                </p:dataTable> 
+                </p:dataTable>
+
+
+
             </div>
-            <div class="col-xs-3 col-md-4 col-lg-4">
+            <div class="col-md-1">
+                <b:commandButton  id="modselect" value=""  actionListener="#{controlRoles.addModulo}"
+                                 look="success"    update=":form:tab"
+                                 size="xs"  tooltip="Tiene el Modulo (#{controlRoles.mdoSelect.nombre}) para Agregar" tooltip-position="bottom" >
+                    <i class="fa fa-plus-circle"></i>
+                    <span class="label">#{controlRoles.mdoSelect.nombre}</span>
+                </b:commandButton>
+            </div>
+
+            <div class="col-xs-12 col-md-6 col-lg-4">
                 <p:dataTable id="modulosSelect" var="rmodu" rendered="#{controlRoles.modelosboolean}" value="#{controlRoles.modulosSelect}" >
                     <f:facet name="header">
-                        #{controlRoles.rolselect.nombre}  Modulos
+                        MODULOS DE  #{controlRoles.rolselect.nombre}  
                     </f:facet>
                     <p:column headerText="Rol">
-                        <i class="#{rmodu.modulo.icono}"></i> <h:outputText value="#{rmodu.modulo.nombre}" />
+                        <i class="fa #{rmodu.modulo.icono} "></i>  <h:outputText value="#{rmodu.modulo.nombre}" />
                     </p:column>
                     <p:column headerText="Modulo">
-                       <h:outputText value="#{rmodu.rol.nombre}" />
+                        <h:outputText value="#{rmodu.rol.nombre}" />
                     </p:column>
                 </p:dataTable> 
             </div>

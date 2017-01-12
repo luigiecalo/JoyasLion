@@ -7,8 +7,10 @@ package com.ControladorVista;
 
 import Utilidades.Utilidades;
 import com.Dao.ModuloDaoimplement;
+import com.Dao.PermisosDaoimplement;
 import com.Dao.RolDaoimplement;
 import com.Entidades.Modulo;
+import com.Entidades.Permisos;
 import com.Entidades.Rol;
 import com.Entidades.RolModuloPermiso;
 import java.util.ArrayList;
@@ -44,6 +46,7 @@ public class ControlRoles {
     //DAO
     private RolDaoimplement RolDAO = new RolDaoimplement();
     private ModuloDaoimplement ModDAO = new ModuloDaoimplement();
+    private PermisosDaoimplement PerDao= new PermisosDaoimplement();
 
     /**
      * Creates a new instance of ControlUtilidades
@@ -61,6 +64,14 @@ public class ControlRoles {
 
     public void onModuloSelect(SelectEvent event) {
 
+    }
+    
+     public void addModulo() {
+         RolModuloPermiso rmp= new RolModuloPermiso();
+         rmp.setModulo(mdoSelect);
+         rmp.setRol(rolselect);
+         rmp.setPermisos(PerDao.consultar(Permisos.class,1L));
+         modulosSelect.add(rmp);
     }
 
     //Lista todos los roles
