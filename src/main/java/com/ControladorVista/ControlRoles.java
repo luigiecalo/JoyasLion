@@ -6,13 +6,17 @@
 package com.ControladorVista;
 
 import Utilidades.Utilidades;
+import com.Dao.GrupoDaoimplement;
 import com.Dao.ModuloDaoimplement;
 import com.Dao.PermisosDaoimplement;
 import com.Dao.RolDaoimplement;
+import com.Dao.SubGrupoDaoimplement;
+import com.Entidades.Grupo;
 import com.Entidades.Modulo;
 import com.Entidades.Permisos;
 import com.Entidades.Rol;
 import com.Entidades.RolModuloPermiso;
+import com.Entidades.SubGrupo;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.application.FacesMessage;
@@ -41,12 +45,16 @@ public class ControlRoles {
     //Listas
     private List<Rol> roles = new ArrayList<Rol>();
     private List<Modulo> modulos = new ArrayList<Modulo>();
+    private List<Grupo> grupos = new ArrayList<Grupo>();
+    private List<SubGrupo> subgrupos = new ArrayList<SubGrupo>();
     private List<RolModuloPermiso> modulosSelect = new ArrayList<RolModuloPermiso>();
 
     //DAO
     private RolDaoimplement RolDAO = new RolDaoimplement();
     private ModuloDaoimplement ModDAO = new ModuloDaoimplement();
-    private PermisosDaoimplement PerDao= new PermisosDaoimplement();
+    private PermisosDaoimplement PerDao = new PermisosDaoimplement();
+    private GrupoDaoimplement GrupoDao = new GrupoDaoimplement();
+    private SubGrupoDaoimplement SubGrupoDao = new SubGrupoDaoimplement();
 
     /**
      * Creates a new instance of ControlUtilidades
@@ -54,27 +62,30 @@ public class ControlRoles {
     public ControlRoles() {
         listarRoles();
         listarModulos();
+        listargrupos();
+        listarSubgrupos();
     }
     //METODOS
 
     public void onRolSelect(SelectEvent event) {
-       this.modelosboolean=true;
-        modulosSelect=rolselect.getRolModuloPermisoList();
+        this.modelosboolean = true;
+        modulosSelect = rolselect.getRolModuloPermisoList();
     }
 
     public void onModuloSelect(SelectEvent event) {
 
     }
-    
-     public void addModulo() {
-         RolModuloPermiso rmp= new RolModuloPermiso();
-         rmp.setModulo(mdoSelect);
-         rmp.setRol(rolselect);
-         rmp.setPermisos(PerDao.consultar(Permisos.class,1L));
-         modulosSelect.add(rmp);
-    }
 
+    public void addModulo() {
+        RolModuloPermiso rmp = new RolModuloPermiso();
+        rmp.setModulo(mdoSelect);
+        rmp.setRol(rolselect);
+        rmp.setPermisos(PerDao.consultar(Permisos.class, 1L));
+        modulosSelect.add(rmp);
+    }
+//METODOS
     //Lista todos los roles
+
     public void listarRoles() {
         roles = RolDAO.Listar();
     }
@@ -82,6 +93,15 @@ public class ControlRoles {
     //Lista todos los roles
     public void listarModulos() {
         modulos = ModDAO.consultarTodo(Modulo.class);
+    }
+
+    //Lista todos los grupos
+    public void listargrupos() {
+        grupos = GrupoDao.consultarTodo(Grupo.class);
+    }
+    //Lista todos los subGrupos
+    public void listarSubgrupos() {
+        subgrupos = SubGrupoDao.consultarTodo(SubGrupo.class);
     }
 
     //GET AND SET
@@ -131,6 +151,22 @@ public class ControlRoles {
 
     public void setModelosboolean(boolean modelosboolean) {
         this.modelosboolean = modelosboolean;
+    }
+
+    public List<Grupo> getGrupos() {
+        return grupos;
+    }
+
+    public void setGrupos(List<Grupo> grupos) {
+        this.grupos = grupos;
+    }
+
+    public List<SubGrupo> getSubgrupos() {
+        return subgrupos;
+    }
+
+    public void setSubgrupos(List<SubGrupo> subgrupos) {
+        this.subgrupos = subgrupos;
     }
 
 }

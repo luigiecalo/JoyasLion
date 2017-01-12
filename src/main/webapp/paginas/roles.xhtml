@@ -45,7 +45,7 @@
                     <f:facet name="header">
                         Selecione un rol
                     </f:facet>
-                    <p:ajax event="rowSelect" listener="#{controlRoles.onRolSelect}" update=":form:tab" />
+                    <p:ajax event="rowSelect" listener="#{controlRoles.onRolSelect}" update=":form:tab"  />
 
                     <p:column headerText="Id">
                         <h:outputText value="#{rol.nombre}" />
@@ -56,11 +56,29 @@
 
                 <p:dataTable id="modulos" var="modu" rendered="#{controlRoles.modelosboolean}" selectionMode="single" rowKey="#{modu.idmodulo}" selection="#{controlRoles.mdoSelect}" value="#{controlRoles.modulos}" >
                     <f:facet name="header">
-                        Selecione Modulo 
+                        Selecione Modulo
+                        <p:commandButton  update=":form:modulomenu" icon="fa fa-plus-square" actionListener="#{controlUtilidades.util.modal('modalMenu','show')}" >
+                        </p:commandButton>
+
                     </f:facet>
                     <p:ajax event="rowSelect" listener="#{controlRoles.onModuloSelect}" update=":form:modselect" />
-                    <p:column headerText="Id">
+                    <p:column headerText="Modulo">
                         <i class="fa #{modu.icono} "></i> <h:outputText value="#{modu.nombre}" />
+                    </p:column>
+                    <p:column headerText="Grupo">
+                        <h:outputText value="#{modu.grupomodulo.nombre}" />
+                    </p:column>
+                    <p:column headerText="SubGrupo">
+                        <h:outputText value="#{modu.subgrupos.nombre}" />
+                    </p:column>
+                    <p:column headerText="Acciones">
+                        <b:commandButton value="" actionListener="#{controlUtilidades.util.modal('modalMenu','show')}"
+                                         look="Warning"  ajax="true"
+                                         size="sm"  tooltip-position="bottom" 
+                                         >
+
+                            <i class="fa fa-pencil"></i>
+                        </b:commandButton>
                     </p:column>
                 </p:dataTable>
 
@@ -69,8 +87,8 @@
             </div>
             <div class="col-md-1">
                 <b:commandButton  id="modselect" value=""  actionListener="#{controlRoles.addModulo}"
-                                 look="success"    update=":form:tab"
-                                 size="xs"  tooltip="Tiene el Modulo (#{controlRoles.mdoSelect.nombre}) para Agregar" tooltip-position="bottom" >
+                                  look="success"    
+                                  size="xs"  tooltip="Tiene el Modulo (#{controlRoles.mdoSelect.nombre}) para Agregar" tooltip-position="bottom" >
                     <i class="fa fa-plus-circle"></i>
                     <span class="label">#{controlRoles.mdoSelect.nombre}</span>
                 </b:commandButton>
@@ -87,6 +105,15 @@
                     <p:column headerText="Modulo">
                         <h:outputText value="#{rmodu.rol.nombre}" />
                     </p:column>
+                    <p:column headerText="Modulo">
+                        <b:commandButton value="" 
+                                         look="primary"   update=":form:modulosSelect" 
+                                         size="sm"  tooltip-position="bottom" 
+                                         >
+                            <i class="fa fa-trash-o"></i>
+                        </b:commandButton>
+                    </p:column>
+
                 </p:dataTable> 
             </div>
 
@@ -99,9 +126,168 @@
 
         </div>
         <p:messages autoUpdate="false"/>
+        <!--Modal de selecion-->
+        <div class="modal fade " id="modalMenu" style="z-index:2000" data-backdrop="false" styleClass="myModal"  role="dialog" >
+
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header" >
+                        <h4 class="modal-title">Info Modal</h4>
+                    </div>
+                    <b:panel   id="modulomenu">
+                        <div class="col-lg-12"  >
+                            #{controlRoles.mdoSelect.nombre}
+                            <b:commandButton value="" 
+                                             look="primary"  
+                                             size="sm"  
+                                             >
+                                <i class="fa fa-plus-circle"></i>
+                            </b:commandButton>
+                            <!--Lista todos los grupos-->
+                            <ui:repeat value="#{controlRoles.grupos}" var="gp">
+                                <b:panel collapsed="true" >
+                                    <f:facet name="heading">
+                                        <b:commandButton value="" 
+                                                         look="primary" ajax="true" process="@this" type="submit" 
+                                                         size="xs" 
+                                                         >
+                                            <i class="fa fa-plus-circle"></i>
+                                        </b:commandButton>
+
+                                        <i class="fa #{gp.icono}" style="padding-right:20px" />
+                                        <h:outputText value="#{gp.nombre}" />
+
+                                    </f:facet>
+                                    <!--Lista todos Los subgrupos-->
+                                    <ui:repeat value="#{controlRoles.subgrupos}" var="sgp">
+                                        <b:panel collapsed="true" rendered="#{sgp.igrupo.equals(gp.igrupo)}" style="border: #ff0000" >
+                                            <f:facet name="heading">
+                                                <b:commandButton value="" 
+                                                                 look="primary" ajax="true" process="@this" type="submit" 
+                                                                 size="xs" 
+                                                                 >
+                                                    <i class="fa fa-plus-circle"></i>
+                                                </b:commandButton>
+                                                <i class="fa #{sgp.icono}" style="padding-right:20px" />
+                                                <h:outputText value="#{sgp.nombre}" />
+                                            </f:facet>
+                                            <ui:repeat value="#{controlRoles.modulos}" var="mds2">
+                                                <b:row rendered='#{mds2.subgrupos.equals(sgp)}'>
+                                                    <div class="col-md-12">
+                                                        <div class="col-md-8">
+                                                            <b:inputText readonly="true" value="#{mds2.nombre}" >
+                                                                <f:facet name="prepend">
+                                                                    <i class="fa #{mds2.icono}"></i>
+                                                                </f:facet>
+
+                                                            </b:inputText>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <b:commandButton  value="" 
+                                                                              look="danger"  
+                                                                              size="sm"  tooltip-position="bottom" 
+                                                                              >
+                                                                <i class="fa fa-trash-o"></i>
+                                                            </b:commandButton>
+                                                        </div>
+
+                                                    </div>
+                                                </b:row>
+                                            </ui:repeat>
+                                        </b:panel>
+                                    </ui:repeat>
+                                    <ui:repeat value="#{controlRoles.modulos}" var="mds">
+
+                                        <b:row rendered='#{mds.grupomodulo.equals(gp) and mds.subgrupos==null}'>
+                                            <div class="col-md-12">
+                                                <div class="col-md-8">
+                                                    <b:inputText readonly="true" value="#{mds.nombre}" >
+                                                        <f:facet name="prepend">
+                                                            <i class="fa #{mds.icono}"></i>
+                                                        </f:facet>
+
+                                                    </b:inputText>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <b:commandButton  value="" 
+                                                                      look="danger"  
+                                                                      size="sm"  tooltip-position="bottom" 
+                                                                      >
+                                                        <i class="fa fa-trash-o"></i>
+                                                    </b:commandButton>
+                                                </div>
+
+                                            </div>
+                                        </b:row>
+                                    </ui:repeat>
+
+                                </b:panel>
+
+                            </ui:repeat>
+                            <!--Lista todos Los modulos sin grupos-->
+                            <ui:repeat value="#{controlRoles.modulos}" var="mdsa">
+                                <b:row rendered='#{mdsa.grupomodulo==null}'>
+                                    <div class="col-md-12">
+                                        <div class="col-md-8">
+                                            <b:inputText readonly="true" value="#{mdsa.nombre}" >
+                                                <f:facet name="prepend">
+                                                    <i class="fa #{mdsa.icono}"></i>
+                                                </f:facet>
+
+                                            </b:inputText>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <b:commandButton  value="" 
+                                                              look="danger"  
+                                                              size="sm"  tooltip-position="bottom" 
+                                                              >
+                                                <i class="fa fa-trash-o"></i>
+                                            </b:commandButton>
+                                        </div>
+
+                                    </div>
 
 
 
+
+                                </b:row>
+
+                            </ui:repeat>
+
+                        </div>
+
+                    </b:panel>
+                    <div class="modal-footer bg-#{controlSeccion.skins}-gradient">
+                        <b:button value="close" dismiss="modal" onclick="return false;"/>
+                        <b:commandButton type="submit"  value="Agregar a Orden"   look="primary">
+                            <i class="fa fa-shopping-cart"></i>
+                        </b:commandButton>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+            <!--                            </div>-->
+        </div>
+        <!--modal modulo-->
+        <div class="modal fade " id="modalsrc" style="z-index:2000" data-backdrop="false" styleClass="myModal"  role="dialog" >
+
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header" >
+                        <h4 class="modal-title">Info Modal</h4>
+                    </div>
+                    <b:panel   id="modulosrc">
+                        sd
+
+                    </b:panel>
+
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+            <!--                            </div>-->
+        </div>
 
 
 
