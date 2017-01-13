@@ -33,7 +33,7 @@ public class SubGrupo implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idsubgrupo")
-    private Long idgrupo;
+    private Long idsubgrupo;
     @Column(name = "nombre")
     private String nombre;
     @Column(name = "icono")
@@ -47,15 +47,15 @@ public class SubGrupo implements Serializable {
     }
 
     public SubGrupo(Long idgrupo) {
-        this.idgrupo = idgrupo;
+        this.idsubgrupo = idgrupo;
     }
 
-    public Long getIgrupo() {
-        return idgrupo;
+    public Long getIdsubgrupo() {
+        return idsubgrupo;
     }
 
-    public void setIgrupo(Long idgrupo) {
-        this.idgrupo = idgrupo;
+    public void setIdsubgrupo(Long idgrupo) {
+        this.idsubgrupo = idgrupo;
     }
 
     public String getNombre() {
@@ -87,7 +87,7 @@ public class SubGrupo implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idgrupo != null ? idgrupo.hashCode() : 0);
+        hash += (idsubgrupo != null ? idsubgrupo.hashCode() : 0);
         return hash;
     }
 
@@ -98,7 +98,7 @@ public class SubGrupo implements Serializable {
             return false;
         }
         SubGrupo other = (SubGrupo) object;
-        if ((this.idgrupo == null && other.idgrupo != null) || (this.idgrupo != null && !this.idgrupo.equals(other.idgrupo))) {
+        if ((this.idsubgrupo == null && other.idsubgrupo != null) || (this.idsubgrupo != null && !this.idsubgrupo.equals(other.idsubgrupo))) {
             return false;
         }
         return true;
@@ -106,7 +106,7 @@ public class SubGrupo implements Serializable {
 
     @Override
     public String toString() {
-        return "Subgrupo[(" + idgrupo + ") modulos="+modulos.size()+" ]";
+        return "Subgrupo[(" + idsubgrupo + ") modulos="+modulos.size()+" ]";
     }
     
 }

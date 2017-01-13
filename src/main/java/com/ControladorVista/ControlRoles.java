@@ -11,14 +11,18 @@ import com.Dao.ModuloDaoimplement;
 import com.Dao.PermisosDaoimplement;
 import com.Dao.RolDaoimplement;
 import com.Dao.SubGrupoDaoimplement;
+import com.Dao.TipoDaoimplement;
 import com.Entidades.Grupo;
 import com.Entidades.Modulo;
 import com.Entidades.Permisos;
 import com.Entidades.Rol;
 import com.Entidades.RolModuloPermiso;
 import com.Entidades.SubGrupo;
+import com.Entidades.Tipo;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -37,14 +41,22 @@ public class ControlRoles {
     //Utilidades
     private Utilidades util = new Utilidades();
     private boolean modelosboolean = false;
+    private Long grupoSelect = 0l;
+    private Long subgrupoSelect = 0l;
+    private String paginaStrin = "";
 
     //Entidades
     private Rol rolselect = new Rol();
     private Modulo mdoSelect = new Modulo();
+    private Grupo grupoSelecion = new Grupo();
+    private SubGrupo subgrupoSelecion = new SubGrupo();
 
     //Listas
     private List<Rol> roles = new ArrayList<Rol>();
     private List<Modulo> modulos = new ArrayList<Modulo>();
+    private Map<String, Long> gruposLista;
+    private Map<String, Long> subgruposLista;
+    private Map<String, String> paginasLista;
     private List<Grupo> grupos = new ArrayList<Grupo>();
     private List<SubGrupo> subgrupos = new ArrayList<SubGrupo>();
     private List<RolModuloPermiso> modulosSelect = new ArrayList<RolModuloPermiso>();
@@ -55,6 +67,9 @@ public class ControlRoles {
     private PermisosDaoimplement PerDao = new PermisosDaoimplement();
     private GrupoDaoimplement GrupoDao = new GrupoDaoimplement();
     private SubGrupoDaoimplement SubGrupoDao = new SubGrupoDaoimplement();
+    private TipoDaoimplement TipoDao = new TipoDaoimplement();
+
+    FacesContext context;
 
     /**
      * Creates a new instance of ControlUtilidades
@@ -72,10 +87,6 @@ public class ControlRoles {
         modulosSelect = rolselect.getRolModuloPermisoList();
     }
 
-    public void onModuloSelect(SelectEvent event) {
-
-    }
-
     public void addModulo() {
         RolModuloPermiso rmp = new RolModuloPermiso();
         rmp.setModulo(mdoSelect);
@@ -85,6 +96,46 @@ public class ControlRoles {
     }
 //METODOS
     //Lista todos los roles
+
+    public Map<String, Long> getGruposLista() {
+        gruposLista = new HashMap<String, Long>();
+        for (Grupo grup : getGrupos()) {
+            gruposLista.put(grup.getNombre(), grup.getIgrupo());
+        }
+        return gruposLista;
+    }
+
+    public Map<String, Long> getSubgruposLista() {
+        subgruposLista = new HashMap<String, Long>();
+        for (SubGrupo subgrup : getSubgrupos()) {
+            subgruposLista.put(subgrup.getNombre(), subgrup.getIdsubgrupo());
+        }
+        return subgruposLista;
+    }
+
+    public Map<String, String> getPaginas() {
+        paginasLista = new HashMap<String, String>();
+        for (Tipo tipo : TipoDao.ListarDescripcion("paginas")) {
+            paginasLista.put(tipo.getNombre(), tipo.getNombre());
+        }
+        return paginasLista;
+    }
+
+    public void guardarModulo() {
+        context = FacesContext.getCurrentInstance();
+        if (grupoSelect == 0l && subgrupoSelect != 0l) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "INGRESE PRIMERO UN GRUPO", "INGRESE PRIMERO UN GRUPO"));
+        } else {
+            Grupo g = GrupoDao.consultar(Grupo.class, grupoSelect);
+            SubGrupo sg = SubGrupoDao.consultar(SubGrupo.class, subgrupoSelect);
+            mdoSelect.setGrupomodulo(g);
+            mdoSelect.setSubgrupos(sg);
+            mdoSelect.setSrc(paginaStrin);
+            ModDAO.crear(mdoSelect);
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "El USUARIO: Ya se Encuentra registrado", ""));
+        }
+
+    }
 
     public void listarRoles() {
         roles = RolDAO.Listar();
@@ -99,6 +150,7 @@ public class ControlRoles {
     public void listargrupos() {
         grupos = GrupoDao.consultarTodo(Grupo.class);
     }
+
     //Lista todos los subGrupos
     public void listarSubgrupos() {
         subgrupos = SubGrupoDao.consultarTodo(SubGrupo.class);
@@ -167,6 +219,54 @@ public class ControlRoles {
 
     public void setSubgrupos(List<SubGrupo> subgrupos) {
         this.subgrupos = subgrupos;
+    }
+
+    public Long getGrupoSelect() {
+        return grupoSelect;
+    }
+
+    public void setGrupoSelect(Long grupoSelect) {
+        this.grupoSelect = grupoSelect;
+    }
+
+    public Long getSubgrupoSelect() {
+        return subgrupoSelect;
+    }
+
+    public void setSubgrupoSelect(Long subgrupoSelect) {
+        this.subgrupoSelect = subgrupoSelect;
+    }
+
+    public void setGruposLista(Map<String, Long> gruposLista) {
+        this.gruposLista = gruposLista;
+    }
+
+    public void setSubgruposLista(Map<String, Long> subgruposLista) {
+        this.subgruposLista = subgruposLista;
+    }
+
+    public Grupo getGrupoSelecion() {
+        return grupoSelecion;
+    }
+
+    public void setGrupoSelecion(Grupo grupoSelecion) {
+        this.grupoSelecion = grupoSelecion;
+    }
+
+    public SubGrupo getSubgrupoSelecion() {
+        return subgrupoSelecion;
+    }
+
+    public void setSubgrupoSelecion(SubGrupo subgrupoSelecion) {
+        this.subgrupoSelecion = subgrupoSelecion;
+    }
+
+    public String getPaginaStrin() {
+        return paginaStrin;
+    }
+
+    public void setPaginaStrin(String paginaStrin) {
+        this.paginaStrin = paginaStrin;
     }
 
 }
