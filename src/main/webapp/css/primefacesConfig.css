@@ -74,6 +74,12 @@ and open the template in the editor.
     cursor: default;
     background: #fff;
 }
+
+#panel-group {
+  background: red;
+      margin-bottom: 10px;
+}
+
 .contenedor-img .mascara,.contenedor-img .contenido {
     width: 300px;
     height: 200px;
@@ -182,6 +188,7 @@ and open the template in the editor.
 .panel-group .panel {
     background-color: transparent;
     border:none !important;
+        margin-bottom: 2px;
 }
 
 .ir-arriba {
@@ -194,7 +201,7 @@ and open the template in the editor.
     width: 100%;
     height: 34px;
     padding: 6px 12px;
-    font-size: 14px;
+    font-size: 12px;
     line-height: 1.428571429;
     color: #555555;
     background-color: #ffffff;
