@@ -21,6 +21,7 @@ import com.Entidades.SubGrupo;
 import com.Entidades.Tipo;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import javax.faces.application.FacesMessage;
@@ -44,6 +45,8 @@ public class ControlRoles {
     private Long grupoSelect = 0l;
     private Long subgrupoSelect = 0l;
     private String paginaStrin = "";
+    private String nombremodulo = "";
+    private String iconomodulo = "";
 
     //Entidades
     private Rol rolselect = new Rol();
@@ -75,10 +78,7 @@ public class ControlRoles {
      * Creates a new instance of ControlUtilidades
      */
     public ControlRoles() {
-        listarRoles();
-        listarModulos();
-        listargrupos();
-        listarSubgrupos();
+        ListarTodo();
     }
     //METODOS
 
@@ -126,20 +126,44 @@ public class ControlRoles {
         if (grupoSelect == 0l && subgrupoSelect != 0l) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "INGRESE PRIMERO UN GRUPO", "INGRESE PRIMERO UN GRUPO"));
         } else {
+            Modulo modulo = new Modulo();
             Grupo g = GrupoDao.consultar(Grupo.class, grupoSelect);
             SubGrupo sg = SubGrupoDao.consultar(SubGrupo.class, subgrupoSelect);
-            mdoSelect.setGrupomodulo(g);
-            mdoSelect.setSubgrupos(sg);
-            mdoSelect.setSrc(paginaStrin);
-            ModDAO.crear(mdoSelect);
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "El USUARIO: Ya se Encuentra registrado", ""));
+            modulo.setNombre(nombremodulo);
+            modulo.setIcono(iconomodulo);
+            modulo.setGrupomodulo(g);
+            modulo.setSubgrupos(sg);
+            modulo.setSrc(paginaStrin);
+            ModDAO.crear(modulo);
+            Limpiar();
+            util.crearmensajes("INFO", "REGISTRO EXITOSO", "SE REGISTRO EXITOSA MENTE EL MODULO");
         }
 
+    }
+    
+    public void eliminarModulo(Modulo mod){
+        ModDAO.eliminar(mod);
+    }
+
+    public void Limpiar() {
+        nombremodulo = "";
+        iconomodulo = "";
+        grupoSelect = 0l;
+        subgrupoSelect = 0l;
+        paginaStrin = "";
+    }
+
+    private void ListarTodo() {
+        listarRoles();
+        listarModulos();
+        listargrupos();
+        listarSubgrupos();
     }
 
     public void listarRoles() {
         roles = RolDAO.Listar();
     }
+
 
     //Lista todos los roles
     public void listarModulos() {
@@ -267,6 +291,22 @@ public class ControlRoles {
 
     public void setPaginaStrin(String paginaStrin) {
         this.paginaStrin = paginaStrin;
+    }
+
+    public String getNombremodulo() {
+        return nombremodulo;
+    }
+
+    public void setNombremodulo(String nombremodulo) {
+        this.nombremodulo = nombremodulo;
+    }
+
+    public String getIconomodulo() {
+        return iconomodulo;
+    }
+
+    public void setIconomodulo(String iconomodulo) {
+        this.iconomodulo = iconomodulo;
     }
 
 }

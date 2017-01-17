@@ -189,16 +189,12 @@ public class ControlSeccion implements Serializable {
                         List<Modulo> modulositem = (List<Modulo>) item.get("modulos");
                         boolean relacion = false;
                         for (Modulo moduloencontrado : modulosEncontraos) {
-                            System.out.println("---" + moduloencontrado.getSubgrupos());
                             if (moduloencontrado.getSubgrupos() != null) {
                                 for (Modulo moduloitem : modulositem) {
-                                    System.out.println(moduloitem.getSubgrupos());
                                     if (moduloitem.getSubgrupos() != null) {
                                         if (moduloitem.getSubgrupos().equals(moduloencontrado.getSubgrupos())) {
                                             Modulo moduloRelacion = moduloencontrado;
-                                            System.err.println("Ese encontro a:" + moduloRelacion);
                                             moduloRelacion.getSubgrupos().getModulos().add(modulo);
-                                            System.err.println("se modificco A:" + moduloRelacion);
                                             relacion = true;
                                             break;
                                         }
@@ -209,7 +205,6 @@ public class ControlSeccion implements Serializable {
                         if (!relacion) {
                             modulosEncontraos.addAll(modulositem);
                         }
-                        System.out.println("COMBINADO :" + itemencontrado);
                     }
                 }
             }

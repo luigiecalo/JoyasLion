@@ -7,9 +7,38 @@
 
     <ui:composition>
 
-        <span class=""></span>
+
+        <div class="row" style="    margin-bottom: 0px;">
+
+            <h:panelGroup >
+                <div id="barraup" class="col-xs-12 col-md-12 " style="z-index:2" >
+                    <div  class="box">
+
+                        <div  class="box-body">
+                            <b:buttonGroup >
+
+
+                                <p:commandButton type="submit"  value="Guardar"  update=":form:menuedit" actionListener="#{controlRoles.guardarModulo}"  >
+                                    <i class="fa fa-save"></i>
+                                </p:commandButton>
+                                <b:commandButton type="submit"  value="Cancelar"  ajax="true"  look="warning">
+                                    <i class="fa fa-eraser"></i>
+                                </b:commandButton>
+
+
+                            </b:buttonGroup>
+                        </div>
+
+
+                        <!-- /.box-body -->
+                    </div>
+                </div>
+            </h:panelGroup>
+        </div>
         <b:panel   id="modulomenu">
+
             <p:focus context="modulomenu"/>
+            <p:messages autoUpdate="false"/>
             <div class="ui-g">
                 <div class="ui-g-12 ui-lg-4 ui-g-nopad">
                     <div class="ui-g-12">
@@ -25,7 +54,7 @@
                         </b:selectOneMenu>
                     </div>
                     <div class="ui-g-12">
-                        <b:inputText   label="NOMBRE" required="true" requiredMessage="ingreso el nombre" style="height: 40px;" value="#{controlRoles.mdoSelect.nombre}" >
+                        <b:inputText   label="NOMBRE" required="true" requiredMessage="ingreso el nombre" style="height: 40px;" value="#{controlRoles.nombremodulo}" >
 
 
                             <f:facet name="prepend">
@@ -35,7 +64,7 @@
                         </b:inputText>
                     </div>
                     <div class="ui-g-12">
-                        <b:inputText  label="ICONO"  required="true" requiredMessage="ingrese texto del icono" style="height: 40px;" value="#{controlRoles.mdoSelect.icono}" >
+                        <b:inputText  label="ICONO"  required="true" requiredMessage="ingrese texto del icono" style="height: 40px;" value="#{controlRoles.iconomodulo}" >
 
 
                             <f:facet name="prepend">
@@ -50,140 +79,81 @@
                             <f:selectItems value="#{controlRoles.paginas}" />
                         </b:selectOneMenu>
                     </div>
-                    <div class="ui-g-6">
-                        <b:commandButton type="submit"  value="Guardar" update="modulomenu" process="@this"  actionListener="#{controlRoles.guardarModulo}"  look="primary">
-                            <i class="fa fa-save"></i>
-                        </b:commandButton>
 
-                    </div>
-                    <div class="ui-g-6">
-                        <b:commandButton type="submit"  value="Cancelar"  update="modulomenu"  look="warning">
-                            <i class="fa fa-eraser"></i>
-                        </b:commandButton>
-                    </div>
 
-                    <p:messages autoUpdate="false"/>
-
-                </div>
-                
-                <div class="ui-g-12 ui-lg-4" style="background: #e1e1e8" >
-                    MENU
-                       
-                             
-                    
-                    <!--Lista todos los grupos-->
-                    <ui:repeat value="#{controlRoles.grupos}" var="gp"  >
-                        <b:panel  collapsed="true" look="info" style="background: #007bb6;margin-bottom: 2px;font-size: 12px;"  >
-                            <f:facet name="heading">
-                                <i class="fa #{gp.icono}" style="padding-right:10px" />
-                                <h:outputText value="#{gp.nombre}" style="padding-right:20px"/>
-                            </f:facet>
-                            <!--Lista todos Los subgrupos-->
-                            <ui:repeat value="#{controlRoles.subgrupos}" var="sgp" >
-                                <b:panel collapsed="true" look="danger"   style="background: #205081">
-                                    <f:facet name="heading">
-                                        <i class="fa #{sgp.icono}" style="padding-right:10px" />
-                                        <h:outputText value="#{sgp.nombre}" style="padding-right:20px" />
-
-                                    </f:facet>
-                                    <ui:repeat value="#{controlRoles.modulos}" var="mds2">
-                                        (#{mds2.subgrupos.nombre} - #{sgp.nombre})
-                                        <b:row rendered='#{mds2.subgrupos.equals(sgp)}'>
-                                            <div class="col-md-12">
-                                                <b:inputText readonly="true" style="height: 40px;" value="#{mds2.nombre} (#{mds2.src})" >
-
-                                                    <f:facet name="prepend">
-                                                        <b:commandButton  value="" 
-                                                                          look="danger"  
-                                                                          size="lg"  tooltip-position="bottom" 
-                                                                          >
-                                                            <i class="fa fa-trash-o"></i>
-                                                        </b:commandButton>
-                                                    </f:facet>
-                                                    <f:facet name="prepend">
-                                                        <i class="fa #{mds2.icono}"></i>
-                                                    </f:facet>
-
-                                                </b:inputText>
-                                            </div>
-                                        </b:row>
-                                    </ui:repeat>
-                                </b:panel>
-                            </ui:repeat>
-                            <!--listar los que no tienen subgrupo-->
-                            <ui:repeat value="#{controlRoles.modulos}" var="mds">
-                                <b:row rendered='#{mds.grupomodulo.equals(gp) and mds.subgrupos==null}'>
-                                    <div class="col-md-12">
-                                        <b:inputText readonly="true" style="height: 24px;" value="#{mds.nombre} (#{mds.src})"  >
-                                            <f:facet name="prepend">
-                                                <b:commandButton  value="" disabled="true" style="border-radius: 0px 0px 0px 0px"
-                                                                  look="default"  
-                                                                  size="sm"  tooltip-position="bottom" 
-                                                                  >
-                                                    <i class="fa #{mds.icono}"></i>
-                                                </b:commandButton>
-                                            </f:facet>
-                                            <f:facet name="append">
-                                                <b:commandButton  value=""  look="danger" 
-                                                                  size="sm"  tooltip-position="bottom"  >
-                                                    <i class="fa fa-trash-o"></i>
-                                                </b:commandButton>
-                                            </f:facet>
-                                        </b:inputText>
-                                    </div>
-                                </b:row>
-                            </ui:repeat>
-                        </b:panel>
-
-                    </ui:repeat>
-                    <!--Lista todos Los modulos sin grupos-->
-                    <ui:repeat value="#{controlRoles.modulos}" var="mdsa">
-                        <b:row rendered='#{mdsa.grupomodulo==null}' style="margin-top: 0px;margin-bottom: 0px;">
-                            <div class="col-md-12" >
-                                <b:inputText readonly="true" style="height: 24px;" value="#{mdsa.nombre}" rendered='#{mdsa.grupomodulo==null}' >
-                                    <f:facet name="prepend">
-                                        <b:commandButton  value="" disabled="true" style="border-radius: 0px 0px 0px 0px"
-                                                          look="default"  
-                                                          size="sm"  tooltip-position="bottom" 
-                                                          >
-                                            <i class="fa #{mdsa.icono}"></i>
-                                        </b:commandButton>
-                                    </f:facet>
-                                    <f:facet name="append">
-                                        <b:commandButton  value=""  look="danger" 
-                                                          size="sm"  tooltip-position="bottom"  >
-                                            <i class="fa fa-trash-o"></i>
-                                        </b:commandButton>
-                                    </f:facet>
-                                </b:inputText>
-                            </div>
-                        </b:row>
-
-                    </ui:repeat>
 
 
                 </div>
+
+
+
                 <div class="ui-g-12 ui-lg-4"  >
-                    <b:panel  id="menuedit" style="background: #afd9ee">
-                        <p:accordionPanel activeIndex="2">
-                            <p:tab title="Godfather Part I" ariaLabel="arial">
-                                <h:panelGrid columns="2" cellpadding="10">
-                                    <h:outputText
-                                        value="The story begins as Don Vito Corleone..." />
-                                </h:panelGrid>
-                            </p:tab>
+                    <b:panel id="menuedit" look="default" collapsible="false" style="background: #C7E6F6" >
+                        <f:facet name="heading">
+                            <h:outputText value="MENU" />
+                        </f:facet>
+                        <ui:repeat value="#{controlUtilidades.util.getMenu(controlRoles.modulos)}" var="modulos" >
+                            <!--modulos con grupos-->
 
-                        </p:accordionPanel>
-                        <p:spacer height="10"/>
-                        <ui:repeat value="#{controlRoles.modulos}"  var="modulo" >
-                            <b:inputText readonly="true" style="height: 24px;" value="#{modulo.nombre}" rendered='#{modulo.grupomodulo==null}' >
+                            <b:panel  collapsed="true" look="primary" style="background: #007bb6" rendered='#{modulos.modulos!=null }'  >
+                                <f:facet name="heading">
+                                    <i class="fa #{modulos.icono}" style="padding-right:10px;color: #ffffff" />
+                                    <h:outputText  value="#{modulos.nombre}" style="padding-right:20px;color: #ffffff"/>
+                                </f:facet>
+                                <!--modulos sin subgrupo-->
+                                <ui:repeat value="#{modulos.modulos}" var="modulos2" >
+                                    <ui:repeat value="#{modulos2.getSubgrupos()}" var="subgrupos" >
+                                        <b:panel  collapsed="true" look="danger" style="background: #205081"  >
+                                            <f:facet name="heading">
+                                                <i class="fa #{subgrupos.getIcono()}" style="padding-right:10px" />
+                                                <h:outputText value="#{subgrupos.getNombre()}" style="padding-right:20px"/>
+                                            </f:facet>
+                                            <b:inputText readonly="true" style="height: 24px;" value="#{modulos2.nombre}"  >
+                                                <f:facet name="prepend">
+                                                    <b:commandButton  value="" disabled="true" style="border-radius: 0px 0px 0px 0px"
+                                                                      look="default"  
+                                                                      size="sm"  tooltip-position="bottom" 
+                                                                      >
+                                                        <i class="fa #{modulos2.icono}"></i>
+                                                    </b:commandButton>
+                                                </f:facet>
+                                                <f:facet name="append">
+                                                    <b:commandButton  value=""  look="danger" 
+                                                                      size="sm"  tooltip-position="bottom"  >
+                                                        <i class="fa fa-trash-o"></i>
+                                                    </b:commandButton>
+                                                </f:facet>
+                                            </b:inputText>
+                                        </b:panel>
+                                    </ui:repeat>
+                                    <b:inputText readonly="true" style="height: 24px;" value="#{modulos2.nombre}" rendered="#{modulos2.getSubgrupos()==null}" >
+                                        <f:facet name="prepend">
+                                            <b:commandButton  value="" disabled="true" style="border-radius: 0px 0px 0px 0px"
+                                                              look="default"  
+                                                              size="sm"  tooltip-position="bottom" 
+                                                              >
+                                                <i class="fa #{modulos2.icono}"></i>
+                                            </b:commandButton>
+                                        </f:facet>
+                                        <f:facet name="append">
+                                            <b:commandButton  value=""  look="danger" 
+                                                              size="sm"  tooltip-position="bottom"  >
+                                                <i class="fa fa-trash-o"></i>
+                                            </b:commandButton>
+                                        </f:facet>
+                                    </b:inputText>
+                                </ui:repeat>
+
+                            </b:panel>
+
+                            <!--modulos sin grupos-->
+                            <b:inputText readonly="true" style="height: 24px;" value="#{modulos.nombre}" rendered='#{modulos.modulos==null}' >
                                 <f:facet name="prepend">
-
                                     <b:commandButton  value="" disabled="true" style="border-radius: 0px 0px 0px 0px"
                                                       look="default"  
                                                       size="sm"  tooltip-position="bottom" 
                                                       >
-                                        <i class="fa #{modulo.icono}"></i>
+                                        <i class="fa #{modulos.icono}"></i>
                                     </b:commandButton>
                                 </f:facet>
                                 <f:facet name="append">
@@ -192,12 +162,11 @@
                                         <i class="fa fa-trash-o"></i>
                                     </b:commandButton>
                                 </f:facet>
-
-
                             </b:inputText>
                         </ui:repeat>
                     </b:panel>
-              
+
+
 
                 </div>
 
@@ -207,7 +176,7 @@
 
         </b:panel>
 
-        <p:messages autoUpdate="false"/>
+
 
 
 

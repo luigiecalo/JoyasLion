@@ -157,23 +157,24 @@ public class prueba implements Serializable {
 
         modelos = MdDao.consultarTodo(Modelo.class);
 
-        System.out.println("______MODELOS__("+uti.formatoDecimal(3.99865424, "0.000")+"________");
-        for (Modelo mod : modelos) {
-            System.out.println(mod.getCodigo() + "-" + mod.getTipo_modelo().getNombre());
-            System.out.println("*CIRCONES(" + mod.getModelo_circon().size() + ")_________");
-            for (ModeloCircon mc1 : mod.getModelo_circon()) {
-                System.out.println(mc1.getCircon().getCodigo() + "--" + mc1.getCircon().getTamano());
-            }
-            System.out.println("*PIEDRAS(" + mod.getPiedra_centrales().size() + ")__________");
-            for (ModeloPiedraCentral mp1 : mod.getPiedra_centrales()) {
-                System.out.println(mp1.getPiedra().getCodigo() + "--" + mp1.getPiedra().getNombre());
-            }
-        }
+//        System.out.println("______MODELOS__("+uti.formatoDecimal(3.99865424, "0.000")+"________");
+//        for (Modelo mod : modelos) {
+//            System.out.println(mod.getCodigo() + "-" + mod.getTipo_modelo().getNombre());
+//            System.out.println("*CIRCONES(" + mod.getModelo_circon().size() + ")_________");
+//            for (ModeloCircon mc1 : mod.getModelo_circon()) {
+//                System.out.println(mc1.getCircon().getCodigo() + "--" + mc1.getCircon().getTamano());
+//            }
+//            System.out.println("*PIEDRAS(" + mod.getPiedra_centrales().size() + ")__________");
+//            for (ModeloPiedraCentral mp1 : mod.getPiedra_centrales()) {
+//                System.out.println(mp1.getPiedra().getCodigo() + "--" + mp1.getPiedra().getNombre());
+//            }
+//        }
 //        String number = ultimo + "";
 //        if (number.length() == 1) {
 //            number.format("00{0}", 2);
 //        }
-
+     prueba p = new prueba();
+     p.ListarModulos();
 //        System.out.println("REGISTRO EXITOSO " + String.format("%03d", ultimo));
 //        ultimo = 190;
 //        System.out.println("REGISTRO EXITOSO " + String.format("%03d", ultimo));

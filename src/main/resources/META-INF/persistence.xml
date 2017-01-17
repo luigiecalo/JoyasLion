@@ -7,7 +7,10 @@
     <class>com.Entidades.Miembro</class>
     <class>com.Entidades.Modelo</class>
     <class>com.Entidades.ModeloCircon</class>
+    <class>com.Entidades.ModeloPiedraCentral</class>
     <class>com.Entidades.Modulo</class>
+    <class>com.Entidades.Orden</class>
+    <class>com.Entidades.OrdenModelo</class>
     <class>com.Entidades.Permisos</class>
     <class>com.Entidades.PiedraCentral</class>
     <class>com.Entidades.Rol</class>
@@ -15,15 +18,12 @@
     <class>com.Entidades.SubGrupo</class>
     <class>com.Entidades.Tipo</class>
     <class>com.Entidades.Usuario</class>
-    <class>com.Entidades.ModeloPiedraCentral</class>
-    <class>com.Entidades.Orden</class>
-    <class>com.Entidades.OrdenModelo</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/LionJoyas?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-      <property name="javax.persistence.jdbc.password" value="root"/>
+      <property name="javax.persistence.jdbc.password" value=""/>
     </properties>
   </persistence-unit>
 </persistence>
