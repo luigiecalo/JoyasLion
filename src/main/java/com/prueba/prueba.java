@@ -72,7 +72,7 @@ public class prueba implements Serializable {
         Circon circon = new Circon();
         Modelo modelo = new Modelo();
         PiedraCentral PC = new PiedraCentral();
-        Utilidades uti= new Utilidades();
+        Utilidades uti = new Utilidades();
         //Lita de OBJETOS
 //        List<Permisos> permisoLista = new ArrayList<Permisos>();
 //        List<Miembro> miembroLista = new ArrayList<Miembro>();
@@ -126,7 +126,6 @@ public class prueba implements Serializable {
 //        modelo.setPeso_modelo(332.8);
 //        tipo = TDao.consultarC(Tipo.class, 1L);
 //        modelo.setTipo_modelo(tipo);
-
 //        MdDao.crear(modelo);
 //        int cant = 14;
 //        modelo = MdDao.buscarModeloEstado(modelo.getCodigo(), "ACTIVO");
@@ -154,7 +153,6 @@ public class prueba implements Serializable {
 //        modelo.setPiedra_centrales(modelopiedras);
 //        modelo.setModelo_circon(modelocircones);
 //        MdDao.modificar(modelo);
-
         modelos = MdDao.consultarTodo(Modelo.class);
 
 //        System.out.println("______MODELOS__("+uti.formatoDecimal(3.99865424, "0.000")+"________");
@@ -173,8 +171,8 @@ public class prueba implements Serializable {
 //        if (number.length() == 1) {
 //            number.format("00{0}", 2);
 //        }
-     prueba p = new prueba();
-     p.ListarModulos();
+        prueba p = new prueba();
+        p.ListarModulos();
 //        System.out.println("REGISTRO EXITOSO " + String.format("%03d", ultimo));
 //        ultimo = 190;
 //        System.out.println("REGISTRO EXITOSO " + String.format("%03d", ultimo));
@@ -289,7 +287,7 @@ public class prueba implements Serializable {
 
         if (modulo.getSubgrupos() == null) {
 
-            System.out.println("*" + modulo.getNombre() + "*");
+//            System.out.println("*" + modulo.getNombre() + "*");
             item.put("id", modulo.getIdmodulo());
             item.put("icono", modulo.getIcono());
             item.put("nombre", modulo.getNombre());
@@ -304,14 +302,14 @@ public class prueba implements Serializable {
 
     public void addItemGrup(Map item, Modulo modulo) {
         if (modulo.getSubgrupos() == null) {
-            System.out.println("*" + modulo.getGrupomodulo().getNombre() + "*");
+//            System.out.println("*" + modulo.getGrupomodulo().getNombre() + "*");
             item.put("id", modulo.getIdmodulo());
             item.put("icono", modulo.getGrupomodulo().getIcono());
             item.put("nombre", modulo.getGrupomodulo().getNombre());
             item.put("grupo", modulo.getGrupomodulo().getNombre());
             List<Modulo> modulosvalidos = new ArrayList<Modulo>();
 
-            System.out.println("-" + modulo.getNombre() + "-");
+//            System.out.println("-" + modulo.getNombre() + "-");
             modulosvalidos.add(modulo);
 
             item.put("modulos", modulosvalidos);
@@ -325,7 +323,7 @@ public class prueba implements Serializable {
     }
 
     public void addItemSubGrup(Map item, Modulo modulo) {
-        System.out.println("-" + modulo.getSubgrupos().getNombre() + "-");
+//        System.out.println("-" + modulo.getSubgrupos().getNombre() + "-");
         item.put("id", modulo.getIdmodulo());
         item.put("icono", modulo.getGrupomodulo().getIcono());
         item.put("nombre", modulo.getGrupomodulo().getNombre());

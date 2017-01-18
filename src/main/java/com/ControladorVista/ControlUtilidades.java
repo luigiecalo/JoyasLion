@@ -6,6 +6,7 @@
 package com.ControladorVista;
 
 import Utilidades.Utilidades;
+import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
@@ -15,7 +16,7 @@ import javax.faces.bean.ViewScoped;
  */
 @ManagedBean
 @ViewScoped
-public class ControlUtilidades {
+public class ControlUtilidades implements  Serializable{
     
     
     private Utilidades util = new Utilidades();

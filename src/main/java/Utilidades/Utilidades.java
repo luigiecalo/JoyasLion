@@ -5,6 +5,7 @@
  */
 package Utilidades;
 
+import com.Dao.ModuloDaoimplement;
 import com.Entidades.Modulo;
 import com.Entidades.RolModuloPermiso;
 import java.io.Serializable;
@@ -24,7 +25,7 @@ import org.primefaces.context.RequestContext;
  *
  * @author usuario
  */
-public class Utilidades implements Serializable {
+public class Utilidades  {
 
     private String focus = "null";
 
@@ -81,13 +82,16 @@ public class Utilidades implements Serializable {
         String date = sdf.format(d);
         return date;
     }
-    
-         public List<Map> getMenu(List<Modulo> modulos) {
+
+    public List<Map> getMenu(List<Modulo> modulos) {
+        ModuloDaoimplement MoDao = new ModuloDaoimplement();
+        int index = 0;
+        modulos = MoDao.consultarTodo(Modulo.class);
         List<Map> menu = new LinkedList<Map>();
         for (Modulo m : modulos) {
-            Modulo modulo = m;
+            Modulo modulo = MoDao.consultar(Modulo.class, m.getIdmodulo());
             Map item = new HashMap<String, String>();
-            
+            item.put("src", modulo.getSrc());
             if (modulo.getGrupomodulo() == null) {
                 addItem(item, modulo, menu);
 
@@ -113,10 +117,7 @@ public class Utilidades implements Serializable {
                         addItemGrup(item, modulo);
                         menu.add(item);
                     } else {
-                       addItemGrup(item, modulo);
-//                        if (item.get("submodulos") == null) {
-                        System.out.println("Item Encontrado" + itemencontrado);
-                        System.out.println("Item -         " + item);
+                        addItemGrup(item, modulo);
                         List<Modulo> modulosEncontraos = (List<Modulo>) itemencontrado.get("modulos");
                         List<Modulo> modulositem = (List<Modulo>) item.get("modulos");
                         boolean relacion = false;
@@ -137,64 +138,91 @@ public class Utilidades implements Serializable {
                         if (!relacion) {
                             modulosEncontraos.addAll(modulositem);
                         }
+
                     }
                 }
             }
         }
 
         return menu;
+
+    }
+
+    public void logMenu(List<Map> menu) {
+        System.out.println("---MENU PRINCIPAL--");
+
+        for (Map menu1 : menu) {
+            System.out.println("*" + menu1.get("nombre") + "*");
+            if (menu1.get("modulos") != null) {
+                for (Modulo modulo : (List<Modulo>) menu1.get("modulos")) {
+                    if (modulo.getSubgrupos() == null) {
+                        System.out.println("-" + modulo.getNombre() + "-");
+                    } else {
+                        System.out.println("v" + modulo.getSubgrupos().getNombre());
+                        for (Modulo modulosub : modulo.getSubgrupos().getModulos()) {
+                            System.out.println(" -" + modulosub.getNombre());
+                        }
+                    }
+////
+                }
+            }
+
+        }
     }
 
     public void addItem(Map item, Modulo modulo, List<Map> menu) {
 
         if (modulo.getSubgrupos() == null) {
-
-            System.out.println("*" + modulo.getNombre() + "*");
-            item.put("src", modulo.getSrc());
             item.put("id", modulo.getIdmodulo());
             item.put("icono", modulo.getIcono());
             item.put("nombre", modulo.getNombre());
+            item.put("grupo", null);
             item.put("modulos", null);
-            item.put("tipo","modulo");
-            item.put("clase",null);
+            item.put("submodulos", null);
+            item.put("update", "@form");
+            item.put("subupdate", null);
+            item.put("subupdate2", null);
         }
     }
 
     public void addItemGrup(Map item, Modulo modulo) {
         if (modulo.getSubgrupos() == null) {
-            System.out.println("*" + modulo.getGrupomodulo().getNombre() + "*");
-            item.put("src", modulo.getGrupomodulo().getNombre());
+//            System.out.println("*" + modulo.getGrupomodulo().getNombre() + "*");
             item.put("id", modulo.getIdmodulo());
             item.put("icono", modulo.getGrupomodulo().getIcono());
             item.put("nombre", modulo.getGrupomodulo().getNombre());
+            item.put("grupo", modulo.getGrupomodulo().getNombre());
             List<Modulo> modulosvalidos = new ArrayList<Modulo>();
 
-            System.out.println("-" + modulo.getNombre() + "-");
+//            System.out.println("-" + modulo.getNombre() + "-");
             modulosvalidos.add(modulo);
+
             item.put("modulos", modulosvalidos);
-            item.put("tipo","grupo");
-            item.put("clase","fa-angle-left pull-right");
+            item.put("submodulos", null);
+            item.put("update", null);
+            item.put("subupdate", "@form");
+            item.put("subupdate2", null);
         } else {
             addItemSubGrup(item, modulo);
         }
     }
 
     public void addItemSubGrup(Map item, Modulo modulo) {
-        System.out.println("-" + modulo.getSubgrupos().getNombre() + "-");
-        item.put("src", modulo.getSubgrupos().getNombre());
+//            System.out.println("-" + modulo.getSubgrupos().getNombre() + "-");
         item.put("id", modulo.getIdmodulo());
         item.put("icono", modulo.getGrupomodulo().getIcono());
         item.put("nombre", modulo.getGrupomodulo().getNombre());
+        item.put("grupo", modulo.getSubgrupos().getNombre());
         List<Modulo> modulosvalidos = new ArrayList<Modulo>();
         List<Modulo> submodulosvalidos = new ArrayList<Modulo>();
         submodulosvalidos.add(modulo);
         modulo.getSubgrupos().setModulos(submodulosvalidos);
         modulosvalidos.add(modulo);
         item.put("modulos", modulosvalidos);
-        item.put("tipo","subgrupo");
-        item.put("clase","fa-angle-left pull-right");
+        item.put("update", null);
+        item.put("subupdate", null);
+        item.put("subupdate2", "@form");
     }
-
 
     public String getFocus() {
         return focus;

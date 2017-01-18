@@ -183,8 +183,8 @@ public class ControlSeccion implements Serializable {
                     } else {
                        addItemGrup(item, modulo);
 //                        if (item.get("submodulos") == null) {
-                        System.out.println("Item Encontrado" + itemencontrado);
-                        System.out.println("Item -         " + item);
+//                        System.out.println("Item Encontrado" + itemencontrado);
+//                        System.out.println("Item -         " + item);
                         List<Modulo> modulosEncontraos = (List<Modulo>) itemencontrado.get("modulos");
                         List<Modulo> modulositem = (List<Modulo>) item.get("modulos");
                         boolean relacion = false;
@@ -217,7 +217,7 @@ public class ControlSeccion implements Serializable {
 
         if (modulo.getSubgrupos() == null) {
 
-            System.out.println("*" + modulo.getNombre() + "*");
+//            System.out.println("*" + modulo.getNombre() + "*");
             item.put("src", modulo.getSrc());
             item.put("id", modulo.getIdmodulo());
             item.put("icono", modulo.getIcono());
@@ -230,14 +230,14 @@ public class ControlSeccion implements Serializable {
 
     public void addItemGrup(Map item, Modulo modulo) {
         if (modulo.getSubgrupos() == null) {
-            System.out.println("*" + modulo.getGrupomodulo().getNombre() + "*");
+//            System.out.println("*" + modulo.getGrupomodulo().getNombre() + "*");
             item.put("src", modulo.getGrupomodulo().getNombre());
             item.put("id", modulo.getIdmodulo());
             item.put("icono", modulo.getGrupomodulo().getIcono());
             item.put("nombre", modulo.getGrupomodulo().getNombre());
             List<Modulo> modulosvalidos = new ArrayList<Modulo>();
 
-            System.out.println("-" + modulo.getNombre() + "-");
+//            System.out.println("-" + modulo.getNombre() + "-");
             modulosvalidos.add(modulo);
             item.put("modulos", modulosvalidos);
             item.put("tipo","grupo");
@@ -248,7 +248,7 @@ public class ControlSeccion implements Serializable {
     }
 
     public void addItemSubGrup(Map item, Modulo modulo) {
-        System.out.println("-" + modulo.getSubgrupos().getNombre() + "-");
+//        System.out.println("-" + modulo.getSubgrupos().getNombre() + "-");
         item.put("src", modulo.getSubgrupos().getNombre());
         item.put("id", modulo.getIdmodulo());
         item.put("icono", modulo.getGrupomodulo().getIcono());

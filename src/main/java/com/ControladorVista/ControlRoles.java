@@ -19,6 +19,7 @@ import com.Entidades.Rol;
 import com.Entidades.RolModuloPermiso;
 import com.Entidades.SubGrupo;
 import com.Entidades.Tipo;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -37,7 +38,7 @@ import org.primefaces.event.UnselectEvent;
  */
 @ManagedBean
 @ViewScoped
-public class ControlRoles {
+public class ControlRoles implements Serializable {
 
     //Utilidades
     private Utilidades util = new Utilidades();
@@ -46,7 +47,8 @@ public class ControlRoles {
     private Long subgrupoSelect = 0l;
     private String paginaStrin = "";
     private String nombremodulo = "";
-    private String iconomodulo = "";
+    private Long moduloselect = 0l;
+    private String estado = "R";
 
     //Entidades
     private Rol rolselect = new Rol();
@@ -57,6 +59,7 @@ public class ControlRoles {
     //Listas
     private List<Rol> roles = new ArrayList<Rol>();
     private List<Modulo> modulos = new ArrayList<Modulo>();
+    private List<Map> menu = new ArrayList<Map>();
     private Map<String, Long> gruposLista;
     private Map<String, Long> subgruposLista;
     private Map<String, String> paginasLista;
@@ -97,6 +100,14 @@ public class ControlRoles {
 //METODOS
     //Lista todos los roles
 
+    public boolean verBtnRegistro() {
+        if (estado.equals("R")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public Map<String, Long> getGruposLista() {
         gruposLista = new HashMap<String, Long>();
         for (Grupo grup : getGrupos()) {
@@ -126,31 +137,32 @@ public class ControlRoles {
         if (grupoSelect == 0l && subgrupoSelect != 0l) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "INGRESE PRIMERO UN GRUPO", "INGRESE PRIMERO UN GRUPO"));
         } else {
-            Modulo modulo = new Modulo();
             Grupo g = GrupoDao.consultar(Grupo.class, grupoSelect);
             SubGrupo sg = SubGrupoDao.consultar(SubGrupo.class, subgrupoSelect);
-            modulo.setNombre(nombremodulo);
-            modulo.setIcono(iconomodulo);
-            modulo.setGrupomodulo(g);
-            modulo.setSubgrupos(sg);
-            modulo.setSrc(paginaStrin);
-            ModDAO.crear(modulo);
-            Limpiar();
+            mdoSelect.setGrupomodulo(g);
+            mdoSelect.setSubgrupos(sg);
+            if (estado.equals("R")) {
+                ModDAO.crear(mdoSelect);
+            } else {
+                ModDAO.modificar(mdoSelect);
+            }
+
+            limpiar();
             util.crearmensajes("INFO", "REGISTRO EXITOSO", "SE REGISTRO EXITOSA MENTE EL MODULO");
         }
 
     }
-    
-    public void eliminarModulo(Modulo mod){
+
+    public void eliminarModulo(Modulo mod) {
         ModDAO.eliminar(mod);
     }
 
-    public void Limpiar() {
-        nombremodulo = "";
-        iconomodulo = "";
+    public void limpiar() {
+        mdoSelect = new Modulo();
         grupoSelect = 0l;
         subgrupoSelect = 0l;
         paginaStrin = "";
+        estado = "R";
     }
 
     private void ListarTodo() {
@@ -163,7 +175,6 @@ public class ControlRoles {
     public void listarRoles() {
         roles = RolDAO.Listar();
     }
-
 
     //Lista todos los roles
     public void listarModulos() {
@@ -178,6 +189,31 @@ public class ControlRoles {
     //Lista todos los subGrupos
     public void listarSubgrupos() {
         subgrupos = SubGrupoDao.consultarTodo(SubGrupo.class);
+    }
+
+    public void selecionMenu(Long idmod) {
+        estado = "A";
+        Modulo moduloSel = ModDAO.consultarC(Modulo.class, idmod);
+        mdoSelect = moduloSel;
+        if (moduloSel != null) {
+            if (mdoSelect.getGrupomodulo() != null) {
+                grupoSelect = mdoSelect.getGrupomodulo().getIgrupo();
+            } else {
+                grupoSelect = 0l;
+            }
+            if (mdoSelect.getSubgrupos() != null) {
+                subgrupoSelect = mdoSelect.getSubgrupos().getIdsubgrupo();
+            } else {
+                subgrupoSelect = 0l;
+            }
+        }
+
+    }
+
+    public void eliminarMenu() {
+        Modulo moduloSel = ModDAO.consultarC(Modulo.class, moduloselect);
+        ModDAO.eliminar(moduloSel);
+        util.crearmensajes("INFO", "MODuLO ELIMINADO EXITOSAMENTE", " MODULO ELIMINADO EXITOSAMENTE");
     }
 
     //GET AND SET
@@ -301,12 +337,39 @@ public class ControlRoles {
         this.nombremodulo = nombremodulo;
     }
 
-    public String getIconomodulo() {
-        return iconomodulo;
+    public Long getModuloselect() {
+        return moduloselect;
     }
 
-    public void setIconomodulo(String iconomodulo) {
-        this.iconomodulo = iconomodulo;
+    public void setModuloselect(Long moduloselect) {
+        this.moduloselect = moduloselect;
+    }
+
+    public List<Map> getMenu() {
+        menu = util.getMenu(getModulos());
+        return menu;
+    }
+
+    public void logMenu() {
+        System.out.println("---MENU PRINCIPAL--");
+
+        for (Map menu1 : getMenu()) {
+            System.out.println("*" + menu1.get("nombre") + "*");
+            if (menu1.get("modulos") != null) {
+                for (Modulo modulo : (List<Modulo>) menu1.get("modulos")) {
+                    if (modulo.getSubgrupos() == null) {
+                        System.out.println("-" + modulo.getNombre() + "-");
+                    } else {
+                        System.out.println("v" + modulo.getSubgrupos().getNombre());
+                        for (Modulo modulosub : modulo.getSubgrupos().getModulos()) {
+                            System.out.println(" -" + modulosub.getNombre());
+                        }
+                    }
+////
+                }
+            }
+
+        }
     }
 
 }
