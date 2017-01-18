@@ -144,7 +144,7 @@ public class ControlRoles implements Serializable {
             if (estado.equals("R")) {
                 ModDAO.crear(mdoSelect);
             } else {
-                ModDAO.modificar(mdoSelect);
+                ModDAO.modificar1(mdoSelect);
             }
 
             limpiar();
