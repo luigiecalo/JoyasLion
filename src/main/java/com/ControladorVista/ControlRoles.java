@@ -29,6 +29,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 
@@ -49,6 +50,8 @@ public class ControlRoles implements Serializable {
     private String nombre = "";
     private String icono = "";
     private String estadocreargrupo = "grupo";
+    private String estadogrupo = "R";
+
     private Long moduloselect = 0l;
     private String estado = "R";
 
@@ -78,6 +81,7 @@ public class ControlRoles implements Serializable {
     private TipoDaoimplement TipoDao = new TipoDaoimplement();
 
     FacesContext context;
+    RequestContext contex;
 
     /**
      * Creates a new instance of ControlUtilidades
@@ -226,21 +230,47 @@ public class ControlRoles implements Serializable {
                 Grupo grup = new Grupo();
                 grup.setNombre(nombre);
                 grup.setIcono(icono);
-                GrupoDao.crear(grup);
+
+                if (estadogrupo.equals("R")) {
+                    GrupoDao.crear(grup);
+                } else {
+                    GrupoDao.modificar(grup);
+                }
             } else {
                 SubGrupo sgrup = new SubGrupo();
                 sgrup.setNombre(nombre);
                 sgrup.setIcono(icono);
-                SubGrupoDao.crear(sgrup);
+                if (estadogrupo.equals("R")) {
+                    SubGrupoDao.crear(sgrup);
+                } else {
+                    SubGrupoDao.modificar(sgrup);
+                }
             }
             util.crearmensajes("INFO", "MENSAGE", "REgistro Exitoso del " + estadocreargrupo + "");
-//            controlOrdenes.setCantidad(203);
-//            ControlOrdenes bean1 = context.getApplication().evaluateExpressionGet(context, "#{controlOrdenes}", ControlOrdenes.class);
-//            bean.setCantidad(bean.getCantidad() + 1);
-            nombre = "";
-            icono = "";
-            util.modal("mdModelo", "hide");
+
+            limpiargrupos();
+            listargrupos();
         }
+    }
+
+    public void selecionGrup(Long id) {
+        contex = RequestContext.getCurrentInstance();
+        estadogrupo = "A";
+        if (estadocreargrupo.equals("GRUPO")) {
+            Grupo grup = GrupoDao.consultarC(Grupo.class, id);
+            if (grup != null) {
+                this.nombre = grup.getNombre();
+                this.icono = grup.getIcono();
+            }
+
+        } else {
+            SubGrupo subgrup = SubGrupoDao.consultar(SubGrupo.class, id);
+            if (subgrup != null) {
+                this.nombre = subgrup.getNombre();
+                this.icono = subgrup.getIcono();
+            }
+        }
+        contex.update(":form:creargrup");
     }
 
     public void eliminarMenu() {
@@ -398,6 +428,12 @@ public class ControlRoles implements Serializable {
 
     public void setEstadocreargrupo(String estadocreargrupo) {
         this.estadocreargrupo = estadocreargrupo;
+    }
+
+    private void limpiargrupos() {
+        this.nombre = "";
+        this.icono = "";
+        this.estadogrupo="R";
     }
 
 }

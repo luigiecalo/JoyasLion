@@ -46,7 +46,7 @@ and open the template in the editor.
 #slider{
     display:table-cell;
     vertical-align:middle;
-  
+
 }
 #slider img:hover {
     -webkit-transform:scale(1.25);
@@ -76,9 +76,91 @@ and open the template in the editor.
 }
 
 #panel-group {
-  background: red;
-      margin-bottom: 10px;
+    background: red;
+    margin-bottom: 10px;
 }
+/*botones primefaces TAMAÑOS*/
+.pbtn-sm .ui-button-text{
+    padding:5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+}
+.pbtn-xs .ui-button-text{
+    padding: 1px 5px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+}
+.pbtn-lg .ui-button-text{
+    padding: 10px 16px;
+    font-size: 18px;
+    line-height: 1.3333333;
+    border-radius: 6px;
+}
+
+
+/*botones primefaces COLORES*/
+.pbtn-success .ui-button-text{
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}
+.pbtn-primary .ui-button-text:hover{
+    background-color: #4cae4c;
+}
+.pbtn-warning .ui-button-text{
+    color: #fff;
+    background-color: #f0ad4e;
+    border-color: #eea236;
+}
+.pbtn-primary .ui-button-text:hover{
+    background-color: #eea236;
+}
+.pbtn-primary .ui-button-text{
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+}
+.pbtn-primary .ui-button-text:hover{
+    background-color: #2e6da4;
+}
+.pbtn-info .ui-button-text{
+    color: #fff;
+    background-color: #5bc0de;
+    border-color: #46b8da;
+}
+.pbtn-info .ui-button-text:hover{
+    background-color: #46b8da;
+}
+.pbtn-danger .ui-button-text{
+    color: #fff;
+    background-color: #d9534f;
+    border-color: #d43f3a;
+}
+.pbtn-danger .ui-button-text:hover{
+    background-color: #d43f3a;
+}
+
+.pbtn .ui-button-text{
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    border-radius: 4px;
+    -webkit-user-select: none;
+
+    user-select: none;
+}
+
 
 .contenedor-img .mascara,.contenedor-img .contenido {
     width: 300px;
@@ -188,7 +270,7 @@ and open the template in the editor.
 .panel-group .panel {
     background-color: transparent;
     border:none !important;
-        margin-bottom: 2px;
+    margin-bottom: 2px;
 }
 
 .ir-arriba {
