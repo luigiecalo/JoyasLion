@@ -15,27 +15,34 @@
                     <div  class="box">
 
                         <div  class="box-body">
-                            <p:commandButton value="3"  class="pbtn pbtn-xs pbtn-danger" />
-                            <p:commandButton value="3"  class="pbtn pbtn-info" />
-                            <p:commandButton value="3"  class="pbtn-xs pbtn pbtn-warning" />
 
-                            <p:commandButton value="3"  class="pbtn pbtn-lg pbtn-primary" />
+                            <div class="ui-lg-8 ui-g-12">
+                                <b:buttonGroup >
+                                    <b:commandButton type="submit"  value="Guardar" rendered="#{controlRoles.verBtnRegistro()}" look="success"  update="tab"  size="sm" actionListener="#{controlRoles.guardarModulo}"  >
+                                        <i class="fa fa-save"></i>
+                                    </b:commandButton>
+                                    <b:commandButton type="submit"  value="Editar"  rendered="#{!controlRoles.verBtnRegistro()}" look="warning" update="tab"  size="sm" actionListener="#{controlRoles.guardarModulo}"  >
+                                        <i class="fa fa-edit"></i>
+                                    </b:commandButton>
+                                    <b:commandButton type="submit" process="@this"  value="Cancelar"   look="danger" actionListener="#{controlRoles.limpiar()}"  update="tab" size="sm">
+                                        <i class="fa fa-eraser"></i>
+                                    </b:commandButton>
+                                </b:buttonGroup>
+                            </div>
+                            <div class="ui-lg-1 ui-g-12">
+                                <div class="input-group input-group-sm" style="width: 150px;">
+                                    <input type="text" name="table_search" class="form-control pull-right" placeholder="Search"/>
 
-                            <p:commandButton value="_"  class="pbtn pbtn-sm pbtn-success"  icon="fa fa-plus" iconPos="lefth"/>
-                            <b:buttonGroup >
-                                <b:commandButton type="submit"  value="Guardar" rendered="#{controlRoles.verBtnRegistro()}" look="success"  update="tab"  size="sm" actionListener="#{controlRoles.guardarModulo}"  >
-                                    <i class="fa fa-save"></i>
-                                </b:commandButton>
-                                <b:commandButton type="submit"  value="Editar"  rendered="#{!controlRoles.verBtnRegistro()}" look="warning" update="tab"  size="sm" actionListener="#{controlRoles.guardarModulo}"  >
-                                    <i class="fa fa-edit"></i>
-                                </b:commandButton>
-                                <b:commandButton type="submit" process="@this"  value="Cancelar"   look="danger" actionListener="#{controlRoles.limpiar()}"  update="tab" size="sm">
-                                    <i class="fa fa-eraser"></i>
-                                </b:commandButton>
+                                    <div class="input-group-btn">
+                                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                    </div>
+                                </div> 
+                            </div>
 
-                            </b:buttonGroup>
+
 
                         </div>
+
 
 
                         <!-- /.box-body -->
@@ -54,7 +61,7 @@
                             <f:selectItem  itemLabel="Selecione un Rol" itemValue="" />
                             <f:selectItems value="#{controlRoles.gruposLista}" />
                             <f:facet name="append">
-                                <b:commandButton  value="" process="@this" actionListener="#{controlSeccion.modalRol('mdCrearGrupo','show')}"  style="border-radius: 0px 0px 0px 0px"
+                                <b:commandButton  value="" process="@this" action="#{controlSeccion.modalRol('mdCrearGrupo','show')}" actionListener="#{controlRoles.limpiargrupos}" style="border-radius: 0px 0px 0px 0px"
                                                   look="info"  ajax="true"
                                                   size="sm" 
                                                   >
@@ -69,7 +76,7 @@
                             <f:selectItem  itemLabel="Selecione un Rol" itemValue="" />
                             <f:selectItems value="#{controlRoles.subgruposLista}" />
                             <f:facet name="append">
-                                <b:commandButton  value="" process="@this"  actionListener="#{controlSeccion.modalRol('mdCrearGrupo','show')}"  style="border-radius: 0px 0px 0px 0px"
+                                <b:commandButton  value="" process="@this"  action="#{controlSeccion.modalRol('mdCrearGrupo','show')}" actionListener="#{controlRoles.limpiargrupos}" style="border-radius: 0px 0px 0px 0px"
                                                   look="info"  ajax="true"
                                                   size="sm"  tooltip-position="bottom" 
                                                   >
@@ -215,38 +222,19 @@
 
         </b:panel>
 
-        <!--modal Para eliminar Modulo-->
-        <div class="modal fade" id="mdEliminarModulo" style="z-index:2000" data-backdrop="false" styleClass="myModal"  role="dialog" >
-            <div class="modal-dialog ">
-                <div class="modal-content bg-yellow-active">
-                    <div class="modal-header" >
-                        <h4 class="modal-title">ADVERTENCIA</h4>
-                    </div>
-                    <div class="modal-body bg-gray-light">
-                        <b:panel   id="eliminarmod">
-                            <p style="color:black">Esta seguro que desa ELIMINAR ESTE MODULO? </p>
-                        </b:panel>
-                    </div>
-                    <div class="modal-footer bg-yellow-gradient">
-                        <b:button value="close" dismiss="modal" onclick="return false;"/>
-                        <b:commandButton  process="@this" update="tab" value="eliminar"  actionListener="#{controlRoles.eliminarMenu}"  look="warning">
-                            <i class="fa fa-eraser"></i>
-                        </b:commandButton>
-                    </div>
 
-                </div>
-            </div>
-        </div>
         <!--modal para agregar grupo-->
         <div class="modal fade" id="mdCrearGrupo" style="z-index:2000" data-backdrop="false" styleClass="myModal"  role="dialog" >
             <div class="modal-dialog ">
-                <div class="modal-content">
-                    <div class="modal-header" >
-                        <h4 class="modal-title">CREAR  #{controlRoles.estadocreargrupo}</h4>
-                    </div>
-                    <b:panel id="creargrup">
+
+                <b:panel id="creargrup" style="margin: auto 0px">
+                    <div class="modal-content">
+                        <div class="modal-header" >
+                            <h4 class="modal-title">CREAR  #{controlRoles.estadocreargrupo}</h4>
+                        </div>
                         <div class="modal-body content">
                             <div class="row">
+
                                 <div class="ui-g-6">
                                     <b:inputText  id="name" label="NOMBRE"  requiredMessage="ingreso el nombre" style="height: 40px;" value="#{controlRoles.nombre}" >
                                         <f:facet name="prepend">
@@ -262,6 +250,7 @@
 
                                     </b:inputText>
                                 </div>
+
                             </div>
                             <div class="row">
 
@@ -284,7 +273,7 @@
                                                 <th style="width: 40px">Editar</th>
                                             </tr>
 
-                                            <ui:repeat value="#{controlRoles.grupos}" var="grup" rendered="#{controlRoles.estadocreargrupo=='GRUPO'}">  
+                                            <ui:repeat id="grupos" value="#{controlRoles.grupos}" var="grup" rendered="#{controlRoles.estadocreargrupo=='GRUPO'}">  
                                                 <tr>
                                                     <td>#{grup.igrupo}</td>
                                                     <td><span class="badge bg-red"><i class="fa #{grup.icono}"/></span></td>
@@ -295,6 +284,7 @@
 
                                                     </td>
                                                     <td>
+
                                                         <p:commandButton value="" style="
                                                                          display: inline-block;
                                                                          margin-bottom: 0;
@@ -305,20 +295,15 @@
                                                                          background-image: none;
                                                                          border: 1px solid transparent;
                                                                          white-space: nowrap;
-                                                                         padding: 6px 12px;
+                                                                         padding: 6px 0px;
                                                                          font-size: 14px;
                                                                          line-height: 1.42857143;
-                                                                         border-radius: 4px;
+                                                                         border-radius: 2px;
                                                                          -webkit-user-select: none;
-
                                                                          user-select: none;
-
                                                                          color: #fff;
                                                                          background-color: #f0ad4e;
-                                                                         border-color: #eea236;
-
-
-                                                                         "   process="@this" iconPos="center"  icon="fa fa-pencil" title="View" actionListener="#{controlRoles.selecionGrup(grup.igrupo)}" update=":form:creargrup" >
+                                                                         "  process="@this" iconPos="center"  icon="fa fa-pencil" title="View" actionListener="#{controlRoles.selecionGrup(grup.igrupo)}" update=":form:creargrup" >
 
                                                         </p:commandButton>
                                                     </td>
@@ -335,6 +320,7 @@
 
                                                     </td>
                                                     <td>
+
                                                         <p:commandButton value="" style="
                                                                          display: inline-block;
                                                                          margin-bottom: 0;
@@ -345,19 +331,14 @@
                                                                          background-image: none;
                                                                          border: 1px solid transparent;
                                                                          white-space: nowrap;
-                                                                         padding: 6px 12px;
+                                                                         padding: 6px 0px;
                                                                          font-size: 14px;
                                                                          line-height: 1.42857143;
-                                                                         border-radius: 4px;
+                                                                         border-radius: 2px;
                                                                          -webkit-user-select: none;
-
                                                                          user-select: none;
-
                                                                          color: #fff;
                                                                          background-color: #f0ad4e;
-                                                                         border-color: #eea236;
-
-
                                                                          "   process="@this" iconPos="center"  icon="fa fa-pencil" title="View" actionListener="#{controlRoles.selecionGrup(sub.idsubgrupo)}" update=":form:creargrup" >
 
                                                         </p:commandButton>
@@ -369,38 +350,62 @@
                                     </div>
                                     <!-- /.box-body -->
                                 </div>
+
                             </div>
                         </div>
+
                         <p:messages autoUpdate="false"/>
-                    </b:panel>
-                    <div class="modal-footer bg-#{controlSeccion.skins}-gradient">
-                        <b:button value="close" dismiss="modal" onclick="return false;"/>
-                        <b:commandButton   update="creargrup subgrupos"  ajax="true" process="@this,name,icono" look="success" actionListener="#{controlRoles.savegrupo}" value="Guardar"  >
-                            <i class="fa fa-save"></i>
-                        </b:commandButton>
+                        <div class="modal-footer bg-#{controlSeccion.skins}-gradient">
+
+                            <b:button value="close" dismiss="modal" iconAwesome="fa-mail-reply" onclick="return false;">
+                            </b:button>
+                            <b:commandButton   update="creargrup  modulomenu"  ajax="true" process="@this,name,icono" look="success" actionListener="#{controlRoles.savegrupo}" value="Guardar"  >
+                                <i class="fa fa-save"></i>
+                            </b:commandButton>
+                            <b:commandButton    rendered="#{!controlRoles.verBtngrupo()}" update="creargrup   eliminarmod" action="#{controlSeccion.modalRol('mdEliminarModulo','show')}" ajax="true" process="@this,name,icono" look="danger" value="Eliminar"  >
+                                <i class="fa fa-trash"></i>
+                            </b:commandButton>
+                            <b:commandButton   rendered="#{!controlRoles.verBtngrupo()}"  update="creargrup "  ajax="true" actionListener="#{controlRoles.limpiargrupos}" process="@this,name,icono" look="warning" value="Cancelar"  >
+                                <i class="fa fa-eraser"></i>
+                            </b:commandButton>
+
+                        </div>
                     </div>
-                </div>
+                </b:panel>
+
+
             </div>
         </div>
+        <!--modal Para eliminar Modulo-->
+        <div class="modal fade" id="mdEliminarModulo" style="z-index:2000" data-backdrop="false" styleClass="myModal"  role="dialog" >
+            <div class="modal-dialog ">
 
-        <!--modal para agregar Sub grupo-->
-        <!--        <div class="modal fade" id="mdCrearSubGrupo" style="z-index:2000" data-backdrop="false" styleClass="myModal"  role="dialog" >
-                    <div class="modal-dialog ">
-                        <div class="modal-content">
-                            <div class="modal-header" >
-                                <h4 class="modal-title">CREAR SUBGRUPO</h4>
-                            </div>
-                            <div class="modal-body ">
-        
-                            </div>
-                            <div class="modal-footer ">
-                                <b:button value="close" dismiss="modal" onclick="return false;"/>
-                                <b:commandButton value="Ok" style="width: 20%" look="primary"   size="sm" />
-        
-                            </div>
+
+
+                <b:panel   id="eliminarmod">
+                    <div class="modal-content ">
+                        <div class="modal-header bg-yellow-active" >
+                            <h4 class="modal-title">ADVERTENCIA</h4>
+                        </div>
+                        <p style="padding-left: 10px;color:black">Esta seguro que desea eliminar #{controlRoles.verBtngrupo()==false?controlRoles.estadocreargrupo:'MODULO'}? </p>
+                        <div class="modal-footer bg-yellow-gradient">
+                            <b:button value="close" dismiss="modal"   iconAwesome="fa-mail-reply" onclick="return false;">
+                            </b:button>
+                            <b:commandButton rendered="#{controlRoles.verBtngrupo()}" process="@this" update="modulomenu" value="eliminar modulo"  actionListener="#{controlRoles.eliminarMenu}"  look="danger">
+                                <i class="fa fa-eraser"></i>
+                            </b:commandButton>
+                            <b:commandButton rendered="#{!controlRoles.verBtngrupo()}" process="@this" update="creargrup modulomenu" action="#{controlSeccion.modalRol('mdEliminarModulo','hide')}" value="eliminar #{controlRoles.estadocreargrupo}"  actionListener="#{controlRoles.eliminarGrupo}"  look="danger">
+                                <i class="fa fa-eraser"></i>
+                            </b:commandButton>
                         </div>
                     </div>
-                </div>-->
+                </b:panel>
+
+
+
+
+            </div>
+        </div>
 
 
 

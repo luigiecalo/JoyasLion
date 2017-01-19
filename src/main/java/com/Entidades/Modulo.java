@@ -32,12 +32,14 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "modulo")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Modulo.findAll", query = "SELECT m FROM Modulo m"),
+    @NamedQuery(name = Modulo.LISTAR, query = "SELECT m FROM Modulo m ORDER BY m.posicion ASC"),
     @NamedQuery(name = "Modulo.findByIdmodulo", query = "SELECT m FROM Modulo m WHERE m.idmodulo = :idmodulo"),
     @NamedQuery(name = "Modulo.findByNombre", query = "SELECT m FROM Modulo m WHERE m.nombre = :nombre"),
     @NamedQuery(name = "Modulo.findByDescripcion", query = "SELECT m FROM Modulo m WHERE m.src = :src"),
     @NamedQuery(name = "Modulo.findByIcono", query = "SELECT m FROM Modulo m WHERE m.icono = :icono")})
 public class Modulo implements Serializable {
+
+    public static final String LISTAR = "Modulo.listar";
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,14 +58,13 @@ public class Modulo implements Serializable {
     private int posicion;
     @OneToOne(cascade = CascadeType.MERGE, optional = false, fetch = FetchType.EAGER, orphanRemoval = false)
     @JoinColumn(name = "idgrupo")
-    private Grupo grupomodulo ;
+    private Grupo grupomodulo;
     @OneToOne(cascade = CascadeType.MERGE, optional = false, fetch = FetchType.EAGER, orphanRemoval = false)
     @JoinColumn(name = "idsubgrupos")
-    private SubGrupo subgrupos ;
+    private SubGrupo subgrupos;
 
     public Modulo() {
     }
-    
 
     public Modulo(Modulo mo) {
         this.idmodulo = mo.idmodulo;
@@ -169,8 +170,5 @@ public class Modulo implements Serializable {
     public String toString() {
         return "Modulo{" + "idmodulo=" + idmodulo + ", nombre=" + nombre + ", src=" + src + ", icono=" + icono + ", posicion=" + posicion + ", grupomodulo=" + grupomodulo + ", subgrupos=" + subgrupos + '}';
     }
-    
 
-   
-    
 }

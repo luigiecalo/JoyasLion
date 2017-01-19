@@ -49,6 +49,7 @@ public class ControlRoles implements Serializable {
     private String paginaStrin = "";
     private String nombre = "";
     private String icono = "";
+    private Long idgrup = 0l;
     private String estadocreargrupo = "grupo";
     private String estadogrupo = "R";
 
@@ -108,6 +109,14 @@ public class ControlRoles implements Serializable {
 
     public boolean verBtnRegistro() {
         if (estado.equals("R")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean verBtngrupo() {
+        if (estadogrupo.equals("R")) {
             return true;
         } else {
             return false;
@@ -187,7 +196,7 @@ public class ControlRoles implements Serializable {
 
     //Lista todos los roles
     public void listarModulos() {
-        modulos = ModDAO.consultarTodo(Modulo.class);
+        modulos = ModDAO.listar();
     }
 
     //Lista todos los grupos
@@ -234,6 +243,7 @@ public class ControlRoles implements Serializable {
                 if (estadogrupo.equals("R")) {
                     GrupoDao.crear(grup);
                 } else {
+                    grup.setIgrupo(idgrup);
                     GrupoDao.modificar(grup);
                 }
             } else {
@@ -243,6 +253,7 @@ public class ControlRoles implements Serializable {
                 if (estadogrupo.equals("R")) {
                     SubGrupoDao.crear(sgrup);
                 } else {
+                    sgrup.setIdsubgrupo(idgrup);
                     SubGrupoDao.modificar(sgrup);
                 }
             }
@@ -250,17 +261,19 @@ public class ControlRoles implements Serializable {
 
             limpiargrupos();
             listargrupos();
+            listarSubgrupos();
         }
     }
 
     public void selecionGrup(Long id) {
         contex = RequestContext.getCurrentInstance();
-        estadogrupo = "A";
+        this.estadogrupo = "A";
         if (estadocreargrupo.equals("GRUPO")) {
             Grupo grup = GrupoDao.consultarC(Grupo.class, id);
             if (grup != null) {
                 this.nombre = grup.getNombre();
                 this.icono = grup.getIcono();
+                this.idgrup = grup.getIgrupo();
             }
 
         } else {
@@ -268,6 +281,7 @@ public class ControlRoles implements Serializable {
             if (subgrup != null) {
                 this.nombre = subgrup.getNombre();
                 this.icono = subgrup.getIcono();
+                this.idgrup = subgrup.getIdsubgrupo();
             }
         }
         contex.update(":form:creargrup");
@@ -278,6 +292,26 @@ public class ControlRoles implements Serializable {
         ModDAO.eliminar(moduloSel);
         util.crearmensajes("INFO", "MODuLO ELIMINADO EXITOSAMENTE", " MODULO ELIMINADO EXITOSAMENTE");
         limpiar();
+    }
+
+    public void eliminarGrupo() {
+        if (estadocreargrupo.equals("GRUPO")) {
+            Grupo grup = GrupoDao.consultarC(Grupo.class, idgrup);
+            if (grup != null) {
+                GrupoDao.eliminar(grup);
+                listargrupos();
+            }
+
+        } else {
+            SubGrupo subgrup = SubGrupoDao.consultar(SubGrupo.class, idgrup);
+            if (subgrup != null) {
+                SubGrupoDao.eliminar(subgrup);
+                listarSubgrupos();
+            }
+        }
+        limpiargrupos();
+        util.crearmensajes("INFO", estadocreargrupo + " ELIMINADO EXITOSAMENTE", estadocreargrupo + " ELIMINADO EXITOSAMENTE");
+
     }
 
     //GET AND SET
@@ -430,10 +464,11 @@ public class ControlRoles implements Serializable {
         this.estadocreargrupo = estadocreargrupo;
     }
 
-    private void limpiargrupos() {
+    public void limpiargrupos() {
         this.nombre = "";
         this.icono = "";
-        this.estadogrupo="R";
+        this.idgrup = 0l;
+        this.estadogrupo = "R";
     }
 
 }
