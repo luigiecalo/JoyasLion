@@ -54,10 +54,10 @@ public class Modulo implements Serializable {
     private List<RolModuloPermiso> rolModuloPermisoList;
     @Column(name = "posicion")
     private int posicion;
-    @OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.MERGE, optional = false, fetch = FetchType.EAGER, orphanRemoval = false)
     @JoinColumn(name = "idgrupo")
     private Grupo grupomodulo ;
-    @OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.MERGE, optional = false, fetch = FetchType.EAGER, orphanRemoval = false)
     @JoinColumn(name = "idsubgrupos")
     private SubGrupo subgrupos ;
 

@@ -38,7 +38,7 @@ public class Grupo implements Serializable {
     private String nombre;
     @Column(name = "icono")
     private String icono;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "grupomodulo")
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "grupomodulo")
     private List<Modulo> modulos;
 
   

@@ -46,7 +46,9 @@ public class ControlRoles implements Serializable {
     private Long grupoSelect = 0l;
     private Long subgrupoSelect = 0l;
     private String paginaStrin = "";
-    private String nombremodulo = "";
+    private String nombre = "";
+    private String icono = "";
+    private String estadocreargrupo = "grupo";
     private Long moduloselect = 0l;
     private String estado = "R";
 
@@ -143,18 +145,21 @@ public class ControlRoles implements Serializable {
             mdoSelect.setSubgrupos(sg);
             if (estado.equals("R")) {
                 ModDAO.crear(mdoSelect);
+                util.crearmensajes("INFO", "REGISTRO EXITOSO", "SE REGISTRO EXITOSAMENTE EL MODULO");
             } else {
-                ModDAO.modificar1(mdoSelect);
+                ModDAO.modificar(mdoSelect);
+                util.crearmensajes("INFO", "MODIFICACION EXITOSA", "SE MODifiCO EXITOSAMENTE EL MODULO");
             }
 
             limpiar();
-            util.crearmensajes("INFO", "REGISTRO EXITOSO", "SE REGISTRO EXITOSA MENTE EL MODULO");
+
         }
 
     }
 
     public void eliminarModulo(Modulo mod) {
         ModDAO.eliminar(mod);
+        util.crearmensajes("INFO", "ELIMINACION EXITOSA", "SE ELIMINO EXITOSAMENTE EL MODULO");
     }
 
     public void limpiar() {
@@ -210,10 +215,39 @@ public class ControlRoles implements Serializable {
 
     }
 
+    public void savegrupo() {
+        if (nombre.isEmpty()) {
+            util.crearmensajes("ALERTA", "INGRESE NOMBRE", "ALERTA");
+        } else if (icono.isEmpty()) {
+            util.crearmensajes("ALERTA", "INGRESE ICONO", "INGRERSE EL ICONO");
+        } else {
+
+            if (estadocreargrupo.equals("GRUPO")) {
+                Grupo grup = new Grupo();
+                grup.setNombre(nombre);
+                grup.setIcono(icono);
+                GrupoDao.crear(grup);
+            } else {
+                SubGrupo sgrup = new SubGrupo();
+                sgrup.setNombre(nombre);
+                sgrup.setIcono(icono);
+                SubGrupoDao.crear(sgrup);
+            }
+            util.crearmensajes("INFO", "MENSAGE", "REgistro Exitoso del " + estadocreargrupo + "");
+//            controlOrdenes.setCantidad(203);
+//            ControlOrdenes bean1 = context.getApplication().evaluateExpressionGet(context, "#{controlOrdenes}", ControlOrdenes.class);
+//            bean.setCantidad(bean.getCantidad() + 1);
+            nombre = "";
+            icono = "";
+            util.modal("mdModelo", "hide");
+        }
+    }
+
     public void eliminarMenu() {
         Modulo moduloSel = ModDAO.consultarC(Modulo.class, moduloselect);
         ModDAO.eliminar(moduloSel);
         util.crearmensajes("INFO", "MODuLO ELIMINADO EXITOSAMENTE", " MODULO ELIMINADO EXITOSAMENTE");
+        limpiar();
     }
 
     //GET AND SET
@@ -329,12 +363,20 @@ public class ControlRoles implements Serializable {
         this.paginaStrin = paginaStrin;
     }
 
-    public String getNombremodulo() {
-        return nombremodulo;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombremodulo(String nombremodulo) {
-        this.nombremodulo = nombremodulo;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getIcono() {
+        return icono;
+    }
+
+    public void setIcono(String icono) {
+        this.icono = icono;
     }
 
     public Long getModuloselect() {
@@ -350,26 +392,12 @@ public class ControlRoles implements Serializable {
         return menu;
     }
 
-    public void logMenu() {
-        System.out.println("---MENU PRINCIPAL--");
+    public String getEstadocreargrupo() {
+        return estadocreargrupo;
+    }
 
-        for (Map menu1 : getMenu()) {
-            System.out.println("*" + menu1.get("nombre") + "*");
-            if (menu1.get("modulos") != null) {
-                for (Modulo modulo : (List<Modulo>) menu1.get("modulos")) {
-                    if (modulo.getSubgrupos() == null) {
-                        System.out.println("-" + modulo.getNombre() + "-");
-                    } else {
-                        System.out.println("v" + modulo.getSubgrupos().getNombre());
-                        for (Modulo modulosub : modulo.getSubgrupos().getModulos()) {
-                            System.out.println(" -" + modulosub.getNombre());
-                        }
-                    }
-////
-                }
-            }
-
-        }
+    public void setEstadocreargrupo(String estadocreargrupo) {
+        this.estadocreargrupo = estadocreargrupo;
     }
 
 }

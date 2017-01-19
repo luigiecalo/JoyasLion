@@ -54,6 +54,7 @@
                                                   size="sm" 
                                                   >
                                     <i class="fa fa-plus"></i>
+                                    <f:setPropertyActionListener value="GRUPO" target="#{controlRoles.estadocreargrupo}"  />
                                 </b:commandButton>
                             </f:facet>
                         </b:selectOneMenu>
@@ -63,11 +64,12 @@
                             <f:selectItem  itemLabel="Selecione un Rol" itemValue="" />
                             <f:selectItems value="#{controlRoles.subgruposLista}" />
                             <f:facet name="append">
-                                <b:commandButton  value="" process="@this"  actionListener="#{controlSeccion.modalRol('mdCrearSubGrupo','show')}"  style="border-radius: 0px 0px 0px 0px"
-                                                  look="info"  
+                                <b:commandButton  value="" process="@this"  actionListener="#{controlSeccion.modalRol('mdCrearGrupo','show')}"  style="border-radius: 0px 0px 0px 0px"
+                                                  look="info"  ajax="true"
                                                   size="sm"  tooltip-position="bottom" 
                                                   >
                                     <i class="fa fa-plus"></i>
+                                    <f:setPropertyActionListener value="SUBGRUPO" target="#{controlRoles.estadocreargrupo}"  />
                                 </b:commandButton>
                             </f:facet>
                         </b:selectOneMenu>
@@ -138,14 +140,14 @@
                                                     </b:commandButton>
                                                 </f:facet>
                                                 <f:facet name="append">
-                                                    <b:commandButton  value="#{subgrupos}"  look="warning" 
-                                                                      size="sm" process="@this" ajax="true"  actionListener="#{controlRoles.selecionMenu(grupos.idmodulo)}" >
+                                                    <b:commandButton  value=""  look="warning" 
+                                                                      size="sm" process="@this" ajax="true"  actionListener="#{controlRoles.selecionMenu(subgrupos.idmodulo)}" >
                                                         <i class="fa fa-pencil"></i>
                                                     </b:commandButton>
                                                     <b:commandButton  value="" process="@this" ajax="true"  actionListener="#{controlUtilidades.util.modal('mdEliminarModulo','show')}" look="danger" 
                                                                       size="sm"  tooltip-position="bottom"  >
                                                         <i class="fa fa-trash-o"></i>
-                                                        <f:setPropertyActionListener value="#{grupos.idmodulo}" target="#{controlRoles.moduloselect}"  />
+                                                        <f:setPropertyActionListener value="#{subgrupos.idmodulo}" target="#{controlRoles.moduloselect}"  />
                                                     </b:commandButton>
                                                 </f:facet>
                                             </b:inputText>
@@ -213,18 +215,15 @@
                     <div class="modal-header" >
                         <h4 class="modal-title">ADVERTENCIA</h4>
                     </div>
-                    <b:panel   id="eliminarmod">
-                        <div class="modal-body bg-warning">
-
+                    <div class="modal-body bg-gray-light">
+                        <b:panel   id="eliminarmod">
                             <p style="color:black">Esta seguro que desa ELIMINAR ESTE MODULO? </p>
-                            Con id: #{controlRoles.moduloselect}
-                        </div>
-
-                    </b:panel>
-                    <div class="modal-footer bg-#{controlSeccion.skins}-gradient">
+                        </b:panel>
+                    </div>
+                    <div class="modal-footer bg-yellow-gradient">
                         <b:button value="close" dismiss="modal" onclick="return false;"/>
-                        <b:commandButton type="submit"  value="eliminar"  actionListener="#{controlRoles.eliminarMenu()}"  look="danger">
-                            <i class="fa fa-save"></i>
+                        <b:commandButton  process="@this" update="tab" value="eliminar"  actionListener="#{controlRoles.eliminarMenu}"  look="warning">
+                            <i class="fa fa-eraser"></i>
                         </b:commandButton>
                     </div>
 
@@ -236,38 +235,112 @@
             <div class="modal-dialog ">
                 <div class="modal-content">
                     <div class="modal-header" >
-                        <h4 class="modal-title">CREAR GRUPO</h4>
+                        <h4 class="modal-title">CREAR  #{controlRoles.estadocreargrupo}</h4>
                     </div>
-                    <div class="modal-body ">
+                    <b:panel id="creargrup">
+                        <div class="modal-body content">
+                            <div class="row">
+                                <div class="ui-g-6">
+                                    <b:inputText   label="NOMBRE" required="true" requiredMessage="ingreso el nombre" style="height: 40px;" value="#{controlRoles.nombre}" >
+                                        <f:facet name="prepend">
+                                            <i class="fa fa-address-card"></i>
+                                        </f:facet>
+                                    </b:inputText>
+                                </div>
+                                <div class="ui-g-6">
+                                    <b:inputText  label="ICONO"  required="true" requiredMessage="ingrese texto del icono" style="height: 40px;" value="#{controlRoles.icono}" >
+                                        <f:facet name="prepend">
+                                            <i class="fa fa-dot-circle-o"></i>
+                                        </f:facet>
 
-                    </div>
-                    <div class="modal-footer">
+                                    </b:inputText>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="box">
+                                    <div class="box-header">
+                                        <h3 class="box-title">LISTA DE #{controlRoles.estadocreargrupo}S</h3>
+                                    </div>
+                                    <!-- /.box-header -->
+                                    <div class="box-body no-padding">
+                                        <table class="table table-striped">
+                                            <tr>
+                                                <th style="width: 10px">Cod</th>
+                                                <th>Nombre</th>
+                                                <th>Icono</th>
+                                                <th style="width: 40px">Editar</th>
+                                            </tr>
+
+                                            <ui:repeat value="#{controlRoles.grupos}" var="grup" rendered="#{controlRoles.estadocreargrupo=='GRUPO'}">  
+                                                <tr>
+                                                    <td><span class="badge bg-red"><i class="fa #{grup.icono}"/></span></td>
+                                                    <td>#{grup.nombre}</td>
+                                                    <td>
+
+                                                        #{grup.icono}
+
+                                                    </td>
+                                                    <td>
+                                                        <b:commandButton  value=""  look="warning" 
+                                                                          size="sm" process="@this" ajax="true"  >
+                                                            <i class="fa fa-pencil"></i>
+                                                        </b:commandButton>
+                                                    </td>
+                                                </tr>
+                                            </ui:repeat>
+                                            <ui:repeat value="#{controlRoles.subgrupos}" var="sub" rendered="#{controlRoles.estadocreargrupo=='SUBGRUPO'}">  
+                                                <tr>
+                                                    <td><span class="badge bg-red"><i class="fa #{sub.icono}"/></span></td>
+                                                    <td>#{sub.nombre}</td>
+                                                    <td>
+
+                                                        #{sub.icono}
+
+                                                    </td>
+                                                    <td>
+                                                        <b:commandButton  value=""  look="warning" 
+                                                                          size="sm" process="@this" ajax="true"  >
+                                                            <i class="fa fa-pencil"></i>
+                                                        </b:commandButton>
+                                                    </td>
+                                                </tr>
+                                            </ui:repeat>
+                                        </table>
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
+                            </div>
+                        </div>
+                        <p:messages autoUpdate="false"/>
+                    </b:panel>
+                    <div class="modal-footer bg-#{controlSeccion.skins}-gradient">
                         <b:button value="close" dismiss="modal" onclick="return false;"/>
-                        <b:commandButton value="Ok" style="width: 20%" look="primary"   size="sm" />
-
+                        <b:commandButton  process="@this" update="creargrup" look="success" value="Guardar"  actionListener="#{controlRoles.savegrupo}" >
+                            <i class="fa fa-save"></i>
+                        </b:commandButton>
                     </div>
                 </div>
             </div>
         </div>
 
         <!--modal para agregar Sub grupo-->
-        <div class="modal fade" id="mdCrearSubGrupo" style="z-index:2000" data-backdrop="false" styleClass="myModal"  role="dialog" >
-            <div class="modal-dialog ">
-                <div class="modal-content">
-                    <div class="modal-header" >
-                        <h4 class="modal-title">CREAR SUBGRUPO</h4>
+        <!--        <div class="modal fade" id="mdCrearSubGrupo" style="z-index:2000" data-backdrop="false" styleClass="myModal"  role="dialog" >
+                    <div class="modal-dialog ">
+                        <div class="modal-content">
+                            <div class="modal-header" >
+                                <h4 class="modal-title">CREAR SUBGRUPO</h4>
+                            </div>
+                            <div class="modal-body ">
+        
+                            </div>
+                            <div class="modal-footer ">
+                                <b:button value="close" dismiss="modal" onclick="return false;"/>
+                                <b:commandButton value="Ok" style="width: 20%" look="primary"   size="sm" />
+        
+                            </div>
+                        </div>
                     </div>
-                    <div class="modal-body ">
-
-                    </div>
-                    <div class="modal-footer ">
-                        <b:button value="close" dismiss="modal" onclick="return false;"/>
-                        <b:commandButton value="Ok" style="width: 20%" look="primary"   size="sm" />
-
-                    </div>
-                </div>
-            </div>
-        </div>
+                </div>-->
 
 
 
