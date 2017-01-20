@@ -129,6 +129,13 @@ public final class ControlUsuarios implements Serializable {
         }
     }
 
+    public void handleFileUpload2(FileUploadEvent event) {
+        carpeta = "select00001";
+        this.imagen = util.cargarimagenTemp(event.getFile());
+        this.imagenedit = true;
+        editarcarpeta();
+    }
+
     public void enviarselecionado(Miembro m) {
         estado = "A";
         Registrar = true;
@@ -168,12 +175,12 @@ public final class ControlUsuarios implements Serializable {
             if (estado.equals("R")) {
                 saveUsuario(miembroSelecionado);
                 MiemDao.crear(miembroSelecionado);
-                guardarImagen(miembroSelecionado);
+                guardarImagen2(miembroSelecionado);
 
             } else {
                 saveUsuario(miembroSelecionado);
                 MiemDao.modificar(miembroSelecionado);
-                guardarImagen(miembroSelecionado);
+                guardarImagen2(miembroSelecionado);
             }
 
             limpiar();
@@ -215,6 +222,15 @@ public final class ControlUsuarios implements Serializable {
             BufferedImage imBuff = ImageIO.read(Origen);
             File Destino = new File(ruta.Ruta() + "/imagenes/usuarios", "" + miembro.getDocumento() + ".png");
             ImageIO.write(imBuff, "png", Destino);
+        } catch (IOException ex) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", ex.toString()));
+        }
+    }
+
+    private void guardarImagen2(Miembro miembro) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        try {
+            util.guardarImagen("usuarios", estado, imagen, imagenedit, miembro.getDocumento());
         } catch (IOException ex) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", ex.toString()));
         }

@@ -8,6 +8,10 @@ package Utilidades;
 import com.Dao.ModuloDaoimplement;
 import com.Entidades.Modulo;
 import com.Entidades.RolModuloPermiso;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -19,15 +23,18 @@ import java.util.List;
 import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.imageio.ImageIO;
 import org.primefaces.context.RequestContext;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
  * @author usuario
  */
-public class Utilidades  {
+public class Utilidades {
 
     private String focus = "null";
+    private crearcarpeta ruta = new crearcarpeta();
 
     public boolean permisos(Long idRol, Modulo modulo, String permiso) {
         boolean result = false;
@@ -222,6 +229,45 @@ public class Utilidades  {
         item.put("update", null);
         item.put("subupdate", null);
         item.put("subupdate2", "@form");
+    }
+
+    public String cargarimagenTemp(UploadedFile file) {
+        String img = "";
+        try {
+            FacesMessage message = new FacesMessage("Se Cargo", file.getFileName() + " Exitosamente");
+            BufferedImage imBuff = ImageIO.read(file.getInputstream());
+
+            File directorio = null;
+            try {
+
+                directorio = new File(ruta.Ruta() + "/temp");
+                directorio.mkdir();
+                String carpeta = "select00001";
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            img = file.getFileName() + ruta.totalArchivos(directorio);
+            File file2 = new File(directorio.getPath(), img + ".png");
+            ImageIO.write(imBuff, "png", file2);
+            crearmensajes("INFO", "Primer Mensage", "SE CARGO IMAGEN CORRECTAMENTE");
+
+        } catch (IOException ex) {
+        }
+        return img;
+    }
+
+    public void guardarImagen(String nombrecarpeta,String estado, String imagen, boolean editarimg, String id) throws IOException {
+        File Origen = new File(ruta.Ruta() + "");
+        if (estado.equals("R")) {
+            Origen = new File(ruta.Ruta() + "/temp", imagen + ".png");
+        } else if (editarimg) {
+            Origen = new File(ruta.Ruta() + "/temp", imagen + ".png");
+        } else {
+            Origen = new File(ruta.Ruta() + "/imagenes/" + nombrecarpeta, imagen + ".png");
+        }
+        BufferedImage imBuff = ImageIO.read(Origen);
+        File Destino = new File(ruta.Ruta() + "/imagenes/" + nombrecarpeta, "" + id + ".png");
+        ImageIO.write(imBuff, "png", Destino);
     }
 
     public String getFocus() {
