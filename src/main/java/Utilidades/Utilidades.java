@@ -86,7 +86,6 @@ public class Utilidades  {
     public List<Map> getMenu(List<Modulo> modulos) {
         ModuloDaoimplement MoDao = new ModuloDaoimplement();
         int index = 0;
-        modulos = MoDao.consultarTodo(Modulo.class);
         List<Map> menu = new LinkedList<Map>();
         for (Modulo m : modulos) {
             Modulo modulo = MoDao.consultar(Modulo.class, m.getIdmodulo());

@@ -44,17 +44,12 @@ public class ControlRoles implements Serializable {
     //Utilidades
     private Utilidades util = new Utilidades();
     private boolean modelosboolean = false;
-    private Long grupoSelect = 0l;
-    private Long subgrupoSelect = 0l;
-    private String paginaStrin = "";
-    private String nombre = "";
-    private String icono = "";
+
     private Long idgrup = 0l;
     private String estadocreargrupo = "grupo";
-    private String estadogrupo = "R";
 
+    private Long rolselection = 0l;
     private Long moduloselect = 0l;
-    private String estado = "R";
 
     //Entidades
     private Rol rolselect = new Rol();
@@ -66,9 +61,7 @@ public class ControlRoles implements Serializable {
     private List<Rol> roles = new ArrayList<Rol>();
     private List<Modulo> modulos = new ArrayList<Modulo>();
     private List<Map> menu = new ArrayList<Map>();
-    private Map<String, Long> gruposLista;
-    private Map<String, Long> subgruposLista;
-    private Map<String, String> paginasLista;
+    private Map<String, Long> rolesLista;
     private List<Grupo> grupos = new ArrayList<Grupo>();
     private List<SubGrupo> subgrupos = new ArrayList<SubGrupo>();
     private List<RolModuloPermiso> modulosSelect = new ArrayList<RolModuloPermiso>();
@@ -92,8 +85,9 @@ public class ControlRoles implements Serializable {
     }
     //METODOS
 
-    public void onRolSelect(SelectEvent event) {
+    public void onRolSelect() {
         this.modelosboolean = true;
+        rolselect=RolDAO.consultar(Rol.class, rolselection);
         modulosSelect = rolselect.getRolModuloPermisoList();
     }
 
@@ -107,87 +101,23 @@ public class ControlRoles implements Serializable {
 //METODOS
     //Lista todos los roles
 
-    public boolean verBtnRegistro() {
-        if (estado.equals("R")) {
-            return true;
-        } else {
-            return false;
+    public Map<String, Long> getRolesLista() {
+        rolesLista = new HashMap<String, Long>();
+        for (Rol rol : getRoles()) {
+            rolesLista.put(rol.getNombre(), rol.getIdrol());
         }
-    }
-
-    public boolean verBtngrupo() {
-        if (estadogrupo.equals("R")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public Map<String, Long> getGruposLista() {
-        gruposLista = new HashMap<String, Long>();
-        for (Grupo grup : getGrupos()) {
-            gruposLista.put(grup.getNombre(), grup.getIgrupo());
-        }
-        return gruposLista;
-    }
-
-    public Map<String, Long> getSubgruposLista() {
-        subgruposLista = new HashMap<String, Long>();
-        for (SubGrupo subgrup : getSubgrupos()) {
-            subgruposLista.put(subgrup.getNombre(), subgrup.getIdsubgrupo());
-        }
-        return subgruposLista;
-    }
-
-    public Map<String, String> getPaginas() {
-        paginasLista = new HashMap<String, String>();
-        for (Tipo tipo : TipoDao.ListarDescripcion("paginas")) {
-            paginasLista.put(tipo.getNombre(), tipo.getNombre());
-        }
-        return paginasLista;
-    }
-
-    public void guardarModulo() {
-        context = FacesContext.getCurrentInstance();
-        if (grupoSelect == 0l && subgrupoSelect != 0l) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "INGRESE PRIMERO UN GRUPO", "INGRESE PRIMERO UN GRUPO"));
-        } else {
-            Grupo g = GrupoDao.consultar(Grupo.class, grupoSelect);
-            SubGrupo sg = SubGrupoDao.consultar(SubGrupo.class, subgrupoSelect);
-            mdoSelect.setGrupomodulo(g);
-            mdoSelect.setSubgrupos(sg);
-            if (estado.equals("R")) {
-                ModDAO.crear(mdoSelect);
-                util.crearmensajes("INFO", "REGISTRO EXITOSO", "SE REGISTRO EXITOSAMENTE EL MODULO");
-            } else {
-                ModDAO.modificar(mdoSelect);
-                util.crearmensajes("INFO", "MODIFICACION EXITOSA", "SE MODifiCO EXITOSAMENTE EL MODULO");
-            }
-
-            limpiar();
-
-        }
-
-    }
-
-    public void eliminarModulo(Modulo mod) {
-        ModDAO.eliminar(mod);
-        util.crearmensajes("INFO", "ELIMINACION EXITOSA", "SE ELIMINO EXITOSAMENTE EL MODULO");
+        return rolesLista;
     }
 
     public void limpiar() {
         mdoSelect = new Modulo();
-        grupoSelect = 0l;
-        subgrupoSelect = 0l;
-        paginaStrin = "";
-        estado = "R";
+
     }
 
     private void ListarTodo() {
         listarRoles();
         listarModulos();
-        listargrupos();
-        listarSubgrupos();
+
     }
 
     public void listarRoles() {
@@ -199,122 +129,16 @@ public class ControlRoles implements Serializable {
         modulos = ModDAO.listar();
     }
 
-    //Lista todos los grupos
-    public void listargrupos() {
-        grupos = GrupoDao.consultarTodo(Grupo.class);
-    }
-
-    //Lista todos los subGrupos
-    public void listarSubgrupos() {
-        subgrupos = SubGrupoDao.consultarTodo(SubGrupo.class);
-    }
-
     public void selecionMenu(Long idmod) {
-        estado = "A";
+
         Modulo moduloSel = ModDAO.consultarC(Modulo.class, idmod);
         mdoSelect = moduloSel;
         if (moduloSel != null) {
-            if (mdoSelect.getGrupomodulo() != null) {
-                grupoSelect = mdoSelect.getGrupomodulo().getIgrupo();
-            } else {
-                grupoSelect = 0l;
-            }
-            if (mdoSelect.getSubgrupos() != null) {
-                subgrupoSelect = mdoSelect.getSubgrupos().getIdsubgrupo();
-            } else {
-                subgrupoSelect = 0l;
-            }
         }
-
-    }
-
-    public void savegrupo() {
-        if (nombre.isEmpty()) {
-            util.crearmensajes("ALERTA", "INGRESE NOMBRE", "ALERTA");
-        } else if (icono.isEmpty()) {
-            util.crearmensajes("ALERTA", "INGRESE ICONO", "INGRERSE EL ICONO");
-        } else {
-
-            if (estadocreargrupo.equals("GRUPO")) {
-                Grupo grup = new Grupo();
-                grup.setNombre(nombre);
-                grup.setIcono(icono);
-
-                if (estadogrupo.equals("R")) {
-                    GrupoDao.crear(grup);
-                } else {
-                    grup.setIgrupo(idgrup);
-                    GrupoDao.modificar(grup);
-                }
-            } else {
-                SubGrupo sgrup = new SubGrupo();
-                sgrup.setNombre(nombre);
-                sgrup.setIcono(icono);
-                if (estadogrupo.equals("R")) {
-                    SubGrupoDao.crear(sgrup);
-                } else {
-                    sgrup.setIdsubgrupo(idgrup);
-                    SubGrupoDao.modificar(sgrup);
-                }
-            }
-            util.crearmensajes("INFO", "MENSAGE", "REgistro Exitoso del " + estadocreargrupo + "");
-
-            limpiargrupos();
-            listargrupos();
-            listarSubgrupos();
-        }
-    }
-
-    public void selecionGrup(Long id) {
-        contex = RequestContext.getCurrentInstance();
-        this.estadogrupo = "A";
-        if (estadocreargrupo.equals("GRUPO")) {
-            Grupo grup = GrupoDao.consultarC(Grupo.class, id);
-            if (grup != null) {
-                this.nombre = grup.getNombre();
-                this.icono = grup.getIcono();
-                this.idgrup = grup.getIgrupo();
-            }
-
-        } else {
-            SubGrupo subgrup = SubGrupoDao.consultar(SubGrupo.class, id);
-            if (subgrup != null) {
-                this.nombre = subgrup.getNombre();
-                this.icono = subgrup.getIcono();
-                this.idgrup = subgrup.getIdsubgrupo();
-            }
-        }
-        contex.update(":form:creargrup");
-    }
-
-    public void eliminarMenu() {
-        Modulo moduloSel = ModDAO.consultarC(Modulo.class, moduloselect);
-        ModDAO.eliminar(moduloSel);
-        util.crearmensajes("INFO", "MODuLO ELIMINADO EXITOSAMENTE", " MODULO ELIMINADO EXITOSAMENTE");
-        limpiar();
-    }
-
-    public void eliminarGrupo() {
-        if (estadocreargrupo.equals("GRUPO")) {
-            Grupo grup = GrupoDao.consultarC(Grupo.class, idgrup);
-            if (grup != null) {
-                GrupoDao.eliminar(grup);
-                listargrupos();
-            }
-
-        } else {
-            SubGrupo subgrup = SubGrupoDao.consultar(SubGrupo.class, idgrup);
-            if (subgrup != null) {
-                SubGrupoDao.eliminar(subgrup);
-                listarSubgrupos();
-            }
-        }
-        limpiargrupos();
-        util.crearmensajes("INFO", estadocreargrupo + " ELIMINADO EXITOSAMENTE", estadocreargrupo + " ELIMINADO EXITOSAMENTE");
-
     }
 
     //GET AND SET
+
     public Rol getRolselect() {
         return rolselect;
     }
@@ -379,30 +203,6 @@ public class ControlRoles implements Serializable {
         this.subgrupos = subgrupos;
     }
 
-    public Long getGrupoSelect() {
-        return grupoSelect;
-    }
-
-    public void setGrupoSelect(Long grupoSelect) {
-        this.grupoSelect = grupoSelect;
-    }
-
-    public Long getSubgrupoSelect() {
-        return subgrupoSelect;
-    }
-
-    public void setSubgrupoSelect(Long subgrupoSelect) {
-        this.subgrupoSelect = subgrupoSelect;
-    }
-
-    public void setGruposLista(Map<String, Long> gruposLista) {
-        this.gruposLista = gruposLista;
-    }
-
-    public void setSubgruposLista(Map<String, Long> subgruposLista) {
-        this.subgruposLista = subgruposLista;
-    }
-
     public Grupo getGrupoSelecion() {
         return grupoSelecion;
     }
@@ -417,30 +217,6 @@ public class ControlRoles implements Serializable {
 
     public void setSubgrupoSelecion(SubGrupo subgrupoSelecion) {
         this.subgrupoSelecion = subgrupoSelecion;
-    }
-
-    public String getPaginaStrin() {
-        return paginaStrin;
-    }
-
-    public void setPaginaStrin(String paginaStrin) {
-        this.paginaStrin = paginaStrin;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getIcono() {
-        return icono;
-    }
-
-    public void setIcono(String icono) {
-        this.icono = icono;
     }
 
     public Long getModuloselect() {
@@ -465,10 +241,24 @@ public class ControlRoles implements Serializable {
     }
 
     public void limpiargrupos() {
-        this.nombre = "";
-        this.icono = "";
         this.idgrup = 0l;
-        this.estadogrupo = "R";
+
+    }
+
+    public Long getIdgrup() {
+        return idgrup;
+    }
+
+    public void setIdgrup(Long idgrup) {
+        this.idgrup = idgrup;
+    }
+
+    public Long getRolselection() {
+        return rolselection;
+    }
+
+    public void setRolselection(Long rolselection) {
+        this.rolselection = rolselection;
     }
 
 }

@@ -18,13 +18,13 @@
                             <b:buttonGroup id="botomgrup">
 
 
-                                <b:commandButton value="Guardar Cambios" rendered="#{controlRoles.modelosboolean}"
+                                <b:commandButton value="Guardar Cambios" rendered="#{controlModulos.modelosboolean}"
                                                  look="warning"    update=":form:tab"
                                                  size="sm"   >
                                     <i class="fa fa-plus-circle"></i>
 
                                 </b:commandButton>
-                                <b:commandButton value="Cancelar Cambios" rendered="#{controlRoles.modelosboolean}"
+                                <b:commandButton value="Cancelar Cambios" rendered="#{controlModulos.modelosboolean}"
                                                  look="primary"   update=":form:tab" 
                                                  size="sm"  tooltip-position="bottom" >
                                 </b:commandButton>
@@ -40,53 +40,135 @@
             </h:panelGroup>
         </div>
         <div class="row">
-            <div class="col-xs-12 col-md-12 col-lg-3">
-                <p:dataTable id="roles" var="rol" value="#{controlRoles.roles}" selectionMode="single" selection="#{controlRoles.rolselect}" rowKey="#{rol.idrol}">
-                    <f:facet name="header">
-                        Selecione un rol
-                    </f:facet>
-                    <p:ajax event="rowSelect" listener="#{controlRoles.onRolSelect}" update=":form:tab"  />
+            <div class="col-xs-12 col-md-12 col-lg-3" >
+                <label  class="bf-no-message">Selecione Rol:
 
-                    <p:column headerText="Id">
-                        <h:outputText value="#{rol.nombre}" />
-                    </p:column>
-                </p:dataTable>
-            </div>
-            <div class="col-xs-12 col-md-6 col-lg-4">
-
+                </label>
+                <h:selectOneMenu  label="" id="piedraCselect"  class="form-control select2"  value="#{controlRoles.rolselection}"  style="margin:0 auto;height:34px">
+                    <p:ajax   listener="#{controlRoles.onRolSelect}" update=":form:tab"  />
+                    <f:selectItem  itemLabel="Selecione una Piedra" itemValue="" />
+                    <f:selectItems value="#{controlRoles.rolesLista}" />
+                </h:selectOneMenu>
                 <p:dataTable id="modulos" var="modu"  selectionMode="single" rowKey="#{modu.idmodulo}" selection="#{controlRoles.mdoSelect}" value="#{controlRoles.modulos}" >
                     <f:facet name="header">
-                        Selecione Modulo
-                        
-
+                        Modulos disponibles
                     </f:facet>
                     <p:ajax event="rowSelect"  update=":form:modselect" />
                     <p:column headerText="Modulo">
-                        <i class="fa #{modu.icono} "></i> <h:outputText value="#{modu.nombre}" />
+                        <i class="fa #{modu.icono} "></i> <h:outputText value="  #{modu.nombre}" />
                     </p:column>
-                    <p:column headerText="Grupo">
-                        <h:outputText value="#{modu.grupomodulo.nombre}" />
-                    </p:column>
-                    <p:column headerText="SubGrupo">
-                        <h:outputText value="#{modu.subgrupos.nombre}" />
-                    </p:column>
-                   
                 </p:dataTable>
-
-
-
             </div>
-            <div class="col-md-1">
+
+            <div class="col-md-4">
                 <b:commandButton  id="modselect" value=""  actionListener="#{controlRoles.addModulo}"
                                   look="success"    
                                   size="xs"  tooltip="Tiene el Modulo (#{controlRoles.mdoSelect.nombre}) para Agregar" tooltip-position="bottom" >
                     <i class="fa fa-plus-circle"></i>
                     <span class="label">#{controlRoles.mdoSelect.nombre}</span>
                 </b:commandButton>
+                <p:panelGrid style="margin-top:20px">
+                    <f:facet name="header">
+                        <p:row>
+                            <p:column colspan="7">1995-96 NBA Playoffs</p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column colspan="2">Conf. Semifinals</p:column>
+                            <p:column colspan="2">Conf. Finals</p:column>
+                            <p:column colspan="2">NBA Finals</p:column>
+                            <p:column>Champion</p:column>
+                        </p:row>
+
+                    </f:facet>
+
+                    <p:row>
+                        <p:column style="font-weight: bold;">Modulo</p:column>
+                        <p:column style="font-weight: bold;">4</p:column>
+
+                        <p:column rowspan="2" style="font-weight: bold;">Seattle</p:column>
+                        <p:column rowspan="2" style="font-weight: bold;">#{controlRoles.mdoSelect.nombre}</p:column>
+
+                        <p:column rowspan="5">Seattle</p:column>
+                        <p:column rowspan="5">2</p:column>
+
+                        <p:column rowspan="11" style="font-weight: bold;">Chicago</p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>Permisos</p:column>
+                        <p:column >
+                        
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column colspan="4" styleClass="ui-widget-header">
+                            <p:spacer height="0"/>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column style="font-weight: bold;">Utah</p:column>
+                        <p:column style="font-weight: bold;">4</p:column>
+
+                        <p:column rowspan="2">Utah</p:column>
+                        <p:column rowspan="2">3</p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>San Antonio</p:column>
+                        <p:column >2</p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column colspan="6" styleClass="ui-widget-header">
+                            <p:spacer height="0"/>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column style="font-weight: bold;">Chicago</p:column>
+                        <p:column style="font-weight: bold;">4</p:column>
+
+                        <p:column rowspan="2" style="font-weight: bold;">Chicago</p:column>
+                        <p:column rowspan="2" style="font-weight: bold;">4</p:column>
+
+                        <p:column rowspan="5" style="font-weight: bold;">Chicago</p:column>
+                        <p:column rowspan="5" style="font-weight: bold;">4</p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>New York</p:column>
+                        <p:column >1</p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column colspan="4" styleClass="ui-widget-header">
+                            <p:spacer height="0"/>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>Atlanta</p:column>
+                        <p:column >1</p:column>
+
+                        <p:column rowspan="2">Orlando</p:column>
+                        <p:column rowspan="2">0</p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column style="font-weight: bold;">Orlando</p:column>
+                        <p:column style="font-weight: bold;">4</p:column>
+                    </p:row>
+
+
+                 
+                </p:panelGrid>
             </div>
 
             <div class="col-xs-12 col-md-6 col-lg-4">
-                <p:dataTable id="modulosSelect" var="rmodu" rendered="#{controlRoles.modelosboolean}" value="#{controlRoles.modulosSelect}" >
+
+                <p:dataTable id="modulosSelect" var="rmodu"  value="#{controlRoles.modulosSelect}" >
                     <f:facet name="header">
                         MODULOS DE  #{controlRoles.rolselect.nombre}  
                     </f:facet>
@@ -106,7 +188,12 @@
                     </p:column>
 
                 </p:dataTable> 
+
+
+
             </div>
+
+
 
 
 
@@ -117,8 +204,8 @@
 
         </div>
         <p:messages autoUpdate="false"/>
-      
-      
+
+
 
 
         <script src="js/prueba.js"></script>
