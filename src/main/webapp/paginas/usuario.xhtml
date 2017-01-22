@@ -121,7 +121,7 @@
                             <div class="box-body box-profile">
                                 #{controlUsuarios.carpeta}#{controlUsuarios.imagen}.png
                                 <p:graphicImage id="temp" class="profile-user-img img-responsive img-circle"  value="#{controlUsuarios.carpeta}#{controlUsuarios.imagen}.png" cache="false"  style=" position: static;width: 100px; height: 100px;"/>
-                                <p:fileUpload fileUploadListener="#{controlUsuarios.handleFileUpload}" update="tab"   style="width:100px" class="center-block" mode="advanced"
+                                <p:fileUpload fileUploadListener="#{controlUsuarios.handleFileUpload2}" update="tab"   style="width:100px" class="center-block" mode="advanced"
                                               auto="true" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
                                 <h3 class="profile-username text-center">#{controlUsuarios.miembroSelecionado.apellido1} #{controlUsuarios.miembroSelecionado.apellido2} #{controlUsuarios.miembroSelecionado.nombre1} #{controlUsuarios.miembroSelecionado.nombre2}
                                 </h3>
