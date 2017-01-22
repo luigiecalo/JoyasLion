@@ -47,7 +47,7 @@ public final class ControlUsuarios implements Serializable {
     private Usuario usuario = new Usuario();
     private Miembro miembro = new Miembro();
     private crearcarpeta ruta = new crearcarpeta();
-    private String imagen = "default2";
+    private String imagen = "default";
     private String carpeta = "temp/";
     File directorioTemp = new File(ruta.Ruta() + "/temp");
 
@@ -141,7 +141,7 @@ public final class ControlUsuarios implements Serializable {
         Registrar = true;
         RequestContext.getCurrentInstance().reset("form:panel");
         miembroSelecionado = m;
-        imagen = m.getImagen() != null ? m.getImagen() : "default2";
+        imagen = m.getImagen() != null ? m.getImagen() : "default";
         editarcarpeta();
         rolesSelect = m.getUsuario().getRoles();
     }
@@ -154,7 +154,7 @@ public final class ControlUsuarios implements Serializable {
         m.setNombre1("");
         m.setNombre2("");
         RequestContext.getCurrentInstance().reset("form:panel");
-        imagen = "default2";
+        imagen = "default";
         miembroSelecionado = m;
         editarcarpeta();
         rolesSelect.clear();
@@ -175,12 +175,16 @@ public final class ControlUsuarios implements Serializable {
             if (estado.equals("R")) {
                 saveUsuario(miembroSelecionado);
                 MiemDao.crear(miembroSelecionado);
-                guardarImagen2(miembroSelecionado);
+                if (imagen != "default") {
+                    guardarImagen2(miembroSelecionado);
+                }
 
             } else {
                 saveUsuario(miembroSelecionado);
                 MiemDao.modificar(miembroSelecionado);
-                guardarImagen2(miembroSelecionado);
+                if (imagen != "default") {
+                    guardarImagen2(miembroSelecionado);
+                }
             }
 
             limpiar();
@@ -199,7 +203,7 @@ public final class ControlUsuarios implements Serializable {
         }
         usuario.setEstado(estadoMiembro ? 1 : 0);
         usuario.setRoles(rolesSelect);
-        miem.setImagen(miem.getDocumento());
+        miem.setImagen(imagen.equals("default") ? imagen : miem.getDocumento());
         miem.setUsuario(usuario);
 
     }
@@ -304,6 +308,11 @@ public final class ControlUsuarios implements Serializable {
     public void setRegistrar(boolean Registrar) {
         this.Registrar = Registrar;
     }
+
+    public boolean isImagenedit() {
+        return imagenedit;
+    }
+
 
     public Miembro getMiembro() {
         return miembro;

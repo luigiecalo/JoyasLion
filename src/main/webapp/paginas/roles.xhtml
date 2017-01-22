@@ -60,109 +60,57 @@
                 </p:dataTable>
             </div>
 
-            <div class="col-md-4">
-                <b:commandButton  id="modselect" value=""  actionListener="#{controlRoles.addModulo}"
-                                  look="success"    
-                                  size="xs"  tooltip="Tiene el Modulo (#{controlRoles.mdoSelect.nombre}) para Agregar" tooltip-position="bottom" >
-                    <i class="fa fa-plus-circle"></i>
-                    <span class="label">#{controlRoles.mdoSelect.nombre}</span>
-                </b:commandButton>
-                <p:panelGrid style="margin-top:20px">
+            <div class="col-xs-12 col-md-6 col-md-4">
+
+                <p:panelGrid style="margin-top:20px" id="modselect">
                     <f:facet name="header">
                         <p:row>
-                            <p:column colspan="7">1995-96 NBA Playoffs</p:column>
+                            <p:column colspan="3">#{controlRoles.mdoSelect.nombre}</p:column>
                         </p:row>
-                        <p:row>
-                            <p:column colspan="2">Conf. Semifinals</p:column>
-                            <p:column colspan="2">Conf. Finals</p:column>
-                            <p:column colspan="2">NBA Finals</p:column>
-                            <p:column>Champion</p:column>
-                        </p:row>
-
                     </f:facet>
 
                     <p:row>
-                        <p:column style="font-weight: bold;">Modulo</p:column>
-                        <p:column style="font-weight: bold;">4</p:column>
 
-                        <p:column rowspan="2" style="font-weight: bold;">Seattle</p:column>
-                        <p:column rowspan="2" style="font-weight: bold;">#{controlRoles.mdoSelect.nombre}</p:column>
-
-                        <p:column rowspan="5">Seattle</p:column>
-                        <p:column rowspan="5">2</p:column>
-
-                        <p:column rowspan="11" style="font-weight: bold;">Chicago</p:column>
-                    </p:row>
-
-                    <p:row>
-                        <p:column>Permisos</p:column>
+                        <p:column style="font-weight: bold;" >TODOS</p:column>
                         <p:column >
-                        
+                            <b:selectBooleanCheckbox value=""/>
+                           
                         </p:column>
-                    </p:row>
+                        <p:column rowspan="6" style="font-weight: bold;">
 
-                    <p:row>
-                        <p:column colspan="4" styleClass="ui-widget-header">
-                            <p:spacer height="0"/>
+                            <b:commandButton   value=""  actionListener="#{controlRoles.addModulo}"
+                                               look="success"    
+                                               size="lg"  tooltip="Tiene el Modulo (#{controlRoles.mdoSelect.nombre}) para Agregar" tooltip-position="bottom" >
+                                <i class="fa fa-plus-circle"></i>
+                                <span class="label"></span>
+                            </b:commandButton>
+                            <b:commandButton   value="" 
+                                               look="danger"    
+                                               size="lg"  tooltip="Tiene el Modulo (#{controlRoles.mdoSelect.nombre}) para Agregar" tooltip-position="bottom" >
+                                <i class="fa fa-plus-circle"></i>
+                                <span class="label"></span>
+                            </b:commandButton>
                         </p:column>
+
                     </p:row>
-
                     <p:row>
-                        <p:column style="font-weight: bold;">Utah</p:column>
-                        <p:column style="font-weight: bold;">4</p:column>
-
-                        <p:column rowspan="2">Utah</p:column>
-                        <p:column rowspan="2">3</p:column>
+                        <p:column >EDITAR</p:column>
+                        <p:column > <p:selectManyCheckbox id="basic" >
+        <f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
+        <f:selectItem itemLabel="PS4" itemValue="PS4" />
+        <f:selectItem itemLabel="Wii U" itemValue="Wii U" />
+    </p:selectManyCheckbox>l</p:column>
                     </p:row>
-
                     <p:row>
-                        <p:column>San Antonio</p:column>
+                        <p:column >LISTAR</p:column>
+                        <p:column >2</p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column >AGREGAR</p:column>
                         <p:column >2</p:column>
                     </p:row>
 
-                    <p:row>
-                        <p:column colspan="6" styleClass="ui-widget-header">
-                            <p:spacer height="0"/>
-                        </p:column>
-                    </p:row>
 
-                    <p:row>
-                        <p:column style="font-weight: bold;">Chicago</p:column>
-                        <p:column style="font-weight: bold;">4</p:column>
-
-                        <p:column rowspan="2" style="font-weight: bold;">Chicago</p:column>
-                        <p:column rowspan="2" style="font-weight: bold;">4</p:column>
-
-                        <p:column rowspan="5" style="font-weight: bold;">Chicago</p:column>
-                        <p:column rowspan="5" style="font-weight: bold;">4</p:column>
-                    </p:row>
-
-                    <p:row>
-                        <p:column>New York</p:column>
-                        <p:column >1</p:column>
-                    </p:row>
-
-                    <p:row>
-                        <p:column colspan="4" styleClass="ui-widget-header">
-                            <p:spacer height="0"/>
-                        </p:column>
-                    </p:row>
-
-                    <p:row>
-                        <p:column>Atlanta</p:column>
-                        <p:column >1</p:column>
-
-                        <p:column rowspan="2">Orlando</p:column>
-                        <p:column rowspan="2">0</p:column>
-                    </p:row>
-
-                    <p:row>
-                        <p:column style="font-weight: bold;">Orlando</p:column>
-                        <p:column style="font-weight: bold;">4</p:column>
-                    </p:row>
-
-
-                 
                 </p:panelGrid>
             </div>
 

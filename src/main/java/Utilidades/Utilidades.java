@@ -255,7 +255,7 @@ public class Utilidades {
         return img;
     }
 
-    public void guardarImagen(String nombrecarpeta,String estado, String imagen, boolean editarimg, String id) throws IOException {
+    public void guardarImagen(String nombrecarpeta, String estado, String imagen, boolean editarimg, String id) throws IOException {
         File Origen = new File(ruta.Ruta() + "");
         if (estado.equals("R")) {
             Origen = new File(ruta.Ruta() + "/temp", imagen + ".png");
@@ -267,6 +267,14 @@ public class Utilidades {
         BufferedImage imBuff = ImageIO.read(Origen);
         File Destino = new File(ruta.Ruta() + "/imagenes/" + nombrecarpeta, "" + id + ".png");
         ImageIO.write(imBuff, "png", Destino);
+    }
+
+    public String getExiteimagen(String carpeta, String imagen) {
+        File Origen = new File(ruta.Ruta() + "/" + carpeta, imagen + ".png");
+        if (!Origen.exists()) {
+            imagen = "default";
+        }
+        return imagen;
     }
 
     public String getFocus() {

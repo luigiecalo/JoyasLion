@@ -87,8 +87,9 @@ public class ControlRoles implements Serializable {
 
     public void onRolSelect() {
         this.modelosboolean = true;
-        rolselect=RolDAO.consultar(Rol.class, rolselection);
+        rolselect = RolDAO.consultar(Rol.class, rolselection);
         modulosSelect = rolselect.getRolModuloPermisoList();
+        eliminarAgregados();
     }
 
     public void addModulo() {
@@ -97,6 +98,7 @@ public class ControlRoles implements Serializable {
         rmp.setRol(rolselect);
         rmp.setPermisos(PerDao.consultar(Permisos.class, 1L));
         modulosSelect.add(rmp);
+        eliminarAgregados();
     }
 //METODOS
     //Lista todos los roles
@@ -138,7 +140,6 @@ public class ControlRoles implements Serializable {
     }
 
     //GET AND SET
-
     public Rol getRolselect() {
         return rolselect;
     }
@@ -259,6 +260,18 @@ public class ControlRoles implements Serializable {
 
     public void setRolselection(Long rolselection) {
         this.rolselection = rolselection;
+    }
+
+    private void eliminarAgregados() {
+        listarModulos();
+        for (Modulo mod :ModDAO.listar()) {
+            for (RolModuloPermiso rolmod : modulosSelect) {
+                if (mod.getIdmodulo().equals(rolmod.getModulo().getIdmodulo())) {
+                    modulos.remove(mod);
+                }
+
+            }
+        }
     }
 
 }
