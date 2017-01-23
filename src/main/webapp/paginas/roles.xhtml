@@ -71,11 +71,14 @@
 
                     <p:row>
 
-                        <p:column style="font-weight: bold;" >TODOS</p:column>
-                        <p:column >
-                            <b:selectBooleanCheckbox value=""/>
-                           
+                        <p:column style="font-weight: bold;" >
+
+                            <p:selectManyCheckbox required="true" id="grid" value="#{controlRoles.permisosSelected}" layout="grid" columns="1">
+                                <f:selectItems value="#{controlRoles.permisos}" var="per" itemLabel="#{per.descripcionPermiso}" itemValue="#{per.idpermisos}" />
+                                <p:spacer />
+                            </p:selectManyCheckbox>
                         </p:column>
+
                         <p:column rowspan="6" style="font-weight: bold;">
 
                             <b:commandButton   value=""  actionListener="#{controlRoles.addModulo}"
@@ -93,22 +96,7 @@
                         </p:column>
 
                     </p:row>
-                    <p:row>
-                        <p:column >EDITAR</p:column>
-                        <p:column > <p:selectManyCheckbox id="basic" >
-        <f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
-        <f:selectItem itemLabel="PS4" itemValue="PS4" />
-        <f:selectItem itemLabel="Wii U" itemValue="Wii U" />
-    </p:selectManyCheckbox>l</p:column>
-                    </p:row>
-                    <p:row>
-                        <p:column >LISTAR</p:column>
-                        <p:column >2</p:column>
-                    </p:row>
-                    <p:row>
-                        <p:column >AGREGAR</p:column>
-                        <p:column >2</p:column>
-                    </p:row>
+
 
 
                 </p:panelGrid>
@@ -120,11 +108,18 @@
                     <f:facet name="header">
                         MODULOS DE  #{controlRoles.rolselect.nombre}  
                     </f:facet>
-                    <p:column headerText="Rol">
+                    <p:column headerText="Modulo">
                         <i class="fa #{rmodu.modulo.icono} "></i>  <h:outputText value="#{rmodu.modulo.nombre}" />
                     </p:column>
-                    <p:column headerText="Modulo">
-                        <h:outputText value="#{rmodu.rol.nombre}" />
+                    <p:column headerText="Permisos">
+
+                        <ui:repeat value="#{rmodu.permisos}" var="permisos" >
+                            <img src="imagenes/botones/#{permisos.nombrePermiso=='T'?'database':
+                                                         permisos.nombrePermiso=='E'?'save_16':
+                                                         permisos.nombrePermiso=='L'?'search_16':
+                                                         permisos.nombrePermiso=='M'?'pencil_16':
+                                                         permisos.nombrePermiso=='I'?'print_16':''}.png"  style="height: 24px;height: 24px" title="#{permisos.descripcionPermiso}"/>
+                        </ui:repeat>
                     </p:column>
                     <p:column headerText="Modulo">
                         <b:commandButton value="" 
