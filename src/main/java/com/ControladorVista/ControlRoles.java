@@ -50,7 +50,7 @@ public class ControlRoles implements Serializable {
 
     private Long rolselection = 0l;
     private Long moduloselect = 0l;
-    private Permisos[] selectedPermisos= new Permisos[10];
+    private Permisos[] selectedPermisos = new Permisos[10];
     private Long[] permisosSelected;
 
     //Entidades
@@ -130,6 +130,9 @@ public class ControlRoles implements Serializable {
                     mapa.put("permisos", permisos);
                     listamapa.set(index, mapa);
                 } else {
+                    List<Permisos> permisos = new ArrayList<Permisos>();
+                    permisos.add(rolmp.getPermisos());
+                    mapa.put("permisos", permisos);
                     listamapa.add(mapa);
                 }
 
@@ -187,12 +190,8 @@ public class ControlRoles implements Serializable {
         modulos = ModDAO.listar();
     }
 
-    public void selecionMenu(Long idmod) {
-
-        Modulo moduloSel = ModDAO.consultarC(Modulo.class, idmod);
-        mdoSelect = moduloSel;
-        if (moduloSel != null) {
-        }
+    public void selecionMenu() {
+        modelosboolean = true;
     }
 
     //GET AND SET

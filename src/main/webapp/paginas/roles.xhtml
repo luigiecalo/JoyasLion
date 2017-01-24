@@ -53,7 +53,7 @@
                     <f:facet name="header">
                         Modulos disponibles
                     </f:facet>
-                    <p:ajax event="rowSelect"  update=":form:modselect" />
+                    <p:ajax event="rowSelect" listener="#{controlRoles.selecionMenu}"  update="form:tab" />
                     <p:column headerText="Modulo">
                         <i class="fa #{modu.icono} "></i> <h:outputText value="  #{modu.nombre}" />
                     </p:column>
@@ -114,11 +114,16 @@
                     <p:column headerText="Permisos">
 
                         <ui:repeat value="#{rmodu.permisos}" var="permisos" >
-                            <img src="imagenes/botones/#{permisos.nombrePermiso=='T'?'database':
+                            
+                            <p:graphicImage  value="imagenes/botones/#{permisos.nombrePermiso=='T'?'database':
                                                          permisos.nombrePermiso=='E'?'save_16':
                                                          permisos.nombrePermiso=='L'?'search_16':
                                                          permisos.nombrePermiso=='M'?'pencil_16':
-                                                         permisos.nombrePermiso=='I'?'print_16':''}.png"  style="height: 24px;height: 24px" title="#{permisos.descripcionPermiso}"/>
+                                                         permisos.nombrePermiso=='I'?'print_16':''}.png"  style="height: 24px;height: 24px" title="#{permisos.descripcionPermiso}">
+                                
+                            </p:graphicImage>
+                           
+                           
                         </ui:repeat>
                     </p:column>
                     <p:column headerText="Modulo">
