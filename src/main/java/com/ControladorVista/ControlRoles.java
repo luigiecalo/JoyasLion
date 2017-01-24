@@ -44,6 +44,7 @@ public class ControlRoles implements Serializable {
     //Utilidades
     private Utilidades util = new Utilidades();
     private boolean modelosboolean = false;
+    private boolean btneditar = false;
 
     private Long idgrup = 0l;
     private String estadocreargrupo = "grupo";
@@ -93,10 +94,17 @@ public class ControlRoles implements Serializable {
     }
 
     public void onRolSelect() {
-        this.modelosboolean = true;
         rolselect = RolDAO.consultar(Rol.class, rolselection);
-        modulosSelect = ModulosrolesListaMap(rolselect.getRolModuloPermisoList());
-        eliminarAgregados();
+        if (rolselection != 0l) {
+            modulosSelect = ModulosrolesListaMap(rolselect.getRolModuloPermisoList());
+            eliminarAgregados();
+        } else {
+            limpiar();
+            modulos.clear();
+            modulosSelect.clear();
+
+        }
+
     }
 
     private List<Map> ModulosrolesListaMap(List<RolModuloPermiso> rolesmodulos) {
@@ -157,6 +165,7 @@ public class ControlRoles implements Serializable {
         mapa.put("permisos", permisos);
         modulosSelect.add(mapa);
         eliminarAgregados();
+        deSelecionMenu();
     }
 //METODOS
     //Lista todos los roles
@@ -171,14 +180,34 @@ public class ControlRoles implements Serializable {
 
     public void limpiar() {
         mdoSelect = new Modulo();
+        modelosboolean = false;
+        permisosSelected = null;
+        rolselection = 0l;
+        modulosSelect.clear();
+        modulos.clear();
+    }
+
+    public void eliminarrolmoduloperimso(Map map) {
+        modulosSelect.remove(map);
+    }
+
+    public void editarrolmoduloperimso(Map map) {
+        btneditar=true;
+        modelosboolean=true;
+        mdoSelect = (Modulo) map.get("modulo");
+        List<Permisos> permisos = (List<Permisos>) map.get("permisos");
+        int i = 0;
+        for (Permisos permiso : permisos) {
+            permisosSelected[i] = permiso.getIdpermisos();
+            i++;
+        }
+        eliminarrolmoduloperimso(map);
 
     }
 
     private void ListarTodo() {
         listarRoles();
-        listarModulos();
         ListarPermisos();
-
     }
 
     public void listarRoles() {
@@ -192,6 +221,25 @@ public class ControlRoles implements Serializable {
 
     public void selecionMenu() {
         modelosboolean = true;
+    }
+
+    public void deSelecionMenu() {
+        modelosboolean = false;
+        mdoSelect = new Modulo();
+        permisosSelected = null;
+    }
+
+    private void eliminarAgregados() {
+        listarModulos();
+        for (Modulo mod : ModDAO.listar()) {
+            for (Map rolmod : modulosSelect) {
+                Modulo modul = (Modulo) rolmod.get("modulo");
+                if (mod.getIdmodulo().equals(modul.getIdmodulo())) {
+                    modulos.remove(mod);
+                }
+
+            }
+        }
     }
 
     //GET AND SET
@@ -341,17 +389,12 @@ public class ControlRoles implements Serializable {
         this.selectedPermisos = selectedPermisos;
     }
 
-    private void eliminarAgregados() {
-        listarModulos();
-        for (Modulo mod : ModDAO.listar()) {
-            for (Map rolmod : modulosSelect) {
-                Modulo modul = (Modulo) rolmod.get("modulo");
-                if (mod.getIdmodulo().equals(modul.getIdmodulo())) {
-                    modulos.remove(mod);
-                }
+    public boolean isBtneditar() {
+        return btneditar;
+    }
 
-            }
-        }
+    public void setBtneditar(boolean btneditar) {
+        this.btneditar = btneditar;
     }
 
 }

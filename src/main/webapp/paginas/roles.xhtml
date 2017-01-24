@@ -18,14 +18,14 @@
                             <b:buttonGroup id="botomgrup">
 
 
-                                <b:commandButton value="Guardar Cambios" rendered="#{controlModulos.modelosboolean}"
+                                <b:commandButton value="Guardar Cambios" 
                                                  look="warning"    update=":form:tab"
                                                  size="sm"   >
                                     <i class="fa fa-plus-circle"></i>
 
                                 </b:commandButton>
-                                <b:commandButton value="Cancelar Cambios" rendered="#{controlModulos.modelosboolean}"
-                                                 look="primary"   update=":form:tab" 
+                                <b:commandButton value="Cancelar Cambios" actionListener="#{controlRoles.limpiar}"
+                                                 look="primary" process="@this"   update=":form:tab" 
                                                  size="sm"  tooltip-position="bottom" >
                                 </b:commandButton>
 
@@ -49,48 +49,50 @@
                     <f:selectItem  itemLabel="Selecione una Piedra" itemValue="" />
                     <f:selectItems value="#{controlRoles.rolesLista}" />
                 </h:selectOneMenu>
-                <p:dataTable id="modulos" var="modu"  selectionMode="single" rowKey="#{modu.idmodulo}" selection="#{controlRoles.mdoSelect}" value="#{controlRoles.modulos}" >
+                <p:dataTable id="modulos" var="modu" scrollable="true" scrollHeight="300"  selectionMode="single" rowKey="#{modu.idmodulo}" selection="#{controlRoles.mdoSelect}" value="#{controlRoles.modulos}" >
                     <f:facet name="header">
                         Modulos disponibles
                     </f:facet>
-                    <p:ajax event="rowSelect" listener="#{controlRoles.selecionMenu}"  update="form:tab" />
+                    <p:ajax event="rowSelect" listener="#{controlRoles.selecionMenu}"  update="form:modselect" />
+                    <p:ajax event="rowUnselect" listener="#{controlRoles.selecionMenu}"  update="form:modselect" />
                     <p:column headerText="Modulo">
                         <i class="fa #{modu.icono} "></i> <h:outputText value="  #{modu.nombre}" />
                     </p:column>
                 </p:dataTable>
             </div>
 
-            <div class="col-xs-12 col-md-6 col-md-4">
-
-                <p:panelGrid style="margin-top:20px" id="modselect">
+            <div class="col-xs-12 col-md-6 col-md-2">
+                <p:panelGrid style="margin-top:20px" id="modselect" >
                     <f:facet name="header">
                         <p:row>
                             <p:column colspan="3">#{controlRoles.mdoSelect.nombre}</p:column>
                         </p:row>
                     </f:facet>
-
                     <p:row>
-
                         <p:column style="font-weight: bold;" >
-
                             <p:selectManyCheckbox required="true" id="grid" value="#{controlRoles.permisosSelected}" layout="grid" columns="1">
                                 <f:selectItems value="#{controlRoles.permisos}" var="per" itemLabel="#{per.descripcionPermiso}" itemValue="#{per.idpermisos}" />
                                 <p:spacer />
                             </p:selectManyCheckbox>
                         </p:column>
-
                         <p:column rowspan="6" style="font-weight: bold;">
 
-                            <b:commandButton   value=""  actionListener="#{controlRoles.addModulo}"
+                            <b:commandButton   value=""  actionListener="#{controlRoles.addModulo}" rendered="#{controlRoles.modelosboolean}" ajax="true"
                                                look="success"    
                                                size="lg"  tooltip="Tiene el Modulo (#{controlRoles.mdoSelect.nombre}) para Agregar" tooltip-position="bottom" >
-                                <i class="fa fa-plus-circle"></i>
+                                <i class="fa glyphicon glyphicon-remove"></i>
                                 <span class="label"></span>
                             </b:commandButton>
-                            <b:commandButton   value="" 
+                            <b:commandButton   value="cancelar"  actionListener="#{controlRoles.deSelecionMenu}" rendered="#{controlRoles.modelosboolean and controlRoles.btneditar}" ajax="true"
                                                look="danger"    
                                                size="lg"  tooltip="Tiene el Modulo (#{controlRoles.mdoSelect.nombre}) para Agregar" tooltip-position="bottom" >
-                                <i class="fa fa-plus-circle"></i>
+                                <i class="fa glyphicon glyphicon-remove"></i>
+                                <span class="label"></span>
+                            </b:commandButton>
+                            <b:commandButton   value="" process="@this" actionListener="#{controlRoles.deSelecionMenu}" rendered="#{controlRoles.modelosboolean}"
+                                               look="danger"  update="form:modselect form:modulos"  
+                                               size="lg" >
+                                <i class="fa fa-trash-o"></i>
                                 <span class="label"></span>
                             </b:commandButton>
                         </p:column>
@@ -102,7 +104,7 @@
                 </p:panelGrid>
             </div>
 
-            <div class="col-xs-12 col-md-6 col-lg-4">
+            <div class="col-xs-12 col-md-6 col-lg-6">
 
                 <p:dataTable id="modulosSelect" var="rmodu"  value="#{controlRoles.modulosSelect}" >
                     <f:facet name="header">
@@ -114,24 +116,30 @@
                     <p:column headerText="Permisos">
 
                         <ui:repeat value="#{rmodu.permisos}" var="permisos" >
-                            
+
                             <p:graphicImage  value="imagenes/botones/#{permisos.nombrePermiso=='T'?'database':
-                                                         permisos.nombrePermiso=='E'?'save_16':
-                                                         permisos.nombrePermiso=='L'?'search_16':
-                                                         permisos.nombrePermiso=='M'?'pencil_16':
-                                                         permisos.nombrePermiso=='I'?'print_16':''}.png"  style="height: 24px;height: 24px" title="#{permisos.descripcionPermiso}">
-                                
+                                                                       permisos.nombrePermiso=='E'?'save_16':
+                                                                       permisos.nombrePermiso=='L'?'search_16':
+                                                                       permisos.nombrePermiso=='M'?'pencil_16':
+                                                                       permisos.nombrePermiso=='I'?'print_16':''}.png"  style="height: 24px;height: 24px" title="#{permisos.descripcionPermiso}">
+
                             </p:graphicImage>
-                           
-                           
+
+
                         </ui:repeat>
                     </p:column>
                     <p:column headerText="Modulo">
-                        <b:commandButton value="" 
-                                         look="primary"   update=":form:modulosSelect" 
+                        <b:commandButton value="" actionListener="#{controlRoles.eliminarrolmoduloperimso(rmodu)}"
+                                         look="danger"   update=":form:modulosSelect" 
                                          size="sm"  tooltip-position="bottom" 
                                          >
                             <i class="fa fa-trash-o"></i>
+                        </b:commandButton>
+                        <b:commandButton value="" actionListener="#{controlRoles.editarrolmoduloperimso(rmodu)}"
+                                         look="warning"   update=":form:modulosSelect" 
+                                         size="sm"  tooltip-position="bottom" 
+                                         >
+                            <i class="fa fa-pencil"></i>
                         </b:commandButton>
                     </p:column>
 
