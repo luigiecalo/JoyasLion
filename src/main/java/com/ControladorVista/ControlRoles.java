@@ -30,6 +30,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import net.bootsfaces.render.A;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
@@ -159,8 +160,14 @@ public class ControlRoles implements Serializable {
             for (Map rolmodulo : modulosSelect) {
                 Rol r = (Rol) rolmodulo.get("rol");
                 Modulo m = (Modulo) rolmodulo.get("modulo");
+//                List<Permisos> ps = (List<Permisos>) rolmodulo.get("permisos");
+//                for (Permisos p : ps) {
+//                    RolModuloPermiso rmp= new RolModuloPermiso(r, m, p);
+//                    RolMOduloPermisoDAO.crear(rmp);
+//                }
                 List<Permisos> ps = (List<Permisos>) rolmodulo.get("permisos");
                 RolMOduloPermisoDAO.registrarRolModuloPermisos(r, m, ps);
+
             }
             util.crearmensajes("INFO", "EXITO", "selecione guardo rigistro exitoxamente");
         } else {

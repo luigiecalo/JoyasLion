@@ -19,13 +19,13 @@
 
 
                                 <b:commandButton value="Guardar Cambios" 
-                                                 look="warning" process="@this" actionListener="#{controlRoles.guardarCambios}"   update=":form:tab"
+                                                 look="warning" process="@this" actionListener="#{controlRoles.guardarCambios}"  ajax="true"
                                                  size="sm"   >
                                     <i class="fa fa-plus-circle"></i>
 
                                 </b:commandButton>
                                 <b:commandButton value="Cancelar Cambios" actionListener="#{controlRoles.limpiar}"
-                                                 look="primary" process="@this"   update=":form:tab" 
+                                                 look="primary" process="@this"   ajax="true"
                                                  size="sm"  tooltip-position="bottom" >
                                 </b:commandButton>
 

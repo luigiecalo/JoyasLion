@@ -172,7 +172,7 @@ public class prueba implements Serializable {
 //            number.format("00{0}", 2);
 //        }
         prueba p = new prueba();
-        p.ListarModulos();
+        p.provarrmp();
 //        System.out.println("REGISTRO EXITOSO " + String.format("%03d", ultimo));
 //        ultimo = 190;
 //        System.out.println("REGISTRO EXITOSO " + String.format("%03d", ultimo));
@@ -281,6 +281,23 @@ public class prueba implements Serializable {
 
         }
 
+    }
+
+    public void provarrmp() {
+        PermisosDaoimplement PDao = new PermisosDaoimplement();
+        Permisos permiso = new Permisos();
+        List<Permisos> permisoLista = new ArrayList<Permisos>();
+        RolModuloPermisoDaoimplement RMPDao = new RolModuloPermisoDaoimplement();
+        ModuloDaoimplement MoDao = new ModuloDaoimplement();
+        System.out.println("---ESTABLECIENDO RELACION ROL MODULO PERMISOS----");
+        Long idmdulo = Long.parseLong("1");
+        Long idrol = Long.parseLong("3");
+//        permisoLista = PDao.consultarTodo(Permisos.class);
+        permisoLista.clear();
+        Modulo modulo = MoDao.consultar(Modulo.class, idmdulo);
+        Rol rol = MoDao.consultar(Rol.class, idrol);
+        RMPDao.registrarRolModuloPermisos(rol, modulo, permisoLista);
+        System.out.println("RELACION ROL MODULO PERMISOS EXITOSA");
     }
 
     public void addItem(Map item, Modulo modulo, List<Map> menu) {
