@@ -77,19 +77,19 @@
                         </p:column>
                         <p:column rowspan="6" style="font-weight: bold;">
 
-                            <b:commandButton   value=""  actionListener="#{controlRoles.addModulo}" rendered="#{controlRoles.modelosboolean and !controlRoles.btneditar}" ajax="true"
+                            <b:commandButton   value=""  actionListener="#{controlRoles.addModulo}" rendered="#{controlRoles.modelosboolean }" ajax="true"
                                                look="success"    
                                                size="lg"  tooltip="Tiene el Modulo (#{controlRoles.mdoSelect.nombre}) para Agregar" tooltip-position="bottom" >
                                 <i class="fa fa-plus"></i>
                                 <span class="label"></span>
                             </b:commandButton>
-                            <b:commandButton   value="cancelar"  actionListener="#{controlRoles.deSelecionMenu}" rendered="#{controlRoles.modelosboolean and controlRoles.btneditar}" ajax="true"
+                            <b:commandButton   value=""  actionListener="#{controlRoles.deSelecionMenu}" rendered="#{controlRoles.modelosboolean and controlRoles.btneditar}" ajax="true"
                                                look="danger"    
                                                size="lg"  tooltip="Tiene el Modulo (#{controlRoles.mdoSelect.nombre}) para Agregar" tooltip-position="bottom" >
                                 <i class="fa glyphicon glyphicon-remove"></i>
                                 <span class="label"></span>
                             </b:commandButton>
-                            <b:commandButton   value="" process="@this" actionListener="#{controlRoles.deSelecionMenu}" rendered="#{controlRoles.modelosboolean}"
+                            <b:commandButton   value="" process="@this" actionListener="#{controlRoles.deSelecionMenu}" rendered="#{controlRoles.modelosboolean and !controlRoles.btneditar}"
                                                look="danger"  update="form:modselect form:modulos"  
                                                size="lg" >
                                 <i class="fa fa-trash-o"></i>
@@ -136,7 +136,7 @@
                             <i class="fa fa-trash-o"></i>
                         </b:commandButton>
                         <b:commandButton value="" actionListener="#{controlRoles.editarrolmoduloperimso(rmodu)}"
-                                         look="warning"  process="@this" update=":form:modulosSelect" 
+                                         look="warning"  process="@this" ajax="true"
                                          size="sm" tooltip="EDITAR" tooltip-position="bottom" 
                                          >
                             <i class="fa fa-mail-reply"></i>

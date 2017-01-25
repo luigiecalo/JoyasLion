@@ -192,11 +192,12 @@ public class ControlRoles implements Serializable {
     }
 
     public void editarrolmoduloperimso(Map map) {
-        btneditar=true;
-        modelosboolean=true;
+        btneditar = true;
+        modelosboolean = true;
         mdoSelect = (Modulo) map.get("modulo");
         List<Permisos> permisos = (List<Permisos>) map.get("permisos");
         int i = 0;
+        permisosSelected = new Long[permisos.size()];
         for (Permisos permiso : permisos) {
             permisosSelected[i] = permiso.getIdpermisos();
             i++;
@@ -221,6 +222,7 @@ public class ControlRoles implements Serializable {
 
     public void selecionMenu() {
         modelosboolean = true;
+        btneditar = false;
     }
 
     public void deSelecionMenu() {
