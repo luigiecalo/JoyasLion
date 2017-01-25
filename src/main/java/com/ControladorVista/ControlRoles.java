@@ -10,6 +10,7 @@ import com.Dao.GrupoDaoimplement;
 import com.Dao.ModuloDaoimplement;
 import com.Dao.PermisosDaoimplement;
 import com.Dao.RolDaoimplement;
+import com.Dao.RolModuloPermisoDaoimplement;
 import com.Dao.SubGrupoDaoimplement;
 import com.Dao.TipoDaoimplement;
 import com.Entidades.Grupo;
@@ -57,6 +58,7 @@ public class ControlRoles implements Serializable {
     //Entidades
     private Rol rolselect = new Rol();
     private Modulo mdoSelect = new Modulo();
+    private Modulo mdoSelectEdit = new Modulo();
     private Grupo grupoSelecion = new Grupo();
     private SubGrupo subgrupoSelecion = new SubGrupo();
 
@@ -72,6 +74,7 @@ public class ControlRoles implements Serializable {
 
     //DAO
     private RolDaoimplement RolDAO = new RolDaoimplement();
+    private RolModuloPermisoDaoimplement RolMOduloPermisoDAO = new RolModuloPermisoDaoimplement();
     private ModuloDaoimplement ModDAO = new ModuloDaoimplement();
     private PermisosDaoimplement PerDao = new PermisosDaoimplement();
     private GrupoDaoimplement GrupoDao = new GrupoDaoimplement();
@@ -151,10 +154,24 @@ public class ControlRoles implements Serializable {
         return listamapa;
     }
 
+    public void guardarCambios() {
+        if (rolselection != 0l) {
+            for (Map rolmodulo : modulosSelect) {
+                Rol r = (Rol) rolmodulo.get("rol");
+                Modulo m = (Modulo) rolmodulo.get("modulo");
+                List<Permisos> ps = (List<Permisos>) rolmodulo.get("permisos");
+                RolMOduloPermisoDAO.registrarRolModuloPermisos(r, m, ps);
+            }
+            util.crearmensajes("INFO", "EXITO", "selecione guardo rigistro exitoxamente");
+        } else {
+            util.crearmensajes("ALERT", "ALERTA", "selecione un rol a modificar");
+        }
+    }
+
     public void addModulo() {
         RolModuloPermiso rmp = new RolModuloPermiso();
         Map mapa = new HashMap<String, String>();
-        mapa.put("modulo", mdoSelect);
+
         mapa.put("rol", rolselect);
         List<Permisos> permisos = new ArrayList<Permisos>();
         if (permisosSelected.length > 0) {
@@ -163,8 +180,23 @@ public class ControlRoles implements Serializable {
             };
         }
         mapa.put("permisos", permisos);
-        modulosSelect.add(mapa);
-        eliminarAgregados();
+
+        if (!btneditar) {
+            mapa.put("modulo", mdoSelect);
+            modulosSelect.add(mapa);
+            eliminarAgregados();
+        } else {
+            mapa.put("modulo", mdoSelectEdit);
+            int i = 0;
+            for (Map map : modulosSelect) {
+                Modulo m = (Modulo) map.get("modulo");
+                if (m.equals(mdoSelectEdit)) {
+                    modulosSelect.set(i, mapa);
+                }
+                i++;
+            }
+
+        }
         deSelecionMenu();
     }
 //METODOS
@@ -194,7 +226,7 @@ public class ControlRoles implements Serializable {
     public void editarrolmoduloperimso(Map map) {
         btneditar = true;
         modelosboolean = true;
-        mdoSelect = (Modulo) map.get("modulo");
+        mdoSelectEdit = (Modulo) map.get("modulo");
         List<Permisos> permisos = (List<Permisos>) map.get("permisos");
         int i = 0;
         permisosSelected = new Long[permisos.size()];
@@ -202,7 +234,7 @@ public class ControlRoles implements Serializable {
             permisosSelected[i] = permiso.getIdpermisos();
             i++;
         }
-        eliminarrolmoduloperimso(map);
+//        eliminarrolmoduloperimso(map);
 
     }
 
@@ -229,6 +261,7 @@ public class ControlRoles implements Serializable {
         modelosboolean = false;
         mdoSelect = new Modulo();
         permisosSelected = null;
+        mdoSelectEdit = new Modulo();
     }
 
     private void eliminarAgregados() {
@@ -397,6 +430,14 @@ public class ControlRoles implements Serializable {
 
     public void setBtneditar(boolean btneditar) {
         this.btneditar = btneditar;
+    }
+
+    public Modulo getMdoSelectEdit() {
+        return mdoSelectEdit;
+    }
+
+    public void setMdoSelectEdit(Modulo mdoSelectEdit) {
+        this.mdoSelectEdit = mdoSelectEdit;
     }
 
 }

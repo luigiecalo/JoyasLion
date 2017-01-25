@@ -19,7 +19,7 @@
 
 
                                 <b:commandButton value="Guardar Cambios" 
-                                                 look="warning"    update=":form:tab"
+                                                 look="warning" process="@this" actionListener="#{controlRoles.guardarCambios}"   update=":form:tab"
                                                  size="sm"   >
                                     <i class="fa fa-plus-circle"></i>
 
@@ -65,7 +65,8 @@
                 <p:panelGrid style="margin-top:20px" id="modselect" >
                     <f:facet name="header">
                         <p:row>
-                            <p:column colspan="3">#{controlRoles.mdoSelect.nombre}</p:column>
+                            <p:column rendered="#{!controlRoles.btneditar}" colspan="3">Agregar #{controlRoles.mdoSelect.nombre}</p:column>
+                            <p:column rendered="#{controlRoles.btneditar}" colspan="3">Editar #{controlRoles.mdoSelectEdit.nombre}</p:column>
                         </p:row>
                     </f:facet>
                     <p:row>
@@ -83,13 +84,8 @@
                                 <i class="fa fa-plus"></i>
                                 <span class="label"></span>
                             </b:commandButton>
-                            <b:commandButton   value=""  actionListener="#{controlRoles.deSelecionMenu}" rendered="#{controlRoles.modelosboolean and controlRoles.btneditar}" ajax="true"
-                                               look="danger"    
-                                               size="lg"  tooltip="Tiene el Modulo (#{controlRoles.mdoSelect.nombre}) para Agregar" tooltip-position="bottom" >
-                                <i class="fa glyphicon glyphicon-remove"></i>
-                                <span class="label"></span>
-                            </b:commandButton>
-                            <b:commandButton   value="" process="@this" actionListener="#{controlRoles.deSelecionMenu}" rendered="#{controlRoles.modelosboolean and !controlRoles.btneditar}"
+                            
+                            <b:commandButton   value="" process="@this" actionListener="#{controlRoles.deSelecionMenu}" rendered="#{controlRoles.modelosboolean}"
                                                look="danger"  update="form:modselect form:modulos"  
                                                size="lg" >
                                 <i class="fa fa-trash-o"></i>
