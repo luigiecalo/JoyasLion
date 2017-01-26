@@ -42,11 +42,21 @@ public class RolModuloPermisoDaoimplement extends ImplDao<RolModuloPermiso, Long
                     }
                 }
             }
-           for (Permisos permiso : permisos) {
+            for (Permisos permiso : permisos) {
                 RolModuloPermiso rolmodulper = new RolModuloPermiso(rol, mod, permiso);
                 RMPDao.crear(rolmodulper);
             }
 
+        }
+
+    }
+
+    public void eliminarRolModuloPermisos(Rol rol, Modulo mod) {
+        List<RolModuloPermiso> rolmoduloPermisos = buscarPermisos(rol.getIdrol(), mod.getIdmodulo());
+        if (rolmoduloPermisos != null) {
+            for (RolModuloPermiso rolmoduloPermiso : rolmoduloPermisos) {
+                RMPDao.eliminar(rolmoduloPermiso);
+            }
         }
 
     }
@@ -61,30 +71,40 @@ public class RolModuloPermisoDaoimplement extends ImplDao<RolModuloPermiso, Long
         }
         return list;
     }
-     public List<Modulo> buscarModulos(Long idrol) {
-         List<Modulo>modulos=new ArrayList<Modulo>();
-        Query query = em.createNativeQuery("SELECT DISTINCT r.idmodulo FROM rol_modulo_permiso r WHERE r.idrol='"+idrol+"'" );
+
+    public List<RolModuloPermiso> buscarModulosPermisos(Long idrol) {
+        Query query = em.createNamedQuery(RolModuloPermiso.BUSCAR_MODULOS_ROL);
+        query.setParameter("idrol", idrol);
+        List<RolModuloPermiso> list = query.getResultList();
+        if (list == null || list.isEmpty()) {
+            return null;
+        }
+        return list;
+    }
+
+    public List<Modulo> buscarModulos(Long idrol) {
+        List<Modulo> modulos = new ArrayList<Modulo>();
+        Query query = em.createNativeQuery("SELECT DISTINCT r.idmodulo FROM rol_modulo_permiso r WHERE r.idrol='" + idrol + "'");
         List<Long> list = query.getResultList();
         if (list == null || list.isEmpty()) {
             return null;
         }
-         for (Long modulo1 : list) {
-           Modulo modulo=MoDao.consultar(Modulo.class, modulo1);
-           modulos.add(modulo);
-         }
+        for (Long modulo1 : list) {
+            Modulo modulo = MoDao.consultar(Modulo.class, modulo1);
+            modulos.add(modulo);
+        }
         return modulos;
     }
-       public boolean buscarModulosValido(Long idrol,Long idmodulo) {
-         boolean valido=false;
-        Query query = em.createNativeQuery("SELECT DISTINCT r.idmodulo FROM rol_modulo_permiso r WHERE r.idrol='"+idrol+"' AND r.idmodulo='"+idmodulo+"'" );
+
+    public boolean buscarModulosValido(Long idrol, Long idmodulo) {
+        boolean valido = false;
+        Query query = em.createNativeQuery("SELECT DISTINCT r.idmodulo FROM rol_modulo_permiso r WHERE r.idrol='" + idrol + "' AND r.idmodulo='" + idmodulo + "'");
         List<Long> list = query.getResultList();
         if (list == null || list.isEmpty()) {
             return false;
-        }else{
-        return true;
+        } else {
+            return true;
         }
     }
-     
-     
 
 }

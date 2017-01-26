@@ -141,7 +141,7 @@ public final class ControlUsuarios implements Serializable {
         Registrar = true;
         RequestContext.getCurrentInstance().reset("form:panel");
         miembroSelecionado = m;
-        imagen = m.getImagen() != null ? m.getImagen() : "default";
+        imagen = util.getExiteimagen("imagenes/usuarios",m.getImagen());
         editarcarpeta();
         rolesSelect = m.getUsuario().getRoles();
     }

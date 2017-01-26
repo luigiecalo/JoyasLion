@@ -56,7 +56,6 @@ public class ControlSeccion implements Serializable {
     private MiembroDaoimplement miembroDao = new MiembroDaoimplement();
     private RolModuloPermisoDaoimplement rolMPDao = new RolModuloPermisoDaoimplement();
     private RolDaoimplement rolDao = new RolDaoimplement();
-   
 
     private boolean seccion = false;
 
@@ -152,64 +151,65 @@ public class ControlSeccion implements Serializable {
 
     public List<Map> getMenu() {
         List<Map> menu = new LinkedList<Map>();
-        for (Modulo m : ModulosSeccion) {
-            Modulo modulo = m;
-            Map item = new HashMap<String, String>();
-            
-            if (modulo.getGrupomodulo() == null) {
-                addItem(item, modulo, menu);
+        if (ModulosSeccion != null) {
+            for (Modulo m : ModulosSeccion) {
+                Modulo modulo = m;
+                Map item = new HashMap<String, String>();
 
-                menu.add(item);
-            } else {
-                item.put("nombre", modulo.getGrupomodulo().getNombre());
-                item.put("icono", modulo.getGrupomodulo().getIcono());
-                if (menu.isEmpty()) {
-                    addItemGrup(item, modulo);
+                if (modulo.getGrupomodulo() == null) {
+                    addItem(item, modulo, menu);
+
                     menu.add(item);
                 } else {
-                    boolean encontro = false;
-                    Map itemencontrado = null;
-                    for (int i = 0; i < menu.size(); i++) {
-                        Map itemMenu = menu.get(i);
-                        if (itemMenu.get("nombre").equals(item.get("nombre"))) {
-                            encontro = true;
-                            itemencontrado = itemMenu;
-                            break;
-                        }
-                    }
-                    if (!encontro) {
+                    item.put("nombre", modulo.getGrupomodulo().getNombre());
+                    item.put("icono", modulo.getGrupomodulo().getIcono());
+                    if (menu.isEmpty()) {
                         addItemGrup(item, modulo);
                         menu.add(item);
                     } else {
-                       addItemGrup(item, modulo);
+                        boolean encontro = false;
+                        Map itemencontrado = null;
+                        for (int i = 0; i < menu.size(); i++) {
+                            Map itemMenu = menu.get(i);
+                            if (itemMenu.get("nombre").equals(item.get("nombre"))) {
+                                encontro = true;
+                                itemencontrado = itemMenu;
+                                break;
+                            }
+                        }
+                        if (!encontro) {
+                            addItemGrup(item, modulo);
+                            menu.add(item);
+                        } else {
+                            addItemGrup(item, modulo);
 //                        if (item.get("submodulos") == null) {
 //                        System.out.println("Item Encontrado" + itemencontrado);
 //                        System.out.println("Item -         " + item);
-                        List<Modulo> modulosEncontraos = (List<Modulo>) itemencontrado.get("modulos");
-                        List<Modulo> modulositem = (List<Modulo>) item.get("modulos");
-                        boolean relacion = false;
-                        for (Modulo moduloencontrado : modulosEncontraos) {
-                            if (moduloencontrado.getSubgrupos() != null) {
-                                for (Modulo moduloitem : modulositem) {
-                                    if (moduloitem.getSubgrupos() != null) {
-                                        if (moduloitem.getSubgrupos().equals(moduloencontrado.getSubgrupos())) {
-                                            Modulo moduloRelacion = moduloencontrado;
-                                            moduloRelacion.getSubgrupos().getModulos().add(modulo);
-                                            relacion = true;
-                                            break;
+                            List<Modulo> modulosEncontraos = (List<Modulo>) itemencontrado.get("modulos");
+                            List<Modulo> modulositem = (List<Modulo>) item.get("modulos");
+                            boolean relacion = false;
+                            for (Modulo moduloencontrado : modulosEncontraos) {
+                                if (moduloencontrado.getSubgrupos() != null) {
+                                    for (Modulo moduloitem : modulositem) {
+                                        if (moduloitem.getSubgrupos() != null) {
+                                            if (moduloitem.getSubgrupos().equals(moduloencontrado.getSubgrupos())) {
+                                                Modulo moduloRelacion = moduloencontrado;
+                                                moduloRelacion.getSubgrupos().getModulos().add(modulo);
+                                                relacion = true;
+                                                break;
+                                            }
                                         }
                                     }
                                 }
                             }
-                        }
-                        if (!relacion) {
-                            modulosEncontraos.addAll(modulositem);
+                            if (!relacion) {
+                                modulosEncontraos.addAll(modulositem);
+                            }
                         }
                     }
                 }
             }
         }
-
         return menu;
     }
 
@@ -223,8 +223,8 @@ public class ControlSeccion implements Serializable {
             item.put("icono", modulo.getIcono());
             item.put("nombre", modulo.getNombre());
             item.put("modulos", null);
-            item.put("tipo","modulo");
-            item.put("clase",null);
+            item.put("tipo", "modulo");
+            item.put("clase", null);
         }
     }
 
@@ -240,8 +240,8 @@ public class ControlSeccion implements Serializable {
 //            System.out.println("-" + modulo.getNombre() + "-");
             modulosvalidos.add(modulo);
             item.put("modulos", modulosvalidos);
-            item.put("tipo","grupo");
-            item.put("clase","fa-angle-left pull-right");
+            item.put("tipo", "grupo");
+            item.put("clase", "fa-angle-left pull-right");
         } else {
             addItemSubGrup(item, modulo);
         }
@@ -259,8 +259,8 @@ public class ControlSeccion implements Serializable {
         modulo.getSubgrupos().setModulos(submodulosvalidos);
         modulosvalidos.add(modulo);
         item.put("modulos", modulosvalidos);
-        item.put("tipo","subgrupo");
-        item.put("clase","fa-angle-left pull-right");
+        item.put("tipo", "subgrupo");
+        item.put("clase", "fa-angle-left pull-right");
     }
 
     public void salir() {

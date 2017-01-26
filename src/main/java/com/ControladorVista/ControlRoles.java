@@ -47,6 +47,7 @@ public class ControlRoles implements Serializable {
     private Utilidades util = new Utilidades();
     private boolean modelosboolean = false;
     private boolean btneditar = false;
+    private boolean btneliminar = false;
 
     private Long idgrup = 0l;
     private String estadocreargrupo = "grupo";
@@ -55,6 +56,8 @@ public class ControlRoles implements Serializable {
     private Long moduloselect = 0l;
     private Permisos[] selectedPermisos = new Permisos[10];
     private Long[] permisosSelected;
+    private Map mapSelect = new HashMap<String, String>();
+    ;
 
     //Entidades
     private Rol rolselect = new Rol();
@@ -100,7 +103,7 @@ public class ControlRoles implements Serializable {
     public void onRolSelect() {
         rolselect = RolDAO.consultar(Rol.class, rolselection);
         if (rolselection != 0l) {
-            modulosSelect = ModulosrolesListaMap(rolselect.getRolModuloPermisoList());
+            modulosSelect = ModulosrolesListaMap(RolMOduloPermisoDAO.buscarModulosPermisos(rolselection));
             eliminarAgregados();
         } else {
             limpiar();
@@ -113,45 +116,46 @@ public class ControlRoles implements Serializable {
 
     private List<Map> ModulosrolesListaMap(List<RolModuloPermiso> rolesmodulos) {
         List<Map> listamapa = new ArrayList<Map>();
-        for (RolModuloPermiso rolmp : rolesmodulos) {
-            Map mapa = new HashMap<String, String>();
-            mapa.put("modulo", rolmp.getModulo());
-            mapa.put("rol", rolmp.getRol());
-
-            if (listamapa.isEmpty()) {
-                List<Permisos> permisos = new ArrayList<Permisos>();
-                permisos.add(rolmp.getPermisos());
-                mapa.put("permisos", permisos);
-                listamapa.add(mapa);
-            } else {
-                boolean encontro = false;
-                int i = 0;
-                int index = 0;
-                Map encontroOm = new HashMap<String, String>();
-                for (Map map : listamapa) {
-                    if (map.get("modulo").equals(mapa.get("modulo")) && map.get("rol").equals(mapa.get("rol"))) {
-                        encontro = true;
-                        encontroOm = map;
-                        index = i;
-                    }
-                    i++;
-                }
-                if (encontro) {
-                    List<Permisos> permisos = (List<Permisos>) encontroOm.get("permisos");
-                    permisos.add(rolmp.getPermisos());
-                    mapa.put("permisos", permisos);
-                    listamapa.set(index, mapa);
-                } else {
+        if (rolesmodulos != null) {
+            for (RolModuloPermiso rolmp : rolesmodulos) {
+                Map mapa = new HashMap<String, String>();
+                mapa.put("modulo", rolmp.getModulo());
+                mapa.put("rol", rolmp.getRol());
+                mapa.put("temporal", false);
+                if (listamapa.isEmpty()) {
                     List<Permisos> permisos = new ArrayList<Permisos>();
                     permisos.add(rolmp.getPermisos());
                     mapa.put("permisos", permisos);
                     listamapa.add(mapa);
+                } else {
+                    boolean encontro = false;
+                    int i = 0;
+                    int index = 0;
+                    Map encontroOm = new HashMap<String, String>();
+                    for (Map map : listamapa) {
+                        if (map.get("modulo").equals(mapa.get("modulo")) && map.get("rol").equals(mapa.get("rol"))) {
+                            encontro = true;
+                            encontroOm = map;
+                            index = i;
+                        }
+                        i++;
+                    }
+                    if (encontro) {
+                        List<Permisos> permisos = (List<Permisos>) encontroOm.get("permisos");
+                        permisos.add(rolmp.getPermisos());
+                        mapa.put("permisos", permisos);
+                        listamapa.set(index, mapa);
+                    } else {
+                        List<Permisos> permisos = new ArrayList<Permisos>();
+                        permisos.add(rolmp.getPermisos());
+                        mapa.put("permisos", permisos);
+                        listamapa.add(mapa);
+                    }
+
                 }
 
             }
-
         }
-
         return listamapa;
     }
 
@@ -160,14 +164,8 @@ public class ControlRoles implements Serializable {
             for (Map rolmodulo : modulosSelect) {
                 Rol r = (Rol) rolmodulo.get("rol");
                 Modulo m = (Modulo) rolmodulo.get("modulo");
-//                List<Permisos> ps = (List<Permisos>) rolmodulo.get("permisos");
-//                for (Permisos p : ps) {
-//                    RolModuloPermiso rmp= new RolModuloPermiso(r, m, p);
-//                    RolMOduloPermisoDAO.crear(rmp);
-//                }
                 List<Permisos> ps = (List<Permisos>) rolmodulo.get("permisos");
                 RolMOduloPermisoDAO.registrarRolModuloPermisos(r, m, ps);
-
             }
             util.crearmensajes("INFO", "EXITO", "selecione guardo rigistro exitoxamente");
         } else {
@@ -180,6 +178,7 @@ public class ControlRoles implements Serializable {
         Map mapa = new HashMap<String, String>();
 
         mapa.put("rol", rolselect);
+        mapa.put("temporal", true);
         List<Permisos> permisos = new ArrayList<Permisos>();
         if (permisosSelected.length > 0) {
             for (int i = 0; i < permisosSelected.length; i++) {
@@ -187,7 +186,6 @@ public class ControlRoles implements Serializable {
             };
         }
         mapa.put("permisos", permisos);
-
         if (!btneditar) {
             mapa.put("modulo", mdoSelect);
             modulosSelect.add(mapa);
@@ -224,10 +222,26 @@ public class ControlRoles implements Serializable {
         rolselection = 0l;
         modulosSelect.clear();
         modulos.clear();
+        btneliminar = false;
     }
 
-    public void eliminarrolmoduloperimso(Map map) {
-        modulosSelect.remove(map);
+    public void selectEliminarRolModuloperimso(Map map) {
+        boolean temp = (Boolean) map.get("temporal");
+        if (temp) {
+            modulosSelect.remove(map);
+        } else {
+            util.modal("mdeliminarRolModulo", "show");
+        }
+
+    }
+
+    public void eliminarRolModuloPermiso() {
+        Modulo m = new Modulo();
+        Rol r = new Rol();
+        m = (Modulo) mapSelect.get("modulo");
+        r = (Rol) mapSelect.get("rol");
+        RolMOduloPermisoDAO.eliminarRolModuloPermisos(r, m);
+        onRolSelect();
     }
 
     public void editarrolmoduloperimso(Map map) {
@@ -445,6 +459,22 @@ public class ControlRoles implements Serializable {
 
     public void setMdoSelectEdit(Modulo mdoSelectEdit) {
         this.mdoSelectEdit = mdoSelectEdit;
+    }
+
+    public Map getMapSelect() {
+        return mapSelect;
+    }
+
+    public void setMapSelect(Map mapSelect) {
+        this.mapSelect = mapSelect;
+    }
+
+    public boolean isBtneliminar() {
+        return btneliminar;
+    }
+
+    public void setBtneliminar(boolean btneliminar) {
+        this.btneliminar = btneliminar;
     }
 
 }
