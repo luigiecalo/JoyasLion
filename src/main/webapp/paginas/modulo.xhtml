@@ -18,10 +18,10 @@
 
                             <div class="ui-lg-8 ui-g-12">
                                 <b:buttonGroup >
-                                    <b:commandButton type="submit"  value="Guardar" rendered="#{controlModulos.verBtnRegistro()}" look="success"  update="tab"  size="sm" actionListener="#{controlModulos.guardarModulo}"  >
+                                    <b:commandButton type="submit"  value="Guardar" rendered="#{controlModulos.verBtnRegistro()}" look="success"  ajax="true"  size="sm" actionListener="#{controlModulos.guardarModulo}"  >
                                         <i class="fa fa-save"></i>
                                     </b:commandButton>
-                                    <b:commandButton type="submit"  value="Editar"  rendered="#{!controlModulos.verBtnRegistro()}" look="warning" update="tab"  size="sm" actionListener="#{controlModulos.guardarModulo}"  >
+                                    <b:commandButton type="submit"  value="Editar"  rendered="#{!controlModulos.verBtnRegistro()}" look="warning" ajax="true"   size="sm" actionListener="#{controlModulos.guardarModulo}"  >
                                         <i class="fa fa-edit"></i>
                                     </b:commandButton>
                                     <b:commandButton type="submit" process="@this"  value="Cancelar"   look="danger" actionListener="#{controlModulos.limpiar()}"  update="tab" size="sm">

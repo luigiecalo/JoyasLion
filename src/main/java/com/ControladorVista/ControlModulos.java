@@ -181,6 +181,7 @@ public class ControlModulos implements Serializable {
         subgrupoSelect = 0l;
         paginaStrin = "";
         estado = "R";
+        ListarTodo();
     }
 
     private void ListarTodo() {
