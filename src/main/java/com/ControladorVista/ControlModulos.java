@@ -10,6 +10,7 @@ import com.Dao.GrupoDaoimplement;
 import com.Dao.ModuloDaoimplement;
 import com.Dao.PermisosDaoimplement;
 import com.Dao.RolDaoimplement;
+import com.Dao.RolModuloPermisoDaoimplement;
 import com.Dao.SubGrupoDaoimplement;
 import com.Dao.TipoDaoimplement;
 import com.Entidades.Grupo;
@@ -290,9 +291,16 @@ public class ControlModulos implements Serializable {
 
     public void eliminarMenu() {
         Modulo moduloSel = ModDAO.consultarC(Modulo.class, moduloselect);
-        ModDAO.eliminar(moduloSel);
-        util.crearmensajes("INFO", "MODuLO ELIMINADO EXITOSAMENTE", " MODULO ELIMINADO EXITOSAMENTE");
-        limpiar();
+        RolModuloPermisoDaoimplement RMPDAo = new RolModuloPermisoDaoimplement();
+        List<RolModuloPermiso> rolesModulos = RMPDAo.buscarRolModulosPermisos(moduloSel.getIdmodulo());
+        if (rolesModulos.isEmpty()) {
+            ModDAO.eliminar(moduloSel);
+            util.crearmensajes("INFO", "MODuLO ELIMINADO EXITOSAMENTE", " MODULO ELIMINADO EXITOSAMENTE");
+            limpiar();
+        } else {
+            util.crearmensajes("ALERT", "ADVERTENCIA", "NO SE PUEDE ELIMINAR ESTE MODULO POR QUE HAY ROLES RELACIONADOS A EL");
+        }
+
     }
 
     public void eliminarGrupo() {

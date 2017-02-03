@@ -11,6 +11,26 @@ and open the template in the editor.
 
 /*Estilos Base*/
 /*Estilos Base*/
+
+#contenido {
+    position: relative;
+    width: 640px;
+    height: auto;
+    margin: 20px auto;
+    border: 12px solid #fff;
+    border-radius: 10px;
+    box-shadow: 1px 1px 5px rgba(50,50,50 0.5);
+}
+.img_wrapper {
+	position: relative;
+	width: 75%;
+	height: auto;
+	margin: 5 5% 0 auto;
+	border: 12px solid #fff;
+	border-radius: 0px;
+	box-shadow: 1px 1px 5px rgba(50,50,50 0.5);
+	float: left;
+}
 #images {
     width: 400px;
     height: 250px;

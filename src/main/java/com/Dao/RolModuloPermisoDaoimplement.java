@@ -82,6 +82,16 @@ public class RolModuloPermisoDaoimplement extends ImplDao<RolModuloPermiso, Long
         return list;
     }
 
+    public List<RolModuloPermiso> buscarRolModulosPermisos(Long idmodulo) {
+        Query query = em.createNamedQuery(RolModuloPermiso.BUSCAR_ROL_MODULOS);
+        query.setParameter("idmodulo", idmodulo);
+        List<RolModuloPermiso> list = query.getResultList();
+        if (list == null || list.isEmpty()) {
+            return null;
+        }
+        return list;
+    }
+
     public List<Modulo> buscarModulos(Long idrol) {
         List<Modulo> modulos = new ArrayList<Modulo>();
         Query query = em.createNativeQuery("SELECT DISTINCT r.idmodulo FROM rol_modulo_permiso r WHERE r.idrol='" + idrol + "'");

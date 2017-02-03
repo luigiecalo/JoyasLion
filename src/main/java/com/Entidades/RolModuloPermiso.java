@@ -26,13 +26,14 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "RolModuloPermiso.findAll", query = "SELECT r FROM RolModuloPermiso r"),
     @NamedQuery(name = RolModuloPermiso.BUSCAR_MODULOS_ROL, query = "SELECT r FROM RolModuloPermiso r WHERE r.rolModuloPermisoPK.idrol = :idrol"),
     @NamedQuery(name = "RolModuloPermiso.findByIdpermiso", query = "SELECT r FROM RolModuloPermiso r WHERE r.rolModuloPermisoPK.idpermiso = :idpermiso"),
-    @NamedQuery(name = "RolModuloPermiso.findByIdmodulo", query = "SELECT r FROM RolModuloPermiso r WHERE r.rolModuloPermisoPK.idmodulo = :idmodulo"),
+    @NamedQuery(name = RolModuloPermiso.BUSCAR_ROL_MODULOS, query = "SELECT r FROM RolModuloPermiso r WHERE r.rolModuloPermisoPK.idmodulo = :idmodulo"),
     @NamedQuery(name = RolModuloPermiso.BUSCAR_PERMISOS_MODULO_ROL, query = "SELECT r FROM RolModuloPermiso r WHERE r.rolModuloPermisoPK.idmodulo = :idmodulo "
             + "AND r.rolModuloPermisoPK.idrol = :idrol")})
 public class RolModuloPermiso implements Serializable {
 
     public static final String BUSCAR_PERMISOS_MODULO_ROL = "RolModuloPermiso.buscarpermisos";
      public static final String BUSCAR_MODULOS_ROL = "RolModuloPermiso.buscarmodulos";
+     public static final String BUSCAR_ROL_MODULOS = "RolModuloPermiso.findByIdmodulo";
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected RolModuloPermisoPK rolModuloPermisoPK;

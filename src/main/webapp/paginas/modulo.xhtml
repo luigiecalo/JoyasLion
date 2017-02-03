@@ -53,7 +53,7 @@
         <b:panel   id="modulomenu">
 
             <p:focus context="modulomenu"/>
-            <p:messages autoUpdate="false"/>
+            <p:messages autoUpdate="true"/>
             <div class="ui-g">
                 <div class="ui-g-12 ui-lg-4 ui-g-nopad">
                     <div class="ui-g-12">
@@ -391,7 +391,7 @@
                         <div class="modal-footer bg-yellow-gradient">
                             <b:button value="close" dismiss="modal"   iconAwesome="fa-mail-reply" onclick="return false;">
                             </b:button>
-                            <b:commandButton rendered="#{controlModulos.verBtngrupo()}" process="@this" update="modulomenu" value="eliminar modulo" action="#{controlSeccion.modalRol('mdEliminarModulo','hide')}"  actionListener="#{controlModulos.eliminarMenu}"  look="danger">
+                            <b:commandButton rendered="#{controlModulos.verBtngrupo()}" process="@this" ajax="true" value="eliminar modulo" action="#{controlSeccion.modalRol('mdEliminarModulo','hide')}"  actionListener="#{controlModulos.eliminarMenu}"  look="danger">
                                 <i class="fa fa-eraser"></i>
                             </b:commandButton>
                             <b:commandButton rendered="#{!controlModulos.verBtngrupo()}" process="@this" update="creargrup modulomenu" action="#{controlSeccion.modalRol('mdEliminarModulo','hide')}" value="eliminar #{controlModulos.estadocreargrupo}"  actionListener="#{controlModulos.eliminarGrupo}"  look="danger">

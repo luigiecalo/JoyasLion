@@ -56,6 +56,14 @@
                             <p:column headerText="CODIGO">
                                 <h:outputText value="#{Modelo.codigo}" />
                             </p:column>
+                            <p:column headerText="IMAGENES">
+                                <ui:repeat value="#{Modelo.modulo_imagenes}" var="img">
+                                    <row>
+                                        <h:outputText value="#{img.nombre}" />
+                                    </row>
+                                </ui:repeat>
+
+                            </p:column>
                             <p:column headerText="PESO CIRCONCES">
                                 <h:outputText value="#{Modelo.peso_circones}" />
                             </p:column>
@@ -122,10 +130,17 @@
                             <div  class="box-body box-profile">
                                 <h2>#{controlModelos.modeloSelecionado.codigo}</h2> 
                                 <img class="profile-user-img img-responsive img-circle" style="width:60%" src="imagenes/modelos/default.png" alt="User profile picture"/>
+                                #{controlModelos.carpeta}#{controlUtilidades.util.getExiteimagen(controlModelos.imagenedit?'temp':'imagenes/modelos',controlModelos.imagen)}.png"
+                                <p:graphicImage id="temp" class="profile-user-img img-responsive img-circle"  value="#{controlModelos.carpeta}#{controlUtilidades.util.getExiteimagen(controlModelos.imagenedit?'temp':'imagenes/modelos',controlModelos.imagen)}.png" cache="false"  style=" position: static;width: 100px; height: 100px;"/>
+                                <p:fileUpload fileUploadListener="#{controlUsuarios.handleFileUpload2}" update="tab"   style="width:100px" class="center-block" mode="advanced"
+                                              auto="true" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
                             </div>
+
+
                             <!--<b:panel styleClass="form-horizontal">-->
                             <!--</b:panel>-->
                         </div>
+
                         <div class="ui-g-12 ui-md-6 ui-lg-3 ui-g-nopad"  >
                             <div class="ui-g-12 ui-md-12 ui-lg-12">
                                 <b:selectOneMenu label="Tipo del Modelo" required="true" class="form-control select2"  value="#{controlModelos.tiposModelolSelect}" title="Asigne almenos un Tipo de Modelo" style="margin:0 auto">
@@ -190,7 +205,7 @@
                                 <div class="ui-g-1 ui-md-1 ui-lg-1" style="padding:0px">
                                     <label  class="bf-no-message" style="color: white">.</label>
                                     <b:commandButton id="Piedrabotom" disabled="#{controlModelos.cantidadPiedra}"  value=""  class="botom-grupo-bordes"   
-                                                     update="listaPiedrasSelect msg growlMsg valorCantidadPiedra piedraCselect" ajax="true" 
+                                                     update="listaPiedrasSelect msg  valorCantidadPiedra piedraCselect" ajax="true" 
                                                      process="@this,listaPiedrasSelect,piedraCselect,valorCantidadPiedra"  
                                                      actionListener="#{controlModelos.agregarPiedra()}" 
                                                      look="primary" size="lg" >
@@ -255,9 +270,9 @@
                                 <div class="ui-g-1 ui-md-1 ui-lg-1" style="padding:0px">
                                     <label  class="bf-no-message" style="color: white">.</label>
                                     <b:commandButton id="cantidadbotom" value="" disabled="#{controlModelos.cantidad}" class="botom-grupo-bordes" 
-                                                     update="listaCirconselct msg growlMsg valorCantidad pesocircones circonselect" 
+                                                     update="listaCirconselct msg  valorCantidad pesocircones circonselect" 
                                                      ajax="true" 
-                                                     process="@this,circonselect,msg,growlMsg,valorCantidad,pesocircones"
+                                                     process="@this,circonselect,msg,valorCantidad,pesocircones"
                                                      actionListener="#{controlModelos.agregarCircon()}"   
                                                      look="primary" size="lg" >
                                         <i class="fa fa-plus"></i>
@@ -311,7 +326,7 @@
 
 
         </b:panel>
-        <p:messages id="msg" autoUpdate="false"/>
+        <p:messages  autoUpdate="true"/>
 
 
 
@@ -319,7 +334,7 @@
 
 
 
-             <script src="js/prueba.js"></script>
+        <script src="js/prueba.js"></script>
 
 
 

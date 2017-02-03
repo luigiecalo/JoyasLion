@@ -23,10 +23,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.FileUploadEvent;
 
 /**
  *
@@ -46,6 +49,9 @@ public final class ControlModelos implements Serializable {
     private boolean cantidadPiedra = true;
     private String focus = "panel";
     private Double pesoCirones = 0.0;
+    private String imagen = "default";
+    private String carpeta = "temp/";
+    private boolean imagenedit = false;
 
     private Map<String, Long> piedrasCentralesLista;
     private Map<String, Long> circonesLista;
@@ -242,6 +248,13 @@ public final class ControlModelos implements Serializable {
                 util.crearmensajes("ALERTA", "CUIDADO 2!!", "Selecione Primero una Piedra central");
             }
         }
+    }
+
+    public void handleFileUpload(FileUploadEvent event) {
+        carpeta = "select00001";
+        this.imagen = util.cargarimagenTemp(event.getFile());
+        this.imagenedit = true;
+        editarcarpeta();
     }
 
     public void eliminaPiedra(ModeloPiedraCentral piedra) {
@@ -570,6 +583,38 @@ public final class ControlModelos implements Serializable {
 
     public void setValorCantidadPiedra(int valorCantidadPiedra) {
         this.valorCantidadPiedra = valorCantidadPiedra;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
+    public boolean isImagenedit() {
+        return imagenedit;
+    }
+
+    public void setImagenedit(boolean imagenedit) {
+        this.imagenedit = imagenedit;
+    }
+
+    public String getCarpeta() {
+        return carpeta;
+    }
+
+    public void setCarpeta(String carpeta) {
+        this.carpeta = carpeta;
+    }
+
+    public void editarcarpeta() {
+        if (estado.equals("R") || carpeta.equals("select00001")) {
+            carpeta = "temp/";
+        } else {
+            carpeta = "imagenes/modelos/";
+        }
     }
 
 }

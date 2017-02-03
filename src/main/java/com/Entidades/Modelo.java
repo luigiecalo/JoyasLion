@@ -55,6 +55,9 @@ public class Modelo implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "modelo")
     private List<OrdenModelo> orden_modelo;
+    
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "modelo")
+    private List<ModeloImagen> modulo_imagenes;
 
     @Basic(optional = false)
     @Column(name = "estado")
@@ -155,6 +158,16 @@ public class Modelo implements Serializable {
     public void setPiedra_centrales(List<ModeloPiedraCentral> piedra_centrales) {
         this.piedra_centrales = piedra_centrales;
     }
+
+    public List<ModeloImagen> getModulo_imagenes() {
+        return modulo_imagenes;
+    }
+
+    public void setModulo_imagenes(List<ModeloImagen> modulo_imagenes) {
+        this.modulo_imagenes = modulo_imagenes;
+    }
+
+
 
     @Override
     public int hashCode() {
