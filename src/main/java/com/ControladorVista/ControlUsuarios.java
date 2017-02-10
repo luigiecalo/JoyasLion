@@ -49,6 +49,7 @@ public final class ControlUsuarios implements Serializable {
     private crearcarpeta ruta = new crearcarpeta();
     private String imagen = "default";
     private String carpeta = "temp/";
+    private List<String>listimgTemp= new ArrayList<String>();
     File directorioTemp = new File(ruta.Ruta() + "/temp");
 
     private Rol rol = new Rol();
@@ -132,6 +133,7 @@ public final class ControlUsuarios implements Serializable {
     public void handleFileUpload2(FileUploadEvent event) {
         carpeta = "select00001";
         this.imagen = util.cargarimagenTemp(event.getFile());
+        listimgTemp.add(event.getFile().toString());
         this.imagenedit = true;
         editarcarpeta();
     }
@@ -416,7 +418,7 @@ public final class ControlUsuarios implements Serializable {
     }
 
     private void Eliminartemp() {
-        ruta.EliminarArchivosTemp(directorioTemp);
+        ruta.EliminarArchivosTemp(directorioTemp, listimgTemp);
     }
 
     public void editarcarpeta() {

@@ -125,6 +125,7 @@
                                               auto="true" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
                                 <h3 class="profile-username text-center">#{controlUsuarios.miembroSelecionado.apellido1} #{controlUsuarios.miembroSelecionado.apellido2} #{controlUsuarios.miembroSelecionado.nombre1} #{controlUsuarios.miembroSelecionado.nombre2}
                                 </h3>
+                                #{controlUsuarios.carpeta}#{controlUtilidades.util.getExiteimagen(controlUsuarios.imagenedit?'temp':'imagenes/usuarios',controlUsuarios.imagen)}.png
                             </div>
                         </div>
 

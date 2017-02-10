@@ -18,6 +18,7 @@ import com.Entidades.ModeloPiedraCentral;
 import com.Entidades.Modulo;
 import com.Entidades.PiedraCentral;
 import com.Entidades.Tipo;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,7 +50,7 @@ public final class ControlModelos implements Serializable {
     private boolean cantidadPiedra = true;
     private String focus = "panel";
     private Double pesoCirones = 0.0;
-    private String imagen = "default";
+    private String imagen = "default2";
     private String carpeta = "temp/";
     private boolean imagenedit = false;
 
@@ -174,6 +175,8 @@ public final class ControlModelos implements Serializable {
         modeloSelecionado = m;
         tiposModelolSelect = m.getTipo_modelo().getId();
         modelocirconSelect = m.getModelo_circon();
+        imagen = util.getExiteimagen("imagenes/modelos", m.getImagen());
+        
         modeloPiedracentralesSelect = m.getPiedra_centrales();
     }
 
@@ -306,27 +309,43 @@ public final class ControlModelos implements Serializable {
 
     public void guardarModelo() {
         modeloSelecionado.setEstado(estadoModelo ? "ACTIVO" : "INACTIVO");
-        modeloSelecionado.setImagen("dsd/imag123.png");
+        modeloSelecionado.setImagen(imagen);
         modeloSelecionado.setTipo_modelo(TipoDao.consultar(Tipo.class, tiposModelolSelect));
         modeloSelecionado.setPeso_circones(pesoCirones);
 
         if (estado.equals("R")) {
             modeloSelecionado.setCodigo("M" + String.format("%03d", ModeloDao.Ultima()));
+
             ModeloDao.crear(modeloSelecionado);
 
             if (modelocirconSelect.size() > 0 || modeloPiedracentralesSelect.size() > 0) {
                 modeloSelecionado = ModeloDao.buscarModeloEstado(modeloSelecionado.getCodigo(), "ACTIVO");
                 modificar(modeloSelecionado);
             }
+            if (imagen != "default2") {
+                guardarImagen(modeloSelecionado);
+            }
             limpiar();
             util.crearmensajes("INFO", "EXITOSO", "Modelo Guadado Satifactoriamente");
         } else {
             modificar(modeloSelecionado);
+            if (imagen != "default2") {
+                guardarImagen(modeloSelecionado);
+            }
             limpiar();
             util.crearmensajes("INFO", "EXITOSO", "Modelo Modificado Satifactoriamente");
 
         }
 
+    }
+
+    private void guardarImagen(Modelo modelo) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        try {
+            util.guardarImagen("modelos", estado, imagen, imagenedit, modelo.getCodigo());
+        } catch (IOException ex) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", ex.toString()));
+        }
     }
 
     private void modificar(Modelo modeloSelecionado) {

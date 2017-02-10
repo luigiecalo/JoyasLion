@@ -129,11 +129,11 @@
                         <div class="ui-g-12 ui-md-12 ui-lg-3"  >
                             <div  class="box-body box-profile">
                                 <h2>#{controlModelos.modeloSelecionado.codigo}</h2> 
-                                <img class="profile-user-img img-responsive img-circle" style="width:60%" src="imagenes/modelos/default.png" alt="User profile picture"/>
+                                <img class="profile-user-img img-responsive img-circle" style="width:60%" src="#{controlModelos.carpeta}#{controlUtilidades.util.getExiteimagen(controlModelos.imagenedit?'temp':'imagenes/modelos',controlModelos.imagen)}.png" alt="User profile picture"/>
                                 #{controlModelos.carpeta}#{controlUtilidades.util.getExiteimagen(controlModelos.imagenedit?'temp':'imagenes/modelos',controlModelos.imagen)}.png"
-                                <p:graphicImage id="temp" class="profile-user-img img-responsive img-circle"  value="#{controlModelos.carpeta}#{controlUtilidades.util.getExiteimagen(controlModelos.imagenedit?'temp':'imagenes/modelos',controlModelos.imagen)}.png" cache="false"  style=" position: static;width: 100px; height: 100px;"/>
-                                <p:fileUpload fileUploadListener="#{controlUsuarios.handleFileUpload2}" update="tab"   style="width:100px" class="center-block" mode="advanced"
-                                              auto="true" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+                                <!--<p:graphicImage id="temp" class="profile-user-img img-responsive img-circle"  value="#{controlModelos.carpeta}#{controlUtilidades.util.getExiteimagen(controlModelos.imagenedit?'temp':'imagenes/modelos',controlModelos.imagen)}.png" cache="false"  style=" position: static;width: 100px; height: 100px;"/>-->
+                                <p:fileUpload fileUploadListener="#{controlModelos.handleFileUpload}" update="tab"   style="width:100px" class="center-block" mode="advanced"
+                                              auto="true" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
                             </div>
 
 
@@ -205,7 +205,7 @@
                                 <div class="ui-g-1 ui-md-1 ui-lg-1" style="padding:0px">
                                     <label  class="bf-no-message" style="color: white">.</label>
                                     <b:commandButton id="Piedrabotom" disabled="#{controlModelos.cantidadPiedra}"  value=""  class="botom-grupo-bordes"   
-                                                     update="listaPiedrasSelect msg  valorCantidadPiedra piedraCselect" ajax="true" 
+                                                     update="listaPiedrasSelect   valorCantidadPiedra piedraCselect" ajax="true" 
                                                      process="@this,listaPiedrasSelect,piedraCselect,valorCantidadPiedra"  
                                                      actionListener="#{controlModelos.agregarPiedra()}" 
                                                      look="primary" size="lg" >
@@ -270,9 +270,9 @@
                                 <div class="ui-g-1 ui-md-1 ui-lg-1" style="padding:0px">
                                     <label  class="bf-no-message" style="color: white">.</label>
                                     <b:commandButton id="cantidadbotom" value="" disabled="#{controlModelos.cantidad}" class="botom-grupo-bordes" 
-                                                     update="listaCirconselct msg  valorCantidad pesocircones circonselect" 
+                                                     update="listaCirconselct growlMsg  valorCantidad pesocircones circonselect" 
                                                      ajax="true" 
-                                                     process="@this,circonselect,msg,valorCantidad,pesocircones"
+                                                     process="@this,circonselect,growlMsg,valorCantidad,pesocircones"
                                                      actionListener="#{controlModelos.agregarCircon()}"   
                                                      look="primary" size="lg" >
                                         <i class="fa fa-plus"></i>

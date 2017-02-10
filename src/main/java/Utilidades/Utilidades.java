@@ -272,7 +272,11 @@ public class Utilidades {
     public String getExiteimagen(String carpeta, String imagen) {
         File Origen = new File(ruta.Ruta() + "/" + carpeta, imagen + ".png");
         if (!Origen.exists()) {
-            imagen = "default";
+            if (carpeta.equals("imagenes/usuarios")) {
+                imagen = "default";
+            } else if (carpeta.equals("imagenes/modelos")) {
+                imagen = "default2";
+            }
         }
         return imagen;
     }
