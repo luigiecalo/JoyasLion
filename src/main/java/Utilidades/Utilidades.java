@@ -230,8 +230,8 @@ public class Utilidades {
         item.put("subupdate2", "@form");
     }
 
-    public String cargarimagenTemp(UploadedFile file) {
-        String img = "";
+    public String cargarimagenTemp(UploadedFile file,String img) {
+//        String img = "";
         try {
             FacesMessage message = new FacesMessage("Se Cargo", file.getFileName() + " Exitosamente");
             BufferedImage imBuff = ImageIO.read(file.getInputstream());
@@ -245,7 +245,7 @@ public class Utilidades {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-            img = file.getFileName() + ruta.totalArchivos(directorio);
+//            img = file.getFileName() + ruta.totalArchivos(directorio);
             File file2 = new File(directorio.getPath(), img + ".png");
             ImageIO.write(imBuff, "png", file2);
             crearmensajes("INFO", "Primer Mensage", "SE CARGO IMAGEN CORRECTAMENTE");

@@ -75,7 +75,7 @@ public class crearcarpeta {
         return total;
     }
 
-    public void EliminarArchivosTemp(File directorio, List<String> imgcargadas) {
+    public void EliminarArchivosTemp(File directorio, String imgcargadas) {
         crearcarpeta rutas = new crearcarpeta();
         int total = 0;
         String[] arrArchivos = directorio.list();
@@ -84,15 +84,11 @@ public class crearcarpeta {
         for (int i = 0; i < arrArchivos.length; ++i) {
             tmpFile = new File(directorio.getPath() + "/" + arrArchivos[i]);
             if (tmpFile.getName().equals("default.png") || tmpFile.getName().equals("default3.png") || tmpFile.getName().equals("default2.png")) {
-            } else {
-                for (String img : imgcargadas) {
-                    if (tmpFile.getName().equals(img)) {
-                        tmpFile.delete();
-                    }
-                }
+            } else if (tmpFile.getName().equals(imgcargadas+".png")) {
+                tmpFile.delete();
             }
         }
-        imgcargadas.clear();
+        imgcargadas = "";
     }
 
     public static void eliminarPorExtension(String path, final String extension) {

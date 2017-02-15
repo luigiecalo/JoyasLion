@@ -6,6 +6,7 @@
 package com.ControladorVista;
 
 import Utilidades.Utilidades;
+import Utilidades.crearcarpeta;
 import com.Dao.CirconDaoimplement;
 import com.Dao.ModeloCirconDaoimplement;
 import com.Dao.ModeloDaoimplement;
@@ -18,6 +19,7 @@ import com.Entidades.ModeloPiedraCentral;
 import com.Entidades.Modulo;
 import com.Entidades.PiedraCentral;
 import com.Entidades.Tipo;
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
@@ -51,8 +54,11 @@ public final class ControlModelos implements Serializable {
     private String focus = "panel";
     private Double pesoCirones = 0.0;
     private String imagen = "default2";
+    private String imgTemp = "";
     private String carpeta = "temp/";
     private boolean imagenedit = false;
+    private crearcarpeta ruta = new crearcarpeta();
+    File directorioTemp = new File(ruta.Ruta() + "/temp");
 
     private Map<String, Long> piedrasCentralesLista;
     private Map<String, Long> circonesLista;
@@ -87,6 +93,10 @@ public final class ControlModelos implements Serializable {
     private PiedraCentralDaoimplement PiedraCentralDao = new PiedraCentralDaoimplement();
     private ModeloCirconDaoimplement ModeloCirconDao = new ModeloCirconDaoimplement();
 //    RequestContext Requescontext = RequestContext.getCurrentInstance();
+
+    //Session
+    @ManagedProperty(value = "#{controlSeccion}")
+    private ControlSeccion controlSeccion;
 
     /**
      * Creates a new instance of controlplantillas
@@ -125,6 +135,10 @@ public final class ControlModelos implements Serializable {
         modelopiedracentrales.clear();
         modelocircones.clear();
         listarModelos();
+        Eliminartemp();
+        editarcarpeta();
+        imagenedit = false;
+        imagen = "default2";
     }
 
     //Lista todos Los Modelos de La vista De Consulta
@@ -176,7 +190,7 @@ public final class ControlModelos implements Serializable {
         tiposModelolSelect = m.getTipo_modelo().getId();
         modelocirconSelect = m.getModelo_circon();
         imagen = util.getExiteimagen("imagenes/modelos", m.getImagen());
-        
+        editarcarpeta();
         modeloPiedracentralesSelect = m.getPiedra_centrales();
     }
 
@@ -255,7 +269,8 @@ public final class ControlModelos implements Serializable {
 
     public void handleFileUpload(FileUploadEvent event) {
         carpeta = "select00001";
-        this.imagen = util.cargarimagenTemp(event.getFile());
+        imgTemp = "MO" + controlSeccion.getMiembro().getDocumento();
+        this.imagen = util.cargarimagenTemp(event.getFile(), imgTemp);
         this.imagenedit = true;
         editarcarpeta();
     }
@@ -309,13 +324,13 @@ public final class ControlModelos implements Serializable {
 
     public void guardarModelo() {
         modeloSelecionado.setEstado(estadoModelo ? "ACTIVO" : "INACTIVO");
-        modeloSelecionado.setImagen(imagen);
+
         modeloSelecionado.setTipo_modelo(TipoDao.consultar(Tipo.class, tiposModelolSelect));
         modeloSelecionado.setPeso_circones(pesoCirones);
 
         if (estado.equals("R")) {
             modeloSelecionado.setCodigo("M" + String.format("%03d", ModeloDao.Ultima()));
-
+            modeloSelecionado.setImagen(imagen.equals("default2") ? imagen : modeloSelecionado.getCodigo());
             ModeloDao.crear(modeloSelecionado);
 
             if (modelocirconSelect.size() > 0 || modeloPiedracentralesSelect.size() > 0) {
@@ -328,7 +343,9 @@ public final class ControlModelos implements Serializable {
             limpiar();
             util.crearmensajes("INFO", "EXITOSO", "Modelo Guadado Satifactoriamente");
         } else {
+            modeloSelecionado.setImagen(imagen.equals("default2") ? imagen : modeloSelecionado.getCodigo());
             modificar(modeloSelecionado);
+
             if (imagen != "default2") {
                 guardarImagen(modeloSelecionado);
             }
@@ -370,7 +387,12 @@ public final class ControlModelos implements Serializable {
         }
     }
 
+    //SET SECCION
+    public void setControlSeccion(ControlSeccion controlSeccion) {
+        this.controlSeccion = controlSeccion;
+    }
 ////GET AND SET
+
     public String getEstado() {
         return estado;
     }
@@ -626,6 +648,10 @@ public final class ControlModelos implements Serializable {
 
     public void setCarpeta(String carpeta) {
         this.carpeta = carpeta;
+    }
+
+    private void Eliminartemp() {
+        ruta.EliminarArchivosTemp(directorioTemp, imgTemp);
     }
 
     public void editarcarpeta() {

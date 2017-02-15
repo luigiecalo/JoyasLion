@@ -26,6 +26,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.imageio.ImageIO;
@@ -49,7 +50,7 @@ public final class ControlUsuarios implements Serializable {
     private crearcarpeta ruta = new crearcarpeta();
     private String imagen = "default";
     private String carpeta = "temp/";
-    private List<String>listimgTemp= new ArrayList<String>();
+    private String imgTemp= "";
     File directorioTemp = new File(ruta.Ruta() + "/temp");
 
     private Rol rol = new Rol();
@@ -70,6 +71,10 @@ public final class ControlUsuarios implements Serializable {
     private MiembroDaoimplement MiemDao = new MiembroDaoimplement();
     private RolDaoimplement RolDao = new RolDaoimplement();
     RequestContext Requescontext = RequestContext.getCurrentInstance();
+    
+    //Session
+    @ManagedProperty(value = "#{controlSeccion}")
+    private ControlSeccion controlSeccion;
 
     /**
      * Creates a new instance of controlplantillas
@@ -105,35 +110,11 @@ public final class ControlUsuarios implements Serializable {
         limpiar();
     }
 
+  
     public void handleFileUpload(FileUploadEvent event) {
-        try {
-            FacesMessage message = new FacesMessage("Se Cargo", event.getFile().getFileName() + " Exitosamente");
-            BufferedImage imBuff = ImageIO.read(event.getFile().getInputstream());
-
-            File directorio = null;
-            try {
-
-                directorio = new File(ruta.Ruta() + "/temp");
-                directorio.mkdir();
-                carpeta = "select00001";
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-            String img = event.getFile().getFileName() + ruta.totalArchivos(directorio);
-            File file = new File(directorio.getPath(), img + ".png");
-            ImageIO.write(imBuff, "png", file);
-            this.imagenedit = true;
-            this.imagen = img;
-            editarcarpeta();
-            util.crearmensajes("INFO", "Primer Mensage", "SE CARGO IMAGEN CORRECTAMENTE");
-        } catch (IOException ex) {
-        }
-    }
-
-    public void handleFileUpload2(FileUploadEvent event) {
         carpeta = "select00001";
-        this.imagen = util.cargarimagenTemp(event.getFile());
-        listimgTemp.add(event.getFile().toString());
+        imgTemp="U"+controlSeccion.getMiembro().getDocumento();
+        this.imagen = util.cargarimagenTemp(event.getFile(),imgTemp);
         this.imagenedit = true;
         editarcarpeta();
     }
@@ -286,6 +267,12 @@ public final class ControlUsuarios implements Serializable {
 //            return "visible";
 //        }
 //    }
+    
+    
+     //SET SECCION
+    public void setControlSeccion(ControlSeccion controlSeccion) {
+        this.controlSeccion = controlSeccion;
+    }
     //GET AND SET
     public Usuario getUsuario() {
         return usuario;
@@ -418,7 +405,7 @@ public final class ControlUsuarios implements Serializable {
     }
 
     private void Eliminartemp() {
-        ruta.EliminarArchivosTemp(directorioTemp, listimgTemp);
+        ruta.EliminarArchivosTemp(directorioTemp, imgTemp);
     }
 
     public void editarcarpeta() {
