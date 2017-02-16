@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileFilter;
 import java.net.URL;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -89,6 +90,25 @@ public class crearcarpeta {
             }
         }
         imgcargadas = "";
+    }
+    public void EliminarArchivosTempLista(File directorio, List<Map> imgcargadas) {
+        crearcarpeta rutas = new crearcarpeta();
+        int total = 0;
+        String[] arrArchivos = directorio.list();
+        total += arrArchivos.length;
+        File tmpFile;
+        for (int i = 0; i < arrArchivos.length; ++i) {
+            tmpFile = new File(directorio.getPath() + "/" + arrArchivos[i]);
+            if (tmpFile.getName().equals("default.png") || tmpFile.getName().equals("default3.png") || tmpFile.getName().equals("default2.png")) {
+            }else {
+                for (Map img : imgcargadas) {
+                    if (tmpFile.getName().equals(img.get("nombre")+".png")) {
+                        tmpFile.delete();
+                    }
+                }
+            }
+        }
+        imgcargadas.clear();
     }
 
     public static void eliminarPorExtension(String path, final String extension) {

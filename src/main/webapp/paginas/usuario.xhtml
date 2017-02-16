@@ -78,6 +78,7 @@
 
         <b:panel id="registro" collapsible="false" rendered="#{controlUsuarios.registrar}">
             <p:focus context="panel"/>
+            
             <div class="row">
 
                 <h:panelGroup >
@@ -86,7 +87,7 @@
 
                             <div  class="box-body">
                                 <b:buttonGroup>
-                                    <b:commandButton value="Guardar" rendered="#{controlUsuarios.verBtnRegistro()}"  actionListener="#{controlUsuarios.save()}"  look="success"   update="tab" size="sm" >
+                                    <b:commandButton value="Guardar"  rendered="#{controlUsuarios.verBtnRegistro()}"  actionListener="#{controlUsuarios.save()}"  look="success"   update="tab" size="sm" >
                                         <i class="fa fa-save"></i>
                                     </b:commandButton>
                                     <b:commandButton value="Editar" rendered="#{!controlUsuarios.verBtnRegistro()}"  actionListener="#{controlUsuarios.save()}" look="warning" class=""  update="tab" size="sm">
@@ -256,6 +257,7 @@
             </div>
 
         </b:panel>
+ 
         <p:messages autoUpdate="false"/>
 
 

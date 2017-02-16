@@ -53,9 +53,13 @@
                             <f:facet name="header">
                                 Lista de Modelos
                             </f:facet>
+                            <p:column style="width:16px;padding-right:20px">
+                                <p:rowToggler />
+                            </p:column>
+
                             <p:column headerText="CODIGO" style="width: 100px;padding-right:20px" >
 
-                                <p:graphicImage  class="img-thumbnail img-responsive  colored ih-item padre"   value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',Modelo.imagen)}.png" cache="false"  title="#{Modelo.peso_modelo}" style="width: 100px; height: 100px;"/>
+                                <p:graphicImage  class="img-thumbnail img-responsive  colored ih-item padre"   value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',Modelo.imagen)}.png" cache="false"  title="#{Modelo.peso_modelo}" style="width: 30px; height: 30px;"/>
                             </p:column>
                             <p:column headerText="IMAGENES">
                                 <ui:repeat value="#{Modelo.modulo_imagenes}" var="img">
@@ -77,7 +81,6 @@
                             <p:column style="text-align: center ;width:200px">
 
                                 <b:commandButton value=""
-                                                 style="height:50px;width: 50px;font-size:30px;"
                                                  actionListener="#{controlModelos.enviarselecionado(Modelo)}"
                                                  look="warning"  process="@this" ajax="true"
                                                  size="sm" tooltip="SELECCIONAR" tooltip-position="bottom" 
@@ -85,7 +88,7 @@
                                     <i class="fa fa-search"></i>
                                 </b:commandButton>
                                 <b:commandButton value="" 
-                                                 style="height:50px;width: 50px;font-size:30px;"
+
                                                  look="danger"
                                                  size="sm"
                                                  ajax="true"
@@ -95,8 +98,38 @@
                                     <i class="fa fa-trash"></i>
                                 </b:commandButton>
 
+                                <!--style="height:50px;width: 50px;font-size:30px;"-->
+
                             </p:column>
+                            <p:rowExpansion>
+
+                                <b:commandButton value="" 
+
+                                                 look="warning"
+                                                 size="sm"
+                                                 process="@this" ajax="true"
+                                                 tooltip="Editar"
+                                                 actionListener="#{controlModelos.enviarselecionado(Modelo)}">
+                                    <i class="fa fa-reply"></i>
+                                </b:commandButton>
+                                <p:lightBox styleClass="imagebox" id="lighbox1" style="position: relative">
+                                    <h:outputLink value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',Modelo.imagen)}.png"  title="#{Modelo.imagen}">  
+                                        <p:graphicImage  class="img-thumbnail img-responsive  colored ih-item padre"   value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',Modelo.imagen)}.png" cache="false"  title="#{Modelo.peso_modelo}" style="width: 100px; height: 100px;"/>
+                                    </h:outputLink>
+
+
+                                    <ui:repeat value="#{Modelo.modulo_imagenes}" var="img">
+                                        <row>
+                                            <h:outputLink value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',Modelo.imagen)}.png"  title="#{Modelo.imagen}">  
+                                                <p:graphicImage  class="img-thumbnail img-responsive  colored ih-item padre"   value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',Modelo.imagen)}.png" cache="false"  title="#{Modelo.peso_modelo}" style="width: 100px; height: 100px;"/>
+                                            </h:outputLink>
+                                        </row>
+                                    </ui:repeat>
+                                </p:lightBox> 
+                            </p:rowExpansion>
                         </p:dataTable>
+
+
                     </div>
                 </div>
 
@@ -143,11 +176,11 @@
                     <p:focus id="focus" context="#{controlModelos.focus}"/>
 
                     <div class="ui-g" >
-                        <div class="ui-g-12 ui-md-12 ui-lg-3"  >
+                        <div class="ui-g-12 ui-md-12 ui-lg-2"  >
 
                             <div class="box-body box-profile">
                                 <p:graphicImage  class="profile-user-img img-responsive"  value="#{controlModelos.carpeta}#{controlUtilidades.util.getExiteimagen(controlModelos.imagenedit?'temp':'imagenes/modelos',controlModelos.imagen)}.png" cache="false"  style=" position: static;width: 400px; height: 400px;"/>
-                                <p:fileUpload fileUploadListener="#{controlModelos.handleFileUpload}" update="tab"   style="width:100px" class="center-block" mode="advanced"
+                                <p:fileUpload fileUploadListener="#{controlModelos.handleFileUpload}" update="tab" label="Examinar"  style="width:100px" class="center-block" mode="advanced"
                                               auto="true" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
                                 <h3 class="profile-username text-center">#{controlModelos.modeloSelecionado.codigo}
                                 </h3>
@@ -155,8 +188,32 @@
                             </div>
 
 
-                            <!--<b:panel styleClass="form-horizontal">-->
-                            <!--</b:panel>-->
+                        </div>
+                        <div class="ui-g-12 ui-md-12 ui-lg-4"  >
+
+                            <p:fileUpload fileUploadListener="#{controlModelos.handleFileUploadLista}" multiple="false" fileLimit="1" auto="true" label="Imagenes"   mode="advanced" dragDropSupport="true"
+                                              update="tab" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+                                <p:dataGrid var="gal" value="#{controlModelos.modelogaleria}" columns="3" layout="grid"
+                                            rows="12" paginator="true" id="cars"
+                                            paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                            rowsPerPageTemplate="6,12,16">
+
+
+                                    <p:panel  style="text-align:center">
+                                        <h:panelGrid columns="2" style="width:100%">
+                                        <p:graphicImage  class=" circle img-responsive"  value="#{controlModelos.carpeta}#{controlUtilidades.util.getExiteimagen(gal.temp?'temp':'imagenes/modelos',gal.nombre)}.png" cache="false"  style=" position: static;width: 40px; height: 40px;"/>
+                                            <h:outputText value="#{gal.nombre}" />
+                                             <b:commandButton value=""  process="@this" look="success"  size="xs" >
+                                                <i class="fa fa-search"></i>
+                                            </b:commandButton>
+                                            <b:commandButton value="" actionListener="#{controlModelos.deletemodelogaleria(gal)}"  process="@this" ajax="true" look="danger"  size="xs" >
+                                                <i class="fa fa-trash"></i>
+                                            </b:commandButton>
+
+                                        </h:panelGrid>
+                                    </p:panel>
+
+                                </p:dataGrid>
                         </div>
 
                         <div class="ui-g-12 ui-md-6 ui-lg-3 ui-g-nopad"  >
@@ -328,14 +385,7 @@
 
 
                         </div>
-                        <div class="ui-g-12 ui-md-6 ui-lg-3 ui-g-nopad" >
-                            <div class="ui-g-12 ui-md-12 ui-lg-12"  >
 
-                            </div>
-                            <div class="ui-g-12 ui-md-12 ui-lg-12"  >
-
-                            </div>
-                        </div>
 
 
                     </div>

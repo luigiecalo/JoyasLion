@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -33,6 +34,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.CloseEvent;
 import org.primefaces.event.FileUploadEvent;
 
 /**
@@ -55,8 +57,10 @@ public final class ControlModelos implements Serializable {
     private Double pesoCirones = 0.0;
     private String imagen = "default2";
     private String imgTemp = "";
+    private List<Map> modelogaleria = new ArrayList<Map>();
     private String carpeta = "temp/";
     private boolean imagenedit = false;
+    private boolean imageneditgaleria = false;
     private crearcarpeta ruta = new crearcarpeta();
     File directorioTemp = new File(ruta.Ruta() + "/temp");
 
@@ -139,6 +143,12 @@ public final class ControlModelos implements Serializable {
         editarcarpeta();
         imagenedit = false;
         imagen = "default2";
+        modelogaleria.clear();
+    }
+
+    public void deletemodelogaleria(Map gal) {
+        modelogaleria.remove(gal);
+        ruta.EliminarArchivosTemp(directorioTemp, (String) gal.get("nombre"));
     }
 
     //Lista todos Los Modelos de La vista De Consulta
@@ -271,6 +281,35 @@ public final class ControlModelos implements Serializable {
         carpeta = "select00001";
         imgTemp = "MO" + controlSeccion.getMiembro().getDocumento();
         this.imagen = util.cargarimagenTemp(event.getFile(), imgTemp);
+        this.imageneditgaleria = true;
+        editarcarpeta();
+    }
+
+    public void handleFileUploadLista(FileUploadEvent event) {
+        carpeta = "select00001";
+        Map imagenmap = new HashMap<String, String>();
+        String imgTemp = "";
+        if (modelogaleria.isEmpty()) {
+            imgTemp = controlSeccion.getMiembro().getDocumento() + "-" + modelogaleria.size();
+        } else {
+            int mayor = 0;
+            for (Map dato : modelogaleria) {
+                String nombre = (String) dato.get("nombre");
+                boolean temp = (Boolean) dato.get("temp");
+                StringTokenizer format = new StringTokenizer(nombre, "-");
+                String num1 = format.nextToken();
+                String num2 = format.nextToken();
+                int numero = Integer.parseInt(num2);
+                if (numero >= mayor) {
+                    mayor = numero + 1;
+                }
+            }
+            imgTemp = controlSeccion.getMiembro().getDocumento() + "-" + mayor + "";
+        }
+        util.cargarimagenTemp(event.getFile(), imgTemp);
+        imagenmap.put("nombre", imgTemp);
+        imagenmap.put("temp", true);
+        modelogaleria.add(imagenmap);
         this.imagenedit = true;
         editarcarpeta();
     }
@@ -652,6 +691,15 @@ public final class ControlModelos implements Serializable {
 
     private void Eliminartemp() {
         ruta.EliminarArchivosTemp(directorioTemp, imgTemp);
+        ruta.EliminarArchivosTempLista(directorioTemp, modelogaleria);
+    }
+
+    public List<Map> getModelogaleria() {
+        return modelogaleria;
+    }
+
+    public void setModelogaleria(List<Map> modelogaleria) {
+        this.modelogaleria = modelogaleria;
     }
 
     public void editarcarpeta() {

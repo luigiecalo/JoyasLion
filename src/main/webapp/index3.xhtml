@@ -12,6 +12,17 @@
         <!--<link rel="stylesheet" href="css/form-elements.css" type="text/css" media="screen" />-->
         <!--<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" />-->
         <link rel="stylesheet" href="AdminLTE/css/AdminLTE.css"/>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.css"/>
+        <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.css"/>
+        <!--<link rel="stylesheet" href="css/primefacesConfig.css"/>-->
+        <!-- Theme style -->
+        <link rel="stylesheet" href="AdminLTE/css/AdminLTE.css"/>
+        <!--<link rel="stylesheet" href="css/primefacesConfig.css"/>-->
+
+        <!-- AdminLTE Skins. Choose a skin from the css/skins
+             folder instead of downloading all of them to reduce the load. -->
+        <link rel="stylesheet" href="AdminLTE/css/skins/skin-#{controlSeccion.skins}.css"/>
+        <link rel="stylesheet" href="styles/main.css"/>
         <style>
             body {
                 text-align: center;
@@ -68,13 +79,34 @@
             <p:commandButton value="cambiar" actionListener="#{controlPrincipal.cambiartext()}" update="panel" />
         </h:form>
 
-        
+
         <h:form id="form2">
             <p:panel id="panel2">
                 <b:inputText value="#{controlOrden.message}"/>
             </p:panel>
-            <p:commandButton value="cambiar"  update=":form:panel" />
+            <p:growl id="growl" />
+
+            <p:panel id="pnl" header="New User" style="margin-top:10px">
+                <p:messages id="messages" />
+                <h:panelGrid columns="3" id="grid" cellpadding="5">
+                    <p:outputLabel for="username" value="Username" />
+                    <p:inputText id="username"  required="true">
+                        <f:validateLength minimum="2" />
+                    </p:inputText>
+                    <p:message for="username" />
+
+                    <p:outputLabel for="email" value="Surname:" />
+                    <p:inputText id="email"  required="true"/>
+                    <p:message for="email" />
+                </h:panelGrid>
+
+                <p:commandButton value="Save" icon="ui-icon-check" update="growl grid" oncomplete="handleForm(xhr, status, args)"/>
+            </p:panel>
+
+            <p:spotlight target="pnl" widgetVar="spot"/>
         </h:form>
+
+
 
         <div id="images">
 
