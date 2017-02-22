@@ -293,7 +293,7 @@ public class ControlModulos implements Serializable {
         Modulo moduloSel = ModDAO.consultarC(Modulo.class, moduloselect);
         RolModuloPermisoDaoimplement RMPDAo = new RolModuloPermisoDaoimplement();
         List<RolModuloPermiso> rolesModulos = RMPDAo.buscarRolModulosPermisos(moduloSel.getIdmodulo());
-        if (rolesModulos.isEmpty()) {
+        if (rolesModulos==null || rolesModulos.isEmpty()) {
             ModDAO.eliminar(moduloSel);
             util.crearmensajes("INFO", "MODuLO ELIMINADO EXITOSAMENTE", " MODULO ELIMINADO EXITOSAMENTE");
             limpiar();
