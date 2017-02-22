@@ -7,6 +7,7 @@ package com.Entidades;
 
 import java.io.Serializable;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -28,16 +29,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ModeloImagen.findAll", query = "SELECT m FROM ModeloImagen m"),
-    @NamedQuery(name = ModeloImagen.BUSCAR_MODULO, query = "SELECT m FROM ModeloImagen m WHERE m.modelo = :idmodelo")})
+    @NamedQuery(name = ModeloImagen.BUSCAR_MODULO, query = "SELECT m FROM ModeloImagen m WHERE m.modelo = :idmodelo"),
+    @NamedQuery(name = ModeloImagen.ULTIMO, query = "SELECT MAX(m.id)+1 FROM ModeloImagen m")})
 public class ModeloImagen implements Serializable {
 
     private static final long serialVersionUID = 1L;
     public static final String BUSCAR_MODULO = "ModeloImagen.modulo";
+    public static final String ULTIMO = "ModeloImagen.ultimo";
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
+    @Column(name = "nombre")
     private String nombre;
-    @JoinColumn(name = "idmodelo", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "idmodelo", referencedColumnName = "id", insertable = true, updatable = true)
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
     private Modelo modelo;
 
@@ -64,8 +69,6 @@ public class ModeloImagen implements Serializable {
     public void setModelo(Modelo modelo) {
         this.modelo = modelo;
     }
-
-  
 
     @Override
     public int hashCode() {

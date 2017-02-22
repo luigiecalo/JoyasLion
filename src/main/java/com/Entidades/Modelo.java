@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = Modelo.LISTAR, query = "SELECT m FROM Modelo m"),
     @NamedQuery(name = Modelo.BUSCAR_CODIGO_ESTADO, query = "SELECT m FROM Modelo m WHERE m.codigo = :codigo AND m.estado =:estado"),
-    @NamedQuery(name = Modelo.ULTIMO, query = "SELECT COUNT(m.id)+1 FROM Modelo m")})
+    @NamedQuery(name = Modelo.ULTIMO, query = "SELECT MAX(m.id)+1 FROM Modelo m")})
 public class Modelo implements Serializable {
 
     public static final String BUSCAR_CODIGO_ESTADO = "Modelo.codigoEstado";

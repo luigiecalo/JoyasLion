@@ -103,7 +103,7 @@
                                     <ui:repeat value="#{controlOrden.ordenesMoldelos}" var="om">
                                         <li class="item">
                                             <div class="product-img">
-                                                <img  src="imagenes/fondo.jpg" data-src="imagenes/fondo.png"  class="modelos img-thumbnail" alt="Generic placeholder thumbnail"/>
+                                                <img  src="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',om.modelo.imagen)}.png"  class="modelos img-thumbnail" alt="Generic placeholder thumbnail"/>
                                             </div>
                                             <div class="product-info">
                                                 <a href="javascript:void(0)" class="product-title">

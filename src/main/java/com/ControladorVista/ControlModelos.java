@@ -10,11 +10,13 @@ import Utilidades.crearcarpeta;
 import com.Dao.CirconDaoimplement;
 import com.Dao.ModeloCirconDaoimplement;
 import com.Dao.ModeloDaoimplement;
+import com.Dao.ModeloImagenDaoimplement;
 import com.Dao.PiedraCentralDaoimplement;
 import com.Dao.TipoDaoimplement;
 import com.Entidades.Circon;
 import com.Entidades.Modelo;
 import com.Entidades.ModeloCircon;
+import com.Entidades.ModeloImagen;
 import com.Entidades.ModeloPiedraCentral;
 import com.Entidades.Modulo;
 import com.Entidades.PiedraCentral;
@@ -32,6 +34,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.model.ArrayDataModel;
 import javax.inject.Named;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.CloseEvent;
@@ -96,6 +99,7 @@ public final class ControlModelos implements Serializable {
     private TipoDaoimplement TipoDao = new TipoDaoimplement();
     private PiedraCentralDaoimplement PiedraCentralDao = new PiedraCentralDaoimplement();
     private ModeloCirconDaoimplement ModeloCirconDao = new ModeloCirconDaoimplement();
+    private ModeloImagenDaoimplement mdimpl = new ModeloImagenDaoimplement();
 //    RequestContext Requescontext = RequestContext.getCurrentInstance();
 
     //Session
@@ -200,6 +204,13 @@ public final class ControlModelos implements Serializable {
         tiposModelolSelect = m.getTipo_modelo().getId();
         modelocirconSelect = m.getModelo_circon();
         imagen = util.getExiteimagen("imagenes/modelos", m.getImagen());
+        modelogaleria.clear();
+        for (ModeloImagen img : m.getModulo_imagenes()) {
+            Map imagenmap = new HashMap<String, String>();
+            imagenmap.put("nombre", img.getNombre());
+            imagenmap.put("temp", false);
+            modelogaleria.add(imagenmap);
+        }
         editarcarpeta();
         modeloPiedracentralesSelect = m.getPiedra_centrales();
     }
@@ -281,16 +292,16 @@ public final class ControlModelos implements Serializable {
         carpeta = "select00001";
         imgTemp = "MO" + controlSeccion.getMiembro().getDocumento();
         this.imagen = util.cargarimagenTemp(event.getFile(), imgTemp);
-        this.imageneditgaleria = true;
+        this.imagenedit = true;
         editarcarpeta();
     }
 
     public void handleFileUploadLista(FileUploadEvent event) {
-        carpeta = "select00001";
+//        carpeta = "select00001";
         Map imagenmap = new HashMap<String, String>();
         String imgTemp = "";
         if (modelogaleria.isEmpty()) {
-            imgTemp = controlSeccion.getMiembro().getDocumento() + "-" + modelogaleria.size();
+            imgTemp = "MO" + controlSeccion.getMiembro().getDocumento() + "-" + modelogaleria.size();
         } else {
             int mayor = 0;
             for (Map dato : modelogaleria) {
@@ -304,14 +315,14 @@ public final class ControlModelos implements Serializable {
                     mayor = numero + 1;
                 }
             }
-            imgTemp = controlSeccion.getMiembro().getDocumento() + "-" + mayor + "";
+            imgTemp = "MO" + controlSeccion.getMiembro().getDocumento() + "-" + mayor + "";
         }
         util.cargarimagenTemp(event.getFile(), imgTemp);
         imagenmap.put("nombre", imgTemp);
         imagenmap.put("temp", true);
         modelogaleria.add(imagenmap);
-        this.imagenedit = true;
-        editarcarpeta();
+//        this.imagenedit = true;
+//        editarcarpeta();
     }
 
     public void eliminaPiedra(ModeloPiedraCentral piedra) {
@@ -372,13 +383,14 @@ public final class ControlModelos implements Serializable {
             modeloSelecionado.setImagen(imagen.equals("default2") ? imagen : modeloSelecionado.getCodigo());
             ModeloDao.crear(modeloSelecionado);
 
-            if (modelocirconSelect.size() > 0 || modeloPiedracentralesSelect.size() > 0) {
+            if (modelocirconSelect.size() > 0 || modeloPiedracentralesSelect.size() > 0 || modelogaleria.size() > 0) {
                 modeloSelecionado = ModeloDao.buscarModeloEstado(modeloSelecionado.getCodigo(), "ACTIVO");
                 modificar(modeloSelecionado);
             }
             if (imagen != "default2") {
                 guardarImagen(modeloSelecionado);
             }
+
             limpiar();
             util.crearmensajes("INFO", "EXITOSO", "Modelo Guadado Satifactoriamente");
         } else {
@@ -404,7 +416,44 @@ public final class ControlModelos implements Serializable {
         }
     }
 
+    private void guardarImagenGaleria(String img) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        try {
+            util.guardarImagen("modelos", estado, imagen, imagenedit, img);
+        } catch (IOException ex) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", ex.toString()));
+        }
+    }
+
+    private void guardarImagenGaleria(String imagen, String img, boolean registrar) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        try {
+            util.guardarImagen("modelos", estado, imagen, registrar, img);
+        } catch (IOException ex) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", ex.toString()));
+        }
+    }
+
     private void modificar(Modelo modeloSelecionado) {
+        List<ModeloImagen> listMi = new ArrayList<ModeloImagen>();
+//        if (!modelogaleria.isEmpty()) {
+
+        for (Map map : modelogaleria) {
+            ModeloImagen mi = new ModeloImagen();
+            String nombre = (String) map.get("nombre");
+            boolean temp = (Boolean) map.get("temp");
+            StringTokenizer toke = new StringTokenizer(nombre, "-");
+            String nameTemp = toke.nextToken();
+            String numTemp = toke.nextToken();
+            mi.setModelo(modeloSelecionado);
+            mi.setNombre(modeloSelecionado.getCodigo() + "-" + numTemp);
+            if (temp) {
+                guardarImagenGaleria(nombre, mi.getNombre(), temp);
+            }
+            listMi.add(mi);
+        }
+//        }
+
         for (ModeloCircon modeloCircon : modelocirconSelect) {
             ModeloCircon nuevomodeloCircon = new ModeloCircon(modeloSelecionado, modeloCircon.getCircon(), modeloCircon.getCantidad());
             modelocircones.add(nuevomodeloCircon);
@@ -415,6 +464,7 @@ public final class ControlModelos implements Serializable {
         }
         modeloSelecionado.setPiedra_centrales(modelopiedracentrales);
         modeloSelecionado.setModelo_circon(modelocircones);
+        modeloSelecionado.setModulo_imagenes(listMi);
         ModeloDao.modificar(modeloSelecionado);
     }
 
@@ -708,6 +758,16 @@ public final class ControlModelos implements Serializable {
         } else {
             carpeta = "imagenes/modelos/";
         }
+    }
+
+    public String editarcarpeta2(boolean temp) {
+        String estado = "";
+        if (estado.equals("R") || carpeta.equals("select00001")) {
+            carpeta = "temp/";
+        } else {
+            carpeta = "imagenes/modelos/";
+        }
+        return carpeta;
     }
 
 }

@@ -60,15 +60,9 @@
                             <p:column headerText="CODIGO" style="width: 100px;padding-right:20px" >
 
                                 <p:graphicImage  class="img-thumbnail img-responsive  colored ih-item padre"   value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',Modelo.imagen)}.png" cache="false"  title="#{Modelo.peso_modelo}" style="width: 30px; height: 30px;"/>
+                                #{Modelo.codigo}
                             </p:column>
-                            <p:column headerText="IMAGENES">
-                                <ui:repeat value="#{Modelo.modulo_imagenes}" var="img">
-                                    <row>
-                                        <h:outputText value="#{img.nombre}" />
-                                    </row>
-                                </ui:repeat>
-
-                            </p:column>
+                          
                             <p:column headerText="PESO CIRCONCES">
                                 <h:outputText value="#{Modelo.peso_circones}" />
                             </p:column>
@@ -120,8 +114,8 @@
 
                                     <ui:repeat value="#{Modelo.modulo_imagenes}" var="img">
                                         <row>
-                                            <h:outputLink value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',Modelo.imagen)}.png"  title="#{Modelo.imagen}">  
-                                                <p:graphicImage  class="img-thumbnail img-responsive  colored ih-item padre"   value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',Modelo.imagen)}.png" cache="false"  title="#{Modelo.peso_modelo}" style="width: 100px; height: 100px;"/>
+                                            <h:outputLink value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',img.nombre)}.png"  title="#{Modelo.imagen}">  
+                                                <p:graphicImage  class="img-thumbnail img-responsive  colored ih-item padre"   value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',img.nombre)}.png" cache="false"  title="#{Modelo.peso_modelo}" style="width: 100px; height: 100px;"/>
                                             </h:outputLink>
                                         </row>
                                     </ui:repeat>
@@ -179,10 +173,14 @@
                         <div class="ui-g-12 ui-md-12 ui-lg-2"  >
 
                             <div class="box-body box-profile">
-                                <p:graphicImage  class="profile-user-img img-responsive"  value="#{controlModelos.carpeta}#{controlUtilidades.util.getExiteimagen(controlModelos.imagenedit?'temp':'imagenes/modelos',controlModelos.imagen)}.png" cache="false"  style=" position: static;width: 400px; height: 400px;"/>
+                                <p:graphicImage  class="profile-user-img img-responsive"  value="#{controlModelos.carpeta}#{controlUtilidades.util.getExiteimagen(controlModelos.imagenedit?'temp':'imagenes/modelos',controlModelos.imagen)}.png" cache="false"  style=" position: static;width: 200px; height: 200px;"/>
                                 <p:fileUpload fileUploadListener="#{controlModelos.handleFileUpload}" update="tab" label="Examinar"  style="width:100px" class="center-block" mode="advanced"
                                               auto="true" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
-                                <h3 class="profile-username text-center">#{controlModelos.modeloSelecionado.codigo}
+
+                                <h3 class="profile-username text-center">
+                                    #{controlModelos.modeloSelecionado.codigo}
+                                    <b:selectBooleanCheckbox disabled="#{controlModelos.verBtnRegistro()}" value="#{controlModelos.estadoModelo}"
+                                                             caption="Activo" />
                                 </h3>
 
                             </div>
@@ -192,28 +190,28 @@
                         <div class="ui-g-12 ui-md-12 ui-lg-4"  >
 
                             <p:fileUpload fileUploadListener="#{controlModelos.handleFileUploadLista}" multiple="false" fileLimit="1" auto="true" label="Imagenes"   mode="advanced" dragDropSupport="true"
-                                              update="tab" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
-                                <p:dataGrid var="gal" value="#{controlModelos.modelogaleria}" columns="3" layout="grid"
-                                            rows="12" paginator="true" id="cars"
-                                            paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                            rowsPerPageTemplate="6,12,16">
+                                          update="tab" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+                           
+                            <ui:repeat  var="gal" value="#{controlModelos.modelogaleria}">
+                                <b:column col-sm="3" col-md="3"  style="padding-top: 20px" >
 
+                                    <div class=""  >
+                                        <!--<b:thumbnail >-->
+                                        <p:graphicImage  class=" circle img-responsive" title="#{gal.temp?'temp/':'imagenes/modelos/'}#{controlUtilidades.util.getExiteimagen(gal.temp?'temp':'imagenes/modelos',gal.nombre)}.png"
+                                                         value="#{gal.temp?'temp/':'imagenes/modelos/'}#{controlUtilidades.util.getExiteimagen(gal.temp?'temp':'imagenes/modelos',gal.nombre)}.png" cache="false"  style=" position: static;width: 40px; height: 40px;"/>
+                                        <!--<img  src="imagenes/fondo.jpg" data-src="imagenes/fondo.png"  class="modelos img" alt="Generic placeholder thumbnail"/>-->
+                                        <!--<div class="mascara" >-->
+                                        <b:commandButton value=""  process="@this" look="success"  size="xs" >
+                                            <i class="fa fa-search"></i>
+                                        </b:commandButton>
+                                        <b:commandButton value="" actionListener="#{controlModelos.deletemodelogaleria(gal)}"  process="@this" ajax="true" look="danger"  size="xs" >
+                                            <i class="fa fa-trash"></i>
+                                        </b:commandButton>
 
-                                    <p:panel  style="text-align:center">
-                                        <h:panelGrid columns="2" style="width:100%">
-                                        <p:graphicImage  class=" circle img-responsive"  value="#{controlModelos.carpeta}#{controlUtilidades.util.getExiteimagen(gal.temp?'temp':'imagenes/modelos',gal.nombre)}.png" cache="false"  style=" position: static;width: 40px; height: 40px;"/>
-                                            <h:outputText value="#{gal.nombre}" />
-                                             <b:commandButton value=""  process="@this" look="success"  size="xs" >
-                                                <i class="fa fa-search"></i>
-                                            </b:commandButton>
-                                            <b:commandButton value="" actionListener="#{controlModelos.deletemodelogaleria(gal)}"  process="@this" ajax="true" look="danger"  size="xs" >
-                                                <i class="fa fa-trash"></i>
-                                            </b:commandButton>
-
-                                        </h:panelGrid>
-                                    </p:panel>
-
-                                </p:dataGrid>
+                                        <!--</div>-->
+                                    </div>
+                                </b:column>
+                            </ui:repeat>
                         </div>
 
                         <div class="ui-g-12 ui-md-6 ui-lg-3 ui-g-nopad"  >
@@ -235,28 +233,6 @@
                                     </f:facet>
                                 </b:inputText>
                             </div>
-                            <div class="ui-g-12 ui-lg-12" >
-                                <b:inputText 
-                                    id="pesocircones"
-                                    value="#{controlModelos.pesoCirones} g"
-                                    renderLabel="true"
-                                    readonly="true"
-                                    label="Peso De Circones"
-                                    >
-                                    <f:facet name="prepend">
-                                        <i class="fa fa-balance-scale" aria-hidden="true"></i>
-                                    </f:facet>
-                                </b:inputText>
-                            </div>
-                            <div class="ui-g-12 ui-md-12 ui-lg-12" >
-
-                                <b:selectBooleanCheckbox disabled="#{controlModelos.verBtnRegistro()}" value="#{controlModelos.estadoModelo}"
-                                                         caption="Activo" />
-
-                            </div>
-
-                        </div>
-                        <div class="ui-g-12 ui-md-6 ui-lg-3 ui-g-nopad" >
                             <div class="ui-g-12 ui-md-12 ui-lg-12"  >
 
                                 <div class="ui-g-8 ui-md-8 ui-lg-8" style="padding:0px">
@@ -323,9 +299,12 @@
                                     </p:column>
                                 </p:dataTable>
                             </div>
+                            
+
+
                         </div>
                         <div class="ui-g-12 ui-md-6 ui-lg-3 ui-g-nopad" >
-                            <div class="ui-g-12 ui-md-12 ui-lg-12"  >
+                             <div class="ui-g-12 ui-md-12 ui-lg-12"  >
                                 <div class="ui-g-8 ui-md-8ui-lg-8" style="padding:0px">
                                     <label  class="bf-no-message">Circones:</label>
                                     <h:selectOneMenu  id="circonselect"  class="form-control select2"  value="#{controlModelos.circoneSelect}"  style="margin:0 auto;height:34px">
@@ -354,6 +333,7 @@
                                     </b:commandButton>
                                 </div>
                             </div>
+                            
                             <div class="ui-g-12 ui-md-12 ui-lg-12" >
                                 <p:dataTable id="listaCirconselct"   style="width:100%" value="#{controlModelos.modelocirconSelect}" var="MCircon">
                                     <f:facet name="header">
@@ -382,9 +362,21 @@
                                     </p:column>
                                 </p:dataTable>
                             </div>
-
-
+                            <div class="ui-g-12 ui-md-12 ui-lg-12" >
+                                <b:inputText 
+                                    id="pesocircones"
+                                    value="#{controlModelos.pesoCirones} g"
+                                    renderLabel="true"
+                                    readonly="true"
+                                    label="Peso De Circones"
+                                    >
+                                    <f:facet name="prepend">
+                                        <i class="fa fa-balance-scale" aria-hidden="true"></i>
+                                    </f:facet>
+                                </b:inputText>
+                            </div>
                         </div>
+                        
 
 
 

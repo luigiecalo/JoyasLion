@@ -10,6 +10,7 @@ import com.Dao.CirconDaoimplement;
 import com.Dao.GrupoDaoimplement;
 import com.Dao.MiembroDaoimplement;
 import com.Dao.ModeloDaoimplement;
+import com.Dao.ModeloImagenDaoimplement;
 import com.Dao.ModuloDaoimplement;
 import com.Dao.PermisosDaoimplement;
 import com.Dao.PiedraCentralDaoimplement;
@@ -22,6 +23,7 @@ import com.Entidades.Grupo;
 import com.Entidades.Miembro;
 import com.Entidades.Modelo;
 import com.Entidades.ModeloCircon;
+import com.Entidades.ModeloImagen;
 import com.Entidades.ModeloPiedraCentral;
 import com.Entidades.Modulo;
 import com.Entidades.Permisos;
@@ -59,6 +61,7 @@ public class prueba implements Serializable {
         CirconDaoimplement CirDao = new CirconDaoimplement();
         ModeloDaoimplement MdDao = new ModeloDaoimplement();
         PiedraCentralDaoimplement PCDao = new PiedraCentralDaoimplement();
+        ModeloImagenDaoimplement mdimpl= new ModeloImagenDaoimplement();
 
         //OBJETOS
 //        Permisos permiso = new Permisos();
@@ -172,7 +175,13 @@ public class prueba implements Serializable {
 //            number.format("00{0}", 2);
 //        }
         prueba p = new prueba();
-        p.provarrmp();
+        p.ListarModulos();
+        
+           ModeloImagen mi = new ModeloImagen();
+            
+                mi.setModelo(MoDao.consultar(Modelo.class, 53L));
+                mi.setNombre("53-1");
+                mdimpl.crear(mi);
 //        System.out.println("REGISTRO EXITOSO " + String.format("%03d", ultimo));
 //        ultimo = 190;
 //        System.out.println("REGISTRO EXITOSO " + String.format("%03d", ultimo));
