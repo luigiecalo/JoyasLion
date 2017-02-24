@@ -78,7 +78,7 @@
 
         <b:panel id="registro" collapsible="false" rendered="#{controlUsuarios.registrar}">
             <p:focus context="panel"/>
-            
+
             <div class="row">
 
                 <h:panelGroup >
@@ -86,26 +86,27 @@
                         <div  class="box">
 
                             <div  class="box-body">
-                                <b:buttonGroup>
-                                    <b:commandButton value="Guardar"  rendered="#{controlUsuarios.verBtnRegistro()}"  actionListener="#{controlUsuarios.save()}"  look="success"   update="tab" size="sm" >
-                                        <i class="fa fa-save"></i>
-                                    </b:commandButton>
-                                    <b:commandButton value="Editar" rendered="#{!controlUsuarios.verBtnRegistro()}"  actionListener="#{controlUsuarios.save()}" look="warning" class=""  update="tab" size="sm">
-                                        <i class="fa fa-edit"></i>
-                                    </b:commandButton>
-                                    <b:commandButton value="Nuevo"  actionListener="#{controlUsuarios.limpiar()}" process="@this"  look="danger"   update="tab" size="sm" >
-                                        <i class="fa fa-clone"></i>
-                                    </b:commandButton>
-                                    <b:commandButton value="Consultar"  process="@this"  actionListener="#{controlUsuarios.consultaModulo()}" update="tab" look="primary"  size="sm" >
-                                        <i class="fa fa-search"></i>
-                                    </b:commandButton>
+                                <div class="ui-lg-8 ui-g-12">
+                                    <b:buttonGroup>
+                                        <b:commandButton value="Guardar"  rendered="#{controlUsuarios.verBtnRegistro()}#{controlUsuarios.bootonregistro(controlSeccion.rol.idrol,controlplantillas.moduloSelecionado)}"  actionListener="#{controlUsuarios.save()}"  look="success"   update="tab" size="sm" >
+                                            <i class="fa fa-save"></i>
+                                        </b:commandButton>
+                                        <b:commandButton value="Editar" rendered="#{!controlUsuarios.verBtnRegistro()}"  actionListener="#{controlUsuarios.save()}" look="warning" class=""  update="tab" size="sm">
+                                            <i class="fa fa-edit"></i>
+                                        </b:commandButton>
+                                        <b:commandButton value="Nuevo" rendered="#{controlUsuarios.bootonregistro(controlSeccion.rol.idrol,controlplantillas.moduloSelecionado)}" actionListener="#{controlUsuarios.limpiar()}" process="@this"  look="danger"   update="tab" size="sm" >
+                                            <i class="fa fa-clone"></i>
+                                        </b:commandButton>
+                                        <b:commandButton value="Consultar"  process="@this"  actionListener="#{controlUsuarios.consultaModulo()}" update="tab" look="primary"  size="sm" >
+                                            <i class="fa fa-search"></i>
+                                        </b:commandButton>
 
-                                    <!--                                    <a class="btn btn-app ir-arriba icon-arrow-up2">
-                                                                            <i class="fa fa-angle-up"></i> up
-                                                                        </a>-->
-                                    <!--<b:messages id="standardMsg3" globalOnly="true" />-->
-                                </b:buttonGroup>
-
+                                        <!--                                    <a class="btn btn-app ir-arriba icon-arrow-up2">
+                                                                                <i class="fa fa-angle-up"></i> up
+                                                                            </a>-->
+                                        <!--<b:messages id="standardMsg3" globalOnly="true" />-->
+                                    </b:buttonGroup>
+                                </div>
                             </div>
                             <!-- /.box-body -->
                         </div>
@@ -126,7 +127,7 @@
                                               auto="true" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
                                 <h3 class="profile-username text-center">#{controlUsuarios.miembroSelecionado.apellido1} #{controlUsuarios.miembroSelecionado.apellido2} #{controlUsuarios.miembroSelecionado.nombre1} #{controlUsuarios.miembroSelecionado.nombre2}
                                 </h3>
-                                
+
                             </div>
                         </div>
 
@@ -257,7 +258,7 @@
             </div>
 
         </b:panel>
- 
+
         <p:messages autoUpdate="false"/>
 
 

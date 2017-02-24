@@ -17,10 +17,17 @@ import com.Entidades.Usuario;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import javax.faces.application.FacesMessage;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import org.primefaces.context.RequestContext;
+import org.primefaces.event.SelectEvent;
 
 @ManagedBean
 @SessionScoped
@@ -130,6 +137,26 @@ public class ControlOrden {
         }
         orden.setOrdenesModelo(descripcion);
         ODAO.modificar(orden);
+    }
+    
+     public void chooseCar() {
+        Map<String,Object> options = new HashMap<String, Object>();
+        options.put("resizable", false);
+        options.put("draggable", false);
+         options.put("contentWidth", "100%");
+        options.put("contentHeight", "100%");
+         options.put("width", 640);
+        options.put("height", 340);
+        options.put("headerElement", "customheader");
+//        options.put("modal", true);
+        RequestContext.getCurrentInstance().openDialog("selectCar", options, null);
+    }
+     
+      public void onCarChosen(SelectEvent event) {
+        Usuario car = (Usuario) event.getObject();
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Car Selected", "Id:" + car.getId());
+         
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 ///GET Y SET
 

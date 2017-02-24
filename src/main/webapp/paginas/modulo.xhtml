@@ -13,9 +13,7 @@
             <h:panelGroup >
                 <div id="barraup" class="col-xs-12 col-md-12 " style="z-index:2" >
                     <div  class="box">
-
                         <div  class="box-body">
-
                             <div class="ui-lg-8 ui-g-12">
                                 <b:buttonGroup >
                                     <b:commandButton type="submit"  value="Guardar" rendered="#{controlModulos.verBtnRegistro()}" look="success"  ajax="true"  size="sm" actionListener="#{controlModulos.guardarModulo}"  >
@@ -99,9 +97,9 @@
                     <div class="ui-g-12">
                         <b:inputText  label="ICONO"  required="true" requiredMessage="ingrese texto del icono" style="height: 40px;" value="#{controlModulos.mdoSelect.icono}" >
 
-                            <p:lightBox iframe="true" id="lighbox3">
-                                <h:outputLink value="http://www.primefaces.org" title="asdas">
-                                    <h:outputText value="asd" />
+                            <p:lightBox iframe="true" id="lighbox3" iframeTitle="asdasd" width="800">
+                                <h:outputLink value="index3.xhtml" title="iconos">
+                                    <h:outputText value="mas iconos" />
                                 </h:outputLink>
                             </p:lightBox>
                             <f:facet name="prepend">

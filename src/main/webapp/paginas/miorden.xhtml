@@ -15,18 +15,46 @@
                     <div  class="box">
 
                         <div  class="box-body">
-                            <b:buttonGroup id="botomgrup">
+                            <div class="ui-lg-8 ui-g-12">
+                                <b:buttonGroup id="botomgrup">
 
-                                <b:commandButton value="MODELOS" actionListener="#{controlplantillas.setModulo('principal.xhtml')}"
-                                                 process="@this"  look="primary"   update=":form:tab" 
-                                                 size="xs"  tooltip-position="bottom" >
-                                </b:commandButton>
-                                <b:button look="warning"  size="xs"   value="REALIZAR ORDEN"/>
-                                <b:commandButton value="Estado Ordenes" actionListener="#{controlplantillas.setModulo('ordenes.xhtml')}"
-                                                 process="@this"  look="primary"   update=":form:tab notificaciones" 
-                                                 size="xs"  tooltip-position="bottom" >
-                                </b:commandButton>
-                            </b:buttonGroup>
+                                    <b:commandButton value="MODELOS" actionListener="#{controlplantillas.setModulo('principal.xhtml')}"
+                                                     process="@this"  look="primary"   update=":form:tab" 
+                                                     size="sm"  tooltip-position="bottom" >
+                                    </b:commandButton>
+                                    <b:button look="warning"  size="sm"   value="REALIZAR ORDEN"/>
+                                    <b:commandButton value="Cancelar Compra" 
+                                                     process="@this"  look="danger"   update=":form:tab notificaciones" 
+                                                     size="sm"  tooltip-position="bottom" >
+                                    </b:commandButton>
+                                </b:buttonGroup>
+                            </div>
+                            <div class="ui-lg-8  col-lg-offset-9">
+                                <b:buttonGroup id="botomgrup2">
+
+                                    <b:commandButton value="" actionListener="#{controlplantillas.setModulo('principal.xhtml')}"
+                                                     process="@this"  look="default"   update=":form:tab" 
+                                                     size="sm"  tooltip-position="bottom" >
+                                        <p:graphicImage  value="imagenes/botones/plus_16.png"  style="height: 20px;height: 20px">
+
+                                        </p:graphicImage>
+                                    </b:commandButton>
+                                    <b:commandButton value="" actionListener="#{controlplantillas.setModulo('principal.xhtml')}"
+                                                     process="@this"  look="default"   update=":form:tab" 
+                                                     size="sm"  tooltip-position="bottom" >
+                                        <p:graphicImage  value="imagenes/botones/plus_16.png"  style="height: 20px;height: 20px">
+
+                                        </p:graphicImage>
+                                    </b:commandButton>
+                                    <b:commandButton value="" actionListener="#{controlplantillas.setModulo('principal.xhtml')}"
+                                                     process="@this"  look="default"   update=":form:tab" 
+                                                     size="sm"  tooltip-position="bottom" >
+                                        <p:graphicImage  value="imagenes/botones/plus_16.png"  style="height: 20px;height: 20px">
+
+                                        </p:graphicImage>
+                                    </b:commandButton>
+                                </b:buttonGroup>
+                            </div>
                         </div>
 
 
@@ -42,7 +70,27 @@
 
                         <div class="ui-g-12 ui-g-nopad">
 
+                          
+                           <p:commandButton value="Selecionar Cliente" icon="ui-icon-extlink" actionListener="#{controlOrden.chooseCar()}">
+                               <p:ajax event="dialogReturn" listener="#{controlOrden.onCarChosen(event)}" update="@this" />
+                            </p:commandButton>
+                            <p:panelGrid columns="2">
+                                <f:facet name="header">
+                                    <p:graphicImage name="demo/images/misc/kobe.png" />
+                                </f:facet>
 
+                                <h:outputText value="Name:" />
+                                <h:outputText value="Kobe Bryant" />
+
+                                <h:outputText value="Team:" />
+                                <h:outputText value="Los Angeles Lakers" />
+
+                                <h:outputText value="Position:" />
+                                <h:outputText value="Shooting Guard" />
+
+                                <h:outputText value="Number:" />
+                                <h:outputText value="24" />
+                            </p:panelGrid>
                             <div class="ui-g">
                                 <div class="ui-g-6 ui-md-12">
                                     <div class="small-box bg-#{controlSeccion.skins}">

@@ -10,7 +10,7 @@
         <ui:repeat id="nivel1" value="#{controlSeccion.menu}"  var="modulos">
             <li class="#{controlplantillas.getActiveGrupo(modulos)}" data-toggle="#{controlplantillas.getDatatogleGrupo(modulos)}"  >
                 <p:commandLink  styleClass="hover"   actionListener="#{controlplantillas.selecionarmenuGrupo(modulos)}" update=":form:tab" >
-                    <i class="fa #{modulos.icono}"></i> <span>#{modulos.nombre}</span>
+                    <i class="fa #{modulos.icono} text-#{controlSeccion.textcolor()}"></i> <span class="text-gray">#{modulos.nombre}</span>
                     <i class="fa #{modulos.clase}"></i>
                 </p:commandLink>
                 

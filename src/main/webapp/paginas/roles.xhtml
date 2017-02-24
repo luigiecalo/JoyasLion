@@ -13,28 +13,26 @@
             <h:panelGroup >
                 <div id="barraup" class="col-xs-12 col-md-12 " style="z-index:2" >
                     <div  class="box">
-
                         <div  class="box-body">
-                            <b:buttonGroup id="botomgrup">
+                            <div class="ui-lg-8 ui-g-12">
+                                <b:buttonGroup id="botomgrup">
 
 
-                                <b:commandButton value="Guardar Cambios" 
-                                                 look="warning" process="@this" actionListener="#{controlRoles.guardarCambios}"  ajax="true"
-                                                 size="sm"   >
-                                    <i class="fa fa-plus-circle"></i>
+                                    <b:commandButton value="Guardar Cambios" 
+                                                     look="warning" process="@this" actionListener="#{controlRoles.guardarCambios}"  ajax="true"
+                                                     size="sm"   >
+                                        <i class="fa fa-plus-circle"></i>
 
-                                </b:commandButton>
-                                <b:commandButton value="Cancelar Cambios" actionListener="#{controlRoles.limpiar}"
-                                                 look="primary" process="@this"   ajax="true"
-                                                 size="sm"  tooltip-position="bottom" >
-                                </b:commandButton>
+                                    </b:commandButton>
+                                    <b:commandButton value="Cancelar Cambios" actionListener="#{controlRoles.limpiar}"
+                                                     look="primary" process="@this"   ajax="true"
+                                                     size="sm"  tooltip-position="bottom" >
+                                    </b:commandButton>
 
 
-                            </b:buttonGroup>
+                                </b:buttonGroup>
+                            </div>
                         </div>
-
-
-                        <!-- /.box-body -->
                     </div>
                 </div>
             </h:panelGroup>
@@ -98,7 +96,7 @@
 
 
                 </p:panelGrid>
-                
+
             </div>
 
             <div class="col-xs-12 col-md-6 col-lg-6">
@@ -126,7 +124,7 @@
                         </ui:repeat>
                     </p:column>
                     <p:column headerText="Modulo">
-                        
+
                         <b:commandButton  value="" process="@this" ajax="true"  actionListener="#{controlRoles.selectEliminarRolModuloperimso(rmodu)}" look="danger" 
                                           size="sm"  tooltip-position="bottom"  >
                             <i class="fa fa-trash-o"></i>
@@ -173,7 +171,7 @@
                             <b:commandButton  process="@this" update="modulosSelect" value="eliminar modulo" action="#{controlSeccion.modalRol('mdeliminarRolModulo','hide')}"  actionListener="#{controlRoles.eliminarRolModuloPermiso}"  look="danger">
                                 <i class="fa fa-eraser"></i>
                             </b:commandButton>
-                        
+
                         </div>
                     </div>
                 </b:panel>

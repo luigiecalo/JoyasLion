@@ -50,7 +50,7 @@ public final class ControlUsuarios implements Serializable {
     private crearcarpeta ruta = new crearcarpeta();
     private String imagen = "default";
     private String carpeta = "temp/";
-    private String imgTemp= "";
+    private String imgTemp = "";
     File directorioTemp = new File(ruta.Ruta() + "/temp");
 
     private Rol rol = new Rol();
@@ -71,7 +71,7 @@ public final class ControlUsuarios implements Serializable {
     private MiembroDaoimplement MiemDao = new MiembroDaoimplement();
     private RolDaoimplement RolDao = new RolDaoimplement();
     RequestContext Requescontext = RequestContext.getCurrentInstance();
-    
+
     //Session
     @ManagedProperty(value = "#{controlSeccion}")
     private ControlSeccion controlSeccion;
@@ -110,11 +110,10 @@ public final class ControlUsuarios implements Serializable {
         limpiar();
     }
 
-  
     public void handleFileUpload(FileUploadEvent event) {
         carpeta = "select00001";
-        imgTemp="U"+controlSeccion.getMiembro().getDocumento();
-        this.imagen = util.cargarimagenTemp(event.getFile(),imgTemp);
+        imgTemp = "U" + controlSeccion.getMiembro().getDocumento();
+        this.imagen = util.cargarimagenTemp(event.getFile(), imgTemp);
         this.imagenedit = true;
         editarcarpeta();
     }
@@ -124,9 +123,14 @@ public final class ControlUsuarios implements Serializable {
         Registrar = true;
         RequestContext.getCurrentInstance().reset("form:panel");
         miembroSelecionado = m;
-        imagen = util.getExiteimagen("imagenes/usuarios",m.getImagen());
+        imagen = util.getExiteimagen("imagenes/usuarios", m.getImagen());
         editarcarpeta();
         rolesSelect = m.getUsuario().getRoles();
+    }
+//esto Para selecionar y retornar un miembroslecionado
+
+    public void selectCarFromDialog(Miembro car) {
+        RequestContext.getCurrentInstance().closeDialog(car);
     }
 
     public void limpiar() {
@@ -267,12 +271,11 @@ public final class ControlUsuarios implements Serializable {
 //            return "visible";
 //        }
 //    }
-    
-    
-     //SET SECCION
+    //SET SECCION
     public void setControlSeccion(ControlSeccion controlSeccion) {
         this.controlSeccion = controlSeccion;
     }
+
     //GET AND SET
     public Usuario getUsuario() {
         return usuario;
@@ -301,7 +304,6 @@ public final class ControlUsuarios implements Serializable {
     public boolean isImagenedit() {
         return imagenedit;
     }
-
 
     public Miembro getMiembro() {
         return miembro;

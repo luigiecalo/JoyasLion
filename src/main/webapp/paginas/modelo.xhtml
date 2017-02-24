@@ -62,8 +62,8 @@
                                 <p:graphicImage  class="img-thumbnail img-responsive  colored ih-item padre"   value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',Modelo.imagen)}.png" cache="false"  title="#{Modelo.peso_modelo}" style="width: 30px; height: 30px;"/>
                                 #{Modelo.codigo}
                             </p:column>
-                          
-                            <p:column headerText="PESO CIRCONCES">
+
+                            <p:column headerText="PESO ZIRCONCES">
                                 <h:outputText value="#{Modelo.peso_circones}" />
                             </p:column>
                             <p:column headerText="PESO MODELO">
@@ -73,25 +73,25 @@
                                 <h:outputText value="#{Modelo.tipo_modelo.nombre}" />
                             </p:column>
                             <p:column style="text-align: center ;width:200px">
+                                <b:buttonGroup>
+                                    <b:commandButton value=""
+                                                     actionListener="#{controlModelos.enviarselecionado(Modelo)}"
+                                                     look="warning"  process="@this" ajax="true"
+                                                     size="sm" tooltip="SELECCIONAR" tooltip-position="bottom" 
+                                                     >
+                                        <i class="fa fa-reply-all"></i>
+                                    </b:commandButton>
+                                    <b:commandButton value="" 
 
-                                <b:commandButton value=""
-                                                 actionListener="#{controlModelos.enviarselecionado(Modelo)}"
-                                                 look="warning"  process="@this" ajax="true"
-                                                 size="sm" tooltip="SELECCIONAR" tooltip-position="bottom" 
-                                                 >
-                                    <i class="fa fa-search"></i>
-                                </b:commandButton>
-                                <b:commandButton value="" 
-
-                                                 look="danger"
-                                                 size="sm"
-                                                 ajax="true"
-                                                 update="modelos"
-                                                 tooltip="ELIMNIAR"
-                                                 actionListener="#{controlModelos.listarModelos()}" >
-                                    <i class="fa fa-trash"></i>
-                                </b:commandButton>
-
+                                                     look="danger"
+                                                     size="sm"
+                                                     ajax="true"
+                                                     update="modelos"
+                                                     tooltip="ELIMNIAR"
+                                                     actionListener="#{controlModelos.listarModelos()}" >
+                                        <i class="fa fa-trash"></i>
+                                    </b:commandButton>
+                                </b:buttonGroup>
                                 <!--style="height:50px;width: 50px;font-size:30px;"-->
 
                             </p:column>
@@ -143,21 +143,35 @@
                         <div  class="box">
 
                             <div  class="box-body">
-                                <b:buttonGroup>
-                                    <b:commandButton value="Guardar" rendered="#{controlModelos.verBtnRegistro()}" actionListener="#{controlModelos.guardarModelo()}"  look="success"  update="tab" size="sm" >
-                                        <i class="fa fa-save"></i>
-                                    </b:commandButton>
-                                    <b:commandButton value="Editar" rendered="#{!controlModelos.verBtnRegistro()}" actionListener="#{controlModelos.guardarModelo()}"  look="warning"   update="tab" size="sm" >
-                                        <i class="fa fa-pencil-square"></i>
-                                    </b:commandButton>
-                                    <b:commandButton value="Nuevo" actionListener="#{controlModelos.limpiar()}"  process="@this" look="danger"  update="tab" size="sm" >
-                                        <i class="fa fa-eraser"></i>
-                                    </b:commandButton>
-                                    <b:commandButton value="Consultar" actionListener="#{controlModelos.consultaModulo()}" process="@this"  look="primary"  update="tab" size="sm">
-                                        <i class="fa fa-list"></i>
-                                    </b:commandButton>
+                                <div class="ui-lg-8 ui-g-12">
+                                    <b:buttonGroup>
+                                        <b:commandButton value="Guardar" rendered="#{controlModelos.verBtnRegistro()}" actionListener="#{controlModelos.guardarModelo()}"  look="success"  update="tab" size="sm" >
+                                            <i class="fa fa-save"></i>
+                                        </b:commandButton>
+                                        <b:commandButton value="Editar" rendered="#{!controlModelos.verBtnRegistro()}" actionListener="#{controlModelos.guardarModelo()}"  look="warning"   update="tab" size="sm" >
+                                            <i class="fa fa-pencil-square"></i>
+                                        </b:commandButton>
+                                        <b:commandButton value="Nuevo" actionListener="#{controlModelos.limpiar()}"  process="@this" look="danger"  update="tab" size="sm" >
+                                            <i class="fa fa-eraser"></i>
+                                        </b:commandButton>
+                                        <b:commandButton value="Consultar" actionListener="#{controlModelos.consultaModulo()}" process="@this"  look="primary"  update="tab" size="sm">
+                                            <i class="fa fa-list"></i>
+                                        </b:commandButton>
 
-                                </b:buttonGroup>
+                                    </b:buttonGroup>
+                                </div>
+                                <div class="ui-lg-8  col-lg-offset-9">
+                                    <b:buttonGroup>
+                                        <b:commandButton value="+"    look="default" tooltip="Agregar Piedra Central" tooltip-position="bottom" update="tab" size="sm" >
+                                            <p:graphicImage  value="imagenes/botones/pCentral.png"  style="height: 20px;height: 20px"/>
+                                        </b:commandButton>
+                                        <b:commandButton value="+"    look="default" tooltip="Agregar Zircon" tooltip-position="bottom" update="tab" size="sm" >
+                                            <p:graphicImage  value="imagenes/botones/zircon.png"  style="height: 20px;height: 20px"/>
+                                        </b:commandButton>
+
+                                    </b:buttonGroup>
+
+                                </div>
                             </div>
                             <!-- /.box-body -->
                         </div>
@@ -191,7 +205,7 @@
 
                             <p:fileUpload fileUploadListener="#{controlModelos.handleFileUploadLista}" multiple="false" fileLimit="1" auto="true" label="Imagenes"   mode="advanced" dragDropSupport="true"
                                           update="tab" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
-                           
+
                             <ui:repeat  var="gal" value="#{controlModelos.modelogaleria}">
                                 <b:column col-sm="3" col-md="3"  style="padding-top: 20px" >
 
@@ -299,14 +313,14 @@
                                     </p:column>
                                 </p:dataTable>
                             </div>
-                            
+
 
 
                         </div>
                         <div class="ui-g-12 ui-md-6 ui-lg-3 ui-g-nopad" >
-                             <div class="ui-g-12 ui-md-12 ui-lg-12"  >
+                            <div class="ui-g-12 ui-md-12 ui-lg-12"  >
                                 <div class="ui-g-8 ui-md-8ui-lg-8" style="padding:0px">
-                                    <label  class="bf-no-message">Circones:</label>
+                                    <label  class="bf-no-message">Zircones:</label>
                                     <h:selectOneMenu  id="circonselect"  class="form-control select2"  value="#{controlModelos.circoneSelect}"  style="margin:0 auto;height:34px">
                                         <p:ajax listener="#{controlModelos.selecoionarcircon()}"  update="valorCantidad cantidadbotom :form:focus" />
                                         <f:selectItem  itemLabel="Selecione un Circon" itemValue="" />
@@ -333,11 +347,11 @@
                                     </b:commandButton>
                                 </div>
                             </div>
-                            
+
                             <div class="ui-g-12 ui-md-12 ui-lg-12" >
                                 <p:dataTable id="listaCirconselct"   style="width:100%" value="#{controlModelos.modelocirconSelect}" var="MCircon">
                                     <f:facet name="header">
-                                        Circones selecionados 
+                                        Zircones selecionados 
                                     </f:facet>
                                     <p:column headerText="Acciones">
                                         <b:buttonGroup>
@@ -368,7 +382,7 @@
                                     value="#{controlModelos.pesoCirones} g"
                                     renderLabel="true"
                                     readonly="true"
-                                    label="Peso De Circones"
+                                    label="Peso De Zircones"
                                     >
                                     <f:facet name="prepend">
                                         <i class="fa fa-balance-scale" aria-hidden="true"></i>
@@ -376,7 +390,7 @@
                                 </b:inputText>
                             </div>
                         </div>
-                        
+
 
 
 

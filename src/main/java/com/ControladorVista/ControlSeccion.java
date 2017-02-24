@@ -126,6 +126,17 @@ public class ControlSeccion implements Serializable {
 
         }
     }
+    public String textcolor() {
+        String result="";
+        String[] colores = {"info",
+            "aqua","blod","danger",
+            "green","success","warning",
+            "yellow","blue","olive","orange",
+            "teal","primary"};
+        int num=(int) (Math.random()*13);
+        result=colores[num];
+        return  result;
+    }
 
     public void validaSeccion() {
         if (miembro == null) {
