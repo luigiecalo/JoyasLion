@@ -11,7 +11,13 @@ and open the template in the editor.
 
 /*Estilos Base*/
 /*Estilos Base*/
-
+.fieldset1 {
+    border: 1px solid silver;
+    margin: 0 2px;
+    padding: .35em .625em .75em;
+    border-bottom-width:1px
+;
+}
 #contenido {
     position: relative;
     width: 640px;
