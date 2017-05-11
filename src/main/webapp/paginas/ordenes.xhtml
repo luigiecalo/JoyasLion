@@ -16,22 +16,22 @@
 
                         <div  class="box-body">
                             <div class="ui-lg-8 ui-g-12">
-                            <b:buttonGroup id="botomgrup">
+                                <b:buttonGroup id="botomgrup">
 
-                                <b:commandButton value="MODELOS" actionListener="#{controlplantillas.setModulo('principal.xhtml')}"
-                                                 process="@this"  look="primary"   update=":form:tab" 
-                                                 size="sm"  tooltip-position="bottom" >
-                                </b:commandButton>
-                                <b:commandButton value="" actionListener="#{controlplantillas.setModulo('miorden.xhtml')}"
-                                                 look="success"    update=":form:tab"
-                                                 size="sm"  tooltip="Tiene (#{controlOrden.ordenesMoldelos.size()}) Articulos para generar " tooltip-position="bottom" >
-                                    <i class="fa fa-cart-arrow-down"></i>
-                                    <span class="label">#{controlOrden.ordenesMoldelos.size()}</span>
-                                </b:commandButton>
+                                    <b:commandButton value="MODELOS" actionListener="#{controlplantillas.setModulo('principal.xhtml')}"
+                                                     process="@this"  look="primary"   update=":form:tab" 
+                                                     size="sm"  tooltip-position="bottom" >
+                                    </b:commandButton>
+                                    <b:commandButton value="" actionListener="#{controlplantillas.setModulo('miorden.xhtml')}"
+                                                     look="success"    update=":form:tab"
+                                                     size="sm"  tooltip="Tiene (#{controlOrden.ordenesMoldelos.size()}) Articulos para generar " tooltip-position="bottom" >
+                                        <i class="fa fa-cart-arrow-down"></i>
+                                        <span class="label">#{controlOrden.ordenesMoldelos.size()}</span>
+                                    </b:commandButton>
 
 
-                            </b:buttonGroup>
-                                </div>
+                                </b:buttonGroup>
+                            </div>
                         </div>
 
 
@@ -41,27 +41,68 @@
             </h:panelGroup>
         </div>
         <div class="row">
-            <div class="col-xs-12 col-md-3 col-lg-12">
-                <p:dataTable var="ord" value="#{controlOrden.ordenes}"  >
-                    <p:column headerText="COD" style="background: #{ord.estado=='EN ESPERA' ? 'red' : ''}" >
-                        <h:outputText value="#{ord.codigo}" />
-                    </p:column>
+            
+            <div  class="col-md-12 col-xs-12 row">
+                <div  class="col-md-12">
 
-                    <p:column headerText="FECHA">
-                        <h:outputText value="#{controlUtilidades.util.LongToDateFormat(ord.fecha, '')}" />
-                    </p:column>
-                     <p:column headerText="CLIENTE">
-                         <h:outputText value="#{ord.cliente.login}" />
-                    </p:column>
+                    <p:dataTable id="ordenes" var="ord"  value="#{controlOrden.ordenes}">
+                        <f:facet name="header">
+                            Oredenes Realizadas
+                        </f:facet>
+                        <p:column style="width:16px;padding-right:20px;background: #{ord.estado=='EN ESPERA' ? 'rgba(231, 76, 60,0.5)' : ''};color:#{ord.estado=='EN ESPERA' ? 'rgba(100, 30, 22 ,1)' : ''} " >
+                            <p:rowToggler />
+                        </p:column>
+                        <p:column headerText="FECHA" style="background: #{ord.estado=='EN ESPERA' ? 'rgba(231, 76, 60,0.5)' : ''};color:#{ord.estado=='EN ESPERA' ? 'rgba(100, 30, 22 ,1)' : ''} ">
+                            <h:outputText value="#{controlUtilidades.util.LongToDateFormat(ord.fecha, '')}" />
+                        </p:column>
+                        <p:column headerText="COD" style="background: #{ord.estado=='EN ESPERA' ? 'rgba(231, 76, 60,0.5)' : ''};color:#{ord.estado=='EN ESPERA' ? 'rgba(100, 30, 22 ,1)' : ''} " >
+                            <h:outputText value="#{ord.codigo}" />
+                        </p:column>
+                        <p:column headerText="CLIENTE" style="background: #{ord.estado=='EN ESPERA' ? 'rgba(231, 76, 60,0.5)' : ''};color:#{ord.estado=='EN ESPERA' ? 'rgba(100, 30, 22 ,1)' : ''} ">
+                            <h:outputText value="#{ord.cliente.login}"  />
+                        </p:column>
+                        <p:column headerText="TOTAL" style="background: #{ord.estado=='EN ESPERA' ? 'rgba(231, 76, 60,0.5)' : ''};color:#{ord.estado=='EN ESPERA' ? 'rgba(100, 30, 22 ,1)' : ''} ">
+                            <h:outputText value="#{ord.valor_total}" />
+                        </p:column>
+                        <p:column headerText="ESTADO" style="background: #{ord.estado=='EN ESPERA' ? 'rgba(231, 76, 60,0.5)' : ''};color:#{ord.estado=='EN ESPERA' ? 'rgba(100, 30, 22 ,1)' : ''} ">
+                            <h:outputText value="#{ord.estado}" />
+                        </p:column>
+                        
+                        <p:rowExpansion styleClass="colored">
+                         
 
-                    <p:column headerText="TOTAL">
-                        <h:outputText value="#{ord.valor_total}" />
-                    </p:column>
+                                <p:dataTable id="modelos" var="modu" style="width: 50%" value="#{ord.ordenesModelo}" >
+                                    <p:column headerText="Modelo" style="width:15%;background:#{modu.material=='ORO'?'#ffcc66':modu.material=='PLATA'?'#94b8b8':''};color:#{modu.material=='ORO' ? 'White' : ''} " >
+                                        <h:outputText value="#{modu.modelo.codigo}" />
+                                    </p:column>
+                                    <p:column headerText="Material" style="width:15%;background:#{modu.material=='ORO'?'#ffcc66':modu.material=='PLATA'?'#94b8b8':''};color:#{modu.material=='ORO' ? 'White' : ''} " >
+                                        <h:outputText value="#{modu.material}" />
+                                    </p:column>
+                                    <p:column headerText="Cant" style="width:5%;background:#{modu.material=='ORO'?'#ffcc66':modu.material=='PLATA'?'#94b8b8':''};color:#{modu.material=='ORO' ? 'White' : ''} " >
+                                        <h:outputText value="#{modu.cantidad}" />
+                                    </p:column>
+                                    <p:column headerText="valor" style="background:#{modu.material=='ORO'?'#ffcc66':modu.material=='PLATA'?'#94b8b8':''};color:#{modu.material=='ORO' ? 'White' : ''} " >
+                                        <h:outputText value="$#{modu.valor}" />
+                                    </p:column>
+                                    <p:column headerText="Descuento" style="background:#{modu.material=='ORO'?'#ffcc66':modu.material=='PLATA'?'#94b8b8':''};color:#{modu.material=='ORO' ? 'White' : ''} " >
+                                        <h:outputText value="%#{modu.descuento}" />
+                                    </p:column>
+                                    <p:column style="text-align: center;background:#{modu.material=='ORO'?'#ffcc66':modu.material=='PLATA'?'#94b8b8':''};color:#{modu.material=='ORO' ? 'White' : ''} ">
 
-                    <p:column headerText="ESTADO">
-                        <h:outputText value="#{ord.estado}" />
-                    </p:column>
-                </p:dataTable>
+                                        
+                                        <p:commandButton id="imageBtn" value="imagen" type="button" icon="ui-icon-search" title="View" />
+                                        <p:overlayPanel id="imagePanel" for="imageBtn" hideEffect="fade">
+                                            <p:graphicImage  class="img-thumbnail img-responsive  colored ih-item padre" width="300"  value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',modu.modelo.imagen)}.png" cache="false"  title="#{modu.modelo.peso_modelo}"/>
+                                        </p:overlayPanel>
+                                    </p:column>
+
+                                </p:dataTable>
+                     
+                        </p:rowExpansion>
+                    </p:dataTable>
+
+
+                </div>
             </div>
 
 

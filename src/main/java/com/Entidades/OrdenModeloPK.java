@@ -80,7 +80,7 @@ public class OrdenModeloPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.Entidades.Orden_ModuloPK[ MOULOCIRCON=" + idmodelo + ", idpermiso=" + idorden +  " ]";
+        return "Orden_ModuloPK[ Modelo=" + idmodelo + ", orden=" + idorden +  " ]";
     }
     
 }

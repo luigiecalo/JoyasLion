@@ -166,7 +166,7 @@ public class OrdenModelo implements Serializable {
 
     @Override
     public String toString() {
-        return "com.Entidades.OrdenModelo[ ordenModeloPk=" + ordenModeloPK + " ]";
+        return "OrdenModelo[ ordenModeloPk=" + ordenModeloPK + " ]";
     }
 
 }
