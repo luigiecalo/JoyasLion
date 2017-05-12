@@ -28,9 +28,19 @@ public class OrdenDaoimplement extends ImplDao<Orden, Long> implements OrdenDao,
         return em.createNamedQuery(Orden.LISTAR).getResultList();
     }
 
-    public List<Orden> buscarOrdenCodigoEstado(Usuario cliente) {
+    public List<Orden> buscarOrdenUsuario(Usuario cliente) {
         Query query = em.createNamedQuery(Orden.USUARIO_LISTA);
         query.setParameter("cliente", cliente);
+        List<Orden> list = query.getResultList();
+        if (list == null || list.isEmpty()) {
+            return null;
+        }
+        return list;
+    }
+
+    public List<Orden> buscarOrdenEstado(String estado) {
+        Query query = em.createNamedQuery(Orden.BUSCAR_ESTADO);
+        query.setParameter("estado", estado);
         List<Orden> list = query.getResultList();
         if (list == null || list.isEmpty()) {
             return null;

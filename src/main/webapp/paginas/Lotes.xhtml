@@ -1,0 +1,227 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+
+
+        <b:panel id="consulta" collapsible="false" rendered="#{!controlLote.registrar}">
+            <div class="row">
+                <h:panelGroup    >
+                    <div id="barraup" class="col-xs-12 col-md-12 " style="z-index:200" >
+                        <div  class="box">
+
+                            <div  class="box-body">
+                                <b:buttonGroup>
+
+                                    <b:commandButton value="Nuevo Lote" 
+
+                                                     title="Agregar nuevo Modelo"   
+                                                     iconAwesome="fa-plus-circle"
+                                                     look="success"
+                                                     actionListener="#{controlLote.registroModulo()}"
+                                                     size="sm" >
+                                    </b:commandButton>
+
+                                </b:buttonGroup>
+
+
+
+
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                    </div>
+                </h:panelGroup>
+
+                <div  class="col-md-12 col-xs-12 row">
+                    <div  class="col-md-12">
+
+                        <p:dataTable id="modelos" var="Modelo" value="#{controlModelos.modelos}">
+                            <f:facet name="header">
+                                Estados de Los lotes
+                            </f:facet>
+
+
+                            <p:column headerText="CODIGO" style="width: 100px;padding-right:20px" >
+
+                                <p:graphicImage  class="img-thumbnail img-responsive  colored ih-item padre"   value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',Modelo.imagen)}.png" cache="false"  title="#{Modelo.peso_modelo}" style="width: 30px; height: 30px;"/>
+                                #{Modelo.codigo}
+                            </p:column>
+
+                            <p:column headerText="PESO ZIRCONCES">
+                                <h:outputText value="#{Modelo.peso_circones}" />
+                            </p:column>
+                            <p:column headerText="PESO MODELO">
+                                <h:outputText value="#{Modelo.peso_modelo}" />
+                            </p:column>
+                            <p:column headerText="TIPO">
+                                <h:outputText value="#{Modelo.tipo_modelo.nombre}" />
+                            </p:column>
+                            <p:column style="text-align: center ;width:200px">
+                                <b:buttonGroup>
+                                    <b:commandButton value=""
+                                                     actionListener="#{controlModelos.enviarselecionado(Modelo)}"
+                                                     look="warning"  process="@this" ajax="true"
+                                                     size="sm" tooltip="SELECCIONAR" tooltip-position="bottom" 
+                                                     >
+                                        <i class="fa fa-reply-all"></i>
+                                    </b:commandButton>
+                                    <b:commandButton value="" 
+
+                                                     look="danger"
+                                                     size="sm"
+                                                     ajax="true"
+                                                     update="modelos"
+                                                     tooltip="ELIMNIAR"
+                                                     actionListener="#{controlModelos.listarModelos()}" >
+                                        <i class="fa fa-trash"></i>
+                                    </b:commandButton>
+                                </b:buttonGroup>
+                                <!--style="height:50px;width: 50px;font-size:30px;"-->
+
+                            </p:column>
+
+                        </p:dataTable>
+
+
+                    </div>
+                </div>
+
+
+            </div> 
+
+        </b:panel>
+
+        <b:panel id="registro" collapsible="false" rendered="#{controlLote.registrar}">
+            <p:focus context="panel"/> <div class="row">
+
+                <h:panelGroup >
+                    <div id="barraup" class="col-xs-12 col-md-12 " style="z-index:200" >
+                        <div  class="box">
+
+                            <div  class="box-body">
+                                <div class="ui-lg-8 ui-g-12">
+                                    <b:buttonGroup>
+
+                                        <b:commandButton value="Nuevo" actionListener="#{controlLote.limpiar()}"  process="@this" look="danger"  update="tab" size="sm" >
+                                            <i class="fa fa-eraser"></i>
+                                        </b:commandButton>
+                                        <b:commandButton value="Consultar" actionListener="#{controlLote.consultaModulo()}" process="@this"  look="primary"  update="tab" size="sm">
+                                            <i class="fa fa-list"></i>
+                                        </b:commandButton>
+
+                                    </b:buttonGroup>
+                                </div>
+
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                    </div>
+                </h:panelGroup>
+            </div>
+            <div  class="col-xs-12 col-md-12 col-lg-4" style="z-index:200" >
+                <fieldset class="fieldset1">
+                    <legend>Oredenes: 
+                        <b:commandButton value="Buscar Oredenes en Espera" tooltip-container="ingresar a lote"  actionListener="#{controlLote.buscarOredenesEsra()}" process="@this"  look="success"  >
+                            <i class="fa fa-forward"></i>
+                        </b:commandButton>
+                    </legend>
+
+                    <ui:repeat  var="orden" value="#{controlLote.ordenes}">
+                        <b:panel  title="#{orden.codigo}-#{orden.cliente.login}"  collapsed="true">
+                            <div class="ui-g">
+                                <div class="ui-g-11 ui-g-nopad">
+                                    <div class="ui-g-12"> <p:dataTable id="modelos" var="modu"  style="width: 100%" value="#{orden.ordenesModelo}" >
+                                            <p:column style="width: 40px;text-align: center;background:#{modu.material=='ORO'?'#ffcc66':modu.material=='PLATA'?'#94b8b8':''};color:#{modu.material=='ORO' ? 'White' : ''} ">
+                                                <p:commandButton id="imageBtn" value="" style="height: 30px;width: 24px" type="button" icon="ui-icon-search" title="View" />
+                                                <p:overlayPanel id="imagePanel" for="imageBtn" hideEffect="fade">
+                                                    <p:graphicImage  class="img-thumbnail img-responsive  colored ih-item padre" width="300"  value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',modu.modelo.imagen)}.png" cache="false"  title="#{modu.modelo.peso_modelo}"/>
+                                                </p:overlayPanel>
+                                            </p:column>
+                                            <p:column headerText="Modelo" style="background:#{modu.material=='ORO'?'#ffcc66':modu.material=='PLATA'?'#94b8b8':''};color:#{modu.material=='ORO' ? 'White' : ''} " >
+                                                <h:outputText value="#{modu.modelo.codigo}" />
+                                            </p:column>
+                                            <p:column headerText="Material" style="width: 30%;background:#{modu.material=='ORO'?'#ffcc66':modu.material=='PLATA'?'#94b8b8':''};color:#{modu.material=='ORO' ? 'White' : ''} " >
+                                                <h:outputText value="#{modu.material}" />
+                                            </p:column>
+                                            <p:column headerText="Cant" style="width:20%;background:#{modu.material=='ORO'?'#ffcc66':modu.material=='PLATA'?'#94b8b8':''};color:#{modu.material=='ORO' ? 'White' : ''} " >
+                                                <h:outputText value="#{modu.cantidad}" />
+                                            </p:column>
+
+
+
+
+                                        </p:dataTable>
+                                    </div>
+                                </div>
+                                <div class="ui-g-1">
+                                    <b:commandButton value="" tooltip-container="ingresar a lote"  actionListener="#{controlLote.agregarOreden(orden)}" process="@this"  look="success"  >
+                                        <i class="fa fa-forward"></i>
+                                    </b:commandButton>
+                                </div>
+                            </div>
+
+
+                        </b:panel>
+
+                    </ui:repeat>
+
+
+                </fieldset>
+            </div>
+            <div  class="col-xs-12 col-md-12 col-lg-8" style="z-index:200" >
+                <p:panel id="panel"  header="Datos del Lote" style="width: 100%" >
+                    <p:focus id="focus" context="#{controlModelos.focus}"/>
+                    <div class="ui-g">
+                        <div class="ui-g-1">Fecha:</div>
+                        <div class="ui-g-1">1</div>
+                        <div class="ui-g-1">Responsable:</div>
+                        <div class="ui-g-1">1</div>
+                        <div class="ui-g-1">Piezas:</div>
+                        <div class="ui-g-1">1</div>
+                        <div class="ui-g-1">1</div>
+                        <div class="ui-g-1">1</div>
+                        <div class="ui-g-1">1</div>
+                        <div class="ui-g-1">1</div>
+                        <div class="ui-g-1">1</div>
+                        <div class="ui-g-1">1</div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-2">2</div>
+                        <div class="ui-g-2">2</div>
+                        <div class="ui-g-2">2</div>
+                        <div class="ui-g-2">2</div>
+                        <div class="ui-g-2">2</div>
+                        <div class="ui-g-2">2</div>
+                    </div>
+                </p:panel>  
+            </div>
+
+
+
+
+
+        </b:panel>
+        <p:messages  autoUpdate="true"/>
+        <p:messages id="msg" autoUpdate="false"/>
+
+
+
+
+
+
+
+        <script src="js/prueba.js"></script>
+
+
+
+
+
+    </ui:composition>
+
+</html>

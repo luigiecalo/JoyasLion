@@ -78,7 +78,7 @@
 
                                 </li>
                                 <li class="messages-menu">
-                                    <p:commandLink  style="height: 50px;font-size:30px;" actionListener="#{controlplantillas.setModulo('ordenes.xhtml')}" update=":form:tab" >
+                                    <p:commandLink  style="height: 50px;font-size:30px;" actionListener="#{controlplantillas.setModulo('lotes.xhtml')}" update=":form:tab" >
                                         <i class="fa fa-list-alt"></i>
                                         <span class="label label-success" style="font-size:15px;">#{controlOrden.ordenes.size()}</span>
                                     </p:commandLink>
@@ -344,7 +344,7 @@
 
                     <div class="nav-tabs-custom">
                         <h:form id="form">
-                            <b:panel  id="tab" styleClass="idpanel" style="height: 100%">
+                            <b:panel  id="tab" styleClass="idpanel" >
                                 <ul id="tab-list"  class="nav nav-tabs " >
                                     <li role="presentation" class="active" ><a href="#inicio" data-toggle="tab" style="text-transform: uppercase"><i class="fa #{controlplantillas.icono}"></i>#{controlplantillas.nombre}</a></li>
                                 </ul>

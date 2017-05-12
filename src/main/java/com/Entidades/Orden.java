@@ -22,10 +22,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = Orden.USUARIO_LISTA, query = "SELECT o FROM Orden o Where o.cliente=:cliente"),
     @NamedQuery(name = Orden.LISTAR, query = "SELECT o FROM Orden o"),
     @NamedQuery(name = Orden.BUSCAR_CODIGO_ESTADO, query = "SELECT o FROM Orden o WHERE o.codigo = :codigo AND o.estado =:estado"),
+    @NamedQuery(name = Orden.BUSCAR_ESTADO, query = "SELECT o FROM Orden o WHERE o.estado =:estado"),
     @NamedQuery(name = Orden.ULTIMO, query = "SELECT COUNT(o.id)+1 FROM Orden o WHERE o.codigo LIKE :codigo")})
 public class Orden implements Serializable {
 
     public static final String BUSCAR_CODIGO_ESTADO = "Orden.codigoEstado";
+    public static final String BUSCAR_ESTADO = "Orden.Estado";
     public static final String LISTAR = "Orden.listar";
     public static final String USUARIO_LISTA = "Orden.usuariolista";
     public static final String ULTIMO = "Orden.ultimo";

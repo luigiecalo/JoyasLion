@@ -23,7 +23,16 @@
     </h:head>
     <h:body>
         <h:form>
+            <b:panel   style="width: 100%">
+                <b:panelGrid columns="1">
+                    <b:accordion >
+                        <ui:repeat  var="orden" value="#{controlOrden.ordenes}">
+                            <b:panel  title="Item 24">Content 4</b:panel>
+                        </ui:repeat>
 
+                    </b:accordion>
+                </b:panelGrid>
+            </b:panel>
             <p:dataTable id="ordenes" var="ord"  value="#{controlOrden.ordenes}" rowStyleClass="#{ord.valor_total le 1990 ? 'old' : null}">
                 <f:facet name="header">
                     Oredenes Realizadas
