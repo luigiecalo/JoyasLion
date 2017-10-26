@@ -53,11 +53,13 @@ public class OrdenModelo implements Serializable {
     private String material;
     @Column(name = "peso_material")
     private Double peso_material;
+    @Column(name = "estado")
+    private String estado;
 
     public OrdenModelo() {
     }
 
-    public OrdenModelo(Modelo modelo, Orden orden, int cantidad, Double descuento, Double valor, Double total, String material, Double peso_material) {
+    public OrdenModelo(Modelo modelo, Orden orden, int cantidad, Double descuento, Double valor, Double total, String material, Double peso_material,String estado) {
         this.ordenModeloPK = new OrdenModeloPK();
         this.ordenModeloPK.setIdmodelo(modelo.getId());
         this.ordenModeloPK.setIdmodelo(orden.getId());
@@ -69,6 +71,7 @@ public class OrdenModelo implements Serializable {
         this.material = material;
         this.peso_material = peso_material;
         this.total = total;
+        this.estado= estado;
 
     }
 
@@ -143,6 +146,15 @@ public class OrdenModelo implements Serializable {
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+    
 
     @Override
     public int hashCode() {

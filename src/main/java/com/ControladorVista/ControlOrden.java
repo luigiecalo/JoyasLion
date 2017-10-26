@@ -67,6 +67,7 @@ public class ControlOrden {
         om.setPeso_material(cant * peso_material);
         om.setValor(peso_material * 100);
         om.setTotal(cant * om.getValor());
+        om.setEstado("PENDIENTE");
         if (ordenesMoldelos.size() <= 0) {
             ordenesMoldelos.add(om);
         } else {

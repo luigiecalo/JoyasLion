@@ -128,29 +128,32 @@
                 <fieldset class="fieldset1">
                     <legend>Oredenes: 
                         <b:commandButton value="Buscar Oredenes en Espera" tooltip-container="ingresar a lote"  actionListener="#{controlLote.buscarOredenesEsra()}" process="@this"  look="success"  >
-                            <i class="fa fa-forward"></i>
+                            <i class="fa fa-search"></i>
                         </b:commandButton>
                     </legend>
 
                     <ui:repeat  var="orden" value="#{controlLote.ordenes}">
                         <b:panel  title="#{orden.codigo}-#{orden.cliente.login}"  collapsed="true">
+                            <b:commandButton value=""  rendered="#{orden.ordenesModelo.size()>1}" tooltip-container="ingresar a lote"  actionListener="#{controlLote.agregarOreden(orden)}" process="@this"  look="success"  >
+                                <i class="fa fa-forward"> Seleccionar toda La orden</i>
+                            </b:commandButton>
                             <div class="ui-g">
                                 <div class="ui-g-11 ui-g-nopad">
-                                    <div class="ui-g-12"> <p:dataTable id="modelos" var="modu"  style="width: 100%" value="#{orden.ordenesModelo}" >
-                                            <p:column style="width: 40px;text-align: center;background:#{modu.material=='ORO'?'#ffcc66':modu.material=='PLATA'?'#94b8b8':''};color:#{modu.material=='ORO' ? 'White' : ''} ">
+                                    <div class="ui-g-12">
+                                        <p:dataTable id="modelos" var="modu"  style="width: 100%" value="#{orden.ordenesModelo}" >
+                                        
+                                            <p:column headerText="Modelo">
                                                 <p:commandButton id="imageBtn" value="" style="height: 30px;width: 24px" type="button" icon="ui-icon-search" title="View" />
                                                 <p:overlayPanel id="imagePanel" for="imageBtn" hideEffect="fade">
                                                     <p:graphicImage  class="img-thumbnail img-responsive  colored ih-item padre" width="300"  value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',modu.modelo.imagen)}.png" cache="false"  title="#{modu.modelo.peso_modelo}"/>
                                                 </p:overlayPanel>
+                                                <h:outputText value="#{modu.modelo.codigo} - #{modu.material} (#{modu.cantidad})" />
                                             </p:column>
-                                            <p:column headerText="Modelo" style="background:#{modu.material=='ORO'?'#ffcc66':modu.material=='PLATA'?'#94b8b8':''};color:#{modu.material=='ORO' ? 'White' : ''} " >
-                                                <h:outputText value="#{modu.modelo.codigo}" />
-                                            </p:column>
-                                            <p:column headerText="Material" style="width: 30%;background:#{modu.material=='ORO'?'#ffcc66':modu.material=='PLATA'?'#94b8b8':''};color:#{modu.material=='ORO' ? 'White' : ''} " >
-                                                <h:outputText value="#{modu.material}" />
-                                            </p:column>
-                                            <p:column headerText="Cant" style="width:20%;background:#{modu.material=='ORO'?'#ffcc66':modu.material=='PLATA'?'#94b8b8':''};color:#{modu.material=='ORO' ? 'White' : ''} " >
-                                                <h:outputText value="#{modu.cantidad}" />
+
+                                            <p:column headerText="Enviar" style="width:20%;" >
+                                                <b:commandButton value="" tooltip-container="ingresar a lote"  actionListener="#{controlLote.agregarOreden(orden)}" process="@this"  look="#{modu.material=='ORO'?'warning':modu.material=='PLATA'?'success':''}"  >
+                                                    <i class="fa fa-arrow-right"></i>
+                                                </b:commandButton>
                                             </p:column>
 
 
@@ -159,11 +162,7 @@
                                         </p:dataTable>
                                     </div>
                                 </div>
-                                <div class="ui-g-1">
-                                    <b:commandButton value="" tooltip-container="ingresar a lote"  actionListener="#{controlLote.agregarOreden(orden)}" process="@this"  look="success"  >
-                                        <i class="fa fa-forward"></i>
-                                    </b:commandButton>
-                                </div>
+                             
                             </div>
 
 
@@ -215,8 +214,6 @@
 
 
 
-
-        <script src="js/prueba.js"></script>
 
 
 
