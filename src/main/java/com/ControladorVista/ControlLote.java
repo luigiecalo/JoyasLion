@@ -8,26 +8,17 @@ package com.ControladorVista;
 import Utilidades.Utilidades;
 import com.Dao.OrdenDaoimplement;
 import com.Dao.RolDaoimplement;
-import com.Entidades.Modelo;
+import com.Entidades.Lote;
+import com.Entidades.LoteModeloOrden;
 import com.Entidades.Orden;
 import com.Entidades.OrdenModelo;
-import com.Entidades.Orden_;
-import com.Entidades.Rol;
 import com.Entidades.Usuario;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import javax.faces.application.FacesMessage;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-import org.primefaces.context.RequestContext;
-import org.primefaces.event.SelectEvent;
 
 @ManagedBean
 @SessionScoped
@@ -42,9 +33,14 @@ public class ControlLote {
     private Orden orden = new Orden();
     private Usuario clienteSelect = new Usuario();
     private OrdenModelo oredeModelo;
+    private Lote lote = new Lote();
+    private LoteModeloOrden loteModeloOrden = new LoteModeloOrden();
+
     //LISTAS
     private List<Orden> ordenes = new ArrayList<Orden>();
     private List<OrdenModelo> ordenesMoldelos = new ArrayList<OrdenModelo>();
+    private List<Lote> lotes = new ArrayList<Lote>();
+    private List<LoteModeloOrden> lotesModelosOrdenes = new ArrayList<LoteModeloOrden>();
     private List<Object> Litas = new ArrayList<Object>();
     //DAO
     private OrdenDaoimplement ODAO = new OrdenDaoimplement();
@@ -63,7 +59,8 @@ public class ControlLote {
         Registrar = true;
         limpiar();
     }
-     public void consultaModulo() {
+
+    public void consultaModulo() {
         Registrar = false;
     }
 
@@ -71,14 +68,31 @@ public class ControlLote {
     public void limpiar() {
         clienteSelect = new Usuario();
         orden = new Orden();
+        lote = new Lote();
+        lotesModelosOrdenes.clear();
         ordenesMoldelos.clear();
     }
-    public void buscarOredenesEsra(){
-       this.ordenes = ODAO.buscarOrdenEstado("EN ESPERA");
+
+    public void buscarOredenesEsra() {
+        if (lotesModelosOrdenes.isEmpty()) {
+            this.ordenes = ODAO.buscarOrdenEstado("EN ESPERA");
+        } else {
+            this.ordenes = ordenes;
+        }
+
     }
-    
-    public void agregarOreden(Orden oreden){
-       this.ordenes.remove(oreden);
+
+    public void agregarOreden(Orden orden) {
+         List<OrdenModelo> modelosordenes=orden.getOrdenesModelo();
+         for (OrdenModelo modelosorden : modelosordenes) {
+             LoteModeloOrden lmo= new LoteModeloOrden();
+             lmo.setCantidad(modelosorden.getCantidad());
+             lmo.setMaterial(modelosorden.getMaterial());
+             lmo.setOrden(modelosorden.getOrden());
+             lmo.setEstado(modelosorden.getEstado());
+            this.lotesModelosOrdenes.add(lmo);
+        }
+        this.ordenes.remove(orden);
     }
 
 ///GET Y SET
@@ -115,7 +129,7 @@ public class ControlLote {
     }
 
     public List<Orden> getOrdenes() {
-        
+
         return ordenes;
     }
 

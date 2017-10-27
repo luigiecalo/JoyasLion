@@ -34,6 +34,11 @@ public class LoteModeloOrdenPK implements Serializable {
         this.idmodelo = idmodelo;
         this.idlote = idlote;
     }
+    
+    public LoteModeloOrdenPK(long idorden, long idmodelo) {
+        this.idorden = idorden;
+        this.idmodelo = idmodelo;
+    }
 
     public long getIdmodelo() {
         return idmodelo;

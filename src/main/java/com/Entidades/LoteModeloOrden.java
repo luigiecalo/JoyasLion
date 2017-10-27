@@ -87,6 +87,10 @@ public class LoteModeloOrden implements Serializable {
     public void setLoteModeloOrdenPK(long modelo, long orden,long lote) {
         this.loteModeloOrdenPK = new LoteModeloOrdenPK(orden, modelo,lote);
     }
+    
+    public void setLoteModeloOrdenPK(long modelo, long orden) {
+        this.loteModeloOrdenPK = new LoteModeloOrdenPK(orden, modelo);
+    }
 
     public Modelo getModelo() {
         return modelo;

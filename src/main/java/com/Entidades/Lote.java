@@ -20,7 +20,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "lote")
 @SequenceGenerator(name = "USER_SEQUENCE", sequenceName = "USER_SEQUENCE", allocationSize = 1, initialValue = 0)
 @NamedQueries({
-    @NamedQuery(name = Lote.USUARIO_LISTA, query = "SELECT l FROM Lote l Where l.encargado=:encargado"),
+    @NamedQuery(name = Lote.USUARIO_LISTA, query = "SELECT l FROM Lote l Where l.usuario=:usuario"),
+     @NamedQuery(name = Lote.ENCARGADO_LISTA, query = "SELECT l FROM Lote l Where l.encargado=:encargado"),
     @NamedQuery(name = Lote.LISTAR, query = "SELECT l FROM Lote l"),
     @NamedQuery(name = Lote.BUSCAR_CODIGO_ESTADO, query = "SELECT l FROM Lote l WHERE l.codigo = :codigo AND l.estado =:estado"),
     @NamedQuery(name = Lote.BUSCAR_ESTADO, query = "SELECT l FROM Lote l WHERE l.estado =:estado"),
@@ -31,6 +32,7 @@ public class Lote implements Serializable {
     public static final String BUSCAR_ESTADO = "Lote.Estado";
     public static final String LISTAR = "Lote.listar";
     public static final String USUARIO_LISTA = "Lote.usuariolista";
+    public static final String ENCARGADO_LISTA = "Lote.encargadolista";
     public static final String ULTIMO = "Lote.ultimo";
     private static final long serialVersionUID = 1L;
     @Id
