@@ -14,7 +14,9 @@ import com.Entidades.Orden;
 import com.Entidades.OrdenModelo;
 import com.Entidades.Usuario;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -48,9 +50,9 @@ public class ControlLote {
     //Session
     @ManagedProperty(value = "#{controlSeccion}")
     private ControlSeccion controlSeccion;
-
+    
     public ControlLote() {
-
+        
     }
 /// METODOS
     //Cisualiza registro y consultas
@@ -59,7 +61,7 @@ public class ControlLote {
         Registrar = true;
         limpiar();
     }
-
+    
     public void consultaModulo() {
         Registrar = false;
     }
@@ -72,34 +74,45 @@ public class ControlLote {
         lotesModelosOrdenes.clear();
         ordenesMoldelos.clear();
     }
-
+    
     public void buscarOredenesEsra() {
         if (lotesModelosOrdenes.isEmpty()) {
             this.ordenes = ODAO.buscarOrdenEstado("EN ESPERA");
         } else {
             this.ordenes = ordenes;
         }
-
+        
     }
-
+    
     public void agregarOreden(Orden orden) {
-         List<OrdenModelo> modelosordenes=orden.getOrdenesModelo();
-         for (OrdenModelo modelosorden : modelosordenes) {
-             LoteModeloOrden lmo= new LoteModeloOrden();
-             lmo.setCantidad(modelosorden.getCantidad());
-             lmo.setMaterial(modelosorden.getMaterial());
-             lmo.setOrden(modelosorden.getOrden());
-             lmo.setEstado(modelosorden.getEstado());
+        List<OrdenModelo> modelosordenes = orden.getOrdenesModelo();
+        for (OrdenModelo modelosorden : modelosordenes) {
+            LoteModeloOrden lmo = new LoteModeloOrden();
+            lmo.setCantidad(modelosorden.getCantidad());
+            lmo.setMaterial(modelosorden.getMaterial());
+            lmo.setOrden(modelosorden.getOrden());
             this.lotesModelosOrdenes.add(lmo);
         }
         this.ordenes.remove(orden);
+    }
+
+    public void agregarOredenModelo(OrdenModelo ordenmodu) {
+        LoteModeloOrden lmo = new LoteModeloOrden();
+        lmo.setCantidad(ordenmodu.getCantidad());
+        lmo.setMaterial(ordenmodu.getMaterial());
+        lmo.setOrden(ordenmodu.getOrden());
+        this.lotesModelosOrdenes.add(lmo);
+        ordenes.forEach((orden) -> {
+            orden.getOrdenesModelo().remove(ordenmodu);
+        });
+
     }
 
 ///GET Y SET
     public Orden getOrden() {
         return orden;
     }
-
+    
     public Double getTotalOrden() {
         Double total = 0.0;
         for (OrdenModelo ordenesMoldelo : ordenesMoldelos) {
@@ -107,48 +120,56 @@ public class ControlLote {
         }
         return total;
     }
-
+    
     public void setOrden(Orden orden) {
         this.orden = orden;
     }
-
+    
     public OrdenModelo getOredeModelo() {
         return oredeModelo;
     }
-
+    
     public void setOredeModelo(OrdenModelo oredeModelo) {
         this.oredeModelo = oredeModelo;
     }
-
+    
     public List<OrdenModelo> getOrdenesMoldelos() {
         return ordenesMoldelos;
     }
-
+    
     public void setOrdenesMoldelos(List<OrdenModelo> ordenesMoldelos) {
         this.ordenesMoldelos = ordenesMoldelos;
     }
-
+    
+    public List<LoteModeloOrden> getLotesModelosOrdenes() {
+        return lotesModelosOrdenes;
+    }
+    
+    public void setLotesModelosOrdenes(List<LoteModeloOrden> lotesModelosOrdenes) {
+        this.lotesModelosOrdenes = lotesModelosOrdenes;
+    }
+    
     public List<Orden> getOrdenes() {
-
+        
         return ordenes;
     }
-
+    
     public void setOrdenes(List<Orden> ordenes) {
         this.ordenes = ordenes;
     }
-
+    
     public String getMessage() {
         return message;
     }
-
+    
     public void setMessage(String message) {
         this.message = message;
     }
-
+    
     public int getCant() {
         return cant;
     }
-
+    
     public void setCant(int cant) {
         this.cant = cant;
     }
@@ -157,21 +178,21 @@ public class ControlLote {
     public void setControlSeccion(ControlSeccion controlSeccion) {
         this.controlSeccion = controlSeccion;
     }
-
+    
     public Usuario getClienteSelect() {
         return clienteSelect;
     }
-
+    
     public void setClienteSelect(Usuario clienteSelect) {
         this.clienteSelect = clienteSelect;
     }
-
+    
     public boolean isRegistrar() {
         return Registrar;
     }
-
+    
     public void setRegistrar(boolean Registrar) {
         this.Registrar = Registrar;
     }
-
+    
 }

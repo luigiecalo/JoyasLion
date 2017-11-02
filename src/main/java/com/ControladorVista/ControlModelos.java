@@ -54,6 +54,8 @@ public final class ControlModelos implements Serializable {
     private String estado = "R";
     private boolean Registrar = false;
     private boolean estadoModelo = true;
+    private boolean zircon = false;
+    private boolean piedra = false;
     private boolean cantidad = true;
     private boolean cantidadPiedra = true;
     private String focus = "panel";
@@ -241,7 +243,10 @@ public final class ControlModelos implements Serializable {
     }
 
     public void eliminaCircon(ModeloCircon circon) {
+//        RequestContext context = RequestContext.getCurrentInstance();
         modelocirconSelect.remove(circon);
+        this.pesoCirones = getPesoCirones();
+//        context.update("pesocircones");
     }
 
     public void agregarCircon() {
@@ -746,6 +751,22 @@ public final class ControlModelos implements Serializable {
 
     public List<Map> getModelogaleria() {
         return modelogaleria;
+    }
+
+    public boolean isZircon() {
+        return zircon;
+    }
+
+    public void setZircon(boolean zircon) {
+        this.zircon = zircon;
+    }
+
+    public boolean isPiedra() {
+        return piedra;
+    }
+
+    public void setPiedra(boolean piedra) {
+        this.piedra = piedra;
     }
 
     public void setModelogaleria(List<Map> modelogaleria) {

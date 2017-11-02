@@ -25,20 +25,18 @@ public class LoteModeloOrdenPK implements Serializable {
     private long idmodelo;
     @Column(name = "idlote")
     private long idlote;
+    @Column(name = "idmaterial")
+    private long idmaterial;
 
     public LoteModeloOrdenPK() {
     }
 
-    public LoteModeloOrdenPK(long idorden, long idmodelo, long idlote) {
+    public LoteModeloOrdenPK(long idorden, long idmodelo, long idlote,long idmaterial) {
         this.idorden = idorden;
         this.idmodelo = idmodelo;
         this.idlote = idlote;
     }
-    
-    public LoteModeloOrdenPK(long idorden, long idmodelo) {
-        this.idorden = idorden;
-        this.idmodelo = idmodelo;
-    }
+
 
     public long getIdmodelo() {
         return idmodelo;
@@ -64,12 +62,22 @@ public class LoteModeloOrdenPK implements Serializable {
         this.idlote = idlote;
     }
 
+    public long getIdmaterial() {
+        return idmaterial;
+    }
+
+    public void setIdmaterial(long idmaterial) {
+        this.idmaterial = idmaterial;
+    }
+    
+
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (int) idmodelo;
         hash += (int) idorden;
         hash += (int) idlote;
+        hash += (int) idmaterial;
         return hash;
     }
 
@@ -89,15 +97,19 @@ public class LoteModeloOrdenPK implements Serializable {
         if (this.idlote != other.idlote) {
             return false;
         }
+         if (this.idmaterial != other.idmaterial) {
+            return false;
+        }
 
         return true;
     }
 
     @Override
     public String toString() {
-        return "LoteModeloOrdenPK{" + "idorden=" + idorden + ", idmodelo=" + idmodelo + ", idlote=" + idlote + '}';
+        return "LoteModeloOrdenPK{" + "idorden=" + idorden + ", idmodelo=" + idmodelo + ", idlote=" + idlote + ", idmaterial=" + idmaterial + '}';
     }
 
+    
    
 
 }

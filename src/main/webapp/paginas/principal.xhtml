@@ -31,7 +31,7 @@
                                         <i class="fa fa-cart-arrow-down"></i>
                                         <span class="label">#{controlOrden.ordenesMoldelos.size()}</span>
                                     </b:commandButton>
-                                    
+
 
 
                                 </b:buttonGroup>
@@ -88,32 +88,32 @@
                     <b:panel   id="mod">
                         <div class="col-lg-6 col-sm-12 col-md-6">
                             <h3 style="margin-top: 0">#{controlPrincipal.modeloSelecionado.codigo}</h3>
-                            <!--                            <div id="images2"  class="col-lg-12 col-sm-12 col-md-12" style="margin-left: 0px;margin-right: 0px;" >
-                                                            <h:outputLink value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',Modelo.imagen)}.png"  title="#{Modelo.imagen}">  
-                                                                <p:graphicImage class="img-md contenedor-img img-thumbnail"    value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',Modelo.imagen)}.png" cache="false"  title="#{Modelo.peso_modelo}" style="width: 100px; height: 100px;"/>
-                                                            </h:outputLink>
-                                                   <p:graphicImage  class="img-thumbnail img-responsive  colored ih-item padre"   value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',controlPrincipal.modeloSelecionado.imagen)}.png" cache="false"  title="#{Modelo.peso_modelo}" style="width: 100px; height: 100px;"/>
-                            
-                                                            <img id="image#{controlPrincipal.modeloSelecionado.codigo}" 
-                                                                 class="img-md contenedor-img img-thumbnail" name="gear"
-                                                                 src="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',controlPrincipal.modeloSelecionado.imagen)}.png" 
-                                                                 alt="bike gear by Markus Spiske" 
-                                                                 style="width: 400px;¡height: 250px;"
-                                                                 data-big="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',controlPrincipal.modeloSelecionado.imagen)}.png"  />
-                                                            <ui:repeat value="#{controlPrincipal.modeloSelecionado.modulo_imagenes}" var="img">
-                                                                <img id="image#{img.nombre}" class="img-md contenedor-img img-thumbnail" name="gear" src="imagenes/modelos/#{img.nombre}.png" alt="bike gear by Markus Spiske" data-big="imagenes/modelos/#{img.nombre}.png"  />
-                                                            </ui:repeat>
-                                                           
-                                                        </div>
-                                                        <div class="col-lg-12 col-sm-12 col-md-12" style="margin-bottom:100px" >
-                                                             <a href="#image#{controlPrincipal.modeloSelecionado.codigo}">
-                                                                 <img style="" class="img-sm img-circle"  src="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',controlPrincipal.modeloSelecionado.imagen)}.png" />
-                                                             </a>
-                                                            <ui:repeat value="#{controlPrincipal.modeloSelecionado.modulo_imagenes}"  var="img">
-                                                                <a href="#image#{img.nombre}"> <img style="" class="img-sm img-circle"  src="imagenes/modelos/#{img.nombre}.png" /></a>
-                                                            </ui:repeat>
-                                                            </div>
-                                                        </div>-->
+                            <!--                                                        <div id="images2"  class="col-lg-12 col-sm-12 col-md-12" style="margin-left: 0px;margin-right: 0px;" >
+                                                                                        <h:outputLink value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',Modelo.imagen)}.png"  title="#{Modelo.imagen}">  
+                                                                                            <p:graphicImage class="img-md contenedor-img img-thumbnail"    value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',Modelo.imagen)}.png" cache="false"  title="#{Modelo.peso_modelo}" style="width: 100px; height: 100px;"/>
+                                                                                        </h:outputLink>
+                                                                               <p:graphicImage  class="img-thumbnail img-responsive  colored ih-item padre"   value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',controlPrincipal.modeloSelecionado.imagen)}.png" cache="false"  title="#{Modelo.peso_modelo}" style="width: 100px; height: 100px;"/>
+                                                        
+                                                                                        <img id="image#{controlPrincipal.modeloSelecionado.codigo}" 
+                                                                                             class="img-md contenedor-img img-thumbnail" name="gear"
+                                                                                             src="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',controlPrincipal.modeloSelecionado.imagen)}.png" 
+                                                                                             alt="bike gear by Markus Spiske" 
+                                                                                             style="width: 400px;¡height: 250px;"
+                                                                                             data-big="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',controlPrincipal.modeloSelecionado.imagen)}.png"  />
+                                                                                        <ui:repeat value="#{controlPrincipal.modeloSelecionado.modulo_imagenes}" var="img">
+                                                                                            <img id="image#{img.nombre}" class="img-md contenedor-img img-thumbnail" name="gear" src="imagenes/modelos/#{img.nombre}.png" alt="bike gear by Markus Spiske" data-big="imagenes/modelos/#{img.nombre}.png"  />
+                                                                                        </ui:repeat>
+                                                                                       
+                                                                                    </div>
+                                                                                    <div class="col-lg-12 col-sm-12 col-md-12" style="margin-bottom:100px" >
+                                                                                         <a href="#image#{controlPrincipal.modeloSelecionado.codigo}">
+                                                                                             <img style="" class="img-sm img-circle"  src="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',controlPrincipal.modeloSelecionado.imagen)}.png" />
+                                                                                         </a>
+                                                                                        <ui:repeat value="#{controlPrincipal.modeloSelecionado.modulo_imagenes}"  var="img">
+                                                                                            <a href="#image#{img.nombre}"> <img style="" class="img-sm img-circle"  src="imagenes/modelos/#{img.nombre}.png" /></a>
+                                                                                        </ui:repeat>
+                                                                                        </div>
+                                                                                    </div>-->
                             <div id="images"  class="col-lg-12 col-sm-12 col-md-12" style="margin-left: 0px;margin-right: 0px;" >
                                 <img id="image500" class="img-md contenedor-img img-thumbnail" name="gear" src="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',controlPrincipal.modeloSelecionado.imagen)}.png" alt="bike gear by Markus Spiske"
                                      data-big="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',controlPrincipal.modeloSelecionado.imagen)}.png"  />
@@ -130,6 +130,35 @@
                             </div>
                         </div>
                         <div class="col-lg-6 col-sm-12 col-md-12">
+                            <div class="ui-g-6 ui-md-6 ui-lg-6">
+                                 MATERIAL:
+                                 <h:selectOneMenu   class="form-control select2"  value="#{controlPrincipal.materialSelect}"  style="margin:0 auto;height:34px">
+                                    <p:ajax  />
+                                    <f:selectItem  itemLabel="Selecione un Circon" itemValue="" />
+                                    <f:selectItems value="#{controlPrincipal.materialLista}" />
+                                </h:selectOneMenu>
+                            </div>
+                            <div class="ui-g-12 ui-lg-12" >
+                                <h:outputText value="Solo en Material" />
+                                <p:selectBooleanCheckbox  value="#{controlModelos.modeloSelecionado.zircon}"
+                                                          >
+                                   
+                                </p:selectBooleanCheckbox>
+
+                            </div>
+                            <div class="ui-g-12 ui-lg-12" >
+                                <h:outputText value="Piedra Central" />
+                                <p:selectBooleanCheckbox  value="#{controlModelos.modeloSelecionado.piedra}"
+                                                          >
+                                </p:selectBooleanCheckbox>
+                            </div>
+                            <div class="ui-g-12 ui-lg-12" >
+                                <h:outputText value="Zircones" />
+                                <p:selectBooleanCheckbox  value="#{controlModelos.modeloSelecionado.piedra}" >
+                                </p:selectBooleanCheckbox>
+                            </div>
+
+
                             <div class="col-lg-3 col-sm-3 col-md-3">Oro:
                                 <b:button  look="warning"  tooltip="peso en Oro" title="peso en Oro"
                                            tooltip-position="bottom" value="#{controlUtilidades.util.formatoDecimal(controlPrincipal.modeloSelecionado.peso_modelo*16,'0.0')}g"/></div>
@@ -149,13 +178,7 @@
                                 </b:inputText>
                             </div>
                             <div class="col-lg-6 col-sm-12 col-md-12"></div>
-                            <div class="col-lg-12 col-sm-12 col-md-12"> 
-                                MATERIAL:
-                                <p:selectOneRadio   label="PESO DEL MARETIA:" value="#{controlPrincipal.material}">
-                                    <f:selectItem  itemValue="ORO"   itemLabel="ORO" />
-                                    <f:selectItem itemValue="PLATA" itemLabel="PLATA" />
-                                </p:selectOneRadio>
-                            </div>
+                           
 
 
 

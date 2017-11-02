@@ -11,10 +11,12 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -41,6 +43,9 @@ public class OrdenModelo implements Serializable {
     @JoinColumn(name = "idmodelo", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
     private Modelo modelo;
+    @JoinColumn(name = "idmaterial", referencedColumnName = "id", insertable = false, updatable = false)
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    private Material material;
     @Column(name = "cantidad")
     private int cantidad;
     @Column(name = "valor")
@@ -49,8 +54,6 @@ public class OrdenModelo implements Serializable {
     private Double descuento;
     @Column(name = "total")
     private Double total;
-    @Column(name = "material")
-    private String material;
     @Column(name = "peso_material")
     private Double peso_material;
     @Column(name = "estado")
@@ -59,7 +62,7 @@ public class OrdenModelo implements Serializable {
     public OrdenModelo() {
     }
 
-    public OrdenModelo(Modelo modelo, Orden orden, int cantidad, Double descuento, Double valor, Double total, String material, Double peso_material,String estado) {
+    public OrdenModelo(Modelo modelo, Orden orden, int cantidad, Double descuento, Double valor, Double total, Material material, Double peso_material,String estado) {
         this.ordenModeloPK = new OrdenModeloPK();
         this.ordenModeloPK.setIdmodelo(modelo.getId());
         this.ordenModeloPK.setIdmodelo(orden.getId());
@@ -79,8 +82,8 @@ public class OrdenModelo implements Serializable {
         this.ordenModeloPK = ordenModeloPK;
     }
 
-    public void setOrdenModeloPK(long modelo, long orden) {
-        this.ordenModeloPK = new OrdenModeloPK(orden, modelo);
+    public void setOrdenModeloPK(long modelo, long orden,long material) {
+        this.ordenModeloPK = new OrdenModeloPK(orden, modelo,material);
     }
 
     public Modelo getModelo() {
@@ -123,11 +126,11 @@ public class OrdenModelo implements Serializable {
         this.total = total;
     }
 
-    public String getMaterial() {
+    public Material getMaterial() {
         return material;
     }
 
-    public void setMaterial(String material) {
+    public void setMaterial(Material material) {
         this.material = material;
     }
 

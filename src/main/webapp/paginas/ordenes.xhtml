@@ -72,22 +72,22 @@
                          
 
                                 <p:dataTable id="modelos" var="modu" style="width: 50%" value="#{ord.ordenesModelo}" >
-                                    <p:column headerText="Modelo" style="width:15%;background:#{modu.material=='ORO'?'#ffcc66':modu.material=='PLATA'?'#94b8b8':''};color:#{modu.material=='ORO' ? 'White' : ''} " >
+                                    <p:column headerText="Modelo" style="width:15%;background:#{modu.material.nombre=='ORO'?'#ffcc66':modu.material.nombre=='PLATA'?'#94b8b8':''};color:#{modu.material.nombre=='ORO' ? 'White' : ''} " >
                                         <h:outputText value="#{modu.modelo.codigo}" />
                                     </p:column>
-                                    <p:column headerText="Material" style="width:15%;background:#{modu.material=='ORO'?'#ffcc66':modu.material=='PLATA'?'#94b8b8':''};color:#{modu.material=='ORO' ? 'White' : ''} " >
-                                        <h:outputText value="#{modu.material}" />
+                                    <p:column headerText="Material" style="width:15%;background:#{modu.material.nombre=='ORO'?'#ffcc66':modu.material.nombre=='PLATA'?'#94b8b8':''};color:#{modu.material.nombre=='ORO' ? 'White' : ''} " >
+                                        <h:outputText value="#{modu.material.nombre}" />
                                     </p:column>
-                                    <p:column headerText="Cant" style="width:5%;background:#{modu.material=='ORO'?'#ffcc66':modu.material=='PLATA'?'#94b8b8':''};color:#{modu.material=='ORO' ? 'White' : ''} " >
+                                    <p:column headerText="Cant" style="width:5%;background:#{modu.material.nombre=='ORO'?'#ffcc66':modu.material.nombre=='PLATA'?'#94b8b8':''};color:#{modu.material.nombre=='ORO' ? 'White' : ''} " >
                                         <h:outputText value="#{modu.cantidad}" />
                                     </p:column>
-                                    <p:column headerText="valor" style="background:#{modu.material=='ORO'?'#ffcc66':modu.material=='PLATA'?'#94b8b8':''};color:#{modu.material=='ORO' ? 'White' : ''} " >
+                                    <p:column headerText="valor" style="background:#{modu.material.nombre=='ORO'?'#ffcc66':modu.material.nombre=='PLATA'?'#94b8b8':''};color:#{modu.material.nombre=='ORO' ? 'White' : ''} " >
                                         <h:outputText value="$#{modu.valor}" />
                                     </p:column>
-                                    <p:column headerText="Descuento" style="background:#{modu.material=='ORO'?'#ffcc66':modu.material=='PLATA'?'#94b8b8':''};color:#{modu.material=='ORO' ? 'White' : ''} " >
+                                    <p:column headerText="Descuento" style="background:#{modu.material.nombre=='ORO'?'#ffcc66':modu.material.nombre=='PLATA'?'#94b8b8':''};color:#{modu.material.nombre=='ORO' ? 'White' : ''} " >
                                         <h:outputText value="%#{modu.descuento}" />
                                     </p:column>
-                                    <p:column style="text-align: center;background:#{modu.material=='ORO'?'#ffcc66':modu.material=='PLATA'?'#94b8b8':''};color:#{modu.material=='ORO' ? 'White' : ''} ">
+                                    <p:column style="text-align: center;background:#{modu.material.nombre=='ORO'?'#ffcc66':modu.material.nombre=='PLATA'?'#94b8b8':''};color:#{modu.material.nombre=='ORO' ? 'White' : ''} ">
 
                                         
                                         <p:commandButton id="imageBtn" value="imagen" type="button" icon="ui-icon-search" title="View" />

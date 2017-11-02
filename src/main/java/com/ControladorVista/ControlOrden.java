@@ -8,6 +8,7 @@ package com.ControladorVista;
 import Utilidades.Utilidades;
 import com.Dao.OrdenDaoimplement;
 import com.Dao.RolDaoimplement;
+import com.Entidades.Material;
 import com.Entidades.Modelo;
 import com.Entidades.Orden;
 import com.Entidades.OrdenModelo;
@@ -58,7 +59,7 @@ public class ControlOrden {
 /// METODOS
     //Agrega un Modelo a La lista
 
-    public void agregarordenmodelo(Modelo modelo, int cant, String material, Double peso_material) {
+    public void agregarordenmodelo(Modelo modelo, int cant, Material material, Double peso_material) {
         OrdenModelo om = new OrdenModelo();
         om.setModelo(modelo);
         om.setCantidad(cant);
@@ -133,7 +134,7 @@ public class ControlOrden {
         List<OrdenModelo> descripcion = new ArrayList<OrdenModelo>();
         for (OrdenModelo ordMod : ordenesMoldelos) {
             OrdenModelo nuevoordMod = ordMod;
-            nuevoordMod.setOrdenModeloPK(ordMod.getModelo().getId(), orden.getId());
+            nuevoordMod.setOrdenModeloPK(ordMod.getModelo().getId(), orden.getId(),ordMod.getMaterial().getId());
             descripcion.add(nuevoordMod);
         }
         orden.setOrdenesModelo(descripcion);

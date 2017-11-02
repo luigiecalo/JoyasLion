@@ -23,14 +23,18 @@ public class OrdenModeloPK implements Serializable {
     @Basic(optional = false)
     @Column(name = "idmodelo")
     private long idmodelo;
+    @Basic(optional = false)
+    @Column(name = "idmaterial")
+    private long idmaterial;
 
 
     public OrdenModeloPK() {
     }
 
-    public OrdenModeloPK(long idorden, long idmodelo) {
+    public OrdenModeloPK(long idorden, long idmodelo,long idmaterial) {
         this.idorden = idorden;
         this.idmodelo = idmodelo;
+        this.idmaterial=idmaterial;
     }
 
     public long getIdmodelo() {
@@ -49,6 +53,14 @@ public class OrdenModeloPK implements Serializable {
         this.idorden = idorden;
     }
 
+    public long getIdmaterial() {
+        return idmaterial;
+    }
+
+    public void setIdmaterial(long idmaterial) {
+        this.idmaterial = idmaterial;
+    }
+
   
 
 
@@ -58,6 +70,8 @@ public class OrdenModeloPK implements Serializable {
         int hash = 0;
         hash += (int) idmodelo;
         hash += (int) idorden;
+        hash += (int) idmaterial;
+        
         return hash;
     }
 
@@ -74,13 +88,17 @@ public class OrdenModeloPK implements Serializable {
         if (this.idorden != other.idorden) {
             return false;
         }
+        if (this.idmaterial != other.idmaterial) {
+            return false;
+        }
         
         return true;
     }
 
     @Override
     public String toString() {
-        return "Orden_ModuloPK[ Modelo=" + idmodelo + ", orden=" + idorden +  " ]";
+        return "OrdenModeloPK{" + "idorden=" + idorden + ", idmodelo=" + idmodelo + ", idmaterial=" + idmaterial + '}';
     }
-    
+
+   
 }

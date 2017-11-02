@@ -55,20 +55,26 @@ public class Modelo implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "modelo")
     private List<OrdenModelo> orden_modelo;
-    
+
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "modelo")
     private List<ModeloImagen> modulo_imagenes;
 
     @Basic(optional = false)
     @Column(name = "estado")
     private String estado;
+    @Basic(optional = false)
+    @Column(name = "piedra")
+    private boolean piedra;
+    @Basic(optional = false)
+    @Column(name = "zircon")
+    private boolean zircon;
 
     public Modelo() {
     }
 
     public Modelo(Long id, String codigo, String imagen,
             Tipo tipo_modelo, Double peso_modelo, Double peso_circones,
-            String estado) {
+            String estado,boolean piedra,boolean zircon) {
         this.id = id;
         this.codigo = codigo;
         this.imagen = imagen;
@@ -76,6 +82,8 @@ public class Modelo implements Serializable {
         this.peso_modelo = peso_modelo;
         this.peso_circones = peso_circones;
         this.estado = estado;
+        this.piedra = piedra;
+        this.zircon = zircon;
     }
 
     public Long getId() {
@@ -151,6 +159,22 @@ public class Modelo implements Serializable {
         this.estado = estado;
     }
 
+    public boolean getPiedra() {
+        return piedra;
+    }
+
+    public void setPiedra(boolean piedra) {
+        this.piedra = piedra;
+    }
+
+    public boolean getZircon() {
+        return zircon;
+    }
+
+    public void setZircon(boolean zircon) {
+        this.zircon = zircon;
+    }
+
     public List<ModeloPiedraCentral> getPiedra_centrales() {
         return piedra_centrales;
     }
@@ -166,8 +190,6 @@ public class Modelo implements Serializable {
     public void setModulo_imagenes(List<ModeloImagen> modulo_imagenes) {
         this.modulo_imagenes = modulo_imagenes;
     }
-
-
 
     @Override
     public int hashCode() {

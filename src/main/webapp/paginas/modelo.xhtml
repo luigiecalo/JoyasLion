@@ -143,6 +143,14 @@
 
                             <div  class="box-body">
                                 <div class="ui-lg-8 ui-g-12">
+                                    <p:commandButton icon="fa fa-arrow-right" oncomplete="PF('sidebar1').show()" />
+                                    <p:commandButton id="tool" icon="fa fa-save" class="success" oncomplete="PF('sidebar2').show()" title="Agregar Piedra Central" />
+                                    <p:tooltip id="toolTipFocus" for="tool"  position="bottom" />
+                                    <p:commandButton icon="fa fa-arrow-down" oncomplete="PF('sidebar3').show()" />
+                                    <p:commandButton icon="fa fa-arrow-up" oncomplete="PF('sidebar4').show()" />
+                                    <p:commandButton icon="fa fa-arrows-alt" oncomplete="PF('sidebar5').show()" image="imagenes/botones/zircon.png" >
+
+                                    </p:commandButton>
                                     <b:buttonGroup>
                                         <b:commandButton value="Guardar" rendered="#{controlModelos.verBtnRegistro()}" actionListener="#{controlModelos.guardarModelo()}"  look="success"  update="tab" size="sm" >
                                             <i class="fa fa-save"></i>
@@ -180,10 +188,8 @@
             <p:panel id="panel"  header="Datos del Modelo">
                 <p:focus id="focus" context="#{controlModelos.focus}"/>
                 <div class="ui-g">
-                    <!--div rowspan-->
-                    <div class="ui-g-12 ui-md-12 ui-lg-4" >
-                        <fieldset class="fieldset1">
-                            <legend>IMAGEN  #{controlModelos.modeloSelecionado.codigo}</legend>
+                    <p:panelGrid id="imagen" >
+                        <div class="ui-g-12 ui-md-4 ui-lg-4" >
                             <div class="box-body box-profile">
                                 <p:graphicImage  class="profile-user-img img-responsive"  value="#{controlModelos.carpeta}#{controlUtilidades.util.getExiteimagen(controlModelos.imagenedit?'temp':'imagenes/modelos',controlModelos.imagen)}.png" cache="false"  style=" position: static;width: 200px; height: 200px;"/>
                                 <p:fileUpload fileUploadListener="#{controlModelos.handleFileUpload}" update="tab" label="Examinar"  style="width:100px" class="center-block" mode="advanced"
@@ -194,248 +200,232 @@
                                     <b:selectBooleanCheckbox disabled="#{controlModelos.verBtnRegistro()}" value="#{controlModelos.estadoModelo}"
                                                              caption="Activo" />
                                 </h3>
+                                <div class="ui-g-12 ui-md-12 ui-lg-12"  >
 
+                                    <p:fileUpload fileUploadListener="#{controlModelos.handleFileUploadLista}" multiple="false" fileLimit="1" auto="true" label="Imagenes"   mode="advanced" dragDropSupport="true"
+                                                  update="tab" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+
+                                    <ui:repeat  var="gal" value="#{controlModelos.modelogaleria}">
+                                        <b:column col-sm="3" col-md="3"  style="padding-top: 20px" >
+
+                                            <div class=""  >
+                                                <!--<b:thumbnail >-->
+                                                <p:graphicImage  class=" circle img-responsive" title="#{gal.temp?'temp/':'imagenes/modelos/'}#{controlUtilidades.util.getExiteimagen(gal.temp?'temp':'imagenes/modelos',gal.nombre)}.png"
+                                                                 value="#{gal.temp?'temp/':'imagenes/modelos/'}#{controlUtilidades.util.getExiteimagen(gal.temp?'temp':'imagenes/modelos',gal.nombre)}.png" cache="false"  style=" position: static;width: 40px; height: 40px;"/>
+                                                <!--<img  src="imagenes/fondo.jpg" data-src="imagenes/fondo.png"  class="modelos img" alt="Generic placeholder thumbnail"/>-->
+                                                <!--<div class="mascara" >-->
+                                                <b:commandButton value=""  process="@this" look="success"  size="xs" >
+                                                    <i class="fa fa-search"></i>
+                                                </b:commandButton>
+                                                <b:commandButton value="" actionListener="#{controlModelos.deletemodelogaleria(gal)}"  process="@this" ajax="true" look="danger"  size="xs" >
+                                                    <i class="fa fa-trash"></i>
+                                                </b:commandButton>
+
+                                                <!--</div>-->
+                                            </div>
+                                        </b:column>
+                                    </ui:repeat>
+                                </div>
                             </div>
+                        </div>
+                        <div class="ui-g-12 ui-md-8 ui-lg-8 ui-g-nopad">
+                            <div class="ui-g-12 ui-md-12 ui-lg-12" >
+                                <fieldset class="fieldset1">
+                                    <legend>Tipo:</legend>
+                                    <div class="ui-g-6 ui-md-6 ui-lg-6">
+                                        <b:selectOneMenu label="Tipo del Modelo" required="true" class="form-control select2"  value="#{controlModelos.tiposModelolSelect}" title="Asigne almenos un Tipo de Modelo" style="margin:0 auto">
+                                            <f:selectItem  itemLabel="Selecione un Tipo" itemValue="" />
+                                            <f:selectItems value="#{controlModelos.tiposModeloLista}" />
+                                        </b:selectOneMenu>
+                                    </div>
+                                    <div class="ui-g-6 ui-lg-6" >
+                                        <b:inputText 
+                                            value="#{controlModelos.modeloSelecionado.peso_modelo}"
+                                            renderLabel="true"
+                                            required="true"
+                                            label="Peso en cera:"
+                                            >
+                                            <f:facet name="prepend">
+                                                <i class="fa fa-balance-scale" aria-hidden="true"></i>
+                                            </f:facet>
+                                        </b:inputText>
+                                    </div>
+                                    <legend>Utiliza:</legend>
+                                    <div class="ui-g-12 ui-lg-12" >
+                                        <h:outputText value="zirconoes " />
+                                        <p:selectBooleanCheckbox  value="#{controlModelos.modeloSelecionado.zircon}"
+                                                                  >
+                                            <p:ajax update="tab"  />
+                                        </p:selectBooleanCheckbox>
+                                        <h:outputText value="Piedra C." />
+                                        <p:selectBooleanCheckbox  value="#{controlModelos.modeloSelecionado.piedra}"
+                                                                  >
+                                            <p:ajax update="tab"  />
+                                        </p:selectBooleanCheckbox>
+                                    </div>
 
-                            <div class="ui-g-12 ui-md-12 ui-lg-12"  >
 
-                                <p:fileUpload fileUploadListener="#{controlModelos.handleFileUploadLista}" multiple="false" fileLimit="1" auto="true" label="Imagenes"   mode="advanced" dragDropSupport="true"
-                                              update="tab" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+                                </fieldset>
+                            </div>
+                            <div class="ui-g-12 ui-md-12 ui-lg-12 ui-g-nopad">
 
-                                <ui:repeat  var="gal" value="#{controlModelos.modelogaleria}">
-                                    <b:column col-sm="3" col-md="3"  style="padding-top: 20px" >
+                                sdsd
+                            </div>
+                        </div>
 
-                                        <div class=""  >
-                                            <!--<b:thumbnail >-->
-                                            <p:graphicImage  class=" circle img-responsive" title="#{gal.temp?'temp/':'imagenes/modelos/'}#{controlUtilidades.util.getExiteimagen(gal.temp?'temp':'imagenes/modelos',gal.nombre)}.png"
-                                                             value="#{gal.temp?'temp/':'imagenes/modelos/'}#{controlUtilidades.util.getExiteimagen(gal.temp?'temp':'imagenes/modelos',gal.nombre)}.png" cache="false"  style=" position: static;width: 40px; height: 40px;"/>
-                                            <!--<img  src="imagenes/fondo.jpg" data-src="imagenes/fondo.png"  class="modelos img" alt="Generic placeholder thumbnail"/>-->
-                                            <!--<div class="mascara" >-->
+
+                    </p:panelGrid>
+                    <p:panel rendered="#{controlModelos.modeloSelecionado.zircon}" header="ZIRCONES">
+                        <div class="ui-g">
+                            <div class="ui-g-8 ui-md-8ui-lg-8" style="padding:0px">
+                                <h:selectOneMenu  id="circonselect"  class="form-control select2"  value="#{controlModelos.circoneSelect}"  style="margin:0 auto;height:34px">
+                                    <p:ajax listener="#{controlModelos.selecoionarcircon()}"  update="valorCantidad cantidadbotom :form:focus" />
+                                    <f:selectItem  itemLabel="Selecione un Circon" itemValue="" />
+                                    <f:selectItems value="#{controlModelos.circonesLista}" />
+                                </h:selectOneMenu>
+                            </div>
+                            <div class="ui-g-3 ui-md-3 ui-lg-3" style="padding:0px">
+                                <b:inputText id="valorCantidad" onfocus="if (this.value == '0') {
+                                            this.value = '';
+                                        }"  style="width:100%" disabled="#{controlModelos.cantidad}" class="input-grupo-bordes"  value="#{controlModelos.valorCantidad}" placeholder="Cantidad"
+                                             >
+                                </b:inputText>
+                            </div>
+                            <div class="ui-g-1 ui-md-1 ui-lg-1" style="padding:0px">
+
+                                <b:commandButton id="cantidadbotom" value="" disabled="#{controlModelos.cantidad}" class="botom-grupo-bordes" 
+                                                 update="listaCirconselct growlMsg  valorCantidad pesocircones circonselect" 
+                                                 ajax="true" 
+                                                 process="@this,circonselect,growlMsg,valorCantidad,pesocircones"
+                                                 actionListener="#{controlModelos.agregarCircon()}"   
+                                                 look="primary" size="lg" >
+                                    <i class="fa fa-plus"></i>
+                                </b:commandButton>
+                            </div>
+                            <div class="ui-g-12 ui-md-12 ui-lg-12" >
+                                <p:dataTable id="listaCirconselct"   style="width:100%" value="#{controlModelos.modelocirconSelect}" var="MCircon">
+                                    <f:facet name="header">
+                                        Zircones selecionados 
+                                    </f:facet>
+                                    <p:column headerText="Acciones">
+                                        <b:buttonGroup>
                                             <b:commandButton value=""  process="@this" look="success"  size="xs" >
                                                 <i class="fa fa-search"></i>
                                             </b:commandButton>
-                                            <b:commandButton value="" actionListener="#{controlModelos.deletemodelogaleria(gal)}"  process="@this" ajax="true" look="danger"  size="xs" >
+                                            <b:commandButton value=""  actionListener="#{controlModelos.eliminaCircon(MCircon)}" 
+                                                             ajax="true" 
+                                                             process="@form"
+                                                             styleClass=" btn btn-xs btn-danger"  update=":form:listaCirconselct " size="xs" >
                                                 <i class="fa fa-trash"></i>
                                             </b:commandButton>
+                                           
+                                        </b:buttonGroup>
+                                    </p:column>
+                                    <p:column headerText="Tamaño">
+                                        <h:outputText value="#{MCircon.circon.tamano}" />
+                                    </p:column>
 
-                                            <!--</div>-->
-                                        </div>
-                                    </b:column>
-                                </ui:repeat>
+                                    <p:column headerText="peso">
+                                        <h:outputText value="#{MCircon.circon.muestra}k" />
+                                    </p:column>
+
+                                    <p:column headerText="cantidad">
+                                        <h:outputText value="#{MCircon.cantidad}" />
+                                    </p:column>
+                                </p:dataTable>
                             </div>
-                        </fieldset>
-                    </div>
-                    <!--divdesplegados -->
-                    <div class="ui-g-8 ui-g-nopad">
-                        <!--div 1 -->
-                        <div class="ui-g-12 ui-md-6 ui-lg-3" >
-                            <fieldset class="fieldset1">
-                                <legend>Personalia:</legend>
-                                <div class="ui-g-12 ui-md-12 ui-lg-12">
-                                    <b:selectOneMenu label="Tipo del Modelo" required="true" class="form-control select2"  value="#{controlModelos.tiposModelolSelect}" title="Asigne almenos un Tipo de Modelo" style="margin:0 auto">
-                                        <f:selectItem  itemLabel="Selecione un Tipo" itemValue="" />
-                                        <f:selectItems value="#{controlModelos.tiposModeloLista}" />
-                                    </b:selectOneMenu>
-                                </div>
-                                <div class="ui-g-12 ui-lg-12" >
-                                    <b:inputText 
-                                        value="#{controlModelos.modeloSelecionado.peso_modelo}"
-                                        renderLabel="true"
-                                        required="true"
-                                        label="Peso en cera:"
-                                        >
-                                        <f:facet name="prepend">
-                                            <i class="fa fa-balance-scale" aria-hidden="true"></i>
-                                        </f:facet>
-                                    </b:inputText>
-                                </div>
-                            </fieldset>
+                            <div class="ui-g-12 ui-md-12 ui-lg-12" >
+                                <b:inputText 
+                                    id="pesocircones"
+                                    value="#{controlModelos.pesoCirones} g"
+                                    renderLabel="true"
+                                    readonly="true"
+                                    label="Peso De Zircones"
+                                    >
+                                    <f:facet name="prepend">
+                                        <i class="fa fa-balance-scale" aria-hidden="true"></i>
+                                    </f:facet>
+                                </b:inputText>
+                            </div>
                         </div>
-                        <!--div 2 -->
-                        <div class="ui-g-12 ui-md-6 ui-lg-9 "> 
-                            <fieldset class="fieldset1">
-                                <legend>Zircones:</legend>
 
-                                <div class="ui-g-8 ui-md-8ui-lg-8" style="padding:0px">
 
-                                    <h:selectOneMenu  id="circonselect"  class="form-control select2"  value="#{controlModelos.circoneSelect}"  style="margin:0 auto;height:34px">
-                                        <p:ajax listener="#{controlModelos.selecoionarcircon()}"  update="valorCantidad cantidadbotom :form:focus" />
-                                        <f:selectItem  itemLabel="Selecione un Circon" itemValue="" />
-                                        <f:selectItems value="#{controlModelos.circonesLista}" />
+
+
+
+                    </p:panel>
+                    <p:panel rendered="#{controlModelos.modeloSelecionado.piedra}" header="PIEDRAS CENTRALES">
+                        <div class="ui-g">
+                            <div class="ui-g-12 ui-md-12 ui-lg-12"  >
+
+                                <div class="ui-g-8 ui-md-8 ui-lg-8" style="padding:0px">
+
+                                    <h:selectOneMenu  label="" id="piedraCselect"  class="form-control select2"  value="#{controlModelos.piedrasCentralSelect}"  style="margin:0 auto;height:34px">
+                                        <p:ajax listener="#{controlModelos.selecoionarpiedra()}"  update="valorCantidadPiedra Piedrabotom :form:focus" />
+                                        <f:selectItem  itemLabel="Selecione una Piedra" itemValue="" />
+                                        <f:selectItems value="#{controlModelos.piedrasCentralesLista}" />
                                     </h:selectOneMenu>
                                 </div>
                                 <div class="ui-g-3 ui-md-3 ui-lg-3" style="padding:0px">
 
-                                    <b:inputText id="valorCantidad" onfocus="if (this.value == '0') {
-                                                this.value = '';
-                                            }"  style="width:100%" disabled="#{controlModelos.cantidad}" class="input-grupo-bordes"  value="#{controlModelos.valorCantidad}" placeholder="Cantidad"
+                                    <b:inputText id="valorCantidadPiedra" onfocus="if (this.value == '0') {
+                                                    this.value = '';
+                                                }"  style="width:100%" disabled="#{controlModelos.cantidadPiedra}" class="input-grupo-bordes"  value="#{controlModelos.valorCantidadPiedra}" placeholder="Cantidad"
                                                  >
                                     </b:inputText>
                                 </div>
                                 <div class="ui-g-1 ui-md-1 ui-lg-1" style="padding:0px">
 
-                                    <b:commandButton id="cantidadbotom" value="" disabled="#{controlModelos.cantidad}" class="botom-grupo-bordes" 
-                                                     update="listaCirconselct growlMsg  valorCantidad pesocircones circonselect" 
-                                                     ajax="true" 
-                                                     process="@this,circonselect,growlMsg,valorCantidad,pesocircones"
-                                                     actionListener="#{controlModelos.agregarCircon()}"   
+                                    <b:commandButton id="Piedrabotom" disabled="#{controlModelos.cantidadPiedra}"  value=""  class="botom-grupo-bordes"   
+                                                     update="listaPiedrasSelect   valorCantidadPiedra piedraCselect" ajax="true" 
+                                                     process="@this,listaPiedrasSelect,piedraCselect,valorCantidadPiedra"  
+                                                     actionListener="#{controlModelos.agregarPiedra()}" 
                                                      look="primary" size="lg" >
                                         <i class="fa fa-plus"></i>
                                     </b:commandButton>
                                 </div>
-                                <div class="ui-g-12 ui-md-12 ui-lg-12" >
-                                    <p:dataTable id="listaCirconselct"   style="width:100%" value="#{controlModelos.modelocirconSelect}" var="MCircon">
-                                        <f:facet name="header">
-                                            Zircones selecionados 
-                                        </f:facet>
-                                        <p:column headerText="Acciones">
-                                            <b:buttonGroup>
-                                                <b:commandButton value=""  process="@this" look="success"  size="xs" >
-                                                    <i class="fa fa-search"></i>
-                                                </b:commandButton>
-                                                <b:commandButton value=""  actionListener="#{controlModelos.eliminaCircon(MCircon)}" process="@this"  styleClass=" btn btn-xs btn-danger"  update=":form:listaCirconselct" size="xs" >
-                                                    <i class="fa fa-trash"></i>
-                                                </b:commandButton>
-                                            </b:buttonGroup>
-                                        </p:column>
-                                        <p:column headerText="Tamaño">
-                                            <h:outputText value="#{MCircon.circon.tamano}" />
-                                        </p:column>
 
-                                        <p:column headerText="peso">
-                                            <h:outputText value="#{MCircon.circon.muestra}k" />
-                                        </p:column>
 
-                                        <p:column headerText="cantidad">
-                                            <h:outputText value="#{MCircon.cantidad}" />
-                                        </p:column>
-                                    </p:dataTable>
-                                </div>
-                                <div class="ui-g-12 ui-md-12 ui-lg-12" >
-                                    <b:inputText 
-                                        id="pesocircones"
-                                        value="#{controlModelos.pesoCirones} g"
-                                        renderLabel="true"
-                                        readonly="true"
-                                        label="Peso De Zircones"
-                                        >
-                                        <f:facet name="prepend">
-                                            <i class="fa fa-balance-scale" aria-hidden="true"></i>
-                                        </f:facet>
-                                    </b:inputText>
-                                </div>
-                            </fieldset>
+                            </div>
+                            <div class="ui-g-12 ui-md-10 ui-lg-12" >
+                                <p:dataTable id="listaPiedrasSelect"   style="width:100%" value="#{controlModelos.modeloPiedracentralesSelect}" var="Piedras">
+                                    <f:facet name="header">
+                                        Piedras Centrales Selecionadas 
+                                    </f:facet>
+                                    <p:column headerText="Acciones">
+                                        <b:buttonGroup>
+                                            <b:commandButton value=""  process="@this" look="success"  size="xs" >
+                                                <i class="fa fa-search"></i>
+                                            </b:commandButton>
+                                            <b:commandButton value=""  actionListener="#{controlModelos.eliminaPiedra(Piedras)}" process="@this"  styleClass=" btn btn-xs btn-danger"  update=":form:listaPiedrasSelect" size="xs" >
+                                                <i class="fa fa-trash"></i>
+                                            </b:commandButton>
+                                        </b:buttonGroup>
+                                    </p:column>
+
+                                    <p:column headerText="forma">
+                                        <!--<h:outputText value="#{Piedras.piedra.forma.nombre}" />-->
+                                        <p:graphicImage  value="/imagenes/tipos/ANILLO.png" cache="false"    width="20" height="20" style=" position: static"/>
+                                    </p:column>
+
+                                    <p:column headerText="peso">
+                                        <h:outputText value="#{Piedras.piedra.peso}" />
+                                    </p:column>
+
+                                    <p:column headerText="Tipo">
+                                        <h:outputText value="#{Piedras.piedra.tipo.nombre}" />
+                                    </p:column>
+                                    <p:column headerText="cant">
+                                        <h:outputText value="#{Piedras.cantidad}" />
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
                         </div>
-                        <!--div 3-->
-                        <div class="ui-g-12  ui-md-12 ui-lg-12 ">
-                            <fieldset class="fieldset1">
-                                <legend>Pedra Central:</legend>
-                                <div class="ui-g-12 ui-md-12 ui-lg-12"  >
-
-                                    <div class="ui-g-8 ui-md-8 ui-lg-8" style="padding:0px">
-                                       
-                                        <h:selectOneMenu  label="" id="piedraCselect"  class="form-control select2"  value="#{controlModelos.piedrasCentralSelect}"  style="margin:0 auto;height:34px">
-                                            <p:ajax listener="#{controlModelos.selecoionarpiedra()}"  update="valorCantidadPiedra Piedrabotom :form:focus" />
-                                            <f:selectItem  itemLabel="Selecione una Piedra" itemValue="" />
-                                            <f:selectItems value="#{controlModelos.piedrasCentralesLista}" />
-                                        </h:selectOneMenu>
-                                    </div>
-                                    <div class="ui-g-3 ui-md-3 ui-lg-3" style="padding:0px">
-                                        
-                                        <b:inputText id="valorCantidadPiedra" onfocus="if (this.value == '0') {
-                                                    this.value = '';
-                                                }"  style="width:100%" disabled="#{controlModelos.cantidadPiedra}" class="input-grupo-bordes"  value="#{controlModelos.valorCantidadPiedra}" placeholder="Cantidad"
-                                                     >
-                                        </b:inputText>
-                                    </div>
-                                    <div class="ui-g-1 ui-md-1 ui-lg-1" style="padding:0px">
-                                       
-                                        <b:commandButton id="Piedrabotom" disabled="#{controlModelos.cantidadPiedra}"  value=""  class="botom-grupo-bordes"   
-                                                         update="listaPiedrasSelect   valorCantidadPiedra piedraCselect" ajax="true" 
-                                                         process="@this,listaPiedrasSelect,piedraCselect,valorCantidadPiedra"  
-                                                         actionListener="#{controlModelos.agregarPiedra()}" 
-                                                         look="primary" size="lg" >
-                                            <i class="fa fa-plus"></i>
-                                        </b:commandButton>
-                                    </div>
-
-
-                                </div>
-                                <div class="ui-g-12 ui-md-10 ui-lg-12" >
-                                    <p:dataTable id="listaPiedrasSelect"   style="width:100%" value="#{controlModelos.modeloPiedracentralesSelect}" var="Piedras">
-                                        <f:facet name="header">
-                                            Piedras Centrales Selecionadas 
-                                        </f:facet>
-                                        <p:column headerText="Acciones">
-                                            <b:buttonGroup>
-                                                <b:commandButton value=""  process="@this" look="success"  size="xs" >
-                                                    <i class="fa fa-search"></i>
-                                                </b:commandButton>
-                                                <b:commandButton value=""  actionListener="#{controlModelos.eliminaPiedra(Piedras)}" process="@this"  styleClass=" btn btn-xs btn-danger"  update=":form:listaPiedrasSelect" size="xs" >
-                                                    <i class="fa fa-trash"></i>
-                                                </b:commandButton>
-                                            </b:buttonGroup>
-                                        </p:column>
-
-                                        <p:column headerText="forma">
-                                            <!--<h:outputText value="#{Piedras.piedra.forma.nombre}" />-->
-                                            <p:graphicImage  value="/imagenes/tipos/ANILLO.png" cache="false"    width="20" height="20" style=" position: static"/>
-                                        </p:column>
-
-                                        <p:column headerText="peso">
-                                            <h:outputText value="#{Piedras.piedra.peso}" />
-                                        </p:column>
-
-                                        <p:column headerText="Tipo">
-                                            <h:outputText value="#{Piedras.piedra.tipo.nombre}" />
-                                        </p:column>
-                                        <p:column headerText="cant">
-                                            <h:outputText value="#{Piedras.cantidad}" />
-                                        </p:column>
-                                    </p:dataTable>
-                                </div>
-                            </fieldset>
-                        </div>
-                    </div>
-
+                    </p:panel>
+                  
                 </div>
             </p:panel>
-            <div  class="col-md-12 col-xs-12">
-                <!--<h3></h3>-->
 
-
-                <div class="ui-g" >
-                    <div class=""  >
-
-
-
-                    </div>
-
-
-                    <div class=""  >
-
-
-
-
-
-
-                    </div>
-                    <div class="" >
-                        <div class="ui-g-12 ui-md-12 ui-lg-12"  >
-
-
-                        </div>
-
-
-
-                    </div>
-
-
-
-
-                </div>
-
-            </div>
 
 
         </b:panel>

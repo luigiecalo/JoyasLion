@@ -11,10 +11,12 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -44,39 +46,32 @@ public class LoteModeloOrden implements Serializable {
     @JoinColumn(name = "idlote", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
     private Lote lote;
+    @JoinColumn(name = "idmaterial", referencedColumnName = "id", insertable = false, updatable = false)
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    private Material material;
     @Column(name = "cantidad")
     private int cantidad;
-    @Column(name = "valor")
-    private Double valor;
-    @Column(name = "descuento")
-    private Double descuento;
     @Column(name = "total")
     private Double total;
-    @Column(name = "material")
-    private String material;
     @Column(name = "peso_material")
     private Double peso_material;
-    @Column(name = "estado")
-    private String estado;
 
     public LoteModeloOrden() {
     }
 
-    public LoteModeloOrden(Modelo modelo, Orden orden,Lote lote, int cantidad, Double descuento, Double valor, Double total, String material, Double peso_material,String estado) {
+    public LoteModeloOrden(Modelo modelo, Orden orden,Lote lote, int cantidad,  Double total, Material material, Double peso_material) {
         this.loteModeloOrdenPK = new LoteModeloOrdenPK();
         this.loteModeloOrdenPK.setIdmodelo(modelo.getId());
         this.loteModeloOrdenPK.setIdmodelo(orden.getId());
         this.loteModeloOrdenPK.setIdmodelo(lote.getId());
+        this.loteModeloOrdenPK.setIdmaterial(material.getId());
         this.modelo = modelo;
         this.orden = orden;
         this.lote = lote;
-        this.cantidad = cantidad;
-        this.descuento = descuento;
-        this.valor = valor;
         this.material = material;
+        this.cantidad = cantidad;
         this.peso_material = peso_material;
         this.total = total;
-        this.estado= estado;
 
     }
 
@@ -84,13 +79,11 @@ public class LoteModeloOrden implements Serializable {
         this.loteModeloOrdenPK = loteModeloOrdenPK;
     }
 
-    public void setLoteModeloOrdenPK(long modelo, long orden,long lote) {
-        this.loteModeloOrdenPK = new LoteModeloOrdenPK(orden, modelo,lote);
+    public void setLoteModeloOrdenPK(long modelo, long orden,long lote,long material) {
+        this.loteModeloOrdenPK = new LoteModeloOrdenPK(orden, modelo,lote,material);
     }
     
-    public void setLoteModeloOrdenPK(long modelo, long orden) {
-        this.loteModeloOrdenPK = new LoteModeloOrdenPK(orden, modelo);
-    }
+
 
     public Modelo getModelo() {
         return modelo;
@@ -116,21 +109,7 @@ public class LoteModeloOrden implements Serializable {
         this.lote = lote;
     }
 
-    public Double getValor() {
-        return valor;
-    }
-
-    public void setValor(Double valor) {
-        this.valor = valor;
-    }
-
-    public Double getDescuento() {
-        return descuento;
-    }
-
-    public void setDescuento(Double descuento) {
-        this.descuento = descuento;
-    }
+  
 
     public Double getTotal() {
         return total;
@@ -140,11 +119,11 @@ public class LoteModeloOrden implements Serializable {
         this.total = total;
     }
 
-    public String getMaterial() {
+    public Material getMaterial() {
         return material;
     }
 
-    public void setMaterial(String material) {
+    public void setMaterial(Material material) {
         this.material = material;
     }
 
@@ -164,13 +143,7 @@ public class LoteModeloOrden implements Serializable {
         this.cantidad = cantidad;
     }
 
-    public String getEstado() {
-        return estado;
-    }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
     
 
     @Override

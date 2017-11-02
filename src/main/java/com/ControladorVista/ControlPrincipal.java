@@ -7,10 +7,12 @@ package com.ControladorVista;
 
 import Utilidades.Utilidades;
 import com.Dao.CirconDaoimplement;
+import com.Dao.MaterialDaoimplement;
 import com.Dao.ModeloDaoimplement;
 import com.Dao.PiedraCentralDaoimplement;
 import com.Dao.TipoDaoimplement;
 import com.Entidades.Circon;
+import com.Entidades.Material;
 import com.Entidades.Modelo;
 import com.Entidades.ModeloCircon;
 import com.Entidades.Modulo;
@@ -18,7 +20,9 @@ import com.Entidades.PiedraCentral;
 import com.Entidades.Tipo;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
@@ -37,7 +41,8 @@ public final class ControlPrincipal implements Serializable {
     private boolean estadoModelo = true;
     private String focus = "panel";
     private int cantidad = 0;
-    private String material = "";
+    private Long materialSelect = 0l;
+    private Material material = new Material();
     private List<String> images;
     private List<String> imagesid;
     @ManagedProperty(value = "#{controlOrden}")
@@ -51,14 +56,17 @@ public final class ControlPrincipal implements Serializable {
     //LISTAS
     private List<Modelo> modelos = new ArrayList<Modelo>();
     private List<Circon> circones = new ArrayList<Circon>();
+    private List<Material> materiales = new ArrayList<Material>();
     private List<Circon> circonesSelect = new ArrayList<Circon>();
     private List<ModeloCircon> modelocircones = new ArrayList<ModeloCircon>();
     private List<ModeloCircon> modelocirconSelect = new ArrayList<ModeloCircon>();
     private List<Tipo> tiposModelo = new ArrayList<Tipo>();
     private List<PiedraCentral> piedracentrales = new ArrayList<PiedraCentral>();
     private List<PiedraCentral> piedracentralesSelect = new ArrayList<PiedraCentral>();
+    private Map<String, Long> MaterialLista;
     //DAOS
     private ModeloDaoimplement ModeloDao = new ModeloDaoimplement();
+    private MaterialDaoimplement MaterialDao = new MaterialDaoimplement();
     private CirconDaoimplement CirconDao = new CirconDaoimplement();
     private TipoDaoimplement TipoDao = new TipoDaoimplement();
     private PiedraCentralDaoimplement PiedraCentralDao = new PiedraCentralDaoimplement();
@@ -67,6 +75,7 @@ public final class ControlPrincipal implements Serializable {
 
     public ControlPrincipal() {
         listarModelos();
+        listarMateriales();
         cargarimagenes();
     }
     ////METODOS
@@ -98,6 +107,10 @@ public final class ControlPrincipal implements Serializable {
         modelos = ModeloDao.consultarTodo(Modelo.class);
     }
 
+    public void listarMateriales() {
+        materiales = MaterialDao.consultarTodo(Material.class);
+    }
+
     //pasa Del modulo De registro la modulo De consulta
     public void consultaModulo() {
         Registrar = false;
@@ -127,23 +140,23 @@ public final class ControlPrincipal implements Serializable {
     public void anadirOrden() {
         if (cantidad == 0) {
             util.crearmensajes("ALERTA", "INGRESE CANTIDAD", "ALERTA");
-        } else if (material == "") {
+        } else if (materialSelect == 0l) {
             util.crearmensajes("ALERTA", "INGRESE MATERIAL", "Selecione Primero Un Material");
         } else {
-            util.crearmensajes("INFO", "MENSAGE", "REgistro Exitoso");
-            util.modal("mdModelo", "hide");
-            Double peso_modelo=0.0;
-            if (material.equals("ORO")) {
-               peso_modelo=modeloSelecionado.getPeso_modelo()* 16;
-            } else {
-                peso_modelo=modeloSelecionado.getPeso_modelo()* 12;
-            }
+
+            Double peso_modelo = 0.0;
+            material=MaterialDao.consultarC(Material.class, materialSelect);
+             peso_modelo = modeloSelecionado.getPeso_modelo() * material.getValor();
+           
+                
             controlOrden.agregarordenmodelo(modeloSelecionado, cantidad, material, peso_modelo);
 //            controlOrdenes.setCantidad(203);
 //            ControlOrdenes bean1 = context.getApplication().evaluateExpressionGet(context, "#{controlOrdenes}", ControlOrdenes.class);
 //            bean.setCantidad(bean.getCantidad() + 1);
+            util.crearmensajes("INFO", "MENSAGE", "REgistro Exitoso");
+            util.modal("mdModelo", "hide");
             cantidad = 0;
-            material = "";
+            material = null;
         }
     }
 
@@ -232,6 +245,22 @@ public final class ControlPrincipal implements Serializable {
         this.circonesSelect = circonesSelect;
     }
 
+    public List<Material> getMateriales() {
+        return materiales;
+    }
+
+    public void setMateriales(List<Material> materialesSelect) {
+        this.materiales = materialesSelect;
+    }
+
+    public Long getMaterialSelect() {
+        return materialSelect;
+    }
+
+    public void setMaterialSelect(Long materialSelect) {
+        this.materialSelect = materialSelect;
+    }
+
     public List<Tipo> getTiposModelo() {
         tiposModelo = TipoDao.ListarDescripcion("Tipo_piezas");
         return tiposModelo;
@@ -298,11 +327,11 @@ public final class ControlPrincipal implements Serializable {
         this.cantidad = cantidad;
     }
 
-    public String getMaterial() {
+    public Material getMaterial() {
         return material;
     }
 
-    public void setMaterial(String material) {
+    public void setMaterial(Material material) {
         this.material = material;
     }
 
@@ -312,6 +341,14 @@ public final class ControlPrincipal implements Serializable {
 
     public void setFocus(String focus) {
         this.focus = focus;
+    }
+
+    public Map<String, Long> getMaterialLista() {
+        MaterialLista = new HashMap<String, Long>();
+        for (Material material : getMateriales()) {
+            MaterialLista.put(material.getNombre(), material.getId());
+        }
+        return MaterialLista;
     }
 
     public List<String> getImages() {
