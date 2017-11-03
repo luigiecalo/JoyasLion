@@ -23,87 +23,18 @@
     </h:head>
     <h:body>
         <h:form>
-            <b:panel   style="width: 100%">
-                <b:panelGrid columns="1">
-                    <b:accordion >
-                        <ui:repeat  var="orden" value="#{controlOrden.ordenes}">
-                            <b:panel  title="Item 24">Content 4</b:panel>
-                        </ui:repeat>
 
-                    </b:accordion>
-                </b:panelGrid>
-            </b:panel>
-            <p:dataTable id="ordenes" var="ord"  value="#{controlOrden.ordenes}" rowStyleClass="#{ord.valor_total le 1990 ? 'old' : null}">
-                <f:facet name="header">
-                    Oredenes Realizadas
-                </f:facet>
-                <p:column style="width:16px;padding-right:20px">
-                    <p:rowToggler />
-                </p:column>
-                <p:column headerText="FECHA">
-                    <h:outputText value="#{controlUtilidades.util.LongToDateFormat(ord.fecha, '')}" />
-                </p:column>
-                <p:column headerText="COD" style="background: #{ord.estado=='EN ESPERA' ? '#ff6666' : ''};color:#{ord.estado=='EN ESPERA' ? 'White' : ''} " >
-                    <h:outputText value="#{ord.codigo}" />
-                </p:column>
-                <p:column headerText="CLIENTE">
-                    <h:outputText value="#{ord.cliente.login}" />
-                </p:column>
-                <p:column headerText="TOTAL">
-                    <h:outputText value="#{ord.valor_total}" />
-                </p:column>
-                <p:column headerText="ESTADO">
-                    <h:outputText value="#{ord.estado}" />
-                </p:column>
-                <p:column style="text-align: center ;width:200px">
-                    <b:buttonGroup>
-                        <b:commandButton value=""
-
-                                         look="warning"  process="@this" ajax="true"
-                                         size="sm" tooltip="SELECCIONAR" tooltip-position="bottom" 
-                                         >
-                            <i class="fa fa-fast-forward"></i>
-                        </b:commandButton>
-
-                    </b:buttonGroup>
-                </p:column>
-                <p:rowExpansion>
-                    <p:lightBox styleClass="imagebox"  style="position: relative">
-
-                        <p:dataTable id="modelos" var="modu" style="width: 50%" value="#{ord.ordenesModelo}" >
-                            <p:column headerText="Modelo" style="width:15%" >
-                                <h:outputText value="#{modu.modelo.codigo}" />
-                            </p:column>
-                            <p:column headerText="Material" style="width:15%">
-                                <h:outputText value="#{modu.material}" />
-                            </p:column>
-                            <p:column headerText="Cant" style="width: 5%">
-                                <h:outputText value="#{modu.cantidad}" />
-                            </p:column>
-                            <p:column headerText="valor">
-                                <h:outputText value="$#{modu.valor}" />
-                            </p:column>
-                            <p:column headerText="Descuento">
-                                <h:outputText value="%#{modu.descuento}" />
-                            </p:column>
-
-                        </p:dataTable>
-                    </p:lightBox> 
-                </p:rowExpansion>
-            </p:dataTable>
             <p:growl id="growl" showDetail="true" />
 
-            <p:commandButton value="Select Car" icon="ui-icon-extlink" actionListener="#{dFView.chooseCar()}">
-                <p:ajax event="dialogReturn" listener="#{dFView.onCarChosen()}" update="growl" />
-            </p:commandButton>
-            <p:dataTable id="ordenes2" var="ord2"  value="#{controlOrden.ordenes}" rowStyleClass="#{ord2.valor_total le 1990 ? 'red' : null}">
-                <p:column headerText="Id" >
-                    <h:outputText value="#{ord2.cliente}" />
-                </p:column>
-                <p:column headerText="Valor">
-                    <h:outputText value="#{ord2.valor_total}" />
-                </p:column>
-            </p:dataTable>
+            <p:panel header="panel">
+                <p:commandButton value="crear Botones" actionListener="#{controlPrueba.agregarBoton()}" update="@form">
+
+                </p:commandButton>
+                <p:tabView binding="#{controlPrueba.tabView}" rendered="true" 
+                           style="float: left; margin-left: 5px; margin-top: 10px; width: 500px;">
+
+                </p:tabView>
+            </p:panel>
         </h:form>
 
         <!-- /.col -->
