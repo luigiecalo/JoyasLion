@@ -177,14 +177,20 @@
                 <p:panel id="panel"  header="Datos del Lote" style="width: 100%" >
                     <p:focus id="focus" context="#{controlModelos.focus}"/>
                     <div class="ui-g">
-                        <div class="ui-g-1">Fecha:</div>
-                        <div class="ui-g-1">1</div>
+                        <div class="ui-g-1"> 
+                            <p:outputLabel for="datetime" value="fecha:" />
+                            <p:calendar id="datetime" value="#{controlLote.date}" locale="de" navigator="true" pattern="MM/dd/yyyy HH:mm:ss" />
+                        </div>
+                        <div class="ui-g-1">
+
+                        </div>
                         <div class="ui-g-1">Responsable:</div>
                         <div class="ui-g-1">1</div>
                         <div class="ui-g-1">Piezas:</div>
+                        <div class="ui-g-1">#{controlLote.piezasTotales}</div>
                         <div class="ui-g-1">1</div>
-                        <div class="ui-g-1">1</div>
-                        <div class="ui-g-1">1</div>
+                        <div class="ui-g-1">1
+                        </div>
                         <div class="ui-g-1">1</div>
                         <div class="ui-g-1">1</div>
                         <div class="ui-g-1">1</div>
@@ -192,21 +198,25 @@
                     </div>
                     <div class="ui-g">
                         <div class="ui-g-12">
-                            <p:dataTable id="loteModeloslista" var="lotesModelos"  style="width: 100%" value="#{controlLote.lotesModelosOrdenes}" >
+                            <p:dataTable id="loteModeloslista" var="lotesModelos"  style="width: 100%" value="#{controlLote.lotesModelosOrdenesMap}" >
 
-                                <p:column headerText="Modelo">
-                                    <p:commandButton id="imageBtn" value="" style="height: 30px;width: 24px" type="button" icon="ui-icon-search" title="View" />
-                                    <p:overlayPanel id="imagePanel" for="imageBtn" hideEffect="fade">
-                                        <p:graphicImage  class="img-thumbnail img-responsive  colored ih-item padre" width="300"  value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',lotesModelos.modelo.codigo)}.png" cache="false"  title="#{lotesModelos.modelo.peso_modelo}"/>
-                                    </p:overlayPanel>
-                                    <h:outputText value="#{lotesModelos.modelo.codigo} - #{lotesModelos.material.nombre} (#{lotesModelos.cantidad})" />
-                                </p:column>
-
+                                
                                 <p:column headerText="Cancelar" style="width:20%;" >
-                                    <b:commandButton value="" tooltip-container="ingresar a lote"  actionListener="#{controlLote.agregarOreden(lotesModelos)}" process="@this"  look="#{lotesModelos.material.nombre=='ORO'?'warning':lotesModelos.material.nombre=='PLATA'?'success':''}"  >
+                                    <b:commandButton value="" tooltip-container="ingresar a lote"  actionListener="#{controlLote.cancelarOredenModelo(lotesModelos)}" process="@form"  look="#{lotesModelos.material=='ORO'?'warning':lotesModelos.material=='PLATA'?'success':''}"  >
                                         <i class="fa fa-arrow-left"></i>
                                     </b:commandButton>
                                 </p:column>
+                                <p:column headerText="Modelo">
+                                    <h:outputText value="#{lotesModelos.modelo}" />
+                                </p:column>
+                                <p:column headerText="Material">
+                                    <h:outputText value="#{lotesModelos.material}" />
+                                </p:column>
+                                <p:column headerText="Cantidad">
+                                    <h:outputText value="#{lotesModelos.cantidad}" />
+                                </p:column>
+                                
+
 
 
 

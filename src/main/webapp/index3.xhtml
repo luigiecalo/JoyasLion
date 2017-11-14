@@ -30,6 +30,9 @@
                 <p:commandButton value="crear Botones" actionListener="#{controlPrueba.agregarBoton()}" update="@form">
 
                 </p:commandButton>
+                <p:outputLabel for="button" value="Button:" />
+                <p:calendar id="button" value="#{controlLote.date}"  />
+
                 <p:tabView binding="#{controlPrueba.tabView}" rendered="true" 
                            style="float: left; margin-left: 5px; margin-top: 10px; width: 500px;">
 
