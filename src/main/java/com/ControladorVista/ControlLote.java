@@ -100,6 +100,7 @@ public class ControlLote {
             lmo.setOrden(modelosorden.getOrden());
             lmo.setModelo(modelosorden.getModelo());
             this.lotesModelosOrdenes.add(lmo);
+            agregarlistaMap(lmo);
         }
         this.ordenes.remove(orden);
     }
@@ -119,6 +120,7 @@ public class ControlLote {
     }
 
     public void cancelarOredenModelo(Map mapa) {
+        List<LoteModeloOrden> listaremover = new ArrayList<LoteModeloOrden>();
         for (LoteModeloOrden loteModeloOrden : getLotesModelosOrdenes()) {
             String modelo = (String) mapa.get("modelo");
             String material = (String) mapa.get("material");
@@ -126,20 +128,24 @@ public class ControlLote {
             String material2 = loteModeloOrden.getMaterial().getNombre();
             if (modelo2.equals(modelo) && material2.equals(material)) {
                 ordenes.forEach((orden) -> {
-                OrdenModelo ordenModelo = new OrdenModelo();
-                ordenModelo.setCantidad(loteModeloOrden.getCantidad());
-                ordenModelo.setMaterial(loteModeloOrden.getMaterial());
-                ordenModelo.setModelo(loteModeloOrden.getModelo());
-                ordenModelo.setOrden(loteModeloOrden.getOrden());
-                ordenModelo.setOrdenModeloPK(loteModeloOrden.getModelo().getId(), loteModeloOrden.getOrden().getId(), loteModeloOrden.getMaterial().getId());
-                if (orden.getCodigo().equals((String) loteModeloOrden.getOrden().getCodigo())) {
-                    orden.getOrdenesModelo().add(ordenModelo);
-                }
-            });
-                lotesModelosOrdenes.remove(loteModeloOrden);
+                    OrdenModelo ordenModelo = new OrdenModelo();
+                    ordenModelo.setCantidad(loteModeloOrden.getCantidad());
+                    ordenModelo.setMaterial(loteModeloOrden.getMaterial());
+                    ordenModelo.setModelo(loteModeloOrden.getModelo());
+                    ordenModelo.setOrden(loteModeloOrden.getOrden());
+                    ordenModelo.setOrdenModeloPK(loteModeloOrden.getModelo().getId(), loteModeloOrden.getOrden().getId(), loteModeloOrden.getMaterial().getId());
+                    if (orden.getCodigo().equals((String) loteModeloOrden.getOrden().getCodigo())) {
+                        orden.getOrdenesModelo().add(ordenModelo);
+                    }
+                });
+                listaremover.add(loteModeloOrden);
             }
         }
- 
+
+        for (LoteModeloOrden loteModeloOrden1 : listaremover) {
+            lotesModelosOrdenes.remove(loteModeloOrden1);
+        }
+
         eliminarListaMap(mapa);
 
     }
