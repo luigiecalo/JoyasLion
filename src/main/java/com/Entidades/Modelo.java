@@ -20,11 +20,20 @@ import javax.xml.bind.annotation.XmlTransient;
 @SequenceGenerator(name = "USER_SEQUENCE", sequenceName = "USER_SEQUENCE", allocationSize = 1, initialValue = 0)
 @NamedQueries({
     @NamedQuery(name = Modelo.LISTAR, query = "SELECT m FROM Modelo m"),
+    @NamedQuery(name = Modelo.BUSCAR_CODIGO_ESTADO_TIPO_ILIKE, query = "SELECT m FROM Modelo m "
+            + "WHERE m.tipo_modelo = :tipo "
+            + "AND m.estado LIKE :estado "
+            + "AND m.codigo LIKE :valor"),
+    @NamedQuery(name = Modelo.BUSCAR_CODIGO_ESTADO_ILIKE, query = "SELECT m FROM Modelo m "
+            + "WHERE m.estado LIKE :estado "
+            + "AND m.codigo LIKE :valor"),
     @NamedQuery(name = Modelo.BUSCAR_CODIGO_ESTADO, query = "SELECT m FROM Modelo m WHERE m.codigo = :codigo AND m.estado =:estado"),
     @NamedQuery(name = Modelo.ULTIMO, query = "SELECT MAX(m.id)+1 FROM Modelo m")})
 public class Modelo implements Serializable {
 
     public static final String BUSCAR_CODIGO_ESTADO = "Modelo.codigoEstado";
+    public static final String BUSCAR_CODIGO_ESTADO_ILIKE = "Modelo.codigoEstadoLike";
+    public static final String BUSCAR_CODIGO_ESTADO_TIPO_ILIKE = "Modelo.codigoEstadoTipoLike";
     public static final String LISTAR = "Modelo.listar";
     public static final String ULTIMO = "Modelo.ultimo";
     private static final long serialVersionUID = 1L;

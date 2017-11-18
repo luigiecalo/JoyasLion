@@ -48,7 +48,34 @@
 
                         <p:dataTable id="tbmiembros" var="Mien" value="#{controlUsuarios.miembros}">
                             <f:facet name="header">
-                                Lista de miembros registrados
+                                USUARIOS
+                                <div class="ui-g">
+                                    <div class="ui-g-2">
+                                        <b:inputText value="#{controlUsuarios.valueFilter}"   style="width:250px" placeholder="Buscar Nombre o identificacion:"/>
+
+                                    </div>
+                                    <div class="ui-g-1"> 
+                                        <b:selectOneMenu  style="width:200px"   value="#{controlUsuarios.rolselectFilter}" title="Asigne almenos un ROL" >
+                                            <f:selectItem  itemLabel="Selecione un Rol" itemValue="" />
+                                            <f:selectItems value="#{controlUsuarios.rolesLista}" />
+                                        </b:selectOneMenu>
+                                    </div>
+                                    <div class="ui-g-3">
+                                        <b:commandButton value="Consultar" 
+                                                         style="padding-left:20px"
+                                                         id="consultarbtn"
+                                                         look="info"
+                                                         size="sm"
+                                                         update="tbmiembros"
+                                                         actionListener="#{controlUsuarios.listarMiembros()}" >
+                                            <i class="fa fa-search"></i>
+                                        </b:commandButton>
+                                    </div>
+                                    <p:defaultCommand target="consultarbtn" />
+                                </div>
+
+
+
                             </f:facet>
                             <p:column headerText="Identificacion">
                                 <h:outputText value="#{Mien.documento}" />
@@ -58,6 +85,16 @@
                             </p:column>
                             <p:column headerText="Estado">
                                 <h:outputText value="#{Mien.estado}" />
+                            </p:column>
+                            <p:column headerText="Roles">
+                                <p:dataList id="listaRoles" value="#{Mien.usuario.roles}" var="ro" type="ordered">
+                                    <f:facet name="header">
+                                        Roles Asignados
+                                    </f:facet>
+
+                                    #{ro.nombre}
+
+                                </p:dataList> 
                             </p:column>
                             <p:column style="text-align: center">
 

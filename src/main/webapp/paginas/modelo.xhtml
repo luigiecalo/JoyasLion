@@ -15,33 +15,22 @@
                 <h:panelGroup    >
                     <div id="barraup" class="col-xs-12 col-md-12 " style="z-index:200" >
                         <div  class="box">
-
                             <div  class="box-body">
-                                <b:buttonGroup>
+                                <p:commandButton icon="fa fa-plus-circle" 
 
-                                    <b:commandButton value="Agregar nuevo modelo" 
-                                                     rendered="#{controlModelos.butompermisos(controlSeccion.rol.idrol,controlplantillas.moduloSelecionado,'E')}" 
-                                                     title="Agregar nuevo Modelo"   
-                                                     iconAwesome="fa-plus-circle"
-                                                     look="success"
-                                                     actionListener="#{controlModelos.registroModulo()}"
-                                                     size="sm" >
-                                    </b:commandButton>
-                                    <b:commandButton value="Consultar" 
-                                                     style="padding-left:20px"
-                                                     look="info"
-                                                     size="sm"
-                                                     update="modelos"
-                                                     actionListener="#{controlModelos.listarModelos()}" >
-                                        <i class="fa fa-search"></i>
-                                    </b:commandButton>
-                                </b:buttonGroup>
-
-
-
-
+                                                 value="Agregar nuevo modelo" 
+                                                 rendered="#{controlModelos.butompermisos(controlSeccion.rol.idrol,controlplantillas.moduloSelecionado,'E')}" 
+                                                 actionListener="#{controlModelos.registroModulo()}" 
+                                                 process="@this" 
+                                                 update="tab" 
+                                                 styleClass="btn-guardar"/>
+                                <p:commandButton icon="fa fa-search"
+                                                 value="Consultar" 
+                                                 actionListener="#{controlModelos.listarModelos()}"
+                                                 process="@this" 
+                                                 styleClass="btn-consultar"
+                                                 update="modelos"/>
                             </div>
-                            <!-- /.box-body -->
                         </div>
                     </div>
                 </h:panelGroup>
@@ -51,7 +40,33 @@
 
                         <p:dataTable id="modelos" var="Modelo" value="#{controlModelos.modelos}">
                             <f:facet name="header">
-                                Lista de Modelos
+                                MODELOS
+                                <div class="ui-g" >
+                                    <div class="ui-g-2">
+                                        <b:inputText value="#{controlModelos.valueFilter}"   style="width:250px" placeholder="Buscar por Codigo ó Peso"/>
+
+                                    </div>
+                                    <div class="ui-g-2"> 
+                                        <b:selectOneMenu  style="width:200px"   value="#{controlModelos.tiposModelolSelectfilter}" title="Asigne almenos un ROL" >
+                                            <f:selectItem  itemLabel="Selecione un Tipo" itemValue="" />
+                                            <f:selectItems value="#{controlModelos.tiposModeloLista}" />
+                                        </b:selectOneMenu>
+                                    </div>
+                                    <div class="ui-g-2"> 
+                                        <b:selectOneMenu  style="width:200px"    value="#{controlModelos.estadofilter}" title="Asigne almenos un ROL" >
+                                            <f:selectItem  itemLabel="Selecione el estado" itemValue="" />
+                                            <f:selectItem  itemLabel="ACTIVO" itemValue="ACTIVO" />
+                                            <f:selectItem  itemLabel="INACTIVO" itemValue="INACTIVO" />
+                                        </b:selectOneMenu>
+                                    </div>
+                                    <div class="ui-g-1">
+                                        <p:commandButton icon="fa fa-search"
+                                                         value="Consultar" 
+                                                         actionListener="#{controlModelos.listarModelos()}"
+                                                         styleClass="btn-consultar"
+                                                         update="modelos"/>
+                                    </div>
+                                </div>
                             </f:facet>
                             <p:column style="width:16px;padding-right:20px">
                                 <p:rowToggler />
@@ -59,7 +74,7 @@
 
                             <p:column headerText="CODIGO" style="width: 100px;padding-right:20px" >
 
-                                <p:graphicImage  class="img-thumbnail img-responsive  colored ih-item padre"   value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',Modelo.imagen)}.png" cache="false"  title="#{Modelo.peso_modelo}" style="width: 30px; height: 30px;"/>
+                                <p:graphicImage     value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',Modelo.imagen)}.png" cache="false"  title="#{Modelo.peso_modelo}" style="width: 30px; height: 30px;"/>
                                 #{Modelo.codigo}
                             </p:column>
 
@@ -71,6 +86,9 @@
                             </p:column>
                             <p:column headerText="TIPO">
                                 <h:outputText value="#{Modelo.tipo_modelo.nombre}" />
+                            </p:column>
+                            <p:column headerText="ESTADO">
+                                <h:outputText value="#{Modelo.estado}" />
                             </p:column>
                             <p:column style="text-align: center ;width:200px">
                                 <b:buttonGroup>
@@ -108,14 +126,14 @@
                                 </b:commandButton>
                                 <p:lightBox styleClass="imagebox" id="lighbox1" style="position: relative">
                                     <h:outputLink value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',Modelo.imagen)}.png"  title="#{Modelo.imagen}">  
-                                        <p:graphicImage  class="img-thumbnail img-responsive  colored ih-item padre"   value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',Modelo.imagen)}.png" cache="false"  title="#{Modelo.peso_modelo}" style="width: 100px; height: 100px;"/>
+                                        <p:graphicImage    value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',Modelo.imagen)}.png" cache="false"  title="#{Modelo.peso_modelo}" style="width: 100px; height: 100px;"/>
                                     </h:outputLink>
 
 
                                     <ui:repeat value="#{Modelo.modulo_imagenes}" var="img">
                                         <row>
                                             <h:outputLink value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',img.nombre)}.png"  title="#{Modelo.imagen}">  
-                                                <p:graphicImage  class="img-thumbnail img-responsive  colored ih-item padre"   value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',img.nombre)}.png" cache="false"  title="#{Modelo.peso_modelo}" style="width: 100px; height: 100px;"/>
+                                                <p:graphicImage    value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',img.nombre)}.png" cache="false"  title="#{Modelo.peso_modelo}" style="width: 100px; height: 100px;"/>
                                             </h:outputLink>
                                         </row>
                                     </ui:repeat>
@@ -140,45 +158,28 @@
                 <h:panelGroup >
                     <div id="barraup" class="col-xs-12 col-md-12 " style="z-index:200" >
                         <div  class="box">
-
                             <div  class="box-body">
-                                <div class="ui-lg-8 ui-g-12">
-                                    <p:commandButton icon="fa fa-arrow-right" oncomplete="PF('sidebar1').show()" />
-                                    <p:commandButton id="tool" icon="fa fa-save" class="success" oncomplete="PF('sidebar2').show()" title="Agregar Piedra Central" />
-                                    <p:tooltip id="toolTipFocus" for="tool"  position="bottom" />
-                                    <p:commandButton icon="fa fa-arrow-down" oncomplete="PF('sidebar3').show()" />
-                                    <p:commandButton icon="fa fa-arrow-up" oncomplete="PF('sidebar4').show()" />
-                                    <p:commandButton icon="fa fa-arrows-alt" oncomplete="PF('sidebar5').show()" image="imagenes/botones/zircon.png" >
+                                <!--<div class="ui-lg-8 ui-g-12">-->
 
-                                    </p:commandButton>
-                                    <b:buttonGroup>
-                                        <b:commandButton value="Guardar" rendered="#{controlModelos.verBtnRegistro()}" actionListener="#{controlModelos.guardarModelo()}"  look="success"  update="tab" size="sm" >
-                                            <i class="fa fa-save"></i>
-                                        </b:commandButton>
-                                        <b:commandButton value="Editar" rendered="#{!controlModelos.verBtnRegistro()}" actionListener="#{controlModelos.guardarModelo()}"  look="warning"   update="tab" size="sm" >
-                                            <i class="fa fa-pencil-square"></i>
-                                        </b:commandButton>
-                                        <b:commandButton value="Nuevo" actionListener="#{controlModelos.limpiar()}"  process="@this" look="danger"  update="tab" size="sm" >
-                                            <i class="fa fa-eraser"></i>
-                                        </b:commandButton>
-                                        <b:commandButton value="Consultar" actionListener="#{controlModelos.consultaModulo()}" process="@this"  look="primary"  update="tab" size="sm">
-                                            <i class="fa fa-list"></i>
-                                        </b:commandButton>
+                                <p:commandButton icon="fa fa-pencil-square" value="Editar" rendered="#{!controlModelos.verBtnRegistro()}" actionListener="#{controlModelos.guardarModelo()}" update="tab"  styleClass="btn-editar"/>
+                                <p:commandButton  value="Guardar" rendered="#{controlModelos.verBtnRegistro()}" actionListener="#{controlModelos.guardarModelo()}" update="tab"  icon="fa fa-save" styleClass="btn-guardar"/>
+                                <p:commandButton icon="fa fa-clone" value="Nuevo" actionListener="#{controlModelos.limpiar()}" process="@this" update="tab" styleClass="btn-nuevo"/>
+                                <p:commandButton icon="fa fa-share" value="Atras" actionListener="#{controlModelos.consultaModulo()}" process="@this"  update="tab" styleClass="btn-consultar"/>
 
-                                    </b:buttonGroup>
-                                </div>
-                                <div class="ui-lg-8  col-lg-offset-9">
-                                    <b:buttonGroup>
-                                        <b:commandButton value="+"    look="default" tooltip="Agregar Piedra Central" tooltip-position="bottom" update="tab" size="sm" >
-                                            <p:graphicImage  value="imagenes/botones/pCentral.png"  style="height: 20px;height: 20px"/>
-                                        </b:commandButton>
-                                        <b:commandButton value="+"    look="default" tooltip="Agregar Zircon" tooltip-position="bottom" update="tab" size="sm" >
-                                            <p:graphicImage  value="imagenes/botones/zircon.png"  style="height: 20px;height: 20px"/>
-                                        </b:commandButton>
 
-                                    </b:buttonGroup>
-
-                                </div>
+                                <!--                                </div>
+                                                                <div class="ui-lg-8  col-lg-offset-9">
+                                                                    <b:buttonGroup>
+                                                                        <b:commandButton value="+"    look="default" tooltip="Agregar Piedra Central" tooltip-position="bottom" update="tab" size="sm" >
+                                                                            <p:graphicImage  value="imagenes/botones/pCentral.png"  style="height: 20px;height: 20px"/>
+                                                                        </b:commandButton>
+                                                                        <b:commandButton value="+"    look="default" tooltip="Agregar Zircon" tooltip-position="bottom" update="tab" size="sm" >
+                                                                            <p:graphicImage  value="imagenes/botones/zircon.png"  style="height: 20px;height: 20px"/>
+                                                                        </b:commandButton>
+                                
+                                                                    </b:buttonGroup>
+                                
+                                                                </div>-->
                             </div>
                             <!-- /.box-body -->
                         </div>
@@ -318,7 +319,7 @@
                                                              styleClass=" btn btn-xs btn-danger"  update=":form:listaCirconselct " size="xs" >
                                                 <i class="fa fa-trash"></i>
                                             </b:commandButton>
-                                           
+
                                         </b:buttonGroup>
                                     </p:column>
                                     <p:column headerText="Tamaño">
@@ -369,8 +370,8 @@
                                 <div class="ui-g-3 ui-md-3 ui-lg-3" style="padding:0px">
 
                                     <b:inputText id="valorCantidadPiedra" onfocus="if (this.value == '0') {
-                                                    this.value = '';
-                                                }"  style="width:100%" disabled="#{controlModelos.cantidadPiedra}" class="input-grupo-bordes"  value="#{controlModelos.valorCantidadPiedra}" placeholder="Cantidad"
+                                                this.value = '';
+                                            }"  style="width:100%" disabled="#{controlModelos.cantidadPiedra}" class="input-grupo-bordes"  value="#{controlModelos.valorCantidadPiedra}" placeholder="Cantidad"
                                                  >
                                     </b:inputText>
                                 </div>
@@ -422,7 +423,7 @@
                             </div>
                         </div>
                     </p:panel>
-                  
+
                 </div>
             </p:panel>
 

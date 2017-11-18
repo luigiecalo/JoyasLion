@@ -98,6 +98,7 @@
         </b:panel>
 
         <b:panel id="registro" collapsible="false" rendered="#{controlLote.registrar}">
+
             <p:focus context="panel"/> <div class="row">
 
                 <h:panelGroup >
@@ -105,10 +106,13 @@
                         <div  class="box">
 
                             <div  class="box-body">
+                                   <p:commandButton icon="fa fa-pencil-square" value="Editar" rendered="#{controlLote.consultaModulo()}" actionListener="#{controlModelos.guardarModelo()}" update="tab"  styleClass="btn-editar"/>
+
+
                                 <div class="ui-lg-8 ui-g-12">
                                     <b:buttonGroup>
 
-                                        <b:commandButton value="Nuevo" actionListener="#{controlLote.limpiar()}"  process="@this" look="danger"  update="tab" size="sm" >
+                                        <b:commandButton value="Cancelar" actionListener="#{controlLote.limpiar()}"  process="@this" look="danger"  update="tab" size="sm" >
                                             <i class="fa fa-eraser"></i>
                                         </b:commandButton>
                                         <b:commandButton value="Consultar" actionListener="#{controlLote.consultaModulo()}" process="@this"  look="primary"  update="tab" size="sm">
@@ -124,37 +128,109 @@
                     </div>
                 </h:panelGroup>
             </div>
+
+            <div  class="col-xs-12 col-md-12 col-lg-8" style="z-index:200" >
+                <p:panel id="panel"  header="Datos del Lote" style="width: 100%" >
+                    <p:focus id="focus" context="#{controlModelos.focus}"/>
+
+
+                    <div class="ui-g">
+                        <div class="ui-g-3">
+                            <p:outputLabel value="Responsable" for="themePojo" />
+
+                            <p:autoComplete id="themePojo" value="#{controlLote.miembro}" completeMethod="#{controlLote.completeUsuario}" size="30"
+                                            var="miembro" itemLabel="#{miembro.apellido1} #{miembro.apellido2} #{miembro.nombre1} #{miembro.nombre2}" itemValue="#{miembro}" converter="objectConverter" dropdown="true" forceSelection="true" >
+                                <p:column style="width:10%">
+
+                                    <p:graphicImage   style="width: 50px;height: 50px;" value="imagenes/usuarios/#{controlUtilidades.util.getExiteimagen('imagenes/usuarios',miem.imagen)}.png" cache="false"  />
+
+                                </p:column>
+
+                                <p:column style="width:90%">
+                                    <h:outputText value="#{miembro.apellido1} #{miembro.apellido2} #{miembro.nombre1} #{miembro.nombre2}" />
+                                </p:column>
+                            </p:autoComplete>
+                        </div>
+                        <div class="ui-g-1"> 
+                            <p:outputLabel for="datetime" value="fecha:" />
+                            <p:calendar id="datetime" value="#{controlLote.date}" locale="de" navigator="true" showButtonPanel="true" pattern="MM/dd/yyyy HH:mm:ss" />
+                        </div>
+
+
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-12">
+                       
+                            <p:dataTable id="loteModeloslista" selectionMode="single" var="lotesModelos" rowKey="#{lotesModelos}" style="width: 100%" value="#{controlLote.lotesModelosOrdenesMap}" >
+
+
+
+                                <p:column headerText="Modelo">
+                                    <h:commandLink id="lnk" value="#{lotesModelos.modelo}" />
+                                    <p:tooltip for="lnk">  
+                                        <p:graphicImage style="height:400px;width:400px" value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',lotesModelos.modelo)}.png"/>  
+                                    </p:tooltip>
+                                </p:column>
+                                <p:column headerText="Material">
+                                    <h:outputText value="#{lotesModelos.material}" />
+                                </p:column>
+                                <p:column headerText="Cantidad">
+                                    <h:outputText value="#{lotesModelos.cantidad}" />
+                                </p:column>
+                                <p:column headerText="Cancel" style="width:6%;" >
+                                    <b:commandButton value="" tooltip-container="ingresar a lote"  actionListener="#{controlLote.cancelarOredenModelo(lotesModelos)}" process="@form"  look="#{lotesModelos.material=='ORO'?'warning':lotesModelos.material=='PLATA'?'success':''}"  >
+                                        <i class="fa fa-arrow-right"></i>
+                                    </b:commandButton>
+                                </p:column>
+                                <p:columnGroup type="footer">
+                                    <p:row>
+                                        <p:column colspan="2" style="text-align:right" footerText="Total de Pezas:" >
+
+                                        </p:column>
+                                        <p:column colspan="2" style="text-align:left" footerText="#{controlLote.piezasTotales}" />
+                                    </p:row>
+                                </p:columnGroup>
+
+
+
+
+
+                            </p:dataTable>
+                        </div>
+
+                    </div>
+                </p:panel>  
+            </div>
+
             <div  class="col-xs-12 col-md-12 col-lg-4" style="z-index:200" >
                 <fieldset class="fieldset1">
-                    <legend>Oredenes: 
-                        <b:commandButton value="Buscar Oredenes en Espera" tooltip-container="ingresar a lote"  actionListener="#{controlLote.buscarOredenesEsra()}" process="@this"  look="success"  >
-                            <i class="fa fa-search"></i>
-                        </b:commandButton>
+                    <legend>Ordenes en espera: 
+
                     </legend>
 
                     <ui:repeat  var="orden" value="#{controlLote.ordenes}">
                         <b:panel  title="#{orden.codigo}-#{orden.cliente.login}"  collapsed="true">
                             <b:commandButton value=""  rendered="#{orden.ordenesModelo.size()>1}" tooltip-container="ingresar a lote"  actionListener="#{controlLote.agregarOreden(orden)}" process="@this"  look="success"  >
-                                <i class="fa fa-forward"> Seleccionar todas Las ordenes</i>
+                                <i class="fa fa-fort-awesome"> Seleccionar todas Las ordenes</i>
                             </b:commandButton>
                             <div class="ui-g">
                                 <div class="ui-g-11 ui-g-nopad">
                                     <div class="ui-g-12">
                                         <p:dataTable id="modelos" var="modu"  style="width: 100%" value="#{orden.ordenesModelo}" >
 
-                                            <p:column headerText="Modelo">
-                                                <p:commandButton id="imageBtn" value="" style="height: 30px;width: 24px" type="button" icon="ui-icon-search" title="View" />
-                                                <p:overlayPanel id="imagePanel" for="imageBtn" hideEffect="fade">
-                                                    <p:graphicImage  class="img-thumbnail img-responsive  colored ih-item padre" width="300"  value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',modu.modelo.imagen)}.png" cache="false"  title="#{modu.modelo.peso_modelo}"/>
-                                                </p:overlayPanel>
-                                                <h:outputText value="#{modu.modelo.codigo} - #{modu.material.nombre} (#{modu.cantidad})" />
-                                            </p:column>
-
                                             <p:column headerText="Enviar" style="width:20%;" >
                                                 <b:commandButton value="" tooltip-container="ingresar a lote"  actionListener="#{controlLote.agregarOredenModelo(modu)}" process="@this"  look="#{modu.material.nombre=='ORO'?'warning':modu.material.nombre=='PLATA'?'success':''}"  >
-                                                    <i class="fa fa-arrow-right"></i>
+                                                    <i class="fa fa-arrow-left"></i>
                                                 </b:commandButton>
                                             </p:column>
+                                            <p:column headerText="Modelo">
+                                                <h:commandLink  id="ouputLabelModelo" value="#{modu.modelo.codigo} - #{modu.material.nombre} (#{modu.cantidad})" />
+                                                <p:tooltip for="ouputLabelModelo">  
+                                                    <p:graphicImage value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',modu.modelo.imagen)}.png"/>  
+                                                </p:tooltip>
+                                            </p:column>
+
+
 
 
 
@@ -173,66 +249,6 @@
 
                 </fieldset>
             </div>
-            <div  class="col-xs-12 col-md-12 col-lg-8" style="z-index:200" >
-                <p:panel id="panel"  header="Datos del Lote" style="width: 100%" >
-                    <p:focus id="focus" context="#{controlModelos.focus}"/>
-                    <div class="ui-g">
-                        <div class="ui-g-1"> 
-                            <p:outputLabel for="datetime" value="fecha:" />
-                            <p:calendar id="datetime" value="#{controlLote.date}" locale="de" navigator="true" showButtonPanel="true" pattern="MM/dd/yyyy HH:mm:ss" />
-                        </div>
-                        <div class="ui-g-1">
-
-                        </div>
-                        <div class="ui-g-1">Responsable:</div>
-                        <div class="ui-g-1">1</div>
-                        <div class="ui-g-1">Piezas:</div>
-                        <div class="ui-g-1">#{controlLote.piezasTotales}</div>
-                        <div class="ui-g-1">1</div>
-                        <div class="ui-g-1">1
-                        </div>
-                        <div class="ui-g-1">1</div>
-                        <div class="ui-g-1">1</div>
-                        <div class="ui-g-1">1</div>
-                        <div class="ui-g-1">1</div>
-                    </div>
-                    <div class="ui-g">
-                        <div class="ui-g-12">
-                            <p:dataTable id="loteModeloslista" var="lotesModelos"  style="width: 100%" value="#{controlLote.lotesModelosOrdenesMap}" >
-
-                                
-                                <p:column headerText="Cancelar" style="width:20%;" >
-                                    <b:commandButton value="" tooltip-container="ingresar a lote"  actionListener="#{controlLote.cancelarOredenModelo(lotesModelos)}" process="@form"  look="#{lotesModelos.material=='ORO'?'warning':lotesModelos.material=='PLATA'?'success':''}"  >
-                                        <i class="fa fa-arrow-left"></i>
-                                    </b:commandButton>
-                                </p:column>
-                                <p:column headerText="Modelo">
-                                    <h:outputText value="#{lotesModelos.modelo}" />
-                                </p:column>
-                                <p:column headerText="Material">
-                                    <h:outputText value="#{lotesModelos.material}" />
-                                </p:column>
-                                <p:column headerText="Cantidad">
-                                    <h:outputText value="#{lotesModelos.cantidad}" />
-                                </p:column>
-                                
-
-
-
-
-
-                            </p:dataTable>
-                        </div>
-                        <div class="ui-g-2">2</div>
-                        <div class="ui-g-2">2</div>
-                        <div class="ui-g-2">2</div>
-                        <div class="ui-g-2">2</div>
-                        <div class="ui-g-2">2</div>
-                    </div>
-                </p:panel>  
-            </div>
-
-
 
 
 

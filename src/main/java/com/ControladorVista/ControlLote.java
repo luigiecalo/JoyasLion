@@ -6,27 +6,29 @@
 package com.ControladorVista;
 
 import Utilidades.Utilidades;
+import com.Dao.MiembroDaoimplement;
 import com.Dao.OrdenDaoimplement;
 import com.Dao.RolDaoimplement;
+import com.Dao.UsuarioDaoimplement;
 import com.Entidades.Lote;
 import com.Entidades.LoteModeloOrden;
+import com.Entidades.Miembro;
 import com.Entidades.Orden;
 import com.Entidades.OrdenModelo;
 import com.Entidades.Usuario;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class ControlLote {
 
     //UTILIDADES
@@ -34,6 +36,7 @@ public class ControlLote {
     private int cant = 0;
     private Utilidades util = new Utilidades();
     private boolean Registrar = false;
+    private boolean responsable = false;
     private Date date = new Date();
     // ENTIDADES
     private Orden orden = new Orden();
@@ -41,6 +44,7 @@ public class ControlLote {
     private OrdenModelo oredeModelo;
     private Lote lote = new Lote();
     private LoteModeloOrden loteModeloOrden = new LoteModeloOrden();
+    private Miembro miembro = new Miembro();
 
     //LISTAS
     private List<Orden> ordenes = new ArrayList<Orden>();
@@ -49,9 +53,14 @@ public class ControlLote {
     private List<LoteModeloOrden> lotesModelosOrdenes = new ArrayList<LoteModeloOrden>();
     private List<Object> Litas = new ArrayList<Object>();
     private List<Map> lotesModelosOrdenesmap = new ArrayList<Map>();
+    private List<Usuario> usuariosRol = new ArrayList<Usuario>();
+    private List<Miembro> miembros = new ArrayList<Miembro>();
+
     //DAO
     private OrdenDaoimplement ODAO = new OrdenDaoimplement();
     private RolDaoimplement RolDAO = new RolDaoimplement();
+    private UsuarioDaoimplement UsuarioDAO = new UsuarioDaoimplement();
+    private MiembroDaoimplement MiembroDAO = new MiembroDaoimplement();
     //Session
     @ManagedProperty(value = "#{controlSeccion}")
     private ControlSeccion controlSeccion;
@@ -67,6 +76,21 @@ public class ControlLote {
         limpiar();
     }
 
+    public List<Miembro> completeUsuario(String query) {
+        List<Miembro> allThemes = MiembroDAO.BuscarMiembroRol(3l);
+        List<Miembro> filteredThemes = MiembroDAO.BuscarMiembroRolLike(3l, query);
+        return filteredThemes;
+    }
+
+    public void selecionarResponsable() {
+        if (miembro != null) {
+            this.responsable = true;
+        } else {
+            this.responsable = false;
+        }
+
+    }
+
     public void consultaModulo() {
         Registrar = false;
     }
@@ -76,9 +100,11 @@ public class ControlLote {
         clienteSelect = new Usuario();
         orden = new Orden();
         lote = new Lote();
-
-        ordenesMoldelos.clear();
+        lotesModelosOrdenes.clear();
         lotesModelosOrdenesmap.clear();
+        ordenesMoldelos.clear();
+        ordenes.clear();
+
         buscarOredenesEsra();
     }
 
@@ -93,6 +119,7 @@ public class ControlLote {
 
     public void agregarOreden(Orden orden) {
         List<OrdenModelo> modelosordenes = orden.getOrdenesModelo();
+        List<OrdenModelo> listaremover = new ArrayList<OrdenModelo>();
         for (OrdenModelo modelosorden : modelosordenes) {
             LoteModeloOrden lmo = new LoteModeloOrden();
             lmo.setCantidad(modelosorden.getCantidad());
@@ -100,9 +127,14 @@ public class ControlLote {
             lmo.setOrden(modelosorden.getOrden());
             lmo.setModelo(modelosorden.getModelo());
             this.lotesModelosOrdenes.add(lmo);
+            listaremover.add(modelosorden);
             agregarlistaMap(lmo);
         }
-        this.ordenes.remove(orden);
+        for (OrdenModelo ordenModelo : listaremover) {
+            orden.getOrdenesModelo().remove(ordenModelo);
+        }
+//        this.ordenes.remove(orden);
+
     }
 
     public void agregarOredenModelo(OrdenModelo ordenmodu) {
@@ -117,6 +149,12 @@ public class ControlLote {
         });
         agregarlistaMap(lmo);
 
+    }
+
+    public void cancelarTodo() {
+        for (Map mapa : lotesModelosOrdenesmap) {
+            cancelarOredenModelo(mapa);
+        }
     }
 
     public void cancelarOredenModelo(Map mapa) {
@@ -185,27 +223,7 @@ public class ControlLote {
             }
 
         }
-//        }
-//        lotesModelosOrdenes.forEach((loteModelOrden) -> {
-//            Map map = new HashMap();
-//            map.put("modelo", loteModelOrden.getModelo().getCodigo());
-//            map.put("material", loteModelOrden.getMaterial().getNombre());
-//            if (lotesModelosOrdenesmap.isEmpty()) {
-//                map.put("cantidad", loteModelOrden.getCantidad());
-//                lotesModelosOrdenesmap.add(map);
-//            } else {
-//                lotesModelosOrdenesmap.forEach((mapa) -> {
-//                    if (loteModelOrden.getModelo().getCodigo().equals(mapa.get("modelo"))
-//                            && loteModelOrden.getMaterial().getNombre().equals(mapa.get("material"))) {
-//                        map.put("cantidad", loteModelOrden.getCantidad() + ((int) mapa.get("cantidad")));
-//                        mapa.replace(mapa,map);
-//                    } else {
-//                        map.put("cantidad", loteModelOrden.getCantidad());
-//                        lotesModelosOrdenesmap.add(map);
-//                    }
-//                });
-//            }
-//        });
+
     }
 
 ///GET Y SET
@@ -321,6 +339,38 @@ public class ControlLote {
 
     public void setLote(Lote lote) {
         this.lote = lote;
+    }
+
+    public List<Usuario> getUsuariosRol() {
+        return usuariosRol;
+    }
+
+    public void setUsuariosRol(List<Usuario> usuariosRol) {
+        this.usuariosRol = usuariosRol;
+    }
+
+    public List<Miembro> getMiembros() {
+        return miembros;
+    }
+
+    public void setMiembros(List<Miembro> miembros) {
+        this.miembros = miembros;
+    }
+
+    public Miembro getMiembro() {
+        return miembro;
+    }
+
+    public void setMiembro(Miembro miembro) {
+        this.miembro = miembro;
+    }
+
+    public boolean isResponsable() {
+        return responsable;
+    }
+
+    public void setResponsable(boolean responsable) {
+        this.responsable = responsable;
     }
 
 }

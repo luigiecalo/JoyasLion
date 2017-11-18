@@ -11,12 +11,77 @@ and open the template in the editor.
 
 /*Estilos Base*/
 /*Estilos Base*/
+/*ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-state-hover ui-state-active*/
+.btn-guardar{
+    height:35px;
+    border: 1px solid #50a050 !important;
+    font-size: 15px !important;
+    box-shadow: 0 1px 0 white inset, 0 1px 2px white !important;
+    background: -webkit-linear-gradient(top, #50a050 0%,#5db75c 100%) !important;
+    box-shadow: 0 4px 0 #50a050 inset, 0 1px 2px rgba(0,0,0,0.2) !important; 
+}
+.btn-guardar:hover{
+    border: 1px solid #50a050 !important;
+    font-size: 16px !important;
+    background: -webkit-linear-gradient(top, #50a050 100%,#50a050 100%) !important;
+}
+
+.btn-consultar{
+    height:35px;
+    border: 1px solid #438bc9 !important;
+    font-size: 15px !important;
+    background: -webkit-linear-gradient(top, #438bc9 20%,#009cff 100%);
+}
+.btn-consultar:hover{
+    border: 1px solid #438bc9 !important;
+    font-size: 16px !important;
+    background: -webkit-linear-gradient(top, #438bc9 100%,#438bc9 100%) !important;
+}
+
+.btn-nuevo{
+    height:35px;
+    border: 1px solid #a94442 !important;
+    font-size: 15px !important;
+    background: -webkit-linear-gradient(top, rgb(197, 80, 80) 100%,rgb(245, 50, 50) 0%) !important;
+}
+.btn-nuevo:hover{
+    border: 1px solid #a94442 !important;
+    font-size: 16px !important;
+    background: -webkit-linear-gradient(top, #a94442 100%,#a94442 100%) !important;
+}
+
+.btn-editar{
+    height:35px;
+    font-size: 15px !important;
+    border: 1px solid #cc8a19 !important;
+    background: -webkit-linear-gradient(top, #ea980b 0%,#debb56 100%) !important;
+}
+.btn-editar:hover{
+    border: 1px solid #cc8a19 !important;
+    font-size: 16px !important;
+    background: -webkit-linear-gradient(top, #ea980b 0%,#ea980b 100%) !important;
+}
+
+.ui-button, button.ui-button.ui-state-default, .ui-button.ui-state-default {
+    box-shadow: 0 1px 0 white inset, 0 1px 2px rgba(25,25,5,0.2) !important; 
+}
+
+.ui-button:focus,button.ui-button.ui-state-focus{
+    border-color:rgba(0,0,0,0.35) !important;
+    color:#FFF !important;
+    text-shadow:0 -1px 0 #216ea6 !important;
+    box-shadow:0 1px 0 rgba(255,255,255,0.2) inset, 0 1px 3px rgba(0,0,0,0.35) !important;
+    background:rgba(0,0,0,0.35) !important;
+}
+
+
+
 .fieldset1 {
     border: 1px solid silver;
     margin: 0 2px;
     padding: .35em .625em .75em;
     border-bottom-width:1px
-;
+        ;
 }
 #contenido {
     position: relative;
@@ -28,14 +93,14 @@ and open the template in the editor.
     box-shadow: 1px 1px 5px rgba(50,50,50 0.5);
 }
 .img_wrapper {
-	position: relative;
-	width: 75%;
-	height: auto;
-	margin: 5 5% 0 auto;
-	border: 12px solid #fff;
-	border-radius: 0px;
-	box-shadow: 1px 1px 5px rgba(50,50,50 0.5);
-	float: left;
+    position: relative;
+    width: 75%;
+    height: auto;
+    margin: 5 5% 0 auto;
+    border: 12px solid #fff;
+    border-radius: 0px;
+    box-shadow: 1px 1px 5px rgba(50,50,50 0.5);
+    float: left;
 }
 #images {
     width: 400px;
@@ -88,7 +153,7 @@ and open the template in the editor.
     border: 2px solid #ccc;
     /* IMPORTANTE */
     text-align: center;
-    background: blue;
+/*    background: blue;*/
 }
 .contenedor-img {
     width: 300px;

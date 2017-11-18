@@ -17,12 +17,13 @@
         <!--<link rel="stylesheet" href="css/primefacesConfig.css"/>-->
         <!-- Theme style -->
         <link rel="stylesheet" href="AdminLTE/css/AdminLTE.css"/>
-        <link rel="stylesheet" href="css/primefacesConfig.css"/>
+        
 
         <!-- AdminLTE Skins. Choose a skin from the css/skins
              folder instead of downloading all of them to reduce the load. -->
         <link rel="stylesheet" href="AdminLTE/css/skins/skin-#{controlSeccion.skins}.css"/>
         <link rel="stylesheet" href="styles/main.css"/>
+        <link rel="stylesheet" href="css/primefacesConfig.css"/>
 
     </h:head>
     <h:body onload="#{controlSeccion.validaSeccion()}" class="hold-transition skin-#{controlSeccion.skins}  fixeds sidebar-mini">
@@ -78,7 +79,7 @@
 
                                 </li>
                                 <li class="messages-menu">
-                                    <p:commandLink  style="height: 50px;font-size:30px;" actionListener="#{controlplantillas.setModulo('Lotes.xhtml')}" update=":form:tab" >
+                                    <p:commandLink  style="height: 50px;font-size:30px;" actionListener="#{controlplantillas.setModulo('lotes.xhtml')}" update=":form:tab" >
                                         <i class="fa fa-list-alt"></i>
                                         <span class="label label-success" style="font-size:15px;">#{controlOrden.ordenes.size()}</span>
                                     </p:commandLink>

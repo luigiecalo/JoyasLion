@@ -11,6 +11,7 @@ import com.Entidades.Rol;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 /**
  *
@@ -21,6 +22,17 @@ public class RolDaoimplement extends ImplDao<Rol, Long> implements RolDao, Seria
 
     public List<Rol> Listar() {
         return em.createNamedQuery("Rol.findAll").getResultList();
+    }
+    
+     public Rol BuscarRolId(Long idrol) {
+        Query query = em.createNamedQuery(Rol.BUSCAR_ID);
+        query.setParameter("idrol", idrol);
+        query.setMaxResults(1);
+        List<Rol> list = query.getResultList();
+        if (list == null || list.isEmpty()) {
+            return null;
+        }
+        return list.get(0);
     }
 
 }

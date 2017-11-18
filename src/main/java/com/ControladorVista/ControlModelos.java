@@ -52,6 +52,8 @@ public final class ControlModelos implements Serializable {
     private Long idmod;
     private Utilidades util = new Utilidades();
     private String estado = "R";
+    private String valueFilter = "";
+    private String estadofilter = "";
     private boolean Registrar = false;
     private boolean estadoModelo = true;
     private boolean zircon = false;
@@ -75,6 +77,7 @@ public final class ControlModelos implements Serializable {
     private Long piedrasCentralSelect = 0l;
     private Long circoneSelect = 0l;
     private Long tiposModelolSelect = 0l;
+    private Long tiposModelolSelectfilter = 0l;
     private int valorCantidad = 0;
     private int valorCantidadPiedra = 0;
 
@@ -159,7 +162,14 @@ public final class ControlModelos implements Serializable {
 
     //Lista todos Los Modelos de La vista De Consulta
     public void listarModelos() {
-        modelos = ModeloDao.consultarTodo(Modelo.class);
+        if (valueFilter.equals("") && tiposModelolSelectfilter.equals(0l) && estadofilter.equals("")) {
+            modelos = ModeloDao.consultarTodo(Modelo.class);
+        } else if (tiposModelolSelectfilter.equals(0l)) {
+            modelos = ModeloDao.buscarModeloEstadoILKE(valueFilter, estadofilter);
+        } else {
+            modelos = ModeloDao.buscarModeloEstadoTipoILKE(valueFilter, TipoDao.consultar(Tipo.class, tiposModelolSelectfilter), estadofilter);
+        }
+
     }
 
     public void selecionar() {
@@ -633,6 +643,14 @@ public final class ControlModelos implements Serializable {
         this.tiposModelolSelect = tiposModelolSelect;
     }
 
+    public Long getTiposModelolSelectfilter() {
+        return tiposModelolSelectfilter;
+    }
+
+    public void setTiposModelolSelectfilter(Long tiposModelolSelectfilter) {
+        this.tiposModelolSelectfilter = tiposModelolSelectfilter;
+    }
+
     public ModeloCircon getModelocircon() {
         return modelocircon;
     }
@@ -789,6 +807,22 @@ public final class ControlModelos implements Serializable {
             carpeta = "imagenes/modelos/";
         }
         return carpeta;
+    }
+
+    public String getValueFilter() {
+        return valueFilter;
+    }
+
+    public void setValueFilter(String valueFilter) {
+        this.valueFilter = valueFilter;
+    }
+
+    public String getEstadofilter() {
+        return estadofilter;
+    }
+
+    public void setEstadofilter(String estadofilter) {
+        this.estadofilter = estadofilter;
     }
 
 }

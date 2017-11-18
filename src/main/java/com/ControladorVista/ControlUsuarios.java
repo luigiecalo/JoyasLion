@@ -44,6 +44,8 @@ public final class ControlUsuarios implements Serializable {
     //UTILIDADES
     private Long idmod;
     private Long rolselect = 0l;
+    private Long rolselectFilter = 0l;
+    private String valueFilter = "";
     private Utilidades util = new Utilidades();
     private Usuario usuario = new Usuario();
     private Miembro miembro = new Miembro();
@@ -90,7 +92,16 @@ public final class ControlUsuarios implements Serializable {
     }
 
     public void listarMiembros() {
-        miembros = MiemDao.consultarTodo(Miembro.class);
+        if (valueFilter.equals("") && rolselectFilter.equals(0l)) {
+            miembros = MiemDao.consultarTodo(Miembro.class);
+        }else if(!valueFilter.equals("") && !rolselectFilter.equals(0l) ){
+            miembros = MiemDao.BuscarMiembroRolLike(rolselectFilter, valueFilter);
+        }else if(!valueFilter.equals("")){
+            miembros = MiemDao.BuscarMiembroUsuarioLike(valueFilter);
+        }else if(!rolselectFilter.equals(0l)){
+            miembros = MiemDao.BuscarMiembroRol(rolselectFilter);
+        }
+
     }
 
     public boolean bootonregistro(Long idrol, Modulo mod) {
@@ -398,6 +409,14 @@ public final class ControlUsuarios implements Serializable {
         this.rolselect = rolselect;
     }
 
+    public Long getRolselectFilter() {
+        return rolselectFilter;
+    }
+
+    public void setRolselectFilter(Long rolselectFilter) {
+        this.rolselectFilter = rolselectFilter;
+    }
+
     public String getImagen() {
         return imagen;
     }
@@ -425,6 +444,14 @@ public final class ControlUsuarios implements Serializable {
 
     public void setCarpeta(String carpeta) {
         this.carpeta = carpeta;
+    }
+
+    public String getValueFilter() {
+        return valueFilter;
+    }
+
+    public void setValueFilter(String valueFilter) {
+        this.valueFilter = valueFilter;
     }
 
 }

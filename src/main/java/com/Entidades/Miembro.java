@@ -18,12 +18,32 @@ import javax.xml.bind.annotation.XmlRootElement;
 @SequenceGenerator(name = "USER_SEQUENCE", sequenceName = "USER_SEQUENCE", allocationSize = 1, initialValue = 0)
 @NamedQueries({
     @NamedQuery(name = "Miembro.findAll", query = "SELECT m FROM Miembro m"),
-    @NamedQuery(name = "Miembro.findByIdmiembro", query = "SELECT m FROM Miembro m WHERE m.idmiembro = :idmiembro"),
+      @NamedQuery(name = Miembro.BUSCAR_ROL_LIKE, query = "SELECT m FROM Miembro m  "
+            + "LEFT JOIN m.usuario.roles  ur "
+            + "WHERE ur.idrol = :idrol  "
+            + "AND(m.nombre1 LIKE :valor "
+            + "OR  m.nombre2 LIKE :valor "
+            + "OR  m.apellido1 LIKE :valor "
+            + "OR  m.documento LIKE :valor "
+            + "OR  m.apellido2 LIKE :valor)"),
+       @NamedQuery(name = Miembro.BUSCAR_ROL, query = "SELECT m FROM Miembro m  "
+            + "LEFT JOIN m.usuario.roles  ur "
+            + "WHERE ur.idrol = :idrol  "),
+    @NamedQuery(name = Miembro.BUSCAR_IDMIEMBRO, query = "SELECT m FROM Miembro m WHERE m.idmiembro = :idmiembro"),
+    @NamedQuery(name = Miembro.BUSCAR_LIKE, query = "SELECT m FROM Miembro m WHERE m.nombre1  LIKE :valor "
+            + "OR  m.nombre2 LIKE :valor "
+            + "OR  m.apellido1 LIKE :valor "
+            + "OR  m.documento LIKE :valor "
+            + "OR  m.apellido2 LIKE :valor"),
+  
     @NamedQuery(name = Miembro.BUSCAR_USUARIO, query = "SELECT m FROM Miembro m WHERE m.usuario = :usuario")})
 public class Miembro implements Serializable {
 
-    
+    public static final String BUSCAR_IDMIEMBRO = "Miembro.findByIdmiembro";
     public static final String BUSCAR_USUARIO = "Miembro.buscarDocumento";
+    public static final String BUSCAR_LIKE = "Miembro.findByLike";
+    public static final String BUSCAR_ROL_LIKE = "Miembro.findByRolLike";
+    public static final String BUSCAR_ROL = "Miembro.findByRol";
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USER_SEQUENCE")
@@ -138,7 +158,6 @@ public class Miembro implements Serializable {
     public void setImagen(String imagen) {
         this.imagen = imagen;
     }
-    
 
     @Override
     public int hashCode() {

@@ -7,8 +7,10 @@ package com.Dao;
 
 import static com.Dao.ImplDao.getEmf;
 import com.DaonInterface.UsuarioDao;
+import com.Entidades.Rol;
 import com.Entidades.Usuario;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -19,15 +21,30 @@ import javax.persistence.Query;
  */
 public class UsuarioDaoimplement extends ImplDao<Usuario, Long> implements UsuarioDao, Serializable {
 
- EntityManager em = getEmf().createEntityManager();
+    EntityManager em = getEmf().createEntityManager();
 
     public List<Usuario> Listar() {
         return em.createNamedQuery(Usuario.LISTAR).getResultList();
     }
-    public Usuario login(String usu,String pass) {
-         Query query = em.createNamedQuery(Usuario.BUSCAR_USUARIO);
-        query.setParameter("usu",usu);
-        query.setParameter("pass",pass);
+
+    public List<Usuario> ListarUsuarioRol(Rol rol) {
+        List<Usuario> usuariosRol = new ArrayList<Usuario>();
+        for (Usuario usuario : Listar()) {
+            List<Rol> roles = usuario.getRoles();
+            for (Rol role : roles) {
+                if (rol.getIdrol().equals(rol.getIdrol())) {
+                    usuariosRol.add(usuario);
+                }
+            }
+
+        }
+        return usuariosRol;
+    }
+
+    public Usuario login(String usu, String pass) {
+        Query query = em.createNamedQuery(Usuario.BUSCAR_USUARIO);
+        query.setParameter("usu", usu);
+        query.setParameter("pass", pass);
         query.setMaxResults(1);
         List<Usuario> list = query.getResultList();
         if (list == null || list.isEmpty()) {
@@ -35,18 +52,18 @@ public class UsuarioDaoimplement extends ImplDao<Usuario, Long> implements Usuar
         }
         return list.get(0);
     }
-    
+
     public void modificar1(Usuario usuario) {
         em.merge(usuario);
     }
-    
+
     public Usuario buscarId1(Long id) {
         return em.find(Usuario.class, id);
     }
-    
-    public Usuario buscarxid1( Long id) {
+
+    public Usuario buscarxid1(Long id) {
         Query query = em.createNamedQuery(Usuario.BUSCAR_POR_ID);
-        query.setParameter("idusuario",id);
+        query.setParameter("idusuario", id);
         query.setMaxResults(1);
         List<Usuario> list = query.getResultList();
         if (list == null || list.isEmpty()) {
@@ -54,7 +71,7 @@ public class UsuarioDaoimplement extends ImplDao<Usuario, Long> implements Usuar
         }
         return list.get(0);
     }
-    
+
     public void eliminar1(Long id) {
         Usuario usu = buscarId1(id);
         em.remove(usu);
