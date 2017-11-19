@@ -16,26 +16,16 @@
                     <div id="barraup" class="col-xs-12 col-md-12 " style="z-index:200" >
                         <div  class="box">
 
-                            <div  class="box-body box-primary">
-                                <b:buttonGroup>
-                                    <b:commandButton value="AGREGAR USAURIO" 
-                                                     rendered="#{controlUsuarios.bootonregistro(controlSeccion.rol.idrol,controlplantillas.moduloSelecionado)}" 
-                                                     title="REGISTRAR MODELO"   
-                                                     look="success"
-                                                     actionListener="#{controlUsuarios.registroModulo()}"
-                                                     size="sm" >
-                                        <i class="fa fa-user-plus"></i>
-                                    </b:commandButton>
+                            <div  class="box-body">
+                                <p:commandButton icon="fa fa-user-plus" 
 
-                                    <b:commandButton value="Consultar" 
-                                                     style="padding-left:20px"
-                                                     look="info"
-                                                     size="sm"
-                                                     update="tbmiembros"
-                                                     actionListener="#{controlUsuarios.listarMiembros()}" >
-                                        <i class="fa fa-search"></i>
-                                    </b:commandButton>
-                                </b:buttonGroup>
+                                                 value="Agregar nuevo modelo" 
+                                                 rendered="#{controlModelos.butompermisos(controlSeccion.rol.idrol,controlplantillas.moduloSelecionado,'E')}" 
+                                                 actionListener="#{controlUsuarios.registroModulo()}"
+                                                 process="@this" 
+                                                 update="tab" 
+                                                 styleClass="btn-guardar"/>
+                               
 
                             </div>
                             <!-- /.box-body -->
@@ -50,26 +40,24 @@
                             <f:facet name="header">
                                 USUARIOS
                                 <div class="ui-g">
-                                    <div class="ui-g-2">
-                                        <b:inputText value="#{controlUsuarios.valueFilter}"   style="width:250px" placeholder="Buscar Nombre o identificacion:"/>
+                                    <div class="ui-g-3">
+                                        <b:inputText value="#{controlUsuarios.valueFilter}"   style="width:100%" placeholder="Buscar Nombre o identificacion:"/>
 
                                     </div>
-                                    <div class="ui-g-1"> 
-                                        <b:selectOneMenu  style="width:200px"   value="#{controlUsuarios.rolselectFilter}" title="Asigne almenos un ROL" >
+                                    <div class="ui-g-2"> 
+                                        <b:selectOneMenu  style="width:100%"   value="#{controlUsuarios.rolselectFilter}" title="Asigne almenos un ROL" >
                                             <f:selectItem  itemLabel="Selecione un Rol" itemValue="" />
                                             <f:selectItems value="#{controlUsuarios.rolesLista}" />
                                         </b:selectOneMenu>
                                     </div>
-                                    <div class="ui-g-3">
-                                        <b:commandButton value="Consultar" 
-                                                         style="padding-left:20px"
+                                    <div class="ui-g-1">
+                                       
+                                        <p:commandButton icon="fa fa-search"
                                                          id="consultarbtn"
-                                                         look="info"
-                                                         size="sm"
-                                                         update="tbmiembros"
-                                                         actionListener="#{controlUsuarios.listarMiembros()}" >
-                                            <i class="fa fa-search"></i>
-                                        </b:commandButton>
+                                                 value="Consultar" 
+                                                 actionListener="#{controlUsuarios.listarMiembros()}"
+                                                 styleClass="btn-consultar"
+                                                 update="tbmiembros"/>
                                     </div>
                                     <p:defaultCommand target="consultarbtn" />
                                 </div>
@@ -123,27 +111,11 @@
                         <div  class="box">
 
                             <div  class="box-body">
-                                <div class="ui-lg-8 ui-g-12">
-                                    <b:buttonGroup>
-                                        <b:commandButton value="Guardar"  rendered="#{controlUsuarios.verBtnRegistro()}#{controlUsuarios.bootonregistro(controlSeccion.rol.idrol,controlplantillas.moduloSelecionado)}"  actionListener="#{controlUsuarios.save()}"  look="success"   update="tab" size="sm" >
-                                            <i class="fa fa-save"></i>
-                                        </b:commandButton>
-                                        <b:commandButton value="Editar" rendered="#{!controlUsuarios.verBtnRegistro()}"  actionListener="#{controlUsuarios.save()}" look="warning" class=""  update="tab" size="sm">
-                                            <i class="fa fa-edit"></i>
-                                        </b:commandButton>
-                                        <b:commandButton value="Nuevo" rendered="#{controlUsuarios.bootonregistro(controlSeccion.rol.idrol,controlplantillas.moduloSelecionado)}" actionListener="#{controlUsuarios.limpiar()}" process="@this"  look="danger"   update="tab" size="sm" >
-                                            <i class="fa fa-clone"></i>
-                                        </b:commandButton>
-                                        <b:commandButton value="Consultar"  process="@this"  actionListener="#{controlUsuarios.consultaModulo()}" update="tab" look="primary"  size="sm" >
-                                            <i class="fa fa-search"></i>
-                                        </b:commandButton>
+                                <p:commandButton icon="fa fa-pencil-square" value="Editar" rendered="#{!controlUsuarios.verBtnRegistro()}"  actionListener="#{controlUsuarios.save()}" update="tab"  styleClass="btn-editar"/>
+                                <p:commandButton icon="fa fa-save" value="Guardar"  rendered="#{controlUsuarios.verBtnRegistro()}"  actionListener="#{controlUsuarios.save()}"  update="tab"   styleClass="btn-guardar"/>
+                                <p:commandButton icon="fa fa-clone" value="Nuevo"  actionListener="#{controlUsuarios.limpiar()}" process="@this" update="tab" styleClass="btn-nuevo"/>
+                                <p:commandButton icon="fa fa-share" value="Atras" actionListener="#{controlUsuarios.consultaModulo()}" process="@this"  update="tab" styleClass="btn-consultar"/>
 
-                                        <!--                                    <a class="btn btn-app ir-arriba icon-arrow-up2">
-                                                                                <i class="fa fa-angle-up"></i> up
-                                                                            </a>-->
-                                        <!--<b:messages id="standardMsg3" globalOnly="true" />-->
-                                    </b:buttonGroup>
-                                </div>
                             </div>
                             <!-- /.box-body -->
                         </div>

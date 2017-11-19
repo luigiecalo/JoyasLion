@@ -80,11 +80,20 @@ public class prueba implements Serializable {
 //        List<Permisos> permisoLista = new ArrayList<Permisos>();
 //        List<Miembro> miembroLista = new ArrayList<Miembro>();
 //        List<Rol> rolesLista = new ArrayList<Rol>();
-//        List<Usuario> usuarioLista = new ArrayList<Usuario>();
+        List<Usuario> usuarioLista = new ArrayList<Usuario>();
 //        List<Grupo> grupos = new ArrayList<Grupo>();
         List<Circon> circones = new ArrayList<Circon>();
         List<Modelo> modelos = new ArrayList<Modelo>();
         List<PiedraCentral> piedras = new ArrayList<PiedraCentral>();
+        usuarioLista= UDao.Listar();
+        for (Usuario usu : usuarioLista) {
+            System.out.println(usu.toString());
+            for (Rol rol : usu.getRoles()) {
+                System.out.println("ROLES");
+                System.out.println(rol.getNombre());
+            }
+            
+        }
 //        List<RolModuloPermiso> rolmodulospermisos = new ArrayList<RolModuloPermiso>();
 //        Long id;
 //        usuario = UDao.login("ADMIN", "ADMIN");
@@ -174,14 +183,7 @@ public class prueba implements Serializable {
 //        if (number.length() == 1) {
 //            number.format("00{0}", 2);
 //        }
-        prueba p = new prueba();
-        p.ListarModulos();
-        
-           ModeloImagen mi = new ModeloImagen();
-            
-                mi.setModelo(MoDao.consultar(Modelo.class, 53L));
-                mi.setNombre("53-1");
-                mdimpl.crear(mi);
+      
 //        System.out.println("REGISTRO EXITOSO " + String.format("%03d", ultimo));
 //        ultimo = 190;
 //        System.out.println("REGISTRO EXITOSO " + String.format("%03d", ultimo));

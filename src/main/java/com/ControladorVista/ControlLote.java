@@ -34,6 +34,7 @@ public class ControlLote {
     //UTILIDADES
     private String message = "Hello World nuevo!";
     private int cant = 0;
+    private String estado = "R";
     private Utilidades util = new Utilidades();
     private boolean Registrar = false;
     private boolean responsable = false;
@@ -76,6 +77,13 @@ public class ControlLote {
         limpiar();
     }
 
+     public boolean verBtnRegistro() {
+        if (estado.equals("R")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     public List<Miembro> completeUsuario(String query) {
         List<Miembro> allThemes = MiembroDAO.BuscarMiembroRol(3l);
         List<Miembro> filteredThemes = MiembroDAO.BuscarMiembroRolLike(3l, query);

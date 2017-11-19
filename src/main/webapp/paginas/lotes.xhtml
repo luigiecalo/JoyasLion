@@ -16,18 +16,15 @@
                         <div  class="box">
 
                             <div  class="box-body">
-                                <b:buttonGroup>
+                                 <p:commandButton icon="fa fa-plus-circle" 
 
-                                    <b:commandButton value="Nuevo Lote" 
-
-                                                     title="Agregar nuevo Modelo"   
-                                                     iconAwesome="fa-plus-circle"
-                                                     look="success"
-                                                     actionListener="#{controlLote.registroModulo()}"
-                                                     size="sm" >
-                                    </b:commandButton>
-
-                                </b:buttonGroup>
+                                                 value="Agregar Nuevo Lote" 
+                                                 rendered="#{controlModelos.butompermisos(controlSeccion.rol.idrol,controlplantillas.moduloSelecionado,'E')}" 
+                                                 actionListener="#{controlLote.registroModulo()}" 
+                                                 process="@this" 
+                                                 update="tab" 
+                                                 styleClass="btn-guardar"/>
+                                
 
 
 
@@ -106,20 +103,13 @@
                         <div  class="box">
 
                             <div  class="box-body">
-                                  
+                                  <p:commandButton icon="fa fa-pencil-square" value="Editar" rendered="#{!controlLote.verBtnRegistro()}" update="tab"  styleClass="btn-editar"/>
+                                <p:commandButton  value="Guardar" rendered="#{controlLote.verBtnRegistro()}"  update="tab"  icon="fa fa-save" styleClass="btn-guardar"/>
+                                <p:commandButton icon="fa fa-clone" value="Nuevo" actionListener="#{controlLote.limpiar()}" process="@this" update="tab" styleClass="btn-nuevo"/>
+                                <p:commandButton icon="fa fa-share" value="Atras" actionListener="#{controlLote.consultaModulo()}" process="@this"  update="tab" styleClass="btn-consultar"/>
 
-                                <div class="ui-lg-8 ui-g-12">
-                                    <b:buttonGroup>
 
-                                        <b:commandButton value="Cancelar" actionListener="#{controlLote.limpiar()}"  process="@this" look="danger"  update="tab" size="sm" >
-                                            <i class="fa fa-eraser"></i>
-                                        </b:commandButton>
-                                        <b:commandButton value="Consultar" actionListener="#{controlLote.consultaModulo()}" process="@this"  look="primary"  update="tab" size="sm">
-                                            <i class="fa fa-list"></i>
-                                        </b:commandButton>
-
-                                    </b:buttonGroup>
-                                </div>
+                                
 
                             </div>
                             <!-- /.box-body -->
@@ -135,10 +125,8 @@
 
                     <div class="ui-g">
                         <div class="ui-g-3">
-                            <p:outputLabel value="Responsable" for="themePojo" />
-
-                            <p:autoComplete id="themePojo" value="#{controlLote.miembro}" completeMethod="#{controlLote.completeUsuario}" size="30"
-                                            var="miembro" itemLabel="#{miembro.apellido1} #{miembro.apellido2} #{miembro.nombre1} #{miembro.nombre2}" itemValue="#{miembro}" converter="objectConverter" dropdown="true" forceSelection="true" >
+                            <p:autoComplete id="responsable" value="#{controlLote.miembro}" completeMethod="#{controlLote.completeUsuario}" style="width:100%"
+                                            placeholder="Responsable"  var="miembro" itemLabel="#{miembro.apellido1} #{miembro.apellido2} #{miembro.nombre1} #{miembro.nombre2}" itemValue="#{miembro}" converter="objectConverter"  forceSelection="true" >
                                 <p:column style="width:10%">
 
                                     <p:graphicImage   style="width: 50px;height: 50px;" value="imagenes/usuarios/#{controlUtilidades.util.getExiteimagen('imagenes/usuarios',miem.imagen)}.png" cache="false"  />
@@ -150,9 +138,8 @@
                                 </p:column>
                             </p:autoComplete>
                         </div>
-                        <div class="ui-g-1"> 
-                            <p:outputLabel for="datetime" value="fecha:" />
-                            <p:calendar id="datetime" value="#{controlLote.date}" locale="de" navigator="true" showButtonPanel="true" pattern="MM/dd/yyyy HH:mm:ss" />
+                        <div class="ui-g-2"> 
+                            <p:calendar id="datetime" style="width:100%" value="#{controlLote.date}" locale="de" navigator="true" showButtonPanel="true" pattern="MM/dd/yyyy HH:mm:ss" />
                         </div>
 
 
@@ -164,19 +151,19 @@
 
 
 
-                                <p:column headerText="Modelo">
+                                <p:column headerText="Modelo" style="width: 20%">
                                     <h:commandLink id="lnk" value="#{lotesModelos.modelo}" />
                                     <p:tooltip for="lnk">  
                                         <p:graphicImage style="height:400px;width:400px" value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',lotesModelos.modelo)}.png"/>  
                                     </p:tooltip>
                                 </p:column>
-                                <p:column headerText="Material">
+                                <p:column headerText="Material" style="width: 10%">
                                     <h:outputText value="#{lotesModelos.material}" />
                                 </p:column>
-                                <p:column headerText="Cantidad">
+                                <p:column headerText="Cantidad" style="width: 10%">
                                     <h:outputText value="#{lotesModelos.cantidad}" />
                                 </p:column>
-                                <p:column headerText="Cancel" style="width:6%;" >
+                                <p:column headerText="Cancel" style="width:10%;"  >
                                     <b:commandButton value="" tooltip-container="ingresar a lote"  actionListener="#{controlLote.cancelarOredenModelo(lotesModelos)}" process="@form"  look="#{lotesModelos.material=='ORO'?'warning':lotesModelos.material=='PLATA'?'success':''}"  >
                                         <i class="fa fa-arrow-right"></i>
                                     </b:commandButton>

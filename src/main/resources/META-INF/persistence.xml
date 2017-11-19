@@ -4,9 +4,13 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>com.Entidades.Circon</class>
     <class>com.Entidades.Grupo</class>
+    <class>com.Entidades.Lote</class>
+    <class>com.Entidades.LoteModeloOrden</class>
+    <class>com.Entidades.Material</class>
     <class>com.Entidades.Miembro</class>
     <class>com.Entidades.Modelo</class>
     <class>com.Entidades.ModeloCircon</class>
+    <class>com.Entidades.ModeloImagen</class>
     <class>com.Entidades.ModeloPiedraCentral</class>
     <class>com.Entidades.Modulo</class>
     <class>com.Entidades.Orden</class>
