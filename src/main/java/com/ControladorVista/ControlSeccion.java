@@ -100,11 +100,11 @@ public class ControlSeccion implements Serializable {
                     secccion();
 
                     requestContext.getCurrentInstance().execute("$('.modalPseudoClass').modal('hide');");
-//                    if (rolSeccion.getIdrol().equals(toLong(1))) {
-//                        context.getExternalContext().redirect("superAdministrador.xhtml");
-//                    } else {
-                    context.getExternalContext().redirect("inicio.xhtml");
-//                    }
+                    if (rolSeccion.getIdrol().equals(toLong(4))) {
+                        context.getExternalContext().redirect("index1.xhtml");
+                    } else {
+                        context.getExternalContext().redirect("inicio.xhtml");
+                    }
                     usu = "";
                     pass = "";
                 } catch (IOException ex) {
@@ -126,16 +126,17 @@ public class ControlSeccion implements Serializable {
 
         }
     }
+
     public String textcolor() {
-        String result="";
+        String result = "";
         String[] colores = {"info",
-            "aqua","blod","danger",
-            "green","success","warning",
-            "yellow","blue","olive","orange",
-            "teal","primary"};
-        int num=(int) (Math.random()*13);
-        result=colores[num];
-        return  result;
+            "aqua", "blod", "danger",
+            "green", "success", "warning",
+            "yellow", "blue", "olive", "orange",
+            "teal", "primary"};
+        int num = (int) (Math.random() * 13);
+        result = colores[num];
+        return result;
     }
 
     public void validaSeccion() {
@@ -145,6 +146,21 @@ public class ControlSeccion implements Serializable {
         } else {
             seccion = true;
             cargarModulos();
+        }
+    }
+
+    public String conSeccionhtml() {
+        if (seccion) {
+            return "hidden";
+        } else {
+            return "none";
+        }
+    }
+    public String sinSeccionhtml() {
+        if (seccion) {
+            return "none";
+        } else {
+            return "hidden";
         }
     }
 
@@ -286,7 +302,7 @@ public class ControlSeccion implements Serializable {
 
             httpSession.invalidate();
 
-            context.getExternalContext().redirect("index.xhtml");
+            context.getExternalContext().redirect("index1.xhtml");
 
             miembro = null;
             seccion = false;

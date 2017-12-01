@@ -203,13 +203,13 @@
                     </p:panelGrid>
                     <p:panelGrid   style="width:80%">
                         <p:row>
-                            <p:column >
+                            <p:column  style="width: 50%">
                                 <b:selectOneMenu label="Tipo del Modelo" required="true" class="form-control select2"  value="#{controlModelos.tiposModelolSelect}" title="Asigne almenos un Tipo de Modelo" style="margin:0 auto">
                                     <f:selectItem  itemLabel="Selecione un Tipo" itemValue="" />
                                     <f:selectItems value="#{controlModelos.tiposModeloLista}" />
                                 </b:selectOneMenu>
                             </p:column>
-                             <p:column >
+                             <p:column style="width: 50%">
                                 <b:inputText 
                                     value="#{controlModelos.modeloSelecionado.peso_modelo}"
                                     renderLabel="true"
@@ -244,8 +244,8 @@
                                                          caption="Activo" />
                             </p:column>
                         </p:row>
-                        <p:row  rendered="#{controlModelos.modeloSelecionado.piedra}" >
-                            <p:column colspan="2">
+                        <p:row  >
+                            <p:column rendered="#{controlModelos.modeloSelecionado.piedra}" colspan="#{controlModelos.modeloSelecionado.zircon?1:2}"  >
                                 <p:panel rendered="#{controlModelos.modeloSelecionado.piedra}" header="PIEDRAS CENTRALES">
                                     <div class="ui-g">
                                         <div class="ui-g-12 ui-md-12 ui-lg-12"  >
@@ -315,9 +315,7 @@
                                     </div>
                                 </p:panel>
                             </p:column>
-                        </p:row>
-                        <p:row rendered="#{controlModelos.modeloSelecionado.zircon}">
-                            <p:column colspan="2">
+                            <p:column rendered="#{controlModelos.modeloSelecionado.zircon}" colspan="#{controlModelos.modeloSelecionado.piedra?1:2}"  >
                                 <p:panel rendered="#{controlModelos.modeloSelecionado.zircon}" header="ZIRCONES">
                                     <div class="ui-g">
                                         <div class="ui-g-8 ui-md-8ui-lg-8" style="padding:0px">
@@ -399,15 +397,6 @@
                                 </p:panel>
                             </p:column>
                         </p:row>
-
-
-
-
-
-
-
-
-
                     </p:panelGrid>
 
 
