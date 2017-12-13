@@ -92,6 +92,7 @@ public class ControlSeccion implements Serializable {
         if (rolselect.equals(toLong(0))) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Primer Mensage", "SELECIONE UN ROL"));
             requestContext.getCurrentInstance().execute("$('.modalPseudoClass').modal('hide');");
+         
         } else {
             rolSeccion = rolDao.consultarC(Rol.class, rolselect);
             if (rolSeccion != null) {

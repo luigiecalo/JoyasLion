@@ -5,7 +5,7 @@ del, dfn, em, font, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
 b, u, i, center,
 dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
+fieldset, form,  legend,
 table, caption, tbody, tfoot, thead, tr, th, td {outline: none !important;
 }
 html{
@@ -41,6 +41,12 @@ body{
 	background-size: cover;
 	border-bottom: 150px solid white;
 	border-left: 3000px solid transparent;
+}
+.label{
+  font-size: 20px;    color: grey;    display: inline-block;
+    margin-bottom: 5px;
+    font-weight: bold;  
+    
 }
 /*.container{
 	outline:1px solid #fc0;
@@ -118,7 +124,6 @@ border: none;
 	padding-right:0px;
 }
 #menu{
-	//margin-top: 33px;
 	margin-top: 74px;
 	float: right;
 }
@@ -307,7 +312,6 @@ border: none;
 }
 /**/
 .centPic{
-	//margin-left: 24px;
 	margin-top: 57px;
 	text-align: center;
 	
@@ -376,7 +380,6 @@ border: none;
 
 
  .Des .fa-heart{
-	//margin-left: -14px;
 	background: url(../images/cir.png) no-repeat;
 	padding: 26px;
 	font-size: 24px;
@@ -392,7 +395,6 @@ border: none;
 	
 }
 .Fresh h4{
-	//margin-left: -15px;
 	margin-top: 17px;
 	font-family: 'Roboto', 'sans-serif';
 	font-size:20px;
@@ -415,16 +417,12 @@ border: none;
 	text-align: center;
 }
 .Des  h4{
-	//margin-left: -19px;
 }
 .Ver  h4{
-	//margin-left:0;
 }
 .Fully  h4{
-	//margin-left: 20px;
 }
 .fa-tablet{
-	//margin-left: 20px;
 	width:73px;
 	background: url(../images/cir.png) no-repeat;
 	padding: 26px;
@@ -803,7 +801,7 @@ border: none;
 
 
 /**/
-}
+
 
  #filter {
 	margin-bottom: 50px !important;
@@ -1217,11 +1215,9 @@ border: none;
 	background:#ededed;
 }
 input:focus{
-	//border:0;
 	outline:none;
 }
 textarea:focus{
-	//border:0;
 	outline:none;
 }
 .name{
@@ -1862,7 +1858,7 @@ textarea {
 		margin-bottom: 35px;
 	}
 	.cont {
-	margin-top: 124px;]
+	margin-top: 124px;
 	}
 	.cBtn ul {
 	margin-left: 0;
@@ -1976,7 +1972,6 @@ margin-bottom: 35px !important;
 }
 
 .load_more_cont {
-	//width:100%;
 	padding:10px 0 0;
 }
 

@@ -21,41 +21,36 @@
         <!--<link type="text/css" href="css/zoomy.css" rel="stylesheet"/>-->
         <!--<link rel="stylesheet" href="css/primefacesConfig.css"/>-->
         <!--<link type="text/css" href="css/zoomy.css" rel="stylesheet"/>-->
-        <!--<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>-->
+        <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
 
         <!--<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700|Open+Sans:700' rel='stylesheet' type='text/css'/>-->
 
         <link rel="stylesheet" type="text/css" href="css/form-elements.css"/>
         <script src="js/sorting.js" type="text/javascript"></script>
         <script src="js/jquery.isotope.js" type="text/javascript"></script>
+        <!--<link rel="stylesheet" href="css/primefacesConfig.css"/>-->
 
         <style>
-            /* styles unrelated to zoom */
-          
-            /* these styles are for the demo, but are not required for the plugin */
-            .zoom {
-                display:inline-block;
+
+         
+            .thumbs img {
+                float: left;
+                width: 60px;
+                height:60px; 
+            }
+            #description {
+                background: black;
+                color: white;
+                position: absolute;
+                bottom: 0;
+                padding: 10px 20px;
+                width: 525px;
+                margin: 5px;
+            }
+            #panel { 
                 position: relative;
+                width: 80%;
             }
-
-            /* magnifying glass icon */
-            .zoom:after {
-                content:'';
-                display:block; 
-                width:33px; 
-                height:33px; 
-                position:absolute; 
-                top:0;
-                right:0;
-                background:url(icon.png);
-            }
-
-            .zoom img {
-                display: block;
-            }
-
-            .zoom img::selection { background-color: red; }
-
         </style>
 
     </h:head>
@@ -131,17 +126,17 @@
                             <div class="camera_wrap camera_white_skin" id="camera_wrap_1"  >
                                 <div data-thumb="" data-src="images/slides/blank.gif">
                                     <div class="img-responsive camera_caption fadeFromBottom">
-                                       
+
                                     </div>
                                 </div>
                                 <div data-thumb="" data-src="images/slides/blank.gif">
                                     <div class="img-responsive camera_caption fadeFromBottom">
-                                        
+
                                     </div>
                                 </div>
                                 <div data-thumb="" data-src="images/slides/blank.gif">
                                     <div class="img-responsive camera_caption fadeFromBottom">
-                                      
+
                                     </div>
                                 </div>
                             </div><!-- #camera_wrap_1 -->
@@ -168,44 +163,106 @@
                     </div>
 
                     <!-- //filter_block -->
-                    <div class="portfolio_block columns3   pretty" data-animated="fadeIn">
+                    <div class="portfolio_block columns3   pretty"  data-animated="fadeIn">
+
                         <h:form id="form">
-                            <div class="modal fade animated jackInTheBox"  id="carritoModal" data-backdrop="false" styleClass="myModal"  role="dialog" >
-                                <!--<div class=" modal-open" >-->
+                            <div class="modal animated jackInTheBox " id="mdModelo" style="z-index:2000" data-backdrop="false" styleClass="myModal"  role="dialog" >
 
-                                <div class="modal-dialog ">
-                                    <div class="modal-content bg-#{controlSeccion.skins}">
-                                        <h:panelGrid   id="mod">
-                                            <div class="modal-header" >
-                                                <h4 class="modal-title">#{controlPrincipal.modeloSelecionado.codigo}</h4>
-                                            </div>
-                                            <div class="modal-body">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header" >
+                                            <h4 class="modal-title">#{controlPrincipal.modeloSelecionado.codigo}</h4>
+                                        </div>
+                                        <b:panel   id="mod">
+                                            <div class="col-lg-6 col-sm-12 col-md-6">
 
-                                                <h3 style="margin-top: 0"></h3>
+                                                <table  cellspacing="0" cellpadding="0">
 
-                                                <span class='zoom' id='ex1'>
-                                                    <img src="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',controlPrincipal.modeloSelecionado.imagen)}.png" width="320px" height="240px" alt='Daisy on the Ohoopee'/>
-                                                    <p>Hover</p>
-                                                </span>
 
+                                                    <tr >
+                                                        <td class="thumbs">
+                                                            <img src="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',controlPrincipal.modeloSelecionado.imagen)}.png" alt="1st image description"    />
+                                                        </td>
+                                                        <td rowspan="6">
+                                                            <div id="panel" class="col-lg-6 col-sm-6 col-md-6">
+                                                                <img  id="largeImage" src="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',controlPrincipal.modeloSelecionado.imagen)}.png"  style="width:300px;height:300px"/>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <ui:repeat value="#{controlPrincipal.modeloSelecionado.modulo_imagenes}"  var="img">
+                                                        <tr class="thumbs">
+                                                        <td >
+                                                            <img src="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',img.nombre)}.png" alt="1st image description"    />
+                                                        </td>
+                                                    </tr>
+                                                    </ui:repeat>
+                                                    
+                                                  
+
+                                                </table>
                                                 <script type="text/javascript">
-                                                    $(document).ready(function () {
-                                                        $('#ex1').zoom();
+
+                                                    $('.thumbs img').click(function () {
+                                                        $('#largeImage').attr('src', $(this).attr('src'));
+                                                        $('#largeImage').addClass('fadeInDown animated ');
                                                     });
+                                                    $('.thumbs').delegate('img', 'click', function () {
+                                                        $('#largeImage').attr('src', $(this).attr('src').replace('thumb', 'large'));
+                                                        $('#largeImage').addClass('fadeInDown animated ');
+                                                    });
+                                                    $('.thumbs img').hover(function () {
+                                                        $('#largeImage').removeClass('fadeInDown animated ');
+                                                    });
+
                                                 </script>
 
-                                                <a href="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',controlPrincipal.modeloSelecionado.imagen)}.png" class="zoom">
-                                                    <img src="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',controlPrincipal.modeloSelecionado.imagen)}.png" width="320px" height="240px" />
-                                                </a>
-
 
 
                                             </div>
-                                        </h:panelGrid>
+                                            <div class="col-lg-6 col-sm-12 col-md-6">
+                                                <div class="ui-g-6 ui-md-6 ui-lg-6">
+                                                    <h:outputText value="MATERIAL:" styleClass="label" />
+                                                    <h:selectOneMenu  label="MATERIAL:" class="form-control select2"  value="#{controlPrincipal.materialSelect}"  style="margin:0 auto;height:34px">
+                                                        <p:ajax  />
+                                                        <f:selectItem  itemLabel="Selecione un Circon" itemValue="" />
+                                                        <f:selectItems value="#{controlPrincipal.materialLista}" />
+                                                    </h:selectOneMenu>
+                                                </div>
+                                                
+
+
+                                                
+
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <b:inputText label="CANTIDAD:" id="cant" value="#{controlPrincipal.cantidad}" style="font-size: 20px;text-align: center">
+                                                        <f:facet name="prepend">
+                                                            <b:commandButton value="-" update="cant"  actionListener="#{controlPrincipal.restar}"/>
+                                                        </f:facet>
+                                                        <f:facet name="append" >
+                                                            <b:commandButton value="+"  update="cant" actionListener="#{controlPrincipal.sumar}"/>
+                                                        </f:facet>
+                                                    </b:inputText>
+                                                </div>
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <b:inputText label="VALOR:" id='valor' value="#{controlPrincipal.cantidad*3}" readonly="true" style="font-size: 20px;text-align: center;color: #00733e">
+                                                        <f:facet name="prepend">
+                                                          $
+                                                        </f:facet>
+                                                        
+                                                    </b:inputText>
+                                                </div>
+                                   
+
+                                                <div class="col-lg-12 col-sm-12 col-md-12"> <p:messages autoUpdate="false"/></div>
+
+
+                                            </div>
+                                        </b:panel>
                                         <div class="modal-footer bg-#{controlSeccion.skins}-gradient">
-                                            <b:button value="close"  look="danger"  size="sm"  dismiss="modal"   />
-
-
+                                            <b:button value="close" dismiss="modal" onclick="return false;" />
+                                            <b:commandButton type="submit"  value="Agregar a Orden" update="mod" actionListener="#{controlPrincipal.anadirOrden}" look="primary">
+                                                <i class="fa fa-shopping-cart"></i>
+                                            </b:commandButton>
                                         </div>
                                     </div>
                                     <!-- /.modal-content -->
@@ -214,7 +271,9 @@
                                 <!--                            </div>-->
                             </div>
 
+
                             <ui:repeat value="#{controlPrincipal.modelos}" var="Modelo">
+
                                 <div class="element col-sm-3 gall #{Modelo.tipo_modelo.id}" >
                                     <div class="product-image-wrapper">
                                         <div class="single-products">
@@ -224,7 +283,7 @@
                                             <div class="product-overlay">
                                                 <div class="overlay-content">
                                                     <h2>#{Modelo.codigo}</h2>
-                                                    <p:commandButton value="Add to cart" class="btn btn-default"   update=":form:mod" icon="fa fa fa-shopping-cart" actionListener="#{controlUtilidades.util.modal('carritoModal','show')}" >
+                                                    <p:commandButton value="Add to cart" class="btn btn-default"   update=":form:mod" icon="fa fa fa-shopping-cart" actionListener="#{controlUtilidades.util.modal('mdModelo','show')}" >
 
                                                         <f:setPropertyActionListener value="#{Modelo}" target="#{controlPrincipal.modeloSelecionado}"  />
                                                     </p:commandButton>
@@ -285,6 +344,9 @@
                 <div class="col-md-12 wwa">
                     <span name="about" ></span>
                     <h3>Quienes Somos? </h3>
+                    <div class="zoom" data-zoomed-image="images/home/girl3.jpg" width="320px" height="240px">
+                        <img src="images/home/girl3.jpg" alt="Thumbnail" width="320px" height="240px"/>
+                    </div>
 
                     <a href="imagenes/bizPic.png" class="zoom">
                         <img src="imagenes/bizPic.png" width="320px" height="240px" />
@@ -457,7 +519,7 @@
 
                     <div class="col-md-12">
                         <h3 style="text-align: left !important;">INICIA SECCION CON NOSOTROS</h3>
-                        <h:form  style="height:300px;width:100%"  >
+                        <h:form id="form1" style="height:300px;width:100%"  >
                             <div class="container" >
                                 <b:growl id="growlMsg" globalOnly="true" placementFrom="top"
                                          show-detail="true" show-summary="false" allowDismiss="true"
@@ -471,7 +533,7 @@
                                 <label  for="form-password">Password</label>
                                 <p:inputText  value="#{controlSeccion.pass}" required="true" requiredMessage="Ingrese Contraseña" type="password"  placeholder="Password..."  />
                                 <!--</div>-->
-                                <b:commandButton  style="width:100%;" class="subS" type="submit" value="Login" ajax="true" look="primary"   actionListener="#{controlSeccion.iniciar}" update="form"  />
+                                <b:commandButton  style="width:100%;"  type="submit" value="Login" ajax="true" look="primary"   actionListener="#{controlSeccion.iniciar}" update="form1"  />
                                 <b:modal id="amodal" title="Selecione el Rol" styleClass="modalPseudoClass animated jackInTheBox"
                                          closable="false" close-on-escape="false" backdrop="false" >
                                     <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
@@ -480,7 +542,7 @@
                                         </p:selectOneRadio>
                                     </h:panelGrid>
                                     <f:facet name="footer">
-                                        <b:button value="close"  look="danger"  size="sm"  dismiss="modal" onclick="return false;"/>
+                                        <b:commandButton value="cancelar" update="growlMsg"  look="danger" actionListener="#{controlSeccion.salir()}"    size="sm" />
                                         <b:commandButton value="Ok" update="growlMsg" look="primary" actionListener="#{controlSeccion.selecionRol()}"   size="sm" />
                                     </f:facet>
                                 </b:modal>
@@ -534,7 +596,7 @@
                                                         </div>
                                                         <div class="modal-footer bg-#{controlSeccion.skins}-gradient">
                                                             <!--<b:button value="close"  look="danger"  size="sm"  dismiss="modal"  />-->
-                                                            <b:commandButton value="Cancelar"  style="width: 20%" look="danger" onclick="" actionListener="#{controlSeccion.modalRol('mdCambiarRol','hide')}"   size="sm" />
+                                                            <b:commandButton value="Cancelar"  style="width: 20%" look="danger" onclick="" update="tab" actionListener="#{controlSeccion.modalRol('mdCambiarRol1','hide')}"   size="sm" />
                                                             <b:commandButton value="Ok"        style="width: 20%" look="primary" actionListener="#{controlSeccion.selecionarrolseccion}"   size="sm" />
 
 
@@ -682,9 +744,10 @@
                 </div>
             </div>
         </div>
-        <script type="text/javascript" src="js/jquery.zoom.js"></script>
+        <!--<script type="text/javascript" src="js/jquery.zoom.js"></script>-->
+        <script type="text/javascript" src="js/jquery.zoomy.min.js"></script>
         <!--<script src="js/jquery.prettyPhoto.js" type="text/javascript" charset="utf-8"></script>-->
-        <script src="js/bootstrap.min.js"></script>
+        <script src="js/bootstrap.js"></script>
         <!--<script src="js/jquery.slicknav.js"></script>-->
         <script src="js/prueba.js"></script>
         <!--<script src="AdminLTE/js/app.js"></script>-->
