@@ -33,6 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Material.findById", query = "SELECT r FROM Material r WHERE r.id = :id"),
     @NamedQuery(name = Material.BUSCAR_NOMBRE, query = "SELECT r FROM Material r WHERE r.nombre LIKE :nombre")})
 public class Material implements Serializable {
+
     public static final String BUSCAR_NOMBRE = "Material.findByNombre";
     private static final long serialVersionUID = 1L;
     @Id
@@ -49,6 +50,8 @@ public class Material implements Serializable {
     @Basic(optional = false)
     @Column(name = "descripcion")
     private String descripcion;
+    @Column(name = "patron")
+    private int patron;
 
     public Material() {
     }
@@ -57,7 +60,7 @@ public class Material implements Serializable {
         this.id = id;
     }
 
-    public Material(Long id, Double valor, String nombre,String descripcion) {
+    public Material(Long id, Double valor, String nombre, String descripcion) {
         this.id = id;
         this.valor = valor;
         this.nombre = nombre;
@@ -71,8 +74,6 @@ public class Material implements Serializable {
     public void setIdrol(Long idrol) {
         this.id = idrol;
     }
-
-  
 
     public String getNombre() {
         return nombre;
@@ -98,7 +99,14 @@ public class Material implements Serializable {
         this.descripcion = descripcion;
     }
 
- 
+    public int getPatron() {
+        return patron;
+    }
+
+    public void setPatron(int patron) {
+        this.patron = patron;
+    }
+    
 
     @Override
     public int hashCode() {
@@ -122,7 +130,7 @@ public class Material implements Serializable {
 
     @Override
     public String toString() {
-        return "com.Entidades.Material[ idrol=" + id + " ]";
+        return "com.Entidades.Material[ idmaterial=" + id + " ]";
     }
-    
+
 }

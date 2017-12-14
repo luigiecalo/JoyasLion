@@ -367,11 +367,14 @@
                                                 </p:column>
 
                                                 <p:column headerText="peso">
-                                                    <h:outputText value="#{MCircon.circon.muestra}k" />
+                                                    <h:outputText value="#{MCircon.circon.muestra}g" />
                                                 </p:column>
 
                                                 <p:column headerText="cantidad">
                                                     <h:outputText value="#{MCircon.cantidad}" />
+                                                </p:column>
+                                                <p:column headerText="peso total">
+                                                    <h:outputText value="#{MCircon.cantidad*MCircon.circon.muestra}gm" />
                                                 </p:column>
                                             </p:dataTable>
                                         </div>

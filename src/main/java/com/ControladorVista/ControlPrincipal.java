@@ -19,16 +19,18 @@ import com.Entidades.Modulo;
 import com.Entidades.PiedraCentral;
 import com.Entidades.Tipo;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
+import javax.inject.Named;
 import org.primefaces.context.RequestContext;
 
+@Named(value = "controlPrincipal")
 @ManagedBean
 @ViewScoped
 public final class ControlPrincipal implements Serializable {
@@ -40,9 +42,11 @@ public final class ControlPrincipal implements Serializable {
     private boolean Registrar = false;
     private boolean estadoModelo = true;
     private String focus = "panel";
-    private int cantidad = 0;
+    private int cantidad = 1;
     private Long materialSelect = 0l;
     private Material material = new Material();
+    private double valor = 0.0;
+    private String valortexto = "$0";
     private List<String> images;
     private List<String> imagesid;
     @ManagedProperty(value = "#{controlOrden}")
@@ -126,38 +130,54 @@ public final class ControlPrincipal implements Serializable {
 //    suma La Cantidad DE modelos 
     public void sumar() {
         cantidad = cantidad + 1;
+        calcular();
     }
 //resta la Cantidad  De  modelos 
 
     public void restar() {
-        if (cantidad > 0) {
+        if (cantidad > 1) {
             cantidad = cantidad - 1;
         }
+        calcular();
 
     }
 //    añade al carro De compras
 
     public void anadirOrden() {
-        if (cantidad == 0) {
-            util.crearmensajes("ALERTA", "INGRESE CANTIDAD", "ALERTA");
-        } else if (materialSelect == 0l) {
-            util.crearmensajes("ALERTA", "INGRESE MATERIAL", "Selecione Primero Un Material");
-        } else {
-
-            Double peso_modelo = 0.0;
-            material=MaterialDao.consultarC(Material.class, materialSelect);
-             peso_modelo = modeloSelecionado.getPeso_modelo() * material.getValor();
-           
-                
-            controlOrden.agregarordenmodelo(modeloSelecionado, cantidad, material, peso_modelo);
+        if (validarorden()) {
+            calcular();
+            controlOrden.agregarordenmodelo(modeloSelecionado, cantidad, material, valor);
 //            controlOrdenes.setCantidad(203);
 //            ControlOrdenes bean1 = context.getApplication().evaluateExpressionGet(context, "#{controlOrdenes}", ControlOrdenes.class);
 //            bean.setCantidad(bean.getCantidad() + 1);
             util.crearmensajes("INFO", "MENSAGE", "REgistro Exitoso");
             util.modal("mdModelo", "hide");
-            cantidad = 0;
-            material = null;
+            limpiarOrden();
         }
+    }
+
+    public void calcular() {
+        Double peso_modelo = 0.0;
+        if (validarorden()) {
+            Material materi = MaterialDao.consultarC(Material.class, materialSelect);
+            double pesopatron = modeloSelecionado.getPeso_modelo() * materi.getPatron();
+            double pesoZircones = pesopatron + modeloSelecionado.getPeso_circones();
+            double subvalor = pesoZircones * materi.getValor();
+            valor = subvalor * cantidad;
+        }
+
+    }
+
+    public boolean validarorden() {
+        boolean valido = false;
+        if (cantidad == 0) {
+            util.crearmensajes("ALERTA", "INGRESE CANTIDAD", "ALERTA");
+        } else if (materialSelect == 0l) {
+            util.crearmensajes("ALERTA", "INGRESE MATERIAL", "Selecione Primero Un Material");
+        } else {
+            valido = true;
+        }
+        return valido;
     }
 
     public void cargarimagenes() {
@@ -374,6 +394,23 @@ public final class ControlPrincipal implements Serializable {
 
     public void setControlOrden(ControlOrden message) {
         this.controlOrden = message;
+    }
+
+    public void limpiarOrden() {
+        cantidad = 1;
+        material = null;
+        materialSelect=0l;
+    }
+
+    public String getValortexto() {
+        DecimalFormat formateador = new DecimalFormat("###,###.##");
+//Este daria a la salida 1,000
+        valortexto = formateador.format(valor);
+        return valortexto;
+    }
+
+    public void setValortexto(String valortexto) {
+        this.valortexto = valortexto;
     }
 
 }

@@ -714,7 +714,7 @@ public final class ControlModelos implements Serializable {
             Double sum = Mcircon.getCircon().getMuestra() * Mcircon.getCantidad();
             peso = sum + peso;
         }
-        pesoCirones = peso * 0.2;
+        pesoCirones = peso;
         return pesoCirones;
     }
 

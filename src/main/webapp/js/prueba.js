@@ -1,18 +1,5 @@
 var nav = $('#barraup');
-$('.zoom').zoomy({
-    innerZoom: true,
-    lensHeight: 100,
-    lensWidth: 300
-});
 
-$('#thumbs img').click(function () {
-    $('#largeImage').attr('src', $(this).attr('src'));
-    $('#description').html($(this).attr('alt'));
-});
-$('#thumbs').delegate('img', 'click', function () {
-    $('#largeImage').attr('src', $(this).attr('src').replace('thumbs', 'largeImage'));
-    $('#description').html($(this).attr('alt'));
-});
 
 if (nav.length != 0) {
     var height = $("#navpricipal").height();
