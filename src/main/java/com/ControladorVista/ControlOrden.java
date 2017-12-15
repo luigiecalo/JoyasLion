@@ -12,9 +12,9 @@ import com.Entidades.Material;
 import com.Entidades.Modelo;
 import com.Entidades.Orden;
 import com.Entidades.OrdenModelo;
-import com.Entidades.Orden_;
 import com.Entidades.Rol;
 import com.Entidades.Usuario;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -136,30 +136,30 @@ public class ControlOrden {
         List<OrdenModelo> descripcion = new ArrayList<OrdenModelo>();
         for (OrdenModelo ordMod : ordenesMoldelos) {
             OrdenModelo nuevoordMod = ordMod;
-            nuevoordMod.setOrdenModeloPK(ordMod.getModelo().getId(), orden.getId(),ordMod.getMaterial().getId());
+            nuevoordMod.setOrdenModeloPK(ordMod.getModelo().getId(), orden.getId(), ordMod.getMaterial().getId());
             descripcion.add(nuevoordMod);
         }
         orden.setOrdenesModelo(descripcion);
         ODAO.modificar(orden);
     }
-    
-     public void chooseCar() {
-        Map<String,Object> options = new HashMap<String, Object>();
+
+    public void chooseCar() {
+        Map<String, Object> options = new HashMap<String, Object>();
         options.put("resizable", false);
         options.put("draggable", false);
-         options.put("contentWidth", "100%");
+        options.put("contentWidth", "100%");
         options.put("contentHeight", "100%");
-         options.put("width", 640);
+        options.put("width", 640);
         options.put("height", 340);
         options.put("headerElement", "customheader");
 //        options.put("modal", true);
         RequestContext.getCurrentInstance().openDialog("selectCar", options, null);
     }
-     
-      public void onCarChosen(SelectEvent event) {
+
+    public void onCarChosen(SelectEvent event) {
         Usuario car = (Usuario) event.getObject();
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Car Selected", "Id:" + car.getId());
-         
+
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
 ///GET Y SET
@@ -173,6 +173,14 @@ public class ControlOrden {
         for (OrdenModelo ordenesMoldelo : ordenesMoldelos) {
             total = total + ordenesMoldelo.getTotal();
         }
+        return total;
+    }
+
+    public String getTotalOrdenString() {
+        String total = "0.0";
+        DecimalFormat formateador = new DecimalFormat("###,###.##");
+//Este daria a la salida 1,000
+        total = formateador.format(getTotalOrden());
         return total;
     }
 
