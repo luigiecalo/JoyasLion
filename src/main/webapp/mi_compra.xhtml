@@ -1,0 +1,275 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Timber</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+        <link rel="stylesheet" type="text/css" href="css/main.css"/>
+        <!--<link rel='stylesheet' id='camera-css'  href='css/camera.css' type='text/css' media='all'/>-->
+
+        <!--<link rel="stylesheet" type="text/css" href="css/slicknav.css"/>-->
+        <link rel="stylesheet" href="css/animate.css"></link>
+        <link rel="stylesheet" type="text/css" href="css/style.css"/>
+        <!--<link type="text/css" href="css/zoomy.css" rel="stylesheet"/>-->
+        <!--<link rel="stylesheet" href="css/primefacesConfig.css"/>-->
+        <!--<link type="text/css" href="css/zoomy.css" rel="stylesheet"/>-->
+        <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+
+        <!--<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700|Open+Sans:700' rel='stylesheet' type='text/css'/>-->
+
+        <link rel="stylesheet" type="text/css" href="css/form-elements.css"/>
+        <script src="js/sorting.js" type="text/javascript"></script>
+        <script src="js/jquery.isotope.js" type="text/javascript"></script>
+        <!--<link rel="stylesheet" href="css/primefacesConfig.css"/>-->
+
+        <style>
+
+            .vertical-menu {
+                width: 200px; /* Set a width if you like */
+                background-color: #0e0e0e;
+            }
+
+            .vertical-menu a {
+                background-color: #0e0e0e; /* Grey background color */
+                color: black; /* Black text color */
+                display: block; /* Make the links appear below each other */
+                padding: 9px; /* Add some padding */
+                text-decoration: none; /* Remove underline from links */
+            }
+
+            .vertical-menu a:hover {
+                /*background-color: #ccc;  Dark grey background on mouse-over */
+            }
+
+            .thumbs img {
+                float: left;
+                width: 60px;
+                height:60px; 
+            }
+            #description {
+                background: black;
+                color: white;
+                position: absolute;
+                bottom: 0;
+                padding: 10px 20px;
+                width: 525px;
+                margin: 5px;
+            }
+            #panel { 
+                position: relative;
+                width: 80%;
+            }
+        </style>
+
+    </h:head>
+    <h:body>
+
+        <div id="home" style="background: url('images/joyeria.png')">
+            <div id="barraup"  class="default">
+                <div class="container" >
+                    <div class="row">
+                        <div class="logo col-md-2">
+                            <div>
+                                <a href="#">
+                                    <img src="images/logo.png"/>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <!--<h:form>-->
+                            <div  class="navmenu" style="text-align: right;">
+                                <ul id="menu">
+                                    <h:form id="notificaciones">
+                                        <li class="active" ><a href="#home">Home</a></li>
+                                        <li><a href="index1.xhtml#productos">Productos</a> </li>
+                                        <li><a href="index1.xhtml#objectivos">Objectivos</a></li>
+                                        <li><a href="index1.xhtml#nosotros">nosotros</a></li>
+                                        <li ><a href="index1.xhtml#contact">Contact</a></li>
+                                        <li class="last" style="display: #{controlSeccion.sinSeccionhtml()}"><a href="#login">Entrar</a></li>
+
+                                        <li class="dropdown" >
+                                            <div class="cart_spam" >
+                                                <a href="#" class="dropdown-toggle"  data-toggle="dropdown"> #{controlSeccion.miembro.nombre1} #{controlSeccion.miembro.apellido1}</a>
+                                                <div class="vertical-menu dropdown-menu">
+                                                    <a href="index1.xhtml#datos" class="active">MI PERFIL</a>
+                                                    <a href="#">MIS ORDENES</a>
+                                                    <a href="mi_compra.xhtml#">MI CARRITO</a>
+                                                    <a href="#">COMPRAS REALIZADAS</a>
+                                                    <p:commandLink style="display: #{controlSeccion.conSeccionhtml()}" update="@form"  actionListener="#{controlSeccion.salir()}">
+                                                        <h:outputText value="cerrar Seccion" />
+                                                        <i class="fa fa-close"></i>
+                                                    </p:commandLink>
+                                                </div>
+
+                                            </div>
+                                        </li>
+
+                                        <li class="dropdown notifications-menu" style="height:20px">
+
+                                            <div class="cart_spam" >
+                                                <a  href="#" class="cart-items dropdown-toggle"  data-toggle="dropdown">
+                                                    <span class="cart-items cart-items-number">#{controlOrden.ordenesMoldelos.size()}</span>  
+                                                </a>
+                                                <a  class="cart-subtotal">
+                                                    <span class="cart-subtotal-currency" style="opacity: 1;">$#{controlOrden.totalOrdenString}</span>
+                                                </a>
+                                                <ul class="dropdown-menu"   style="color: black;">
+                                                    <div class="col-md-12">
+                                                        <div>
+
+                                                            <p:dataList value="#{controlOrden.ordenesMoldelos}" var="orden2" type="definition" >
+                                                                <f:facet name="header">
+                                                                    Carrito De Compras
+                                                                </f:facet>
+                                                                Cantidad:#{orden.cantidad}, Valor:COP #{orden.valor}
+                                                                <f:facet name="description">
+                                                                    <img  src="images/line.png" style="width:100%;height:1px"/>
+                                                                    <img  src="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',orden2.modelo.imagen)}.png" style="width:50px;height:50px"/> 
+                                                                </f:facet>
+                                                            </p:dataList>
+
+                                                        </div>
+                                                    </div>
+                                                </ul>
+                                            </div>
+
+                                        </li>
+                                        <li class="last" >
+                                            <div>
+                                                <h:form>
+
+
+
+                                                </h:form>
+                                            </div>
+                                        </li>
+                                    </h:form>
+                                </ul>
+                            </div>
+
+                            <!--</h:form>-->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div> 
+
+        <!--DATOS-->
+        <div class="line1"  id="datos" style="display: #{controlSeccion.conSeccionhtml()}">
+            <div class="container">
+                <br></br>
+                <h:form >
+                    <div  class="col-md-12 col-xs-12">
+                        <p:panel id="tab" header="Mi Compra">
+
+                            <div class="ui-g">
+                                <div class="ui-g-12 ui-md-12 ui-lg-3" >
+                                    <div class="box-body box-profile" style="text-align: center">
+
+                                        <p:graphicImage id="temp" class="profile-user-img img-responsive img-circle"  value="#{controlUsuarios.carpeta}#{controlUtilidades.util.getExiteimagen(controlUsuarios.imagenedit?'temp':'imagenes/usuarios',controlUsuarios.imagen)}.png" cache="false"  />
+                                        #{controlSeccion.miembro.nombre1}-#{controlSeccion.miembro.apellido1}
+
+                                    </div>
+                                </div>
+
+                                <div class="ui-g-12 ui-md-6 ui-lg-9" >
+                                    <div class="ui-g-12 ui-md-12 ui-lg-12"  >
+
+                                        <div class="ui-g-12 ui-md-12 ui-lg-12" style="padding:0px">
+                                            <ul class="products-list product-list-in-box">
+                                                <ui:repeat value="#{controlOrden.ordenesMoldelos}" var="om">
+                                                    <li class="item">
+                                                        <div class="product-img">
+                                                            <img  src="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',om.modelo.imagen)}.png"  class="modelos img-thumbnail" alt="Generic placeholder thumbnail"/>
+                                                        </div>
+                                                        <div class="product-info">
+                                                            <a href="javascript:void(0)" class="product-title">
+                                                                <h:outputText value="#{om.modelo.codigo}  " style="font-size:17px;"/>
+
+                                                            </a>
+                                                            <b:buttonGroup >
+                                                                <b:button look="#{om.material=='ORO'?'warning':'default'}" style="#{om.material=='ORO'?'':'color:black'}" title="peso en #{om.material}" tooltip="peso en #{om.material}" 
+                                                                          tooltip-position="bottom" value="#{controlUtilidades.util.formatoDecimal(om.peso_material,'0.0')}g"/>
+                                                                <b:commandButton value="Cancelar" actionListener="#{controlOrden.eliminaOrden(om)}" process="@this"  look="danger"  ajax="true"   >
+                                                                    <i class="fa fa-trash"></i>
+                                                                </b:commandButton>
+                                                            </b:buttonGroup>
+
+                                                            <span class="label label-warning pull-right">$#{om.total}</span>
+                                                            <span class="product-description">
+
+                                                                Cantidad: <h:outputText value="#{om.cantidad}"/>
+                                                            </span>
+                                                        </div>
+                                                    </li>
+                                                </ui:repeat>
+
+                                            </ul>
+                                        </div>
+
+                                        <div class="ui-g-4 ui-md-4 ui-lg-4" style="padding:0px">
+
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </p:panel>
+                    </div>
+                </h:form>
+
+            </div>
+        </div>
+        <!--footer-->
+        <div class="lineBlack">
+            <div class="">
+                <div class="row downLine">
+
+                    <div class="col-md-6 text-left copy">
+                        <p>Copyright &copy; 2016 Timber. Crafted by <a href="http://designscrazed.org/">Designscrazed</a>. </p>
+                    </div>
+                    <div class="col-md-6 text-right dm">
+                        <ul id="downMenu">
+                            <li class="active"><a href="#home">Home</a></li>
+                            <li><a href="#productos">Productos</a> </li>
+                            <li><a href="#objectivos">Objectivos</a></li>
+                            <li><a href="#nosotros">Nosotros</a></li>
+                            <li class="last"><a href="#contact">Contact</a></li>
+                            <!--li><a href="#features">Features</a></li-->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<script type="text/javascript" src="js/jquery.zoom.js"></script>-->
+        <script type="text/javascript" src="js/jquery.zoomy.min.js"></script>
+        <!--<script src="js/jquery.prettyPhoto.js" type="text/javascript" charset="utf-8"></script>-->
+        <script src="js/bootstrap.js"></script>
+        <!--<script src="js/jquery.slicknav.js"></script>-->
+        <script src="js/prueba.js"></script>
+        <!--<script src="AdminLTE/js/app.js"></script>-->
+        <!--<script src="bootstrap/js/bootstrap.min.js"></script>-->
+        <script src="js/scripts.js"></script>
+
+        <!-- /.col -->
+
+
+
+
+    </h:body>
+
+</html>
+

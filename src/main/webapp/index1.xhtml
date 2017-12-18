@@ -32,6 +32,22 @@
 
         <style>
 
+            .vertical-menu {
+                width: 200px; /* Set a width if you like */
+                background-color: #0e0e0e;
+            }
+
+            .vertical-menu a {
+                background-color: #0e0e0e; /* Grey background color */
+                color: black; /* Black text color */
+                display: block; /* Make the links appear below each other */
+                padding: 9px; /* Add some padding */
+                text-decoration: none; /* Remove underline from links */
+            }
+
+            .vertical-menu a:hover {
+                /*background-color: #ccc;  Dark grey background on mouse-over */
+            }
 
             .thumbs img {
                 float: left;
@@ -79,7 +95,24 @@
                                             <li><a href="#nosotros">nosotros</a></li>
                                             <li ><a href="#contact">Contact</a></li>
                                             <li class="last" style="display: #{controlSeccion.sinSeccionhtml()}"><a href="#login">Entrar</a></li>
-                                            <li ><a href="#datos">#{controlSeccion.miembro.nombre1} #{controlSeccion.miembro.apellido1}</a></li>
+
+                                            <li class="dropdown" >
+                                                <div class="cart_spam" >
+                                                    <a href="#" class="dropdown-toggle"  data-toggle="dropdown"> #{controlSeccion.miembro.nombre1} #{controlSeccion.miembro.apellido1}</a>
+                                                    <div class="vertical-menu dropdown-menu">
+                                                        <a href="#datos" class="active">MI PERFIL</a>
+                                                        <a href="mi_orden.xhtml">MIS ORDENES</a>
+                                                        <a href="mi_compra.xhtml#">MI CARRITO</a>
+                                                        <a href="#">COMPRAS REALIZADAS</a>
+                                                        <p:commandLink style="display: #{controlSeccion.conSeccionhtml()}" update="@form"  actionListener="#{controlSeccion.salir()}">
+                                                            <h:outputText value="cerrar Seccion" />
+                                                            <i class="fa fa-close"></i>
+                                                        </p:commandLink>
+                                                    </div>
+
+                                                </div>
+                                            </li>
+
                                             <li class="dropdown notifications-menu" style="height:20px">
 
                                                 <div class="cart_spam" >
@@ -93,38 +126,14 @@
                                                         <div class="col-md-12">
                                                             <div>
 
-                                                                <p:dataList value="#{controlOrden.ordenesMoldelos}" var="orden2" type="definition" paginator="true">
-                                                                    <f:facet name="header">
-                                                                        Carrito De Compras
-                                                                    </f:facet>
-                                                                    Cantidad:#{orden.cantidad}, Valor:COP #{orden.valor}
+                                                                <p:dataList value="#{controlOrden.ordenesMoldelos}" var="orden2" type="definition" >
+                                                                    
                                                                     <f:facet name="description">
+                                                                        Cantidad:#{orden2.cantidad}, Valor:COP #{orden2.valor}
                                                                         <img  src="images/line.png" style="width:100%;height:1px"/>
                                                                         <img  src="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',orden2.modelo.imagen)}.png" style="width:50px;height:50px"/> 
                                                                     </f:facet>
                                                                 </p:dataList>
-                                                                <b:panel   id="mod2">
-
-
-                                                                    <ui:repeat value="#{controlOrden.ordenesMoldelos}" var="orden">
-
-                                                                        <li><a href="#filter" data-option-value=".#{tipo.id}">#{tipo.nombre}</a></li>
-                                                                        <img  src="images/line.png" style="width:100%;height:1px"/>
-                                                                        <img  src="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',orden.modelo.imagen)}.png" style="width:50px;height:50px"/>
-                                                                        <p class="product-name">
-                                                                            #{orden.modelo.codigo}
-                                                                        </p>
-                                                                        <div class="card-view-details" style="display: none;">
-                                                                            #{orden.modelo.peso_circones}
-                                                                            Oro Rosa 750  Zafiro amarillo amp; Brillante 
-                                                                        </div>
-                                                                        <div class="card-details">Cantidad:#{orden.cantidad}</div><p class="price">
-                                                                            <span >
-                                                                                <span class="price">COP #{orden.valor}</span>				
-                                                                            </span>
-                                                                        </p>
-                                                                    </ui:repeat>
-                                                                </b:panel>
 
                                                             </div>
                                                         </div>
@@ -132,18 +141,7 @@
                                                 </div>
 
                                             </li>
-                                            <li class="last" style="display: #{controlSeccion.conSeccionhtml()}">
-                                                <div>
-                                                    <h:form>
-
-                                                        <p:commandLink  update="@form"  actionListener="#{controlSeccion.salir()}">
-                                                            <h:outputText value="cerrar Seccion" />
-                                                            <i class="fa fa-close"></i>
-                                                        </p:commandLink>
-
-                                                    </h:form>
-                                                </div>
-                                            </li>
+                             
                                         </h:form>
                                     </ul>
                                 </div>
@@ -332,7 +330,7 @@
                                                 <p>#{Modelo.codigo}</p>
                                                 <p>#{Modelo.tipo_modelo.nombre}</p>
                                             </ul>
-                                            
+
                                         </div>
                                     </div>
                                 </div>

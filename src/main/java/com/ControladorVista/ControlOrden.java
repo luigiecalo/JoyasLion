@@ -61,15 +61,15 @@ public class ControlOrden {
 /// METODOS
     //Agrega un Modelo a La lista
 
-    public void agregarordenmodelo(Modelo modelo, int cant, Material material, Double peso_material) {
+    public void agregarordenmodelo(Modelo modelo, int cant, Material material, Double valor) {
         OrdenModelo om = new OrdenModelo();
         om.setModelo(modelo);
         om.setCantidad(cant);
         om.setDescuento(0.0);
         om.setMaterial(material);
-        om.setPeso_material(cant * peso_material);
-        om.setValor(peso_material * 100);
-        om.setTotal(cant * om.getValor());
+        om.setPeso_material(modelo.getPeso_modelo()*cant);
+        om.setValor(valor/cant);
+        om.setTotal(valor);
         om.setEstado("PENDIENTE");
         if (ordenesMoldelos.size() <= 0) {
             ordenesMoldelos.add(om);
@@ -169,7 +169,7 @@ public class ControlOrden {
     }
 
     public Double getTotalOrden() {
-        Double total = 0.0;
+        double total = 0.0;
         for (OrdenModelo ordenesMoldelo : ordenesMoldelos) {
             total = total + ordenesMoldelo.getTotal();
         }

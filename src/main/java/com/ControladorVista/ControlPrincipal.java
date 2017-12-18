@@ -146,6 +146,7 @@ public final class ControlPrincipal implements Serializable {
     public void anadirOrden() {
         if (validarorden()) {
             calcular();
+                
             controlOrden.agregarordenmodelo(modeloSelecionado, cantidad, material, valor);
 //            controlOrdenes.setCantidad(203);
 //            ControlOrdenes bean1 = context.getApplication().evaluateExpressionGet(context, "#{controlOrdenes}", ControlOrdenes.class);
@@ -159,10 +160,10 @@ public final class ControlPrincipal implements Serializable {
     public void calcular() {
         Double peso_modelo = 0.0;
         if (validarorden()) {
-            Material materi = MaterialDao.consultarC(Material.class, materialSelect);
-            double pesopatron = modeloSelecionado.getPeso_modelo() * materi.getPatron();
+            material = MaterialDao.consultarC(Material.class, materialSelect);
+            double pesopatron = modeloSelecionado.getPeso_modelo() * material.getPatron();
             double pesoZircones = pesopatron + modeloSelecionado.getPeso_circones();
-            double subvalor = pesoZircones * materi.getValor();
+            double subvalor = pesoZircones * material.getValor();
             valor = subvalor * cantidad;
         }
 
