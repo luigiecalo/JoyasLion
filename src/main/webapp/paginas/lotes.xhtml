@@ -16,7 +16,7 @@
                         <div  class="box">
 
                             <div  class="box-body">
-                                 <p:commandButton icon="fa fa-plus-circle" 
+                                <p:commandButton icon="fa fa-plus-circle" 
 
                                                  value="Agregar Nuevo Lote" 
                                                  rendered="#{controlModelos.butompermisos(controlSeccion.rol.idrol,controlplantillas.moduloSelecionado,'E')}" 
@@ -24,7 +24,7 @@
                                                  process="@this" 
                                                  update="tab" 
                                                  styleClass="btn-guardar"/>
-                                
+
 
 
 
@@ -103,13 +103,13 @@
                         <div  class="box">
 
                             <div  class="box-body">
-                                  <p:commandButton icon="fa fa-pencil-square" value="Editar" rendered="#{!controlLote.verBtnRegistro()}" update="tab"  styleClass="btn-editar"/>
+                                <p:commandButton icon="fa fa-pencil-square" value="Editar" rendered="#{!controlLote.verBtnRegistro()}" update="tab"  styleClass="btn-editar"/>
                                 <p:commandButton  value="Guardar" rendered="#{controlLote.verBtnRegistro()}"  update="tab"  icon="fa fa-save" styleClass="btn-guardar"/>
                                 <p:commandButton icon="fa fa-clone" value="Nuevo" actionListener="#{controlLote.limpiar()}" process="@this" update="tab" styleClass="btn-nuevo"/>
                                 <p:commandButton icon="fa fa-share" value="Atras" actionListener="#{controlLote.consultaModulo()}" process="@this"  update="tab" styleClass="btn-consultar"/>
 
 
-                                
+
 
                             </div>
                             <!-- /.box-body -->
@@ -146,7 +146,7 @@
                     </div>
                     <div class="ui-g">
                         <div class="ui-g-12">
-                       
+
                             <p:dataTable id="loteModeloslista" selectionMode="single" var="lotesModelos" rowKey="#{lotesModelos}" style="width: 100%" value="#{controlLote.lotesModelosOrdenesMap}" >
 
 
@@ -193,7 +193,6 @@
                     <legend>Ordenes en espera: 
 
                     </legend>
-
                     <ui:repeat  var="orden" value="#{controlLote.ordenes}">
                         <b:panel  title="#{orden.codigo}-#{orden.cliente.login}"  collapsed="true">
                             <b:commandButton value=""  rendered="#{orden.ordenesModelo.size()>1}" tooltip-container="ingresar a lote"  actionListener="#{controlLote.agregarOreden(orden)}" process="@this"  look="success"  >
@@ -204,12 +203,12 @@
                                     <div class="ui-g-12">
                                         <p:dataTable id="modelos" var="modu"  style="width: 100%" value="#{orden.ordenesModelo}" >
 
-                                            <p:column headerText="Enviar" style="width:20%;" >
+                                            <p:column headerText="Enviar" style="width:30%;" >
                                                 <b:commandButton value="" tooltip-container="ingresar a lote"  actionListener="#{controlLote.agregarOredenModelo(modu)}" process="@this"  look="#{modu.material.nombre=='ORO'?'warning':modu.material.nombre=='PLATA'?'success':''}"  >
                                                     <i class="fa fa-arrow-left"></i>
                                                 </b:commandButton>
                                             </p:column>
-                                            <p:column headerText="Modelo">
+                                            <p:column headerText="Modelo" style="width: 70%">
                                                 <h:commandLink  id="ouputLabelModelo" value="#{modu.modelo.codigo} - #{modu.material.nombre} (#{modu.cantidad})" />
                                                 <p:tooltip for="ouputLabelModelo">  
                                                     <p:graphicImage value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',modu.modelo.imagen)}.png"/>  

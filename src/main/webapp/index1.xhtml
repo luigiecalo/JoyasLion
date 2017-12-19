@@ -595,7 +595,7 @@
                                 <div class="ui-g-12 ui-md-12 ui-lg-3" >
                                     <div class="box-body box-profile" style="text-align: center">
 
-                                        <p:graphicImage id="temp" class="profile-user-img img-responsive img-circle"  value="#{controlUsuarios.carpeta}#{controlUtilidades.util.getExiteimagen(controlUsuarios.imagenedit?'temp':'imagenes/usuarios',controlUsuarios.imagen)}.png" cache="false"  />
+                                        <p:graphicImage id="temp" class="profile-user-img img-responsive img-circle"  value="imagenes/usuarios/#{controlUtilidades.util.getExiteimagen('imagenes/usuarios',controlSeccion.miembro.imagen)}.png" cache="false"  />
                                         #{controlSeccion.miembro.nombre1}-#{controlSeccion.miembro.apellido1}
 
                                     </div>

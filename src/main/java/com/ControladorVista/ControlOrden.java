@@ -99,6 +99,8 @@ public class ControlOrden {
 
     public void eliminaOrden(OrdenModelo om) {
         ordenesMoldelos.remove(om);
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.getCurrentInstance().update("tab");
     }
 
     //Se Genweara Lel Registro De La orden En base De Datos
