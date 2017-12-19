@@ -1,0 +1,96 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+
+        <b:panel id="registro" collapsible="false" >
+            <p:focus context="registro"/>
+            <div id="barraup" class="col-xs-12 col-md-12 " style="z-index:200" >
+                <div  class="box">
+
+                    <div  class="box-body">
+                        <p:commandButton icon="fa fa-save" value="Guardar"    actionListener="#{controlUsuariosClientes.save()}"  update="growlMsg"   styleClass="btn-guardar"/>
+                        <p:commandButton icon="fa fa-clone" value="Nuevo"  actionListener="#{controlUsuariosClientes.limpiar()}" process="@this" update="registro" styleClass="btn-nuevo"/>
+
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+
+            </div>
+            <div  class="col-md-12 col-xs-12">
+                <b:inputText 
+                    value="#{controlUsuariosClientes.identificacion}"
+                    required="true" 
+                    renderLabel="true"
+                    label="Identificacion"
+                    >
+                    <f:facet name="prepend">
+                        <b:icon name="glyphicon glyphicon-list-alt"/>
+                    </f:facet>
+                </b:inputText>
+            </div>
+
+            <div  class="col-md-12 col-xs-12">
+                <b:inputText 
+                    value="#{controlUsuariosClientes.apellido1}"
+                    required="true" 
+                    renderLabel="true"
+                    label="Primer apellido"
+                    >
+                    <f:facet name="prepend">
+                        <b:icon name="glyphicon glyphicon-list-alt"/>
+                    </f:facet>
+                </b:inputText>
+            </div>
+            <div  class="col-md-12 col-xs-12">
+                <b:inputText 
+                    value="#{controlUsuariosClientes.apellido2}"
+                    required="true" 
+                    renderLabel="true"
+                    label="Segundo apellido"
+                    >
+                    <f:facet name="prepend">
+                        <b:icon name="glyphicon glyphicon-list-alt"/>
+                    </f:facet>
+                </b:inputText>
+            </div>
+            <div  class="col-md-12 col-xs-12">
+                <b:inputText 
+                    value="#{controlUsuariosClientes.nombre1}"
+                    required="true" 
+                    renderLabel="true"
+                    label="Primer Nombre"
+                    >
+                    <f:facet name="prepend">
+                        <b:icon name="glyphicon glyphicon-list-alt"/>
+                    </f:facet>
+                </b:inputText>
+            </div>
+            <div  class="col-md-12 col-xs-12">
+                <b:inputText 
+                    value="#{controlUsuariosClientes.nombre2}"
+                    required="true" 
+                    renderLabel="true"
+                    label="Segundo Nombre"
+                    >
+                    <f:facet name="prepend">
+                        <b:icon name="glyphicon glyphicon-list-alt"/>
+                    </f:facet>
+                </b:inputText>
+            </div>
+
+
+
+        </b:panel>
+
+        <p:messages autoUpdate="false"/>
+
+
+    </ui:composition>
+
+</html>

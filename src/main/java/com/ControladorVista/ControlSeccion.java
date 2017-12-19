@@ -86,13 +86,48 @@ public class ControlSeccion implements Serializable {
 
     }
 
+    public void iniciar(String usu, String pass) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+        Usuario usuario = usuarioDao.login(usu, pass);
+        if (usuario == null) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Primer Mensage", "USUARIO NO ENCONTRADO REGISTRADO"));
+        } else {
+            this.miembro = miembroDao.BuscarMiembroUsuario(usuario);
+            if (usuario.getRoles().size() == 1) {
+                rolselect = usuario.getRoles().get(0).getIdrol();
+                selecionRol();
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Primer Mensage", "Bienvenido " + usuario.getLogin()));
+            } else {
+                requestContext.getCurrentInstance().execute("$('.modalPseudoClass').modal();");
+
+            }
+        }
+
+    }
+
+    public void registrarCliente() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+
+        requestContext.getCurrentInstance().execute("$('.modalregistro').modal();");
+
+    }
+
+    public void cancelarCliente() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+        requestContext.getCurrentInstance().execute("$('.modalregistro').modal('hide');");
+
+    }
+
     public void selecionRol() {
         FacesContext context = FacesContext.getCurrentInstance();
         RequestContext requestContext = RequestContext.getCurrentInstance();
         if (rolselect.equals(toLong(0))) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Primer Mensage", "SELECIONE UN ROL"));
             requestContext.getCurrentInstance().execute("$('.modalPseudoClass').modal('hide');");
-         
+
         } else {
             rolSeccion = rolDao.consultarC(Rol.class, rolselect);
             if (rolSeccion != null) {
@@ -157,6 +192,7 @@ public class ControlSeccion implements Serializable {
             return "none";
         }
     }
+
     public String sinSeccionhtml() {
         if (seccion) {
             return "none";

@@ -22,13 +22,11 @@
         <!--<link rel="stylesheet" href="css/primefacesConfig.css"/>-->
         <!--<link type="text/css" href="css/zoomy.css" rel="stylesheet"/>-->
         <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
-<link rel="stylesheet" href="AdminLTE/css/skins/skin-#{controlSeccion.skins}.css"/>
+        <link rel="stylesheet" href="AdminLTE/css/skins/skin-#{controlSeccion.skins}.css"/>
         <!--<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700|Open+Sans:700' rel='stylesheet' type='text/css'/>-->
 
-        <link rel="stylesheet" type="text/css" href="css/form-elements.css"/>
-        <script src="js/sorting.js" type="text/javascript"></script>
-        <script src="js/jquery.isotope.js" type="text/javascript"></script>
-        <!--<link rel="stylesheet" href="css/primefacesConfig.css"/>-->
+        <!--<link rel="stylesheet" type="text/css" href="css/form-elements.css"/>-->
+        <link rel="stylesheet" href="AdminLTE/css/AdminLTE.css"/>
 
         <style>
             .products-list .product-img {
@@ -99,14 +97,14 @@
                                         <li><a href="index1.xhtml#objectivos">Objectivos</a></li>
                                         <li><a href="index1.xhtml#nosotros">nosotros</a></li>
                                         <li ><a href="index1.xhtml#contact">Contact</a></li>
-                                        <li class="last" style="display: #{controlSeccion.sinSeccionhtml()}"><a href="#login">Entrar</a></li>
+                                        <li class="last" style="display: #{controlSeccion.sinSeccionhtml()}"><a href="index1.xhtml#login">Entrar</a></li>
 
                                         <li class="dropdown" >
                                             <div class="cart_spam" >
                                                 <a href="#" class="dropdown-toggle"  data-toggle="dropdown"> #{controlSeccion.miembro.nombre1} #{controlSeccion.miembro.apellido1}</a>
                                                 <div class="vertical-menu dropdown-menu">
                                                     <a href="index1.xhtml#datos" class="active">MI PERFIL</a>
-                                                    <a href="#">MIS ORDENES</a>
+                                                    <a href="mi_orden.xhtml##">MIS ORDENES</a>
                                                     <a href="mi_compra.xhtml#">MI CARRITO</a>
                                                     <a href="#">COMPRAS REALIZADAS</a>
                                                     <p:commandLink style="display: #{controlSeccion.conSeccionhtml()}" update="@form"  actionListener="#{controlSeccion.salir()}">
@@ -148,15 +146,7 @@
                                             </div>
 
                                         </li>
-                                        <li class="last" >
-                                            <div>
-                                                <h:form>
 
-
-
-                                                </h:form>
-                                            </div>
-                                        </li>
                                     </h:form>
                                 </ul>
                             </div>
@@ -170,23 +160,35 @@
         </div> 
 
         <!--DATOS-->
-        <div class="line1"  id="datos" style="display: #{controlSeccion.conSeccionhtml()}">
+        <div class="line1"  id="datos" >
             <div class="container">
                 <br></br>
-                
+
                 <h:form >
                     <div  class="col-md-12 col-xs-12">
+                        <b:growl id="growlMsg" globalOnly="true" placementFrom="top"
+                                 show-detail="true" show-summary="false" allowDismiss="true"
+                                 delay="10000" escape="true" /> 
                         <p:panel id="tab" header="Mi Compra">
 
                             <div class="ui-g">
                                 <div class="ui-g-12 ui-md-12 ui-lg-3" >
-                                    <div class="box-body box-profile" style="text-align: center">
+                                    <div class="ui-g">
+                                        <div class="ui-g-6 ui-md-12">
+                                            <div class="small-box bg-#{controlSeccion.skins}">
+                                                <div class="inner">
+                                                    <h2>
+                                                        #{controlSeccion.miembro.nombre1} #{controlSeccion.miembro.nombre2}
+                                                    </h2>
 
-                                        <p:graphicImage id="temp" class="profile-user-img img-responsive img-circle" 
-                                                        value="imagenes/usuarios/#{controlUtilidades.util.getExiteimagen('imagenes/usuarios',controlSeccion.miembro.imagen)}.png"
-                                                        cache="false"  />
+                                                    <p style="text-align: right">TOTAL<span class="info-box-number">$#{controlOrden.totalOrden}</span></p>
+                                                </div>
+                                                <div class="icon">
+                                                    <i class="fa fa-cart-plus"></i>
+                                                </div>
+                                            </div>
+                                        </div>  
 
-                                        #{controlSeccion.miembro.nombre1}-#{controlSeccion.miembro.apellido1}
 
                                     </div>
                                 </div>
@@ -225,9 +227,28 @@
 
                                             </ul>
                                         </div>
+                                        <div class="ui-g-4 ui-md-4 ui-lg-4" style="padding:0px;display: #{controlSeccion.sinSeccionhtml()}">
+                                            <b:commandButton type="submit"  value="Registrarme"  look="success" actionListener="#{controlSeccion.registrarCliente}"  ajax="true"  size="sm"   >
+                                                <i class="fa fa-users"></i>
+                                            </b:commandButton>
 
-                                        <div class="ui-g-4 ui-md-4 ui-lg-4" style="padding:0px">
+                                            <b:modal id="modalCliente" title="REGISTRO" styleClass="modalregistro animated jackInTheBox"
+                                                     close-on-escape="false" backdrop="false" >
+                                                <ui:include  src="usuarioCliente.xhtml" />
+                                                <f:facet name="footer">
+                                                    <b:commandButton value="cancelar"   look="danger" onclick="return false;"    size="sm" />
+                                                </f:facet>
+                                            </b:modal>
+                                        </div>
 
+                                        <div class="ui-g-4 ui-md-4 ui-lg-4" style="padding:0px;display: #{controlSeccion.conSeccionhtml()}">
+
+                                            <b:commandButton type="submit" rendered="#{controlOrden.ordenesMoldelos.size()!=0}"  value="REALIZAR ORDEN" 
+                                                             actionListener="#{controlOrden.guardarOrden}"
+                                                             process="@this"  look="warning"
+                                                             ajax="true"    >
+                                                <i class="fa fa-cart-plus"></i>
+                                            </b:commandButton>
                                         </div>
 
 

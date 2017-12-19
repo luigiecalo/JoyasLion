@@ -6,6 +6,7 @@
 package com.ControladorVista;
 
 import Utilidades.Utilidades;
+import static com.ControladorVista.ControlSeccion.toLong;
 import com.Dao.CirconDaoimplement;
 import com.Dao.MaterialDaoimplement;
 import com.Dao.ModeloDaoimplement;
@@ -24,9 +25,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import org.primefaces.context.RequestContext;
 
@@ -146,12 +149,8 @@ public final class ControlPrincipal implements Serializable {
     public void anadirOrden() {
         if (validarorden()) {
             calcular();
-                
             controlOrden.agregarordenmodelo(modeloSelecionado, cantidad, material, valor);
-//            controlOrdenes.setCantidad(203);
-//            ControlOrdenes bean1 = context.getApplication().evaluateExpressionGet(context, "#{controlOrdenes}", ControlOrdenes.class);
-//            bean.setCantidad(bean.getCantidad() + 1);
-            util.crearmensajes("INFO", "MENSAGE", "REgistro Exitoso");
+            util.crearmensajes("INFO", "MENSAGE", "Se agregaron ("+cantidad+") articulos del producto "+modeloSelecionado.getCodigo()+" a su carro de compras");
             util.modal("mdModelo", "hide");
             limpiarOrden();
         }
@@ -400,7 +399,7 @@ public final class ControlPrincipal implements Serializable {
     public void limpiarOrden() {
         cantidad = 1;
         material = null;
-        materialSelect=0l;
+        materialSelect = 0l;
     }
 
     public String getValortexto() {

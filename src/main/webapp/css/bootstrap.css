@@ -334,6 +334,10 @@ img {
 .img-circle {
   border-radius: 50%;
 }
+.img-circle-small {
+  height: 200px;
+  width: 200px;
+}
 hr {
   margin-top: 20px;
   margin-bottom: 20px;
