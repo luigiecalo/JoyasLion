@@ -139,6 +139,7 @@ public final class ControlUsuariosClientes implements Serializable {
         rolesSelect.clear();
         Eliminartemp();
         imagenedit = false;
+        rol= new Rol();
 
 //        ControlUsuarios cu= new ControlUsuarios();
     }
@@ -157,6 +158,7 @@ public final class ControlUsuariosClientes implements Serializable {
             miembroSelecionado.setNombre2(nombre2);
             miembroSelecionado.setEstado(estadoMiembro ? "ACTIVO" : "INACTIVO");
             usuario.setLogin(miembroSelecionado.getNombre1());
+            rolesSelect.add(rol);
             if (estado.equals("R")) {
                 saveUsuario(miembroSelecionado);
                 MiemDao.crear(miembroSelecionado);
