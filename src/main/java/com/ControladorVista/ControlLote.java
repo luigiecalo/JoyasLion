@@ -26,7 +26,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
+import javax.inject.Named;
 
+@Named(value = "controlLote")
 @ManagedBean
 @ViewScoped
 public class ControlLote {
@@ -50,6 +52,7 @@ public class ControlLote {
     //LISTAS
     private List<Orden> ordenes = new ArrayList<Orden>();
     private List<OrdenModelo> ordenesMoldelos = new ArrayList<OrdenModelo>();
+    private List<OrdenModelo> ordenesMoldelosSelection = new ArrayList<OrdenModelo>();
     private List<Lote> lotes = new ArrayList<Lote>();
     private List<LoteModeloOrden> lotesModelosOrdenes = new ArrayList<LoteModeloOrden>();
     private List<Object> Litas = new ArrayList<Object>();
@@ -77,13 +80,14 @@ public class ControlLote {
         limpiar();
     }
 
-     public boolean verBtnRegistro() {
+    public boolean verBtnRegistro() {
         if (estado.equals("R")) {
             return true;
         } else {
             return false;
         }
     }
+
     public List<Miembro> completeUsuario(String query) {
         List<Miembro> allThemes = MiembroDAO.BuscarMiembroRol(3l);
         List<Miembro> filteredThemes = MiembroDAO.BuscarMiembroRolLike(3l, query);
@@ -111,6 +115,7 @@ public class ControlLote {
         lotesModelosOrdenes.clear();
         lotesModelosOrdenesmap.clear();
         ordenesMoldelos.clear();
+        ordenesMoldelosSelection.clear();
         ordenes.clear();
 
         buscarOredenesEsra();
@@ -118,11 +123,16 @@ public class ControlLote {
 
     public void buscarOredenesEsra() {
         if (lotesModelosOrdenes.isEmpty()) {
-            this.ordenes = ODAO.buscarOrdenEstado("EN ESPERA");
+            ordenes = ODAO.buscarOrdenEstado("EN ESPERA");
         } else {
-            this.ordenes = ordenes;
+            ordenes = ordenes;
         }
-
+        for (Orden ordene : ordenes) {
+            List<OrdenModelo> OrdenModelos = ordene.getOrdenesModelo();
+            for (OrdenModelo OrdenModelo1 : OrdenModelos) {
+                ordenesMoldelos.add(OrdenModelo1);
+            }
+        }
     }
 
     public void agregarOreden(Orden orden) {
@@ -134,7 +144,7 @@ public class ControlLote {
             lmo.setMaterial(modelosorden.getMaterial());
             lmo.setOrden(modelosorden.getOrden());
             lmo.setModelo(modelosorden.getModelo());
-            this.lotesModelosOrdenes.add(lmo);
+            lotesModelosOrdenes.add(lmo);
             listaremover.add(modelosorden);
             agregarlistaMap(lmo);
         }
@@ -145,18 +155,18 @@ public class ControlLote {
 
     }
 
-    public void agregarOredenModelo(OrdenModelo ordenmodu) {
-        LoteModeloOrden lmo = new LoteModeloOrden();
-        lmo.setCantidad(ordenmodu.getCantidad());
-        lmo.setMaterial(ordenmodu.getMaterial());
-        lmo.setOrden(ordenmodu.getOrden());
-        lmo.setModelo(ordenmodu.getModelo());
-        this.lotesModelosOrdenes.add(lmo);
-        ordenes.forEach((orden) -> {
-            orden.getOrdenesModelo().remove(ordenmodu);
-        });
-        agregarlistaMap(lmo);
+    public void agregarOredenModelo() {
+        for (OrdenModelo ordenmodu : ordenesMoldelosSelection) {
+            LoteModeloOrden lmo = new LoteModeloOrden();
+            lmo.setCantidad(ordenmodu.getCantidad());
+            lmo.setMaterial(ordenmodu.getMaterial());
+            lmo.setOrden(ordenmodu.getOrden());
+            lmo.setModelo(ordenmodu.getModelo());
+            lotesModelosOrdenes.add(lmo);
+            agregarlistaMap(lmo);
+            ordenesMoldelos.remove(ordenmodu);
 
+        }
     }
 
     public void cancelarTodo() {
@@ -166,38 +176,26 @@ public class ControlLote {
     }
 
     public void cancelarOredenModelo(Map mapa) {
-        List<LoteModeloOrden> listaremover = new ArrayList<LoteModeloOrden>();
         for (LoteModeloOrden loteModeloOrden : getLotesModelosOrdenes()) {
             String modelo = (String) mapa.get("modelo");
             String material = (String) mapa.get("material");
             String modelo2 = loteModeloOrden.getModelo().getCodigo();
             String material2 = loteModeloOrden.getMaterial().getNombre();
             if (modelo2.equals(modelo) && material2.equals(material)) {
-                ordenes.forEach((orden) -> {
-                    OrdenModelo ordenModelo = new OrdenModelo();
-                    ordenModelo.setCantidad(loteModeloOrden.getCantidad());
-                    ordenModelo.setMaterial(loteModeloOrden.getMaterial());
-                    ordenModelo.setModelo(loteModeloOrden.getModelo());
-                    ordenModelo.setOrden(loteModeloOrden.getOrden());
-                    ordenModelo.setOrdenModeloPK(loteModeloOrden.getModelo().getId(), loteModeloOrden.getOrden().getId(), loteModeloOrden.getMaterial().getId());
-                    if (orden.getCodigo().equals((String) loteModeloOrden.getOrden().getCodigo())) {
-                        orden.getOrdenesModelo().add(ordenModelo);
-                    }
-                });
-                listaremover.add(loteModeloOrden);
+                lotesModelosOrdenes.remove(loteModeloOrden);
+                OrdenModelo ordenmodelo = new OrdenModelo();
+                ordenmodelo.setCantidad(loteModeloOrden.getCantidad());
+                ordenmodelo.setMaterial(loteModeloOrden.getMaterial());
+                ordenmodelo.setModelo(loteModeloOrden.getModelo());
+                ordenmodelo.setOrden(loteModeloOrden.getOrden());
+                ordenesMoldelos.add(ordenmodelo);
             }
         }
-
-        for (LoteModeloOrden loteModeloOrden1 : listaremover) {
-            lotesModelosOrdenes.remove(loteModeloOrden1);
-        }
-
         eliminarListaMap(mapa);
-
     }
 
     public void eliminarListaMap(Map mapa) {
-        this.lotesModelosOrdenesmap.remove(mapa);
+        lotesModelosOrdenesmap.remove(mapa);
     }
 
     public void agregarlistaMap(LoteModeloOrden loteModelOrden) {
@@ -207,7 +205,7 @@ public class ControlLote {
         map.put("material", loteModelOrden.getMaterial().getNombre());
         if (lotesModelosOrdenesmap.isEmpty()) {
             map.put("cantidad", loteModelOrden.getCantidad());
-            this.lotesModelosOrdenesmap.add(map);
+            lotesModelosOrdenesmap.add(map);
         } else {
             boolean encontro = false;
             Map encontroMap = new HashMap();
@@ -222,12 +220,12 @@ public class ControlLote {
                 }
             }
             if (encontro) {
-                this.lotesModelosOrdenesmap.remove(encontroMap);
+                lotesModelosOrdenesmap.remove(encontroMap);
                 map.put("cantidad", loteModelOrden.getCantidad() + ((int) encontroMap.get("cantidad")));
-                this.lotesModelosOrdenesmap.add(map);
+                lotesModelosOrdenesmap.add(map);
             } else {
                 map.put("cantidad", loteModelOrden.getCantidad());
-                this.lotesModelosOrdenesmap.add(map);
+                lotesModelosOrdenesmap.add(map);
             }
 
         }
@@ -265,6 +263,14 @@ public class ControlLote {
 
     public void setOrdenesMoldelos(List<OrdenModelo> ordenesMoldelos) {
         this.ordenesMoldelos = ordenesMoldelos;
+    }
+
+    public List<OrdenModelo> getOrdenesMoldelosSelection() {
+        return ordenesMoldelosSelection;
+    }
+
+    public void setOrdenesMoldelosSelection(List<OrdenModelo> ordenesMoldelosSelection) {
+        this.ordenesMoldelosSelection = ordenesMoldelosSelection;
     }
 
     public List<LoteModeloOrden> getLotesModelosOrdenes() {

@@ -96,7 +96,8 @@
 
         <b:panel id="registro" collapsible="false" rendered="#{controlLote.registrar}">
 
-            <p:focus context="panel"/> <div class="row">
+            <p:focus context="panel"/> 
+            <div class="row">
 
                 <h:panelGroup >
                     <div id="barraup" class="col-xs-12 col-md-12 " style="z-index:200" >
@@ -118,7 +119,51 @@
                 </h:panelGroup>
             </div>
 
-            <div  class="col-xs-12 col-md-12 col-lg-8" style="z-index:200" >
+            <div  class="col-xs-12 col-md-12 col-lg-4" style="z-index:200" >
+                <p:panel id="panel2"  header="Datos del Lote" style="width: 100%" >
+                    <p:dataTable  id="checkboxOrden" var="ord" value="#{controlLote.ordenesMoldelos}" 
+                                  sortBy="#{ord.orden.codigo}" 
+                                  expandableRowGroups="true"
+                                  selection="#{controlLote.ordenesMoldelosSelection}" 
+                                  rowKey="#{ord.cantidad}" 
+                                  emptyMessage="no se encontraron ordenes en Espera" 
+                                  rowStyleClass="old">
+                        <f:facet name="header">
+                            
+                            <p:commandButton process="checkboxOrden" 
+                                             update=":form:panel :form:panel2"
+                                             styleClass="btn-guardar" 
+                                             actionListener="#{controlLote.agregarOredenModelo()}"
+                                             icon="fa fa-arrow-right" value="Enviar Slecionados"  />
+                        </f:facet>
+                        <p:headerRow >
+                            <p:column  colspan="4"  >
+                                <h:outputText value="#{ord.orden.cliente.login}" />
+                            </p:column>
+                        </p:headerRow>
+                        <p:column headerText="Orden" groupRow="true">
+                            <h:outputText   value="#{ord.orden.codigo}" />
+                            
+                        </p:column>
+                        <p:column selectionMode="multiple" style="width:48px;text-align:center" />
+                        <p:column headerText="Codigo"  style="background-color:#{ord.material.nombre=='ORO'? '#ffcc66' : ord.material.nombre=='PLATA'?'#f2f2f2':null}">
+                            <h:outputText id="ouputLabelModelo" value="#{ord.modelo.codigo}" />
+                            <p:tooltip for="ouputLabelModelo">  
+                                <p:graphicImage value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',ord.modelo.imagen)}.png"/>  
+                            </p:tooltip>
+                        </p:column>
+                        <p:column headerText="Cantidad">
+                            <h:outputText value="#{ord.cantidad}" />
+                        </p:column>
+
+                    </p:dataTable>
+
+
+                </p:panel>
+
+            </div>
+
+            <div  class="col-xs-12 col-md-12 col-lg-8"  >
                 <p:panel id="panel"  header="Datos del Lote" style="width: 100%" >
                     <p:focus id="focus" context="#{controlModelos.focus}"/>
 
@@ -188,52 +233,6 @@
                 </p:panel>  
             </div>
 
-            <div  class="col-xs-12 col-md-12 col-lg-4" style="z-index:200" >
-                <fieldset class="fieldset1">
-                    <legend>Ordenes en espera: 
-
-                    </legend>
-                    <ui:repeat  var="orden" value="#{controlLote.ordenes}">
-                        <b:panel  title="#{orden.codigo}-#{orden.cliente.login}"  collapsed="true">
-                            <b:commandButton value=""  rendered="#{orden.ordenesModelo.size()>1}" tooltip-container="ingresar a lote"  actionListener="#{controlLote.agregarOreden(orden)}" process="@this"  look="success"  >
-                                <i class="fa fa-fort-awesome"> Seleccionar todas Las ordenes</i>
-                            </b:commandButton>
-                            <div class="ui-g">
-                                <div class="ui-g-11 ui-g-nopad">
-                                    <div class="ui-g-12">
-                                        <p:dataTable id="modelos" var="modu"  style="width: 100%" value="#{orden.ordenesModelo}" >
-
-                                            <p:column headerText="Enviar" style="width:30%;" >
-                                                <b:commandButton value="" tooltip-container="ingresar a lote"  actionListener="#{controlLote.agregarOredenModelo(modu)}" process="@this"  look="#{modu.material.nombre=='ORO'?'warning':modu.material.nombre=='PLATA'?'success':''}"  >
-                                                    <i class="fa fa-arrow-left"></i>
-                                                </b:commandButton>
-                                            </p:column>
-                                            <p:column headerText="Modelo" style="width: 70%">
-                                                <h:commandLink  id="ouputLabelModelo" value="#{modu.modelo.codigo} - #{modu.material.nombre} (#{modu.cantidad})" />
-                                                <p:tooltip for="ouputLabelModelo">  
-                                                    <p:graphicImage value="imagenes/modelos/#{controlUtilidades.util.getExiteimagen('imagenes/modelos',modu.modelo.imagen)}.png"/>  
-                                                </p:tooltip>
-                                            </p:column>
-
-
-
-
-
-
-                                        </p:dataTable>
-                                    </div>
-                                </div>
-
-                            </div>
-
-
-                        </b:panel>
-
-                    </ui:repeat>
-
-
-                </fieldset>
-            </div>
 
 
 
