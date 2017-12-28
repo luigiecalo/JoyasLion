@@ -56,6 +56,9 @@ public class Lote implements Serializable {
     private int cantidad_modelos;
     @Column(name = "valor")
     private Double valor;
+    @OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name = "tipo_material")
+    private Material tipo_material;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "lote")
     private List<LoteModeloOrden> loteModeloOrden;
 
@@ -133,6 +136,14 @@ public class Lote implements Serializable {
 
     public void setCantidad_modelos(int cantidad_modelos) {
         this.cantidad_modelos = cantidad_modelos;
+    }
+
+    public Material getTipo_material() {
+        return tipo_material;
+    }
+
+    public void setTipo_material(Material tipo_material) {
+        this.tipo_material = tipo_material;
     }
     
 
