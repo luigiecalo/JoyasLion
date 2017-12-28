@@ -194,6 +194,30 @@ public class ControlLote {
         eliminarListaMap(mapa);
     }
 
+     public void guardarLote() {
+         Lote lote= new Lote();
+         lote.setCantidad_modelos(getPiezasTotales());
+         lote.setLoteModeloOrden(lotesModelosOrdenes);
+         lote.setEncargado(clienteSelect);
+         lote.setFecha(date);
+        for (LoteModeloOrden loteModeloOrden : getLotesModelosOrdenes()) {
+            String modelo = (String) mapa.get("modelo");
+            String material = (String) mapa.get("material");
+            String modelo2 = loteModeloOrden.getModelo().getCodigo();
+            String material2 = loteModeloOrden.getMaterial().getNombre();
+            if (modelo2.equals(modelo) && material2.equals(material)) {
+                lotesModelosOrdenes.remove(loteModeloOrden);
+                OrdenModelo ordenmodelo = new OrdenModelo();
+                ordenmodelo.setCantidad(loteModeloOrden.getCantidad());
+                ordenmodelo.setMaterial(loteModeloOrden.getMaterial());
+                ordenmodelo.setModelo(loteModeloOrden.getModelo());
+                ordenmodelo.setOrden(loteModeloOrden.getOrden());
+                ordenesMoldelos.add(ordenmodelo);
+            }
+        }
+        eliminarListaMap(mapa);
+    }
+    
     public void eliminarListaMap(Map mapa) {
         lotesModelosOrdenesmap.remove(mapa);
     }
